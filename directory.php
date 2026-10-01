@@ -1,3 +1,17 @@
+<?php
+require_once 'config/db.php';
+
+$sql = "SELECT 
+            ap.*,
+            u.first_name,
+            u.last_name
+        FROM alumni_profiles ap
+        INNER JOIN users u ON ap.user_id = u.id
+        WHERE ap.is_public = 1";
+
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +31,10 @@
         <h1 style="color: var(--primary-color); font-size: 2.5rem;">Alumni Directory</h1>
         <p style="color: #666; margin-bottom: 1.5rem;">0 member(s) found</p>
 
+        <?php while ($row = $result->fetch_assoc()): ?>
+            
         <div class="card" style="margin-bottom: 3rem;">
+
             <form action="directory.php" method="GET" style="display: flex; flex-wrap: wrap; gap: 1rem;">
                 <div style="flex: 1; min-width: 200px;">
                     <input type="text" class="form-control" name="search" placeholder="Search by name, company...">
@@ -34,7 +51,31 @@
                      <button type="submit" class="btn-primary" style="width: auto;">Filter</button>
                 </div>
             </form>
-        </div>
+        <h3>
+        <?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) ?>
+        </h3>
+
+        <p>
+        <?= htmlspecialchars($row['degree_programme']) ?>
+        </p>
+
+        <p>
+        <?= htmlspecialchars($row['graduation_year']) ?>
+        </p>
+
+        <p>
+        <?= htmlspecialchars($row['current_job_title']) ?>
+        </p>
+
+        <p>
+        <?= htmlspecialchars($row['current_company']) ?>
+        </p>
+
+        <p>
+        <?= htmlspecialchars($row['location']) ?>
+        </p>
+    </div>
+    <?php endwhile; ?>
 
         <div class="empty-state" style="text-align: center; color: #666; padding: 3rem 0;">
             <h3>No alumni match your search yet. Try a different filter.</h3>
