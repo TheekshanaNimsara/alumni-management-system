@@ -1,84 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
-  --primary-color: #0b192c;
-  --accent-color: #eeb742;
-  --bg-color: #f8f9fa;
-  --text-main: #333333;
-  --border-radius: 8px;
+    /* KDU Official Color Palette */
+    --primary-color: #800000;      /* KDU Deep Maroon */
+    --secondary-color: #5a0000;    /* Darker Maroon for hover states */
+    --accent-color: #D4AF37;       /* KDU Gold */
+    --bg-color: #F4F6F8;           /* Professional light grey background */
+    --text-color: #2B2B2B;         /* Dark charcoal for readability */
+    --text-muted: #666666;
+    
+    /* Modern UI Elements */
+    --border-radius: 6px;          /* Slightly sharper, more professional corners */
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Softer, premium shadow */
+    --transition: all 0.3s ease;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
+/* Base Typography Reset */
 body {
-  background-color: var(--bg-color);
-  color: var(--text-main);
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
 }
 
+h1, h2, h3, h4 {
+    color: var(--text-color);
+    margin-top: 0;
+}
+
+/* Navigation Bar */
 .navbar {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    border-bottom: 3px solid var(--accent-color); /* KDU Gold bottom border */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .logo-badge {
-  background-color: var(--accent-color);
-  color: var(--primary-color);
-  font-weight: bold;
-  padding: 5px 10px;
-  border-radius: 4px;
-  margin-right: 10px;
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
 }
 
+/* Main Container */
 .container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
+/* Premium Card Design */
 .card {
-  background: white;
-  padding: 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  border: 1px solid #eaeaea;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    padding: 2rem;
+    border: 1px solid rgba(0,0,0,0.03);
+    transition: var(--transition);
 }
 
-.form-group {
-  margin-bottom: 1.5rem;
+.card:hover {
+    transform: translateY(-5px); /* Card lifts up when hovered */
+    box-shadow: 0 8px 24px rgba(128, 0, 0, 0.1); /* Subtle maroon shadow */
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  font-size: 0.9rem;
+.card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
 }
 
+.card p {
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+}
+
+.card p strong {
+    color: var(--text-color);
+}
+
+/* Professional Form Controls */
 .form-control {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: var(--transition);
+    width: 100%;
+    box-sizing: border-box;
 }
 
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.1);
+}
+
+select.form-control {
+    appearance: auto;
+    cursor: pointer;
+}
+
+/* KDU Button Styling */
 .btn-primary {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  width: 100%;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    text-align: center;
 }
 
 .btn-primary:hover {
-  background-color: #162c4a;
+    background-color: var(--secondary-color);
+}
+
+/* Empty States */
+.empty-state {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 3rem;
+    background-color: white;
+    border-radius: var(--border-radius);
+    border: 1px dashed #ccc;
 }
