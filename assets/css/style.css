@@ -2,11 +2,11 @@
 
 :root {
     /* KDU Official Color Palette */
-    --primary-color: #800000;      /* KDU Deep Maroon */
-    --secondary-color: #5a0000;    /* Darker Maroon for hover states */
-    --accent-color: #D4AF37;       /* KDU Gold */
-    --bg-color: #F4F6F8;           /* Professional light grey background */
-    --text-color: #2B2B2B;         /* Dark charcoal for readability */
+    --primary-color: #0f766e;
+    --secondary-color: #115e59;  
+    --accent-color: #D4AF37;     
+    --bg-color: #F4F6F8;           
+    --text-color: #2B2B2B;         
     --text-muted: #666666;
     
     /* Modern UI Elements */
@@ -143,4 +143,46 @@ select.form-control {
     background-color: white;
     border-radius: var(--border-radius);
     border: 1px dashed #ccc;
+}
+/* KDU Breadcrumb Trail */
+.breadcrumb {
+    background-color: #e9ecef;
+    padding: 10px 2rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    border-bottom: 1px solid #ddd;
+}
+.breadcrumb span {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* KDU Institutional Footer */
+.footer {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 2rem;
+    margin-top: 4rem;
+    text-align: center;
+    border-top: 4px solid var(--primary-color);
+}
+.footer-content {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+.footer-content p {
+    margin: 5px 0;
+    color: #bbb;
+    font-size: 0.9rem;
+}
+.footer a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+.footer a:hover {
+    color: #fff;
 }

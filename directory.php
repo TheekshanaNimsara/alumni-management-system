@@ -30,18 +30,24 @@ $result = $conn->query($sql);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Alumni Directory</title>
+    <title>KDU Alumni Directory</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <!-- KDU Navbar -->
     <nav class="navbar">
         <div class="logo">
             <span class="logo-badge">AN</span>
-            <span style="font-weight: bold; font-size: 1.2rem;">Alumni Network</span>
+            <span style="font-weight: bold; font-size: 1.2rem;">KDU Alumni Network</span>
         </div>
     </nav>
     
-    <div class="container" style="padding: 2rem;">
+    <!-- Authentic KDU Breadcrumb Trail -->
+    <div class="breadcrumb">
+        You are in : <a href="index.php" style="color: var(--text-muted); text-decoration: none;">Home</a> / <span>Alumni Directory</span>
+    </div>
+    
+    <div class="container" style="padding: 2rem; min-height: 60vh;">
         <h1 style="color: var(--primary-color); font-size: 2.5rem;">Alumni Directory</h1>
         
         <p style="color: #666; margin-bottom: 1.5rem;"><?= $result->num_rows ?> member(s) found</p>
@@ -85,5 +91,21 @@ $result = $conn->query($sql);
             <?php endif; ?>
         </div>
     </div>
+
+    <!-- Authentic KDU Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h4 style="color: var(--accent-color); margin-bottom: 10px;">Contact Us</h4>
+                <p>Email: info@kdualumni.lk</p>
+                <p>Phone: +94 112635268</p>
+            </div>
+            <div>
+                <h4 style="color: var(--accent-color); margin-bottom: 10px;">Useful Links</h4>
+                <p><a href="https://kdu.ac.lk" target="_blank">Kotelawala Defence University</a></p>
+            </div>
+        </div>
+        <p style="font-size: 0.8rem; margin-top: 2rem;">&copy; 2026 KDU Alumni Association (Group 16 Project). All Rights Reserved.</p>
+    </footer>
 </body>
 </html>
