@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Job Approvals - Alumni Network</title>
+  <meta name="description" content="Admin portal to review, approve and delete job postings." />
+  <link rel="stylesheet" href="event.css" />
+  <link rel="stylesheet" href="jobs.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="jobs.html"><span class="logo">AN</span> Alumni Network</a>
+      <nav>
+        <a href="event.html">Events</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="eventadmin.html">Event Admin</a>
+        <a href="jobadmin.html" class="active-nav">Job Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-top">
+      <div>
+        <h1>Admin Portal &mdash; Job Approvals</h1>
+        <p class="muted">Review and manage job submissions before publishing them to the alumni network.</p>
+      </div>
+      <a class="btn btn-outline" href="jobs.html">&larr; Back to Jobs Page</a>
+    </div>
+
+    <!-- Dashboard Summary Cards -->
+    <div class="admin-stats">
+      <div class="stat-card">
+        <span class="stat-num" id="pendingCount">0</span>
+        <span class="stat-label">Pending Approval</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num" id="approvedCount">0</span>
+        <span class="stat-label">Approved Jobs</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num" id="totalCount">0</span>
+        <span class="stat-label">Total Postings</span>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="tabs" id="adminTabs">
+      <button class="tab active" data-filter="pending">Pending Approvals</button>
+      <button class="tab" data-filter="approved">Approved Jobs</button>
+      <button class="tab" data-filter="all">All Submissions</button>
+    </div>
+
+    <input type="search" id="adminSearchInput" class="search"
+           placeholder="Search job submissions by title or company..." />
+
+    <div class="grid job-list" id="adminGrid"></div>
+    <p class="empty" id="adminEmptyState" hidden>No job submissions found in this view.</p>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 University Alumni Network. Admin Dashboard.</p>
+  </footer>
+
+  <script src="jobadmin.js"></script>
+</body>
+</html>
