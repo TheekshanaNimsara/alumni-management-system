@@ -13,6 +13,21 @@ $currentPage = isset($currentPage) ? $currentPage : '';
 $isLoggedIn = isset($_SESSION['user_id']);
 $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : '';
 $userName = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : '';
+$userAvatar = $baseUrl . 'assets/images/default-avatar.svg';
+$unreadMessagesCount = 0;
+if ($isLoggedIn && $db_connected && $pdo) {
+    try {
+        $uStmt = $pdo->prepare("SELECT profile_picture FROM alumni_profiles WHERE user_id = ? LIMIT 1");
+        $uStmt->execute([$_SESSION['user_id']]);
+        $pic = $uStmt->fetchColumn();
+        if ($pic && $pic !== 'default-avatar.svg' && file_exists(__DIR__ . '/../uploads/profiles/' . $pic)) {
+            $userAvatar = $baseUrl . 'uploads/profiles/' . htmlspecialchars($pic);
+        }
+        $unreadMessagesCount = get_unread_messages_count($pdo, $_SESSION['user_id']);
+    } catch (Exception $e) {
+        // fallback
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +57,18 @@ $userName = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : '';
                     <li><a href="<?php echo $baseUrl; ?>events.php" class="nav-link <?php echo ($currentPage === 'events') ? 'active' : ''; ?>">Events</a></li>
                     <li><a href="<?php echo $baseUrl; ?>jobs.php" class="nav-link <?php echo ($currentPage === 'jobs') ? 'active' : ''; ?>">Jobs</a></li>
                     <li><a href="<?php echo $baseUrl; ?>about.php" class="nav-link <?php echo ($currentPage === 'about') ? 'active' : ''; ?>">About</a></li>
+                    <?php if ($isLoggedIn): ?>
+                        <li>
+                            <a href="<?php echo $baseUrl; ?>messages.php" class="nav-link <?php echo ($currentPage === 'messages') ? 'active' : ''; ?>">
+                                Messages
+                                <?php if ($unreadMessagesCount > 0): ?>
+                                    <span class="badge" style="background: var(--accent-color); color: var(--primary-color); font-size: 0.72rem; padding: 0.15rem 0.45rem; border-radius: 10px; margin-left: 0.3rem;">
+                                        <?php echo $unreadMessagesCount; ?>
+                                    </span>
+                                <?php endif; ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                     <?php if ($isLoggedIn && $userRole === 'admin'): ?>
                         <li><a href="<?php echo $baseUrl; ?>admin/index.php" class="nav-link <?php echo ($currentPage === 'admin') ? 'active' : ''; ?>" style="color: var(--accent-color); font-weight: 700;">Admin</a></li>
                     <?php endif; ?>
@@ -49,10 +76,10 @@ $userName = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : '';
 
                 <div class="nav-auth">
                     <?php if ($isLoggedIn): ?>
-                        <div class="nav-user">
-                            <img src="<?php echo $baseUrl; ?>assets/images/default-avatar.svg" alt="Profile" class="nav-user-avatar">
+                        <a href="<?php echo $baseUrl; ?>profile.php" class="nav-user" style="text-decoration: none;" title="View & Edit Your Profile">
+                            <img src="<?php echo $userAvatar; ?>" alt="Profile" class="nav-user-avatar">
                             <span><?php echo htmlspecialchars($userName); ?></span>
-                        </div>
+                        </a>
                         <a href="<?php echo $baseUrl; ?>auth/logout.php" class="btn btn-outline-light btn-sm">Logout</a>
                     <?php else: ?>
                         <a href="<?php echo $baseUrl; ?>auth/login.php" class="btn btn-outline-light btn-sm">Login</a>

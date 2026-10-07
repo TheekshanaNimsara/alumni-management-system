@@ -4,10 +4,7 @@
 // ============================================================
 require_once __DIR__ . '/../config/db.php';
 
-if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-    header("Location: ../auth/login.php?admin_required=1");
-    exit;
-}
+require_admin();
 
 $currentAdminPage = 'jobs';
 $baseUrl = get_base_url();
@@ -15,29 +12,33 @@ $msg = '';
 
 // Handle Moderation Action
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['job_id'], $_POST['action'])) {
-    $jobId = intval($_POST['job_id']);
-    $action = $_POST['action'];
-
-    if ($db_connected && $pdo) {
-        try {
-            if ($action === 'approve') {
-                $stmt = $pdo->prepare("UPDATE jobs SET status = 'approved' WHERE id = ?");
-                $stmt->execute([$jobId]);
-                $msg = "Job vacancy #{$jobId} approved.";
-            } elseif ($action === 'reject') {
-                $stmt = $pdo->prepare("UPDATE jobs SET status = 'rejected' WHERE id = ?");
-                $stmt->execute([$jobId]);
-                $msg = "Job vacancy #{$jobId} marked as rejected.";
-            } elseif ($action === 'delete') {
-                $stmt = $pdo->prepare("DELETE FROM jobs WHERE id = ?");
-                $stmt->execute([$jobId]);
-                $msg = "Job vacancy #{$jobId} deleted permanently.";
-            }
-        } catch (Exception $e) {
-            $msg = "Error updating job: " . $e->getMessage();
-        }
+    if (!verify_csrf_token()) {
+        $msg = "Security token invalid.";
     } else {
-        $msg = "Job vacancy #{$jobId} status updated ({$action}).";
+        $jobId = intval($_POST['job_id']);
+        $action = $_POST['action'];
+
+        if ($db_connected && $pdo) {
+            try {
+                if ($action === 'approve') {
+                    $stmt = $pdo->prepare("UPDATE jobs SET status = 'approved' WHERE id = ?");
+                    $stmt->execute([$jobId]);
+                    $msg = "Job vacancy #{$jobId} approved.";
+                } elseif ($action === 'reject') {
+                    $stmt = $pdo->prepare("UPDATE jobs SET status = 'rejected' WHERE id = ?");
+                    $stmt->execute([$jobId]);
+                    $msg = "Job vacancy #{$jobId} marked as rejected.";
+                } elseif ($action === 'delete') {
+                    $stmt = $pdo->prepare("DELETE FROM jobs WHERE id = ?");
+                    $stmt->execute([$jobId]);
+                    $msg = "Job vacancy #{$jobId} deleted permanently.";
+                }
+            } catch (Exception $e) {
+                $msg = "Error updating job: " . $e->getMessage();
+            }
+        } else {
+            $msg = "Job vacancy #{$jobId} status updated ({$action}).";
+        }
     }
 }
 
@@ -129,6 +130,7 @@ if (empty($jobsList)) {
                                 <div style="display: flex; gap: 0.4rem;">
                                     <?php if ($job['status'] !== 'approved'): ?>
                                         <form method="POST" style="display: inline;">
+                                            <?php echo csrf_field(); ?>
                                             <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
                                             <input type="hidden" name="action" value="approve">
                                             <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.8rem;">
@@ -139,6 +141,7 @@ if (empty($jobsList)) {
 
                                     <?php if ($job['status'] !== 'rejected'): ?>
                                         <form method="POST" style="display: inline;">
+                                            <?php echo csrf_field(); ?>
                                             <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
                                             <input type="hidden" name="action" value="reject">
                                             <button type="submit" class="btn btn-sm" style="background: #FFF4D6; color: #B7791F; border: 1px solid #D8CDBB; padding: 0.3rem 0.65rem; font-size: 0.8rem;">
@@ -148,6 +151,7 @@ if (empty($jobsList)) {
                                     <?php endif; ?>
 
                                     <form method="POST" style="display: inline;" onsubmit="return confirm('Delete this job posting?');">
+                                        <?php echo csrf_field(); ?>
                                         <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
                                         <input type="hidden" name="action" value="delete">
                                         <button type="submit" class="btn btn-sm" style="background: #F8EAEA; color: #A63D40; border: 1px solid #A63D40; padding: 0.3rem 0.65rem; font-size: 0.8rem;">

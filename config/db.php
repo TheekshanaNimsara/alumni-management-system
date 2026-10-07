@@ -4,8 +4,97 @@
 // Pure PHP & PDO for beginner-friendly, secure SQL queries
 // ============================================================
 
+// Session security hardening
+ini_set("session.use_only_cookies", 1);
+ini_set("session.use_strict_mode", 1);
+
 if (session_status() === PHP_SESSION_NONE) {
+    $is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
+    session_set_cookie_params([
+        "lifetime" => 0,
+        "path" => "/",
+        "secure" => $is_https,
+        "httponly" => true,
+        "samesite" => "Lax"
+    ]);
     session_start();
+}
+
+// ------------------------------------------------------------
+// CSRF Protection Helpers
+// ------------------------------------------------------------
+function generate_csrf_token() {
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+function csrf_field() {
+    $token = generate_csrf_token();
+    return '<input type="hidden" name="csrf_token" value="' . htmlspecialchars($token) . '">';
+}
+
+function verify_csrf_token($token = null) {
+    if ($token === null) {
+        $token = $_POST['csrf_token'] ?? '';
+    }
+    if (empty($_SESSION['csrf_token']) || empty($token)) {
+        return false;
+    }
+    return hash_equals($_SESSION['csrf_token'], $token);
+}
+
+// ------------------------------------------------------------
+// Authentication & Role Helpers
+// ------------------------------------------------------------
+function is_logged_in() {
+    return isset($_SESSION['user_id']);
+}
+
+function current_user_id() {
+    return $_SESSION['user_id'] ?? null;
+}
+
+function is_admin() {
+    return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+}
+
+function require_login($redirect = null) {
+    if (!is_logged_in()) {
+        $target = $redirect ? $redirect : get_base_url() . 'auth/login.php';
+        header("Location: " . $target);
+        exit;
+    }
+}
+
+function require_admin($redirect = null) {
+    if (!is_admin()) {
+        $target = $redirect ? $redirect : get_base_url() . 'auth/login.php?admin_required=1';
+        header("Location: " . $target);
+        exit;
+    }
+}
+
+function get_unread_messages_count($pdo, $user_id) {
+    if (!$pdo || !$user_id) return 0;
+    try {
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM messages WHERE receiver_id = ? AND is_read = 0");
+        $stmt->execute([$user_id]);
+        return (int)$stmt->fetchColumn();
+    } catch (Exception $e) {
+        return 0;
+    }
+}
+
+function get_pending_reports_count($pdo) {
+    if (!$pdo) return 0;
+    try {
+        $stmt = $pdo->query("SELECT COUNT(*) FROM reports WHERE status = 'pending'");
+        return (int)$stmt->fetchColumn();
+    } catch (Exception $e) {
+        return 0;
+    }
 }
 
 $db_host = '127.0.0.1';

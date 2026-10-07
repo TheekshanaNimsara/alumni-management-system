@@ -19,7 +19,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $department = trim($_POST['department'] ?? '');
 
     // Server-side validation
-    if (empty($first_name) || empty($last_name) || empty($username) || empty($email) || empty($password) || empty($degree) || empty($department) || empty($grad_year)) {
+    if (!verify_csrf_token()) {
+        $error = "Security token expired or invalid. Please try again.";
+    } elseif (empty($first_name) || empty($last_name) || empty($username) || empty($email) || empty($password) || empty($degree) || empty($department) || empty($grad_year)) {
         $error = "All fields are required. Please complete the form.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Please provide a valid email address.";
@@ -38,7 +40,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 if ($checkStmt->fetch()) {
                     $error = "An account with this email address or username already exists.";
                 } else {
-                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
                     // Insert into users
                     $pdo->beginTransaction();
@@ -59,7 +61,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 
                     $pdo->commit();
 
-                    // Log in immediately
+                    // Log in immediately - regenerate session ID for security
+                    session_regenerate_id(true);
                     $_SESSION['user_id'] = $new_user_id;
                     $_SESSION['user_name'] = $first_name . ' ' . $last_name;
                     $_SESSION['user_role'] = 'alumni';
@@ -147,6 +150,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 <?php endif; ?>
 
                 <form id="registerForm" method="POST" action="register.php">
+                    <?php echo csrf_field(); ?>
                     
                     <!-- Name row -->
                     <div class="auth-row">

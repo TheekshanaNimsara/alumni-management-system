@@ -4,43 +4,41 @@
 // ============================================================
 require_once __DIR__ . '/../config/db.php';
 
-// Check admin authentication (allow demo admin session if not set)
-if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-    // If not logged in as admin, redirect to login with prompt
-    header("Location: ../auth/login.php?admin_required=1");
-    exit;
-}
+require_admin();
 
 $currentAdminPage = 'dashboard';
 $baseUrl = get_base_url();
 
 // Compute stats
-$totalAlumni = 1250;
-$pendingEventsCount = 12;
-$approvedEventsCount = 45;
-$pendingJobsCount = 18;
+$totalUsersCount = 0;
+$activeUsersCount = 0;
+$suspendedUsersCount = 0;
+$pendingEventsCount = 0;
+$approvedEventsCount = 0;
+$pendingJobsCount = 0;
+$approvedJobsCount = 0;
+$pendingReportsCount = 0;
 
 $recentPendingEvents = [];
 $recentPendingJobs = [];
 
 if ($db_connected && $pdo) {
     try {
-        // Count users with alumni role
-        $stmt = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'alumni'");
-        $cnt = $stmt->fetchColumn();
-        if ($cnt > 0) $totalAlumni = $cnt + 1244; // Scale with baseline 1,250
+        // Users stats
+        $totalUsersCount = (int)$pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
+        $activeUsersCount = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE status = 'active'")->fetchColumn();
+        $suspendedUsersCount = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE status = 'suspended'")->fetchColumn();
 
-        // Count pending events
-        $stmt = $pdo->query("SELECT COUNT(*) FROM events WHERE status = 'pending'");
-        $pendingEventsCount = $stmt->fetchColumn();
+        // Events stats
+        $pendingEventsCount = (int)$pdo->query("SELECT COUNT(*) FROM events WHERE status = 'pending'")->fetchColumn();
+        $approvedEventsCount = (int)$pdo->query("SELECT COUNT(*) FROM events WHERE status = 'approved'")->fetchColumn();
 
-        // Count approved events
-        $stmt = $pdo->query("SELECT COUNT(*) FROM events WHERE status = 'approved'");
-        $approvedEventsCount = $stmt->fetchColumn();
+        // Jobs stats
+        $pendingJobsCount = (int)$pdo->query("SELECT COUNT(*) FROM jobs WHERE status = 'pending'")->fetchColumn();
+        $approvedJobsCount = (int)$pdo->query("SELECT COUNT(*) FROM jobs WHERE status = 'approved'")->fetchColumn();
 
-        // Count pending jobs
-        $stmt = $pdo->query("SELECT COUNT(*) FROM jobs WHERE status = 'pending'");
-        $pendingJobsCount = $stmt->fetchColumn();
+        // Reports stats
+        $pendingReportsCount = (int)$pdo->query("SELECT COUNT(*) FROM reports WHERE status = 'pending'")->fetchColumn();
 
         // Fetch pending events list
         $stmt = $pdo->query("
@@ -111,15 +109,31 @@ if (empty($recentPendingJobs)) {
             </div>
         </div>
 
-        <!-- 4 Statistics Cards -->
-        <div class="admin-stats-grid">
+        <!-- Comprehensive Statistics Cards -->
+        <div class="admin-stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
             
             <div class="admin-stat-card">
                 <div>
-                    <div class="admin-stat-number"><?php echo number_format($totalAlumni); ?></div>
-                    <div class="admin-stat-label">Total Alumni</div>
+                    <div class="admin-stat-number"><?php echo number_format($totalUsersCount); ?></div>
+                    <div class="admin-stat-label">Total Users</div>
                 </div>
                 <div class="admin-stat-icon">&#128101;</div>
+            </div>
+
+            <div class="admin-stat-card">
+                <div>
+                    <div class="admin-stat-number" style="color: var(--success-color);"><?php echo number_format($activeUsersCount); ?></div>
+                    <div class="admin-stat-label">Active Users</div>
+                </div>
+                <div class="admin-stat-icon">&#9989;</div>
+            </div>
+
+            <div class="admin-stat-card">
+                <div>
+                    <div class="admin-stat-number" style="color: var(--danger-color);"><?php echo number_format($suspendedUsersCount); ?></div>
+                    <div class="admin-stat-label">Blocked / Suspended</div>
+                </div>
+                <div class="admin-stat-icon">&#128683;</div>
             </div>
 
             <div class="admin-stat-card">
@@ -135,15 +149,31 @@ if (empty($recentPendingJobs)) {
                     <div class="admin-stat-number" style="color: var(--success-color);"><?php echo $approvedEventsCount; ?></div>
                     <div class="admin-stat-label">Approved Events</div>
                 </div>
-                <div class="admin-stat-icon">&#9989;</div>
+                <div class="admin-stat-icon">&#128197;</div>
             </div>
 
             <div class="admin-stat-card">
                 <div>
-                    <div class="admin-stat-number" style="color: var(--accent-dark);"><?php echo $pendingJobsCount; ?></div>
+                    <div class="admin-stat-number" style="color: var(--warning-color);"><?php echo $pendingJobsCount; ?></div>
                     <div class="admin-stat-label">Pending Jobs</div>
                 </div>
+                <div class="admin-stat-icon">&#9203;</div>
+            </div>
+
+            <div class="admin-stat-card">
+                <div>
+                    <div class="admin-stat-number" style="color: var(--success-color);"><?php echo $approvedJobsCount; ?></div>
+                    <div class="admin-stat-label">Approved Jobs</div>
+                </div>
                 <div class="admin-stat-icon">&#128188;</div>
+            </div>
+
+            <div class="admin-stat-card">
+                <div>
+                    <div class="admin-stat-number" style="color: <?php echo ($pendingReportsCount > 0) ? 'var(--danger-color)' : 'var(--text-muted)'; ?>;"><?php echo $pendingReportsCount; ?></div>
+                    <div class="admin-stat-label">Reports Queue</div>
+                </div>
+                <div class="admin-stat-icon">&#9873;</div>
             </div>
 
         </div>

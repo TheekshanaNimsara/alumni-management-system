@@ -4,10 +4,7 @@
 // ============================================================
 require_once __DIR__ . '/../config/db.php';
 
-if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-    header("Location: ../auth/login.php?admin_required=1");
-    exit;
-}
+require_admin();
 
 $currentAdminPage = 'events';
 $baseUrl = get_base_url();
@@ -15,29 +12,33 @@ $msg = '';
 
 // Handle Moderation Action
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['event_id'], $_POST['action'])) {
-    $eventId = intval($_POST['event_id']);
-    $action = $_POST['action'];
-
-    if ($db_connected && $pdo) {
-        try {
-            if ($action === 'approve') {
-                $stmt = $pdo->prepare("UPDATE events SET status = 'approved' WHERE id = ?");
-                $stmt->execute([$eventId]);
-                $msg = "Event #{$eventId} approved successfully.";
-            } elseif ($action === 'reject') {
-                $stmt = $pdo->prepare("UPDATE events SET status = 'rejected' WHERE id = ?");
-                $stmt->execute([$eventId]);
-                $msg = "Event #{$eventId} rejected.";
-            } elseif ($action === 'delete') {
-                $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
-                $stmt->execute([$eventId]);
-                $msg = "Event #{$eventId} deleted permanently.";
-            }
-        } catch (Exception $e) {
-            $msg = "Error updating event: " . $e->getMessage();
-        }
+    if (!verify_csrf_token()) {
+        $msg = "Security token invalid.";
     } else {
-        $msg = "Event #{$eventId} status updated ({$action}).";
+        $eventId = intval($_POST['event_id']);
+        $action = $_POST['action'];
+
+        if ($db_connected && $pdo) {
+            try {
+                if ($action === 'approve') {
+                    $stmt = $pdo->prepare("UPDATE events SET status = 'approved' WHERE id = ?");
+                    $stmt->execute([$eventId]);
+                    $msg = "Event #{$eventId} approved successfully.";
+                } elseif ($action === 'reject') {
+                    $stmt = $pdo->prepare("UPDATE events SET status = 'rejected' WHERE id = ?");
+                    $stmt->execute([$eventId]);
+                    $msg = "Event #{$eventId} rejected.";
+                } elseif ($action === 'delete') {
+                    $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
+                    $stmt->execute([$eventId]);
+                    $msg = "Event #{$eventId} deleted permanently.";
+                }
+            } catch (Exception $e) {
+                $msg = "Error updating event: " . $e->getMessage();
+            }
+        } else {
+            $msg = "Event #{$eventId} status updated ({$action}).";
+        }
     }
 }
 
@@ -129,6 +130,7 @@ if (empty($eventsList)) {
                                 <div style="display: flex; gap: 0.4rem;">
                                     <?php if ($event['status'] !== 'approved'): ?>
                                         <form method="POST" style="display: inline;">
+                                            <?php echo csrf_field(); ?>
                                             <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
                                             <input type="hidden" name="action" value="approve">
                                             <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.8rem;">
@@ -139,6 +141,7 @@ if (empty($eventsList)) {
 
                                     <?php if ($event['status'] !== 'rejected'): ?>
                                         <form method="POST" style="display: inline;">
+                                            <?php echo csrf_field(); ?>
                                             <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
                                             <input type="hidden" name="action" value="reject">
                                             <button type="submit" class="btn btn-sm" style="background: #FFF4D6; color: #B7791F; border: 1px solid #D8CDBB; padding: 0.3rem 0.65rem; font-size: 0.8rem;">
@@ -148,6 +151,7 @@ if (empty($eventsList)) {
                                     <?php endif; ?>
 
                                     <form method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                                        <?php echo csrf_field(); ?>
                                         <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
                                         <input type="hidden" name="action" value="delete">
                                         <button type="submit" class="btn btn-sm" style="background: #F8EAEA; color: #A63D40; border: 1px solid #A63D40; padding: 0.3rem 0.65rem; font-size: 0.8rem;">
