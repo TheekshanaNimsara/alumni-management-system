@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post a Job – Alumni Network</title>
+  <link rel="stylesheet" href="jobs.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="navbar-left">
+      <div class="logo-box">AN</div>
+      <span class="navbar-title">Alumni Network</span>
+    </div>
+    <nav>
+      <a href="event.html">Events</a>
+      <a href="jobs.html">Jobs</a>
+    </nav>
+  </header>
+
+  <main class="form-container">
+    <div class="form-card">
+      <h1>Post a Job</h1>
+      <p class="subtitle">Share an opportunity with fellow alumni. Submissions will be sent for admin approval before appearing on the job board.</p>
+
+      <!-- Error banner (shown when job.php redirects back with ?error=…) -->
+      <div id="errorBanner" style="display:none;background:#f8d7da;color:#721c24;
+           padding:10px 16px;border-radius:6px;margin-bottom:16px;font-weight:600;"></div>
+
+      <form action="job.php?action=create" method="POST">
+        <label for="jobTitle">Job Title</label>
+        <input type="text" id="jobTitle" name="jobTitle"
+               placeholder="e.g. Software Engineer" required />
+
+        <label for="companyName">Company Name</label>
+        <input type="text" id="companyName" name="companyName"
+               placeholder="e.g. Sysco LABS" required />
+
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location"
+               placeholder="e.g. Colombo, Sri Lanka" />
+
+        <label for="jobType">Job Type</label>
+        <select id="jobType" name="jobType">
+          <option value="Full time">Full time</option>
+          <option value="Part time">Part time</option>
+          <option value="Remote">Remote</option>
+        </select>
+
+        <label for="contactEmail">Contact Email <span style="font-weight:400;color:#777">(for applicants)</span></label>
+        <input type="email" id="contactEmail" name="contactEmail"
+               placeholder="e.g. hr@company.com" />
+
+        <button type="submit" class="submit-btn">Post Job</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    // Show error message if redirected back from job.php with ?error=
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const err = params.get("error");
+      if (err) {
+        const banner = document.getElementById("errorBanner");
+        banner.textContent = "⚠ " + decodeURIComponent(err);
+        banner.style.display = "block";
+        history.replaceState({}, "", "jobcreate.html");
+      }
+    })();
+  </script>
+
+</body>
+</html>
