@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alumni Job Board</title>
+    <link rel="stylesheet" href="jobs.css" />
+  </head>
+  <body>
+    <!-- Top navbar -->
+    <header class="navbar">
+      <div class="navbar-left">
+        <div class="logo-box">AN</div>
+        <span class="navbar-title">Alumni Network</span>
+      </div>
+      <nav>
+        <a href="event.html">Events</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="jobadmin.html">Job Admin</a>
+      </nav>
+    </header>
+
+    <!-- Page content -->
+    <main class="content">
+      <div class="top-row">
+        <div>
+          <h1>Alumni Job Board</h1>
+          <p class="subtitle">
+            Opportunities shared by fellow alumni. Give back by posting one yourself.
+          </p>
+        </div>
+        <a href="jobcreate.html" class="btn btn-primary">+ Post a Job</a>
+      </div>
+      <!-- Search bar -->
+      <div class="search-bar">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search jobs by title or company"
+        />
+
+        <select id="jobTypeFilter">
+          <option value="all">All Job Types</option>
+          <option value="Remote">Remote</option>
+          <option value="Full time">Full time</option>
+          <option value="Part time">Part time</option>
+        </select>
+      </div>
+
+      <!-- Job list -->
+      <div class="job-list" id="jobList"></div>
+
+      <p id="noResults" class="no-results">
+        No job postings right now. Check back later!
+      </p>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 University Alumni Network. All rights reserved.</p>
+      <p>CS12012 — Web Development Group Assignment</p>
+    </footer>
+
+    <script src="jobs.js"></script>
+  </body>
+</html>

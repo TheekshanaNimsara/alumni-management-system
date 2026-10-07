@@ -1,0 +1,13 @@
+# Dependencies and Temporary Files
+scratch/
+.gemini/
+*.log
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE Configurations
+.vscode/
+.idea/

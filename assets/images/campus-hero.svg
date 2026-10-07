@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <!-- Cinematic Sunset Sky Gradient (Deep Maroon to KDU Gold) -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#120305" />
+      <stop offset="35%" stop-color="#24070A" />
+      <stop offset="60%" stop-color="#4A1116" />
+      <stop offset="80%" stop-color="#73222B" />
+      <stop offset="92%" stop-color="#A98218" />
+      <stop offset="100%" stop-color="#D4AF37" />
+    </linearGradient>
+
+    <!-- Warm Sunset Sun Glow in KDU Gold -->
+    <radialGradient id="sunGlow" cx="65%" cy="75%" r="45%">
+      <stop offset="0%" stop-color="#FFF4D6" stop-opacity="0.9" />
+      <stop offset="30%" stop-color="#F1D77A" stop-opacity="0.6" />
+      <stop offset="60%" stop-color="#D4AF37" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#120305" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Window Light Glow -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Sky Background -->
+  <rect width="1920" height="1080" fill="url(#skyGrad)" />
+
+  <!-- Warm Sun behind Campus -->
+  <circle cx="1250" cy="700" r="320" fill="url(#sunGlow)" />
+
+  <!-- Distant Mountain / Forest Ridge Silhouette -->
+  <path d="M0,820 Q320,780 640,810 T1280,790 T1920,810 L1920,1080 L0,1080 Z" fill="#120305" opacity="0.85" />
+
+  <!-- University Quad Trees Silhouette -->
+  <g fill="#120305">
+    <ellipse cx="220" cy="810" rx="90" ry="120" />
+    <ellipse cx="310" cy="830" rx="70" ry="90" />
+    <ellipse cx="140" cy="840" rx="60" ry="80" />
+    <ellipse cx="1680" cy="800" rx="100" ry="130" />
+    <ellipse cx="1780" cy="820" rx="80" ry="100" />
+    <ellipse cx="1580" cy="830" rx="70" ry="90" />
+  </g>
+
+  <!-- Campus Neoclassical Hall & Clock Tower Architecture Silhouette -->
+  <!-- Main Foundation -->
+  <rect x="360" y="740" width="1200" height="220" fill="#120305" />
+
+  <!-- Front Portico Columns -->
+  <g fill="#1C080B">
+    <rect x="760" y="650" width="400" height="20" /> <!-- Architrave -->
+    <polygon points="740,650 960,560 1180,650" fill="#120305" /> <!-- Pediment -->
+    <!-- Columns -->
+    <rect x="780" y="670" width="22" height="190" />
+    <rect x="830" y="670" width="22" height="190" />
+    <rect x="880" y="670" width="22" height="190" />
+    <rect x="930" y="670" width="22" height="190" />
+    <rect x="980" y="670" width="22" height="190" />
+    <rect x="1030" y="670" width="22" height="190" />
+    <rect x="1080" y="670" width="22" height="190" />
+    <rect x="1130" y="670" width="22" height="190" />
+  </g>
+
+  <!-- Left Wing -->
+  <rect x="380" y="700" width="380" height="160" fill="#120305" />
+  <polygon points="360,700 570,640 780,700" fill="#1C080B" />
+
+  <!-- Right Wing -->
+  <rect x="1160" y="700" width="380" height="160" fill="#120305" />
+  <polygon points="1140,700 1350,640 1560,700" fill="#1C080B" />
+
+  <!-- Iconic University Clock Tower (Center) -->
+  <g fill="#120305">
+    <rect x="915" y="320" width="90" height="240" />
+    <polygon points="895,320 960,180 1025,320" /> <!-- Spire -->
+    <!-- Tower Balcony & Details -->
+    <rect x="900" y="380" width="120" height="16" fill="#1C080B" />
+    <rect x="905" y="480" width="110" height="14" fill="#1C080B" />
+    <!-- Clock Face Glowing in KDU Gold -->
+    <circle cx="960" cy="430" r="24" fill="#D4AF37" filter="url(#glow)" opacity="0.9" />
+    <circle cx="960" cy="430" r="22" fill="#FFF4D6" />
+    <!-- Clock Hands -->
+    <line x1="960" y1="430" x2="960" y2="415" stroke="#120305" stroke-width="3" stroke-linecap="round" />
+    <line x1="960" y1="430" x2="972" y2="438" stroke="#120305" stroke-width="2.5" stroke-linecap="round" />
+  </g>
+
+  <!-- Warm Windows with Golden Light Glow -->
+  <g fill="#F1D77A" opacity="0.85" filter="url(#glow)">
+    <!-- Tower Windows -->
+    <rect x="948" y="505" width="10" height="22" rx="5" />
+    <rect x="962" y="505" width="10" height="22" rx="5" />
+    <!-- Left Wing Windows -->
+    <rect x="420" y="730" width="20" height="35" rx="3" />
+    <rect x="470" y="730" width="20" height="35" rx="3" />
+    <rect x="520" y="730" width="20" height="35" rx="3" />
+    <rect x="570" y="730" width="20" height="35" rx="3" />
+    <rect x="620" y="730" width="20" height="35" rx="3" />
+    <rect x="670" y="730" width="20" height="35" rx="3" />
+    <rect x="420" y="790" width="20" height="35" rx="3" />
+    <rect x="470" y="790" width="20" height="35" rx="3" />
+    <rect x="520" y="790" width="20" height="35" rx="3" />
+    <rect x="570" y="790" width="20" height="35" rx="3" />
+    <rect x="620" y="790" width="20" height="35" rx="3" />
+    <rect x="670" y="790" width="20" height="35" rx="3" />
+    <!-- Right Wing Windows -->
+    <rect x="1230" y="730" width="20" height="35" rx="3" />
+    <rect x="1280" y="730" width="20" height="35" rx="3" />
+    <rect x="1330" y="730" width="20" height="35" rx="3" />
+    <rect x="1380" y="730" width="20" height="35" rx="3" />
+    <rect x="1430" y="730" width="20" height="35" rx="3" />
+    <rect x="1480" y="730" width="20" height="35" rx="3" />
+    <rect x="1230" y="790" width="20" height="35" rx="3" />
+    <rect x="1280" y="790" width="20" height="35" rx="3" />
+    <rect x="1330" y="790" width="20" height="35" rx="3" />
+    <rect x="1380" y="790" width="20" height="35" rx="3" />
+    <rect x="1430" y="790" width="20" height="35" rx="3" />
+    <rect x="1480" y="790" width="20" height="35" rx="3" />
+  </g>
+
+  <!-- Foreground Quad Lawn -->
+  <polygon points="0,920 1920,920 1920,1080 0,1080" fill="#0E0204" />
+  <!-- Walkway Reflection -->
+  <polygon points="960,920 1120,1080 800,1080" fill="#24070A" opacity="0.6" />
+</svg>
