@@ -1,5 +1,4 @@
 -- ============================================================
--- CS12012 Web Development - Group Assignment
 -- University Alumni Network Platform
 -- Database Schema (MySQL)
 -- ============================================================
@@ -115,10 +114,7 @@ CREATE TABLE messages (
     FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- ------------------------------------------------------------
--- Seed data: one admin account
--- Email: admin@alumni.edu   Password: Admin@123
--- ------------------------------------------------------------
+
 INSERT INTO users (first_name, last_name, email, password, role) VALUES
 ('System', 'Administrator', 'admin@alumni.edu', '$2y$10$0vTq2kWX4IM1BAZnbi0zouWGNpipqbMXhykF/fMTX61Z10fa8znX2', 'admin');
 -- The hash above is password_hash("Admin@123", PASSWORD_DEFAULT).
