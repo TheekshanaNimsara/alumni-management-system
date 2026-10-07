@@ -944,6 +944,87 @@ img {
     font-size: 0.9rem;
 }
 
+.btn-primary:hover {
+  background-color: #162c4a;
+}
+/* Messaging UI Styles */
+.chat-wrapper {
+  display: flex;
+  height: 70vh;
+  background: white;
+  border-radius: var(--border-radius);
+  border: 1px solid #eaeaea;
+  overflow: hidden;
+}
+
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  background: var(--primary-color);
+  color: white;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  background-color: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.msg-bubble {
+  max-width: 60%;
+  padding: 10px 15px;
+  border-radius: 15px;
+  line-height: 1.4;
+  font-size: 0.95rem;
+}
+
+.msg-sent {
+  align-self: flex-end;
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+  border-bottom-right-radius: 2px;
+}
+
+.msg-received {
+  align-self: flex-start;
+  background-color: white;
+  color: var(--text-main);
+  border: 1px solid #ddd;
+  border-bottom-left-radius: 2px;
+}
+
+.msg-time {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-top: 5px;
+  display: block;
+}
+
+.chat-input-area {
+  padding: 1rem;
+  background: white;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  gap: 10px;
+}
+
+.chat-input-area input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+}
 /* Focus state with Gold Accent */
 .form-control:focus {
     outline: 3px solid rgba(212, 175, 55, 0.18);
