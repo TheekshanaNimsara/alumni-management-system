@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Event</title>
+  <link rel="stylesheet" href="event.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="event.html"><span class="logo">AN</span> Alumni Network</a>
+      <nav>
+        <a href="event.html">Events</a>
+        <a href="jobs.html">Jobs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap narrow">
+    <a class="back" href="event.html">&larr; Back to Events</a>
+
+    <div class="form-card">
+      <h1>Create a New Event</h1>
+      <p class="muted">Fill in the details and publish it to the alumni events page.</p>
+
+      <!-- Filled in by create-event.js if save-event.php sends back ?error=... -->
+      <div class="error-box" id="errorBox" hidden></div>
+
+      <!-- Plain HTML form. It posts straight to event.php?action=save -->
+      <form id="eventForm" action="event.php?action=save" method="post">
+        <label>Event title
+          <input type="text" name="title" id="title" required placeholder="e.g. Alumni Homecoming">
+        </label>
+
+        <div class="row">
+          <label>Event date
+            <input type="date" name="date" id="date" required>
+          </label>
+          <label>Registration deadline
+            <input type="date" name="regDate" id="regDate" required>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Start time
+            <input type="time" name="start" id="start" required>
+          </label>
+          <label>End time
+            <input type="time" name="end" id="end" required>
+          </label>
+        </div>
+
+        <label>Location
+          <input type="text" name="location" id="location" required placeholder="e.g. Main Auditorium">
+        </label>
+
+        <div class="form-actions">
+          <a class="btn btn-outline" href="event.html">Cancel</a>
+          <button type="submit" class="btn btn-primary">Publish Event</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 University Alumni Network. All rights reserved.</p>
+    <p>CS12012 &mdash; Web Development Group Assignment</p>
+  </footer>
+
+  <script src="eventcreate.js"></script>
+</body>
+</html>

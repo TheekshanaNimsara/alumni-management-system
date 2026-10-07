@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alumni Events</title>
+  <link rel="stylesheet" href="event.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="event.html"><span class="logo">AN</span> Alumni Network</a>
+      <nav>
+        <a href="event.html" class="active-nav">Events</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="eventadmin.html">Admin Portal</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-top">
+      <div>
+        <h1>Alumni Events</h1>
+        <p class="muted">Reunions, webinars, and career talks hosted by the alumni community.</p>
+      </div>
+      <a class="btn btn-primary" href="eventcreate.html">+ Create Event</a>
+    </div>
+
+    <input type="search" id="searchInput" class="search" placeholder="Search events...">
+
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-filter="all">All Events</button>
+      <button class="tab" data-filter="upcoming">Upcoming Events</button>
+      <button class="tab" data-filter="my">My Events</button>
+    </div>
+
+    <h2 id="sectionHeading">All Events</h2>
+    <div class="grid" id="eventGrid"></div>
+    <p class="empty" id="emptyState" hidden>No upcoming events scheduled right now. Check back soon!</p>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 University Alumni Network. All rights reserved.</p>
+    <p>CS12012 &mdash; Web Development Group Assignment</p>
+  </footer>
+
+  <script src="event.js"></script>
+</body>
+</html>
