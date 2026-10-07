@@ -24,10 +24,7 @@ $isOwner = ($currentUserId && $viewUserId == $currentUserId);
 
 // Handle Profile Updates (Owner only)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isOwner) {
-    if (!verify_csrf_token()) {
-        $errorMsg = "Security token expired. Please try again.";
-    } else {
-        $action = $_POST['action'] ?? '';
+    $action = $_POST['action'] ?? '';
 
         // 1. Photo Upload Action
         if ($action === 'upload_photo') {
@@ -143,7 +140,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isOwner) {
                 }
             }
         }
-    }
 }
 
 // Fetch Profile Data

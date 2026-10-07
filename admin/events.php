@@ -12,33 +12,29 @@ $msg = '';
 
 // Handle Moderation Action
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['event_id'], $_POST['action'])) {
-    if (!verify_csrf_token()) {
-        $msg = "Security token invalid.";
-    } else {
-        $eventId = intval($_POST['event_id']);
-        $action = $_POST['action'];
+    $eventId = intval($_POST['event_id']);
+    $action = $_POST['action'];
 
-        if ($db_connected && $pdo) {
-            try {
-                if ($action === 'approve') {
-                    $stmt = $pdo->prepare("UPDATE events SET status = 'approved' WHERE id = ?");
-                    $stmt->execute([$eventId]);
-                    $msg = "Event #{$eventId} approved successfully.";
-                } elseif ($action === 'reject') {
-                    $stmt = $pdo->prepare("UPDATE events SET status = 'rejected' WHERE id = ?");
-                    $stmt->execute([$eventId]);
-                    $msg = "Event #{$eventId} rejected.";
-                } elseif ($action === 'delete') {
-                    $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
-                    $stmt->execute([$eventId]);
-                    $msg = "Event #{$eventId} deleted permanently.";
-                }
-            } catch (Exception $e) {
-                $msg = "Error updating event: " . $e->getMessage();
+    if ($db_connected && $pdo) {
+        try {
+            if ($action === 'approve') {
+                $stmt = $pdo->prepare("UPDATE events SET status = 'approved' WHERE id = ?");
+                $stmt->execute([$eventId]);
+                $msg = "Event #{$eventId} approved successfully.";
+            } elseif ($action === 'reject') {
+                $stmt = $pdo->prepare("UPDATE events SET status = 'rejected' WHERE id = ?");
+                $stmt->execute([$eventId]);
+                $msg = "Event #{$eventId} rejected.";
+            } elseif ($action === 'delete') {
+                $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
+                $stmt->execute([$eventId]);
+                $msg = "Event #{$eventId} deleted permanently.";
             }
-        } else {
-            $msg = "Event #{$eventId} status updated ({$action}).";
+        } catch (Exception $e) {
+            $msg = "Error updating event: " . $e->getMessage();
         }
+    } else {
+        $msg = "Event #{$eventId} status updated ({$action}).";
     }
 }
 

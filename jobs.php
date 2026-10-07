@@ -17,9 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if (!$isLoggedIn) {
         $message = "Please log in to submit a job application.";
         $messageType = "danger";
-    } elseif (!verify_csrf_token()) {
-        $message = "Security token invalid. Please try again.";
-        $messageType = "danger";
     } else {
         $jobId = intval($_POST['job_id'] ?? 0);
         $coverMessage = trim($_POST['application_message'] ?? '');
@@ -55,9 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'post_job') {
     if (!$isLoggedIn) {
         $message = "Please log in to post a career opportunity.";
-        $messageType = "danger";
-    } elseif (!verify_csrf_token()) {
-        $message = "Security token invalid. Please try again.";
         $messageType = "danger";
     } else {
         $title = trim($_POST['title'] ?? '');

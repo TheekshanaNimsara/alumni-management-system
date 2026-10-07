@@ -12,33 +12,29 @@ $msg = '';
 
 // Handle Moderation Action
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['job_id'], $_POST['action'])) {
-    if (!verify_csrf_token()) {
-        $msg = "Security token invalid.";
-    } else {
-        $jobId = intval($_POST['job_id']);
-        $action = $_POST['action'];
+    $jobId = intval($_POST['job_id']);
+    $action = $_POST['action'];
 
-        if ($db_connected && $pdo) {
-            try {
-                if ($action === 'approve') {
-                    $stmt = $pdo->prepare("UPDATE jobs SET status = 'approved' WHERE id = ?");
-                    $stmt->execute([$jobId]);
-                    $msg = "Job vacancy #{$jobId} approved.";
-                } elseif ($action === 'reject') {
-                    $stmt = $pdo->prepare("UPDATE jobs SET status = 'rejected' WHERE id = ?");
-                    $stmt->execute([$jobId]);
-                    $msg = "Job vacancy #{$jobId} marked as rejected.";
-                } elseif ($action === 'delete') {
-                    $stmt = $pdo->prepare("DELETE FROM jobs WHERE id = ?");
-                    $stmt->execute([$jobId]);
-                    $msg = "Job vacancy #{$jobId} deleted permanently.";
-                }
-            } catch (Exception $e) {
-                $msg = "Error updating job: " . $e->getMessage();
+    if ($db_connected && $pdo) {
+        try {
+            if ($action === 'approve') {
+                $stmt = $pdo->prepare("UPDATE jobs SET status = 'approved' WHERE id = ?");
+                $stmt->execute([$jobId]);
+                $msg = "Job vacancy #{$jobId} approved.";
+            } elseif ($action === 'reject') {
+                $stmt = $pdo->prepare("UPDATE jobs SET status = 'rejected' WHERE id = ?");
+                $stmt->execute([$jobId]);
+                $msg = "Job vacancy #{$jobId} marked as rejected.";
+            } elseif ($action === 'delete') {
+                $stmt = $pdo->prepare("DELETE FROM jobs WHERE id = ?");
+                $stmt->execute([$jobId]);
+                $msg = "Job vacancy #{$jobId} deleted permanently.";
             }
-        } else {
-            $msg = "Job vacancy #{$jobId} status updated ({$action}).";
+        } catch (Exception $e) {
+            $msg = "Error updating job: " . $e->getMessage();
         }
+    } else {
+        $msg = "Job vacancy #{$jobId} status updated ({$action}).";
     }
 }
 

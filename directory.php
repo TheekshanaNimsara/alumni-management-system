@@ -12,24 +12,20 @@ $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $yearFilter = isset($_GET['year']) ? trim($_GET['year']) : '';
 $degreeFilter = isset($_GET['degree']) ? trim($_GET['degree']) : '';
 $deptFilter = isset($_GET['department']) ? trim($_GET['department']) : '';
+$page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$perPage = 6;
+$totalCount = 0;
+$totalPages = 1;
 
 $alumniList = [];
 
 if ($db_connected && $pdo) {
     try {
-        $sql = "
-            SELECT u.id, u.username, u.first_name, u.last_name, u.email,
-                   p.graduation_year, p.degree_programme, p.department,
-                   p.current_job_title, p.current_company, p.location,
-                   p.linkedin_url, p.bio, p.skills, p.profile_picture
-            FROM users u
-            JOIN alumni_profiles p ON u.id = p.user_id
-            WHERE u.status = 'active' AND p.is_public = 1
-        ";
+        $whereSql = " WHERE u.status = 'active' AND p.is_public = 1";
         $params = [];
 
         if ($search !== '') {
-            $sql .= " AND (u.first_name LIKE :s1 OR u.last_name LIKE :s2 OR u.username LIKE :s3 OR p.current_company LIKE :s4 OR p.current_job_title LIKE :s5 OR p.skills LIKE :s6)";
+            $whereSql .= " AND (u.first_name LIKE :s1 OR u.last_name LIKE :s2 OR u.username LIKE :s3 OR p.current_company LIKE :s4 OR p.current_job_title LIKE :s5 OR p.skills LIKE :s6)";
             $params[':s1'] = "%{$search}%";
             $params[':s2'] = "%{$search}%";
             $params[':s3'] = "%{$search}%";
@@ -39,21 +35,39 @@ if ($db_connected && $pdo) {
         }
 
         if ($yearFilter !== '') {
-            $sql .= " AND p.graduation_year = :year";
+            $whereSql .= " AND p.graduation_year = :year";
             $params[':year'] = $yearFilter;
         }
 
         if ($degreeFilter !== '') {
-            $sql .= " AND p.degree_programme LIKE :degree";
+            $whereSql .= " AND p.degree_programme LIKE :degree";
             $params[':degree'] = "%{$degreeFilter}%";
         }
 
         if ($deptFilter !== '') {
-            $sql .= " AND p.department LIKE :dept";
+            $whereSql .= " AND p.department LIKE :dept";
             $params[':dept'] = "%{$deptFilter}%";
         }
 
-        $sql .= " ORDER BY p.graduation_year DESC, u.first_name ASC";
+        // Count total matching profiles
+        $countStmt = $pdo->prepare("SELECT COUNT(*) FROM users u JOIN alumni_profiles p ON u.id = p.user_id" . $whereSql);
+        $countStmt->execute($params);
+        $totalCount = (int)$countStmt->fetchColumn();
+        $totalPages = max(1, (int)ceil($totalCount / $perPage));
+        if ($page > $totalPages) $page = $totalPages;
+        $offset = ($page - 1) * $perPage;
+
+        // Fetch paginated results
+        $sql = "
+            SELECT u.id, u.username, u.first_name, u.last_name, u.email,
+                   p.graduation_year, p.degree_programme, p.department,
+                   p.current_job_title, p.current_company, p.location,
+                   p.linkedin_url, p.bio, p.skills, p.profile_picture
+            FROM users u
+            JOIN alumni_profiles p ON u.id = p.user_id
+            {$whereSql}
+            ORDER BY p.graduation_year DESC, u.first_name ASC
+            LIMIT " . intval($perPage) . " OFFSET " . intval($offset);
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
@@ -245,6 +259,34 @@ if ($db_connected && $pdo) {
             </div>
         <?php endif; ?>
     </div>
+
+    <!-- Pagination Controls -->
+    <?php if ($totalPages > 1): ?>
+        <?php 
+            $queryParams = $_GET; 
+            function get_page_url($p, $queryParams) {
+                $queryParams['page'] = $p;
+                return 'directory.php?' . http_build_query($queryParams);
+            }
+        ?>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 3rem; flex-wrap: wrap;">
+            <?php if ($page > 1): ?>
+                <a href="<?php echo htmlspecialchars(get_page_url($page - 1, $queryParams)); ?>" class="btn btn-outline-light btn-sm" style="color: var(--text-color); border-color: var(--border-color);">&larr; Previous</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="<?php echo htmlspecialchars(get_page_url($i, $queryParams)); ?>" 
+                   class="btn btn-sm <?php echo ($i === $page) ? 'btn-gold' : 'btn-outline-light'; ?>" 
+                   style="<?php echo ($i === $page) ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+                    <?php echo $i; ?>
+                </a>
+            <?php endfor; ?>
+
+            <?php if ($page < $totalPages): ?>
+                <a href="<?php echo htmlspecialchars(get_page_url($page + 1, $queryParams)); ?>" class="btn btn-outline-light btn-sm" style="color: var(--text-color); border-color: var(--border-color);">Next &rarr;</a>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
 
 </div>
 

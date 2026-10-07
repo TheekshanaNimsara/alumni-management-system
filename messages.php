@@ -46,11 +46,8 @@ if ($targetUserId > 0 && $targetUserId !== $currentUserId && $db_connected && $p
 
 // Handle sending a new message
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'send_message') {
-    if (!verify_csrf_token()) {
-        $error = "Security token invalid. Please try again.";
-    } else {
-        $convId = intval($_POST['conversation_id'] ?? 0);
-        $messageText = trim($_POST['message'] ?? '');
+    $convId = intval($_POST['conversation_id'] ?? 0);
+    $messageText = trim($_POST['message'] ?? '');
 
         if ($convId > 0 && !empty($messageText) && $db_connected && $pdo) {
             try {
@@ -83,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         } else {
             $error = "Please enter a message.";
         }
-    }
 }
 
 // Fetch conversation list for current user

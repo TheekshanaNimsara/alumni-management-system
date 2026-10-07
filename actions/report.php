@@ -7,10 +7,6 @@ require_once __DIR__ . '/../config/db.php';
 require_login();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verify_csrf_token()) {
-        die("Security token validation failed.");
-    }
-
     $reporter_id = current_user_id();
     $reported_user_id = !empty($_POST['reported_user_id']) ? intval($_POST['reported_user_id']) : null;
     $event_id = !empty($_POST['event_id']) ? intval($_POST['event_id']) : null;

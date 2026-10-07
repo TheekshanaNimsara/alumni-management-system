@@ -17,9 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if (!$isLoggedIn) {
         $message = "Please log in to RSVP for events.";
         $messageType = "danger";
-    } elseif (!verify_csrf_token()) {
-        $message = "Security token invalid. Please try again.";
-        $messageType = "danger";
     } else {
         $eventId = intval($_POST['event_id'] ?? 0);
         if ($eventId > 0 && $db_connected && $pdo) {
@@ -86,9 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_event') {
     if (!$isLoggedIn) {
         $message = "Please log in to propose an event.";
-        $messageType = "danger";
-    } elseif (!verify_csrf_token()) {
-        $message = "Security token invalid. Please try again.";
         $messageType = "danger";
     } else {
         $title = trim($_POST['title'] ?? '');

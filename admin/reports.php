@@ -15,12 +15,8 @@ $messageType = '';
 
 // Handle Moderation Actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verify_csrf_token()) {
-        $message = "Security token invalid.";
-        $messageType = "danger";
-    } else {
-        $action = $_POST['action'] ?? '';
-        $reportId = intval($_POST['report_id'] ?? 0);
+    $action = $_POST['action'] ?? '';
+    $reportId = intval($_POST['report_id'] ?? 0);
 
         if ($reportId > 0 && $db_connected && $pdo) {
             try {
@@ -51,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $messageType = "danger";
             }
         }
-    }
 }
 
 // Filter

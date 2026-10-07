@@ -11,9 +11,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $identity = trim($_POST['login_identity'] ?? $_POST['email'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
-    if (!verify_csrf_token()) {
-        $error = "Security token expired or invalid. Please try again.";
-    } elseif (empty($identity) || empty($password)) {
+    if (empty($identity) || empty($password)) {
         $error = "Please enter both your email address/username and password.";
     } else {
         if ($db_connected && $pdo) {

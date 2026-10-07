@@ -15,13 +15,9 @@ $msgType = 'success';
 
 // Handle State-Changing POST Actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verify_csrf_token()) {
-        $msg = "Security token invalid.";
-        $msgType = 'danger';
-    } else {
-        $action = $_POST['action'] ?? '';
-        $targetUserId = intval($_POST['user_id'] ?? 0);
-        $currentAdminId = current_user_id();
+    $action = $_POST['action'] ?? '';
+    $targetUserId = intval($_POST['user_id'] ?? 0);
+    $currentAdminId = current_user_id();
 
         if ($targetUserId > 0 && $db_connected && $pdo) {
             try {
@@ -59,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $msgType = 'danger';
             }
         }
-    }
 }
 
 // Search & Filter parameters

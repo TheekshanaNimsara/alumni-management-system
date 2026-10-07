@@ -19,9 +19,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $department = trim($_POST['department'] ?? '');
 
     // Server-side validation
-    if (!verify_csrf_token()) {
-        $error = "Security token expired or invalid. Please try again.";
-    } elseif (empty($first_name) || empty($last_name) || empty($username) || empty($email) || empty($password) || empty($degree) || empty($department) || empty($grad_year)) {
+    if (empty($first_name) || empty($last_name) || empty($username) || empty($email) || empty($password) || empty($degree) || empty($department) || empty($grad_year)) {
         $error = "All fields are required. Please complete the form.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Please provide a valid email address.";

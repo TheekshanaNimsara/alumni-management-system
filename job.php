@@ -1,56 +1,15 @@
 <?php
-/**
- * Unified Jobs backend.
- *
- * Supported actions (via $_GET['action'] or $_POST['action']):
- *   get     – Returns all jobs as JSON.
- *   create  – Inserts a new job (status = pending by default).
- *               jobTitle, companyName, location, jobType, description, contactEmail
- *             (also accepts generic: title, company, type for AJAX callers)
- *   approve – Approves a job by id (POST field: id). Returns JSON.
- *   delete  – Deletes a job by id (POST field: id). Returns JSON.
- *   setup   – Creates the DB / table (returns plain text).
- *
- * create redirects to jobs.html on success when called as a regular form POST.
- * When called via XMLHttpRequest / fetch (X-Requested-With header) it returns JSON.
- */
+// Route browser visitors to main portal
+if (empty($_GET['action']) && empty($_POST['action']) && empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+    header("Location: jobs.php");
+    exit;
+}
 
-$DB_HOST = 'localhost';
-$DB_NAME = 'alumni_jobs';
-$DB_USER = 'root';
-$DB_PASS = '';
-
-// ── DB Connection ──────────────────────────────────────────────────────────
-try {
-    $pdo = new PDO("mysql:host=$DB_HOST;charset=utf8mb4", $DB_USER, $DB_PASS, [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
-
-    $pdo->exec("CREATE DATABASE IF NOT EXISTS `$DB_NAME`");
-    $pdo->exec("USE `$DB_NAME`");
-
-    $pdo->exec("
-        CREATE TABLE IF NOT EXISTS jobs (
-            id            INT AUTO_INCREMENT PRIMARY KEY,
-            title         VARCHAR(150) NOT NULL,
-            company       VARCHAR(150) NOT NULL,
-            location      VARCHAR(150),
-            type          VARCHAR(50)  NOT NULL,
-            description   TEXT,
-            contact_email VARCHAR(200),
-            status        VARCHAR(20)  NOT NULL DEFAULT 'pending',
-            posted_at     DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-    ");
+require_once __DIR__ . '/config/db.php';
     // Migrate older schemas
     try { $pdo->exec("ALTER TABLE jobs ADD COLUMN contact_email VARCHAR(200) AFTER description"); } catch (PDOException $e) {}
     try { $pdo->exec("ALTER TABLE jobs ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'pending' AFTER contact_email"); } catch (PDOException $e) {}
-} catch (PDOException $e) {
-    http_response_code(500);
-    header('Content-Type: application/json');
-    die(json_encode(['success' => false, 'error' => 'DB connection failed: ' . $e->getMessage()]));
-}
+
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 function isAjax(): bool {
