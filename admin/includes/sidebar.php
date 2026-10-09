@@ -35,6 +35,17 @@ $baseUrl = get_base_url();
             </a>
         </li>
         <li class="admin-nav-item">
+            <?php $pendingRepCount = ($db_connected && $pdo) ? get_pending_reports_count($pdo) : 0; ?>
+            <a href="<?php echo $baseUrl; ?>admin/reports.php" class="admin-nav-link <?php echo ($currentAdminPage === 'reports') ? 'active' : ''; ?>">
+                <span>&#9873;</span> Reports
+                <?php if ($pendingRepCount > 0): ?>
+                    <span class="badge" style="background: var(--accent-color); color: var(--primary-color); font-size: 0.72rem; padding: 0.15rem 0.45rem; border-radius: 10px; margin-left: auto;">
+                        <?php echo $pendingRepCount; ?>
+                    </span>
+                <?php endif; ?>
+            </a>
+        </li>
+        <li class="admin-nav-item">
             <a href="<?php echo $baseUrl; ?>admin/settings.php" class="admin-nav-link <?php echo ($currentAdminPage === 'settings') ? 'active' : ''; ?>">
                 <span>&#9881;</span> Settings
             </a>

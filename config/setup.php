@@ -10,8 +10,22 @@ $db_user = 'root';
 $db_pass = '';
 $db_name = 'alumni_network';
 
+require_once __DIR__ . '/db.php';
+
 $messages = [];
 $success = false;
+
+// Security Guard: Prevent unauthenticated database resets
+if (php_sapi_name() !== 'cli' && $db_connected && $pdo) {
+    try {
+        $userCount = (int)$pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
+        if ($userCount > 0 && !is_admin()) {
+            require_admin();
+        }
+    } catch (Exception $e) {
+        // Allow initial setup if tables do not exist yet
+    }
+}
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' || php_sapi_name() === 'cli') {
     try {

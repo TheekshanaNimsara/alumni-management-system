@@ -105,17 +105,54 @@ CREATE TABLE IF NOT EXISTS job_applications (
 ) ENGINE=InnoDB;
 
 -- ------------------------------------------------------------
--- 7. Direct Messages
+-- 7. Conversations Table (1-to-1 Private Messaging)
+-- ------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS conversations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_one_id INT NOT NULL,
+    user_two_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_participants (user_one_id, user_two_id),
+    FOREIGN KEY (user_one_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_two_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- ------------------------------------------------------------
+-- 8. Direct Messages Table
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    conversation_id INT NULL,
     sender_id INT NOT NULL,
     receiver_id INT NOT NULL,
     message TEXT NOT NULL,
     is_read TINYINT(1) NOT NULL DEFAULT 0,
     sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX (conversation_id),
     FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- ------------------------------------------------------------
+-- 9. Content & User Moderation Reports
+-- ------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS reports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    reporter_id INT NOT NULL,
+    reported_user_id INT NULL,
+    event_id INT NULL,
+    job_id INT NULL,
+    message_id INT NULL,
+    reason VARCHAR(150) NOT NULL,
+    description TEXT NULL,
+    status ENUM('pending', 'reviewed', 'resolved', 'dismissed') NOT NULL DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (reporter_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (reported_user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
+    FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE,
+    FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- ============================================================
@@ -158,3 +195,18 @@ INSERT INTO jobs (id, title, company, description, location, job_type, applicati
 (4, 'DevOps & Platform Intern', 'Sysco LABS', 'Exciting 6-month internship on continuous deployment pipelines, Kubernetes cluster management, and infrastructure monitoring.', 'Colombo, Sri Lanka', 'Internship', 'https://syscolabs.com/careers', 4, 'approved'),
 (5, 'Junior Full Stack Developer', 'Octave Analytics', 'Join our advanced analytics team to build responsive dashboards, ETL interfaces, and predictive data tools.', 'Colombo, Sri Lanka', 'Full-Time', 'https://octave.lk/careers', 6, 'pending')
 ON DUPLICATE KEY UPDATE title=VALUES(title);
+
+INSERT INTO conversations (id, user_one_id, user_two_id) VALUES
+(1, 2, 3)
+ON DUPLICATE KEY UPDATE updated_at=NOW();
+
+INSERT INTO messages (id, conversation_id, sender_id, receiver_id, message, is_read, sent_at) VALUES
+(1, 1, 3, 2, 'Hi John! Welcome back to the KDU Alumni network.', 1, DATE_SUB(NOW(), INTERVAL 2 HOUR)),
+(2, 1, 2, 3, 'Hi Sarah! Great to connect. Are you attending the Global Tech & AI Summit?', 1, DATE_SUB(NOW(), INTERVAL 1 HOUR)),
+(3, 1, 3, 2, 'Yes, I will be speaking on generative intelligence! Hope to see you there.', 0, DATE_SUB(NOW(), INTERVAL 10 MINUTE))
+ON DUPLICATE KEY UPDATE message=VALUES(message);
+
+INSERT INTO reports (id, reporter_id, reported_user_id, reason, description, status) VALUES
+(1, 2, 7, 'Suspicious / Inactive Profile Information', 'Please verify profile details.', 'pending')
+ON DUPLICATE KEY UPDATE reason=VALUES(reason);
+

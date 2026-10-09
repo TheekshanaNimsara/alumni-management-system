@@ -1,52 +1,11 @@
 <?php
-$DB_HOST = 'localhost';
-$DB_NAME = 'alumni_events';
-$DB_USER = 'root';
-$DB_PASS = '';
-
-try {
-    // 1. Connect to MySQL server and ensure database exists
-    $pdo = new PDO("mysql:host=$DB_HOST;charset=utf8mb4", $DB_USER, $DB_PASS, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-    ]);
-    $pdo->exec("CREATE DATABASE IF NOT EXISTS `alumni_events`");
-    $pdo->exec("USE `alumni_events`");
-
-    // 2. Ensure events table exists
-    $pdo->exec("
-        CREATE TABLE IF NOT EXISTS events (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            title VARCHAR(255) NOT NULL,
-            event_date DATE NOT NULL,
-            start_time TIME NOT NULL,
-            end_time TIME NOT NULL,
-            location VARCHAR(255) NOT NULL,
-            reg_date DATE NOT NULL,
-            status VARCHAR(20) NOT NULL DEFAULT 'pending',
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    ");
-
-    // Ensure status column exists if table existed previously
-    $stmt = $pdo->query("SHOW COLUMNS FROM events LIKE 'status'");
-    if (!$stmt->fetch()) {
-        $pdo->exec("ALTER TABLE events ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'pending'");
-        $pdo->exec("UPDATE events SET status = 'approved'");
-    }
-
-    // Seed sample data if empty
-    $count = $pdo->query("SELECT COUNT(*) FROM events")->fetchColumn();
-    if ($count == 0) {
-        $pdo->exec("
-            INSERT INTO events (title, event_date, start_time, end_time, location, reg_date, status) VALUES
-            ('Annual Alumni Tech & Innovation Symposium 2026', '2026-11-15', '10:00:00', '16:00:00', 'Main Campus Auditorium', '2026-11-10', 'approved'),
-            ('Career Mentorship & Leadership Workshop', '2026-10-25', '14:00:00', '17:00:00', 'Online (Zoom)', '2026-10-20', 'approved'),
-            ('Spring Alumni Gala & Networking Dinner', '2026-09-01', '18:00:00', '22:00:00', 'Grand Ballroom, City Hotel', '2026-08-25', 'approved')
-        ");
-    }
-} catch (PDOException $e) {
-    die('Database connection failed: ' . $e->getMessage());
+// Route browser visitors to main portal
+if (empty($_GET['action']) && empty($_POST['action']) && empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+    header("Location: events.php");
+    exit;
 }
+
+require_once __DIR__ . '/config/db.php';
 
 $action = $_GET['action'] ?? $_POST['action'] ?? 'get';
 
