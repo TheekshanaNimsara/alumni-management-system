@@ -24,21 +24,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }, delay);
         };
 
-        if (prefersReducedMotion) {
-            // Bypass animation immediately for reduced motion preference
+        if (prefersReducedMotion || hasLoadedBefore) {
+            // Bypass animation immediately for reduced motion preference or subsequent page navigation
             dismissLoader(0);
         } else {
-            // Ultra-snappy, cinematic loader runs briskly (~450ms + smooth 0.25s fade)
-            dismissLoader(450);
+            // Ultra-snappy loader runs in a brief 120ms pulse then fades out
+            sessionStorage.setItem('kdu_cinematic_loader_shown', 'true');
+            dismissLoader(120);
         }
 
-        // Safety fallback: guaranteed dismissal within 900ms regardless of assets
+        // Safety fallback: guaranteed dismissal within 250ms regardless of assets
         setTimeout(() => {
             if (!loader.classList.contains('loader-hidden')) {
                 loader.classList.add('loader-hidden');
                 loader.style.pointerEvents = 'none';
             }
-        }, 900);
+        }, 250);
 
         // Handle browser back/forward cache (bfcache) restoration
         window.addEventListener('pageshow', (event) => {
