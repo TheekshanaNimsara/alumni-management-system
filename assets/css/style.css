@@ -57,8 +57,8 @@
 
     /* UI Measurements & Shadows */
     --border-radius: 8px;
-    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
-    --card-hover-shadow: 0 18px 42px rgba(0, 0, 0, 0.75), 0 0 20px rgba(212, 175, 55, 0.18);
+    --card-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+    --card-hover-shadow: 0 22px 48px rgba(0, 0, 0, 0.8), 0 0 24px rgba(212, 175, 55, 0.18);
     --gold-glow: 0 0 20px rgba(212, 175, 55, 0.35);
 }
 
@@ -170,16 +170,20 @@ textarea:focus-visible {
 }
 
 /* ------------------------------------------------------------
-   4. CINEMATIC SECTION SYSTEM
+   4. CINEMATIC SECTION SYSTEM & ATMOSPHERIC TRANSITIONS
    ------------------------------------------------------------ */
 .section {
-    padding: 5.5rem 0;
+    padding: 6rem 0;
     position: relative;
+    overflow: hidden;
 }
 
+/* Atmospheric Section Transitions */
 .section-dark {
-    background: linear-gradient(180deg, #120305 0%, #1c0609 50%, #120305 100%);
+    background: radial-gradient(ellipse at 50% 12%, rgba(58, 14, 20, 0.48) 0%, rgba(18, 3, 5, 0.96) 65%, #120305 100%);
     color: var(--text-light);
+    border-top: 1px solid rgba(74, 17, 22, 0.4);
+    border-bottom: 1px solid rgba(74, 17, 22, 0.4);
 }
 
 .section-dark p {
@@ -188,42 +192,73 @@ textarea:focus-visible {
 
 .section-light,
 .section-white {
-    background: linear-gradient(180deg, #180407 0%, #200609 50%, #180407 100%);
+    background: radial-gradient(ellipse at 50% 18%, rgba(48, 16, 21, 0.52) 0%, rgba(26, 6, 9, 0.98) 65%, #140305 100%);
     color: var(--text-color);
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
+    border-top: 1px solid rgba(74, 17, 22, 0.5);
+    border-bottom: 1px solid rgba(74, 17, 22, 0.5);
 }
 
-/* Section Header Typography */
+/* Distinct Section Identities */
+.section-events {
+    background: radial-gradient(ellipse at 50% 15%, rgba(70, 16, 23, 0.55) 0%, rgba(18, 3, 5, 0.98) 65%, #100204 100%);
+}
+
+.section-alumni {
+    background: radial-gradient(ellipse at 50% 20%, rgba(56, 17, 24, 0.58) 0%, rgba(24, 5, 8, 0.98) 65%, #120305 100%);
+}
+
+.section-jobs {
+    background: radial-gradient(ellipse at 50% 15%, rgba(64, 16, 22, 0.52) 0%, rgba(20, 4, 7, 0.98) 65%, #120305 100%);
+}
+
+/* Section Header Typography & Soft Gold Spotlight */
 .section-header {
     text-align: center;
-    margin-bottom: 3.5rem;
+    margin-bottom: 3.8rem;
+    position: relative;
+    z-index: 2;
+}
+
+.section-header::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 380px;
+    height: 140px;
+    background: radial-gradient(ellipse, rgba(212, 175, 55, 0.14) 0%, rgba(74, 17, 22, 0.08) 50%, transparent 75%);
+    pointer-events: none;
+    z-index: -1;
+    filter: blur(8px);
 }
 
 .section-eyebrow {
     color: var(--accent-color);
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     font-weight: 700;
-    letter-spacing: 2.5px;
+    letter-spacing: 2.8px;
     text-transform: uppercase;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.75rem;
     display: inline-block;
 }
 
 .section-title {
-    font-size: 2.4rem;
+    font-size: 2.5rem;
     font-weight: 800;
     letter-spacing: -0.5px;
     line-height: 1.25;
     color: var(--text-light);
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
 }
 
 .gold-divider {
-    width: 60px;
+    width: 64px;
     height: 3px;
     background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
     margin: 1.2rem auto;
     border-radius: 2px;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
 }
 
 .gold-divider-left {
@@ -654,7 +689,7 @@ textarea:focus-visible {
 }
 
 .btn-sm {
-    padding: 0.45rem 1rem;
+    padding: 0.48rem 1.1rem;
     font-size: 0.85rem;
 }
 
@@ -674,34 +709,34 @@ textarea:focus-visible {
    8. CARD SYSTEM (ELEVATED SURFACES)
    ------------------------------------------------------------ */
 .card {
-    background-color: var(--surface-elevated);
+    background: linear-gradient(165deg, #28080D 0%, #1E0508 55%, #140305 100%);
     color: var(--text-color);
     border-radius: var(--border-radius);
     border: 1px solid var(--border-gold);
     box-shadow: var(--card-shadow);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                box-shadow 0.3s ease, 
-                border-color 0.25s ease;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.35s ease, 
+                border-color 0.3s ease;
     overflow: hidden;
     position: relative;
 }
 
 .card:hover {
-    transform: translateY(-6px);
-    border-color: var(--accent-color);
+    transform: translateY(-7px);
+    border-color: rgba(212, 175, 55, 0.55);
     box-shadow: var(--card-hover-shadow);
 }
 
 /* Dark Card Accent */
 .card-dark {
-    background: linear-gradient(145deg, #180407 0%, #28080D 60%, #360E14 100%);
+    background: linear-gradient(165deg, #24070A 0%, #1A0508 50%, #120305 100%);
     color: var(--text-light);
     border: 1px solid var(--border-gold);
 }
 
 .card-dark:hover {
-    transform: translateY(-6px);
-    border-color: var(--accent-color);
+    transform: translateY(-7px);
+    border-color: rgba(212, 175, 55, 0.55);
     box-shadow: var(--card-hover-shadow);
 }
 
@@ -712,7 +747,7 @@ textarea:focus-visible {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
-    margin-top: 3rem;
+    margin-top: 3.2rem;
 }
 
 @media (max-width: 900px) {
@@ -728,31 +763,33 @@ textarea:focus-visible {
 }
 
 .stat-item {
-    padding: 2.2rem 1.5rem;
-    background: rgba(48, 16, 21, 0.6);
+    padding: 2.4rem 1.6rem;
+    background: linear-gradient(145deg, rgba(48, 16, 21, 0.75), rgba(24, 6, 9, 0.85));
     border-radius: var(--border-radius);
     border: 1px solid var(--border-gold);
     backdrop-filter: blur(8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .stat-item:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
     border-color: var(--accent-color);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.15);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.65), 0 0 18px rgba(212, 175, 55, 0.18);
 }
 
 .stat-number {
-    font-size: 2.8rem;
+    font-size: 2.9rem;
     font-weight: 900;
     color: var(--accent-color);
     line-height: 1;
     margin-bottom: 0.5rem;
     letter-spacing: -1px;
+    text-shadow: 0 2px 15px rgba(212, 175, 55, 0.25);
 }
 
 .stat-label {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -760,29 +797,62 @@ textarea:focus-visible {
 }
 
 /* ------------------------------------------------------------
-   10. ALUMNI PROFILE CARDS
+   10. ALUMNI DIRECTORY (PROFILE CARDS & AVATAR HALOS)
    ------------------------------------------------------------ */
 .alumni-card {
     display: flex;
     flex-direction: column;
     text-align: center;
-    padding: 2.2rem 1.8rem;
-    background-color: var(--surface-elevated);
-    border: 1px solid var(--border-gold);
+    padding: 2.5rem 2rem 2.2rem;
+    background: linear-gradient(165deg, #28080D 0%, #1E0508 55%, #140305 100%);
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    border-radius: var(--border-radius);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(241, 215, 122, 0.08);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s ease,
+                border-color 0.3s ease;
+    height: 100%;
+    position: relative;
+}
+
+.alumni-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(212, 175, 55, 0.55);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.8), 0 0 24px rgba(212, 175, 55, 0.16);
 }
 
 .alumni-avatar-wrapper {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 1.5rem;
+    width: 104px;
+    height: 104px;
+    margin: 0 auto 1.4rem;
     border-radius: 50%;
-    padding: 4px;
+    padding: 3px;
     background: linear-gradient(135deg, var(--accent-color), #4A1116);
-    transition: transform 0.35s ease;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.22);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    position: relative;
+}
+
+/* Ambient Gold Halo */
+.alumni-avatar-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.28) 0%, transparent 70%);
+    opacity: 0.6;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
 }
 
 .alumni-card:hover .alumni-avatar-wrapper {
     transform: scale(1.06);
+    box-shadow: 0 0 28px rgba(212, 175, 55, 0.42);
+}
+
+.alumni-card:hover .alumni-avatar-wrapper::before {
+    opacity: 1;
+    transform: scale(1.15);
 }
 
 .alumni-avatar {
@@ -795,164 +865,228 @@ textarea:focus-visible {
 
 .alumni-name {
     color: var(--text-light);
-    font-size: 1.35rem;
-    font-weight: 700;
+    font-size: 1.4rem;
+    font-weight: 800;
     margin-bottom: 0.25rem;
 }
 
 .alumni-degree {
     color: var(--text-muted);
     font-size: 0.88rem;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.6rem;
 }
 
 .alumni-role {
     color: var(--accent-light);
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.02rem;
+    margin-bottom: 0.2rem;
 }
 
 .alumni-company {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    margin-bottom: 1.2rem;
+    color: var(--text-muted-light);
+    font-size: 0.92rem;
+    margin-bottom: 0.85rem;
 }
 
 .alumni-badge-grad {
     display: inline-block;
-    padding: 0.25rem 0.8rem;
-    background: rgba(212, 175, 55, 0.12);
+    align-self: center;
+    padding: 0.28rem 0.9rem;
+    background: rgba(74, 17, 22, 0.6);
     color: var(--accent-light);
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    border: 1px solid rgba(212, 175, 55, 0.32);
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+}
+
+.alumni-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 1.6rem;
+    flex-grow: 1;
+}
+
+.alumni-card .btn {
     margin-top: auto;
 }
 
 /* ------------------------------------------------------------
-   11. EVENTS SECTION & CARDS
+   11. UPCOMING GATHERINGS (EVENTS SECTION & CARDS)
    ------------------------------------------------------------ */
 .event-card {
+    background: linear-gradient(165deg, #24070A 0%, #1A0508 50%, #120305 100%);
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    border-radius: var(--border-radius);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(241, 215, 122, 0.1);
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s ease,
+                border-color 0.3s ease;
+    position: relative;
+    height: 100%;
+}
+
+.event-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(212, 175, 55, 0.55);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.8), 0 0 24px rgba(212, 175, 55, 0.16);
 }
 
 .event-image-box {
     position: relative;
-    height: 180px;
+    height: 195px;
     overflow: hidden;
-    background: #180407;
+    background: linear-gradient(135deg, #301015, #140305);
+}
+
+.event-image-box::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(18, 3, 5, 0.1) 0%, rgba(18, 3, 5, 0.75) 75%, rgba(18, 3, 5, 0.95) 100%);
+    pointer-events: none;
 }
 
 .event-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .event-card:hover .event-image {
-    transform: scale(1.06);
+    transform: scale(1.05);
 }
 
 .event-date-badge {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: #0E0204;
+    top: 1.1rem;
+    right: 1.1rem;
+    background: rgba(14, 2, 4, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--accent-color);
-    color: var(--accent-color);
-    padding: 0.4rem 0.8rem;
+    color: var(--accent-light);
+    padding: 0.45rem 0.9rem;
     border-radius: 6px;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 800;
     letter-spacing: 1px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.75), 0 0 10px rgba(212, 175, 55, 0.2);
+    z-index: 2;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.event-card:hover .event-date-badge {
+    border-color: var(--accent-light);
 }
 
 .event-body {
-    padding: 1.8rem;
+    padding: 2rem 1.8rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
-.event-title {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--text-light);
-    margin-bottom: 0.8rem;
-    line-height: 1.3;
-}
-
 .event-meta {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
     color: var(--accent-light);
     font-size: 0.88rem;
     font-weight: 600;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.85rem;
+}
+
+.event-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-light);
+    margin-bottom: 0.85rem;
+    line-height: 1.3;
 }
 
 .event-desc {
     color: var(--text-muted);
     font-size: 0.92rem;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
     flex-grow: 1;
 }
 
+.event-body .btn {
+    margin-top: auto;
+}
+
 /* ------------------------------------------------------------
-   12. JOBS / CAREERS SECTION & CARDS
+   12. CAREER OPPORTUNITIES (EDITORIAL CARDS & GOLD ACCENTS)
    ------------------------------------------------------------ */
 .job-card {
-    padding: 2rem;
-    background-color: var(--surface-elevated);
-    border: 1px solid var(--border-gold);
+    padding: 2.2rem 2rem 2rem;
+    background: linear-gradient(165deg, #24070A 0%, #1A0508 55%, #120305 100%);
+    border: 1px solid rgba(212, 175, 55, 0.22);
     border-left: 4px solid var(--accent-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(241, 215, 122, 0.08);
     display: flex;
     flex-direction: column;
     height: 100%;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s ease,
+                border-color 0.3s ease;
+    position: relative;
+}
+
+.job-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(212, 175, 55, 0.55);
+    border-left-color: var(--accent-light);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.8), 0 0 24px rgba(212, 175, 55, 0.16);
 }
 
 .job-type-pill {
     align-self: flex-start;
-    background: rgba(212, 175, 55, 0.12);
+    background: rgba(212, 175, 55, 0.14);
     color: var(--accent-light);
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    border: 1px solid rgba(212, 175, 55, 0.35);
     font-size: 0.78rem;
     font-weight: 700;
-    padding: 0.25rem 0.75rem;
+    padding: 0.28rem 0.85rem;
     border-radius: 4px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 0.8rem;
+    letter-spacing: 0.8px;
+    margin-bottom: 0.95rem;
 }
 
 .job-title {
-    font-size: 1.3rem;
-    font-weight: 700;
+    font-size: 1.35rem;
+    font-weight: 800;
     color: var(--text-light);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.35rem;
+    line-height: 1.3;
 }
 
 .job-company {
-    font-weight: 600;
+    font-weight: 700;
     color: var(--accent-light);
-    font-size: 0.95rem;
-    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    margin-bottom: 0.45rem;
 }
 
 .job-location {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
     color: var(--text-muted);
     font-size: 0.88rem;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.1rem;
 }
 
 .job-desc {
@@ -961,6 +1095,10 @@ textarea:focus-visible {
     line-height: 1.6;
     margin-bottom: 1.8rem;
     flex-grow: 1;
+}
+
+.job-card .btn {
+    margin-top: auto;
 }
 
 /* ------------------------------------------------------------
@@ -980,7 +1118,7 @@ textarea:focus-visible {
 
 .form-control {
     width: 100%;
-    padding: 0.8rem 1rem;
+    padding: 0.85rem 1rem;
     font-size: 0.95rem;
     border: 1px solid var(--border-color);
     border-radius: 6px;
@@ -1376,17 +1514,52 @@ textarea:focus-visible {
 }
 
 /* ------------------------------------------------------------
-   17. SCROLL REVEAL (INTERSECTION OBSERVER)
+   17. STAGGERED SCROLL REVEAL & INTERSECTION OBSERVER
    ------------------------------------------------------------ */
 .reveal {
     opacity: 0;
     transform: translateY(28px);
-    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
-                transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: opacity, transform;
 }
 
 .reveal.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered Child Reveal */
+.reveal-stagger > :nth-child(1) {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.08s,
+                transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.08s;
+}
+
+.reveal-stagger > :nth-child(2) {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.22s,
+                transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.22s;
+}
+
+.reveal-stagger > :nth-child(3) {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.36s,
+                transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.36s;
+}
+
+.reveal-stagger > :nth-child(4) {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.50s,
+                transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.50s;
+}
+
+.reveal.show.reveal-stagger > *,
+.reveal.show .reveal-stagger > * {
     opacity: 1;
     transform: translateY(0);
 }
@@ -1589,19 +1762,19 @@ textarea:focus-visible {
 }
 
 /* ------------------------------------------------------------
-   21. FEATURE ONE: CINEMATIC LOADING SCREEN
+   21. FEATURE ONE: CINEMATIC LOADING SCREEN (COORDINATED 3-4s)
    ------------------------------------------------------------ */
 .cinematic-loader {
     position: fixed;
     inset: 0;
     z-index: 999999;
-    background: radial-gradient(ellipse at center, #24070A 0%, #120305 70%, #080102 100%);
+    background: radial-gradient(ellipse at 50% 45%, #24070A 0%, #120305 65%, #080102 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.55s ease;
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.7s ease;
     pointer-events: auto;
 }
 
@@ -1613,35 +1786,59 @@ textarea:focus-visible {
 
 .loader-content {
     text-align: center;
-    max-width: 440px;
-    padding: 2rem;
-    animation: loaderFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    max-width: 460px;
+    padding: 2.5rem;
+    position: relative;
+}
+
+/* Atmospheric Ambient Gold Glow developing behind wordmark */
+.loader-content::before {
+    content: '';
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 260px;
+    height: 150px;
+    background: radial-gradient(ellipse, rgba(212, 175, 55, 0.22) 0%, rgba(74, 17, 22, 0.15) 50%, transparent 75%);
+    pointer-events: none;
+    animation: loaderGlowPulse 2.8s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes loaderGlowPulse {
+    0%, 100% { opacity: 0.45; transform: translate(-50%, -50%) scale(0.92); }
+    50% { opacity: 0.95; transform: translate(-50%, -50%) scale(1.12); }
 }
 
 .loader-brand {
     display: inline-flex;
     align-items: center;
-    gap: 0.8rem;
-    margin-bottom: 1.8rem;
+    gap: 0.9rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    animation: loaderFadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
 }
 
 .loader-badge {
     background-color: var(--accent-color);
     color: #120305;
     font-weight: 900;
-    padding: 6px 12px;
+    padding: 7px 14px;
     border-radius: 6px;
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     letter-spacing: 1px;
-    box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.45);
 }
 
 .loader-title {
-    font-size: 1.45rem;
+    font-size: 1.55rem;
     font-weight: 800;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     color: #F8F4EA;
     text-transform: uppercase;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
 }
 
 .loader-gold {
@@ -1649,49 +1846,64 @@ textarea:focus-visible {
 }
 
 .loader-progress-track {
-    width: 220px;
+    width: 240px;
     height: 3px;
-    background: rgba(212, 175, 55, 0.18);
+    background: rgba(212, 175, 55, 0.16);
     border-radius: 3px;
-    margin: 0 auto 1.4rem;
+    margin: 0 auto 1.5rem;
     overflow: hidden;
     position: relative;
+    z-index: 1;
 }
 
 .loader-progress-bar {
-    width: 45%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, #D4AF37, #F1D77A, #D4AF37, transparent);
+    width: 0%;
+    background: linear-gradient(90deg, #A98218, #D4AF37, #F1D77A, #D4AF37);
     border-radius: 3px;
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
-    animation: loaderShimmer 1.4s ease-in-out infinite;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.85);
+    animation: loaderProgressExpand 1.4s cubic-bezier(0.25, 1, 0.5, 1) 1.2s forwards;
 }
 
-@keyframes loaderShimmer {
+@keyframes loaderProgressExpand {
     0% {
-        transform: translateX(-150%);
+        width: 0%;
     }
     100% {
-        transform: translateX(250%);
+        width: 100%;
     }
 }
 
 .loader-status {
     font-size: 0.88rem;
     color: var(--accent-light);
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 600;
-    opacity: 0.88;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+    animation: loaderMessageFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1.8s both;
 }
 
 @keyframes loaderFadeInUp {
     from {
         opacity: 0;
-        transform: translateY(18px);
+        transform: translateY(22px);
     }
     to {
         opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes loaderMessageFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 0.95;
         transform: translateY(0);
     }
 }
@@ -1711,7 +1923,8 @@ textarea:focus-visible {
         display: none !important;
     }
 
-    .reveal {
+    .reveal,
+    .reveal-stagger > * {
         opacity: 1 !important;
         transform: none !important;
     }
