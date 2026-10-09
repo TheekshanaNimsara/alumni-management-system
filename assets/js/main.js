@@ -1,67 +1,142 @@
 /* ============================================================
    UNIVERSITY ALUMNI NETWORK - VANILLA JAVASCRIPT
-   Clean, Readable & Beginner-Friendly Code
+   Cinematic Dark Theme, Smooth Loader, Hero & UI Animations
+   Vanilla JS • No External Frameworks • Pure CSS3 & DOM APIs
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
     // ------------------------------------------------------------
-    // 1. SIMPLE INTERSECTION OBSERVER SCROLL REVEAL
-    // Animates elements with class .reveal when they enter view
+    // 1. FEATURE ONE: CINEMATIC LOADING SCREEN CONTROLLER
+    // ------------------------------------------------------------
+    const loader = document.getElementById('cinematicLoader');
+
+    if (loader) {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const hasLoadedBefore = sessionStorage.getItem('kdu_cinematic_loader_shown');
+
+        const dismissLoader = (delay = 0) => {
+            setTimeout(() => {
+                loader.classList.add('loader-hidden');
+                loader.setAttribute('aria-hidden', 'true');
+                // Allow page interactions immediately
+                loader.style.pointerEvents = 'none';
+            }, delay);
+        };
+
+        if (prefersReducedMotion) {
+            // Bypass animation immediately for reduced motion preference
+            dismissLoader(0);
+        } else if (hasLoadedBefore) {
+            // Fast 150ms transition for subsequent page views in same session
+            dismissLoader(150);
+        } else {
+            // Cinematic initial entrance
+            sessionStorage.setItem('kdu_cinematic_loader_shown', 'true');
+            dismissLoader(650);
+        }
+
+        // Safety fallback: guaranteed dismissal within 900ms regardless of assets
+        setTimeout(() => {
+            if (!loader.classList.contains('loader-hidden')) {
+                loader.classList.add('loader-hidden');
+                loader.style.pointerEvents = 'none';
+            }
+        }, 900);
+
+        // Handle browser back/forward cache (bfcache) restoration
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                loader.classList.add('loader-hidden');
+                loader.style.pointerEvents = 'none';
+            }
+        });
+    }
+
+    // ------------------------------------------------------------
+    // 2. FEATURE THREE (D): SCROLL REVEAL (INTERSECTION OBSERVER)
     // ------------------------------------------------------------
     const revealElements = document.querySelectorAll('.reveal');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if ('IntersectionObserver' in window && revealElements.length > 0) {
-        const observer = new IntersectionObserver((entries) => {
+    if (prefersReducedMotion) {
+        // Reduced motion: reveal all sections immediately without animation
+        revealElements.forEach(el => el.classList.add('show'));
+    } else if ('IntersectionObserver' in window && revealElements.length > 0) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('show');
-                    // Stop observing once animated
+                    // Stop observing once animated to save GPU/CPU cycles
                     observer.unobserve(entry.target);
                 }
             });
         }, {
-            threshold: 0.15,
+            threshold: 0.12,
             rootMargin: '0px 0px -40px 0px'
         });
 
-        revealElements.forEach(el => observer.observe(el));
+        revealElements.forEach(el => revealObserver.observe(el));
     } else {
         // Fallback for older browsers
         revealElements.forEach(el => el.classList.add('show'));
     }
 
     // ------------------------------------------------------------
-    // 2. NAVBAR SCROLL EFFECT
-    // Adds .scrolled class on scroll for subtle transparency & shadow
+    // 3. FEATURE THREE (A): NAVBAR SCROLL TRANSPARENCY & BLUR
     // ------------------------------------------------------------
     const navbar = document.querySelector('.navbar');
     if (navbar) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 40) {
+        const handleScroll = () => {
+            if (window.scrollY > 30) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
-        });
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // Initial check
     }
 
     // ------------------------------------------------------------
-    // 3. MOBILE NAVIGATION MENU TOGGLE
+    // 4. MOBILE NAVIGATION DRAWER TOGGLE
     // ------------------------------------------------------------
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
 
     if (navToggle && navMenu) {
         navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('open');
-            const isExpanded = navMenu.classList.contains('open');
-            navToggle.setAttribute('aria-expanded', isExpanded);
+            const isOpen = navMenu.classList.toggle('open');
+            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        // Close mobile drawer when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                navMenu.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            }
         });
     }
 
     // ------------------------------------------------------------
-    // 4. CLIENT-SIDE REGISTRATION FORM VALIDATION
+    // 5. FEATURE THREE (F): MODAL KEYBOARD ACCESSIBILITY (ESC KEY)
+    // ------------------------------------------------------------
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' || event.key === 'Esc') {
+            const openModals = document.querySelectorAll('.modal-overlay[style*="display: flex"], .modal-overlay[style*="display: block"]');
+            openModals.forEach(m => {
+                m.style.display = 'none';
+            });
+            if (typeof window.closeModals === 'function') {
+                window.closeModals();
+            }
+        }
+    });
+
+    // ------------------------------------------------------------
+    // 6. CLIENT-SIDE REGISTRATION FORM VALIDATION
     // ------------------------------------------------------------
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {

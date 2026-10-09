@@ -16,26 +16,28 @@
   --accent-light:     #F1D77A;
   --accent-dark:      #A98218;
 
-  --bg-color:         #F3EFE6;
-  --surface-color:    #FFFFFF;
+  --bg-color:         #120305;
+  --surface-color:    #24070A;
+  --surface-elevated: #301015;
 
-  --text-color:       #242124;
+  --text-color:       #F3EFE6;
   --text-light:       #F8F4EA;
-  --text-muted:       #756F6A;
-  --text-muted-light: #C8C0B5;
+  --text-muted:       #B8ADB0;
+  --text-muted-light: #D4CBCD;
 
-  --border-color:     #D8CDBB;
-  --border-dark:      rgba(212, 175, 55, 0.25);
+  --border-color:     rgba(74, 17, 22, 0.7);
+  --border-gold:      rgba(212, 175, 55, 0.25);
+  --border-dark:      rgba(212, 175, 55, 0.2);
 
-  --danger-color:     #A63D40;
-  --danger-bg:        #F8EAEA;
-  --success-color:    #3F7D5A;
-  --success-bg:       #E8F2EC;
-  --warning-color:    #B7791F;
-  --warning-bg:       #FFF4D6;
+  --danger-color:     #E57373;
+  --danger-bg:        rgba(229, 115, 115, 0.15);
+  --success-color:    #4CAF50;
+  --success-bg:       rgba(76, 175, 80, 0.15);
+  --warning-color:    #F1D77A;
+  --warning-bg:       rgba(241, 215, 122, 0.15);
 
-  --disabled-color:   #929292;
-  --disabled-bg:      #E5E3DF;
+  --disabled-color:   #7A7274;
+  --disabled-bg:      #1F080B;
 
   --border-radius:    8px;
 }
