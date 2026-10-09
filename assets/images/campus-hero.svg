@@ -1,21 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
   <defs>
-    <!-- Cinematic Sunset Sky Gradient (Deep Maroon to KDU Gold) -->
+    <!-- Cinematic Twilight Sky Gradient (Midnight Purple to Electric Violet) -->
     <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#120305" />
-      <stop offset="35%" stop-color="#24070A" />
-      <stop offset="60%" stop-color="#4A1116" />
-      <stop offset="80%" stop-color="#73222B" />
-      <stop offset="92%" stop-color="#A98218" />
-      <stop offset="100%" stop-color="#D4AF37" />
+      <stop offset="0%" stop-color="#080510" />
+      <stop offset="35%" stop-color="#10091D" />
+      <stop offset="60%" stop-color="#1B1230" />
+      <stop offset="80%" stop-color="#241735" />
+      <stop offset="92%" stop-color="#7C3AED" />
+      <stop offset="100%" stop-color="#9333EA" />
     </linearGradient>
 
-    <!-- Warm Sunset Sun Glow in KDU Gold -->
+    <!-- Radiance behind Campus Silhouette in Soft Lavender & Electric Violet -->
     <radialGradient id="sunGlow" cx="65%" cy="75%" r="45%">
-      <stop offset="0%" stop-color="#FFF4D6" stop-opacity="0.9" />
-      <stop offset="30%" stop-color="#F1D77A" stop-opacity="0.6" />
-      <stop offset="60%" stop-color="#D4AF37" stop-opacity="0.25" />
-      <stop offset="100%" stop-color="#120305" stop-opacity="0" />
+      <stop offset="0%" stop-color="#E9D5FF" stop-opacity="0.95" />
+      <stop offset="30%" stop-color="#C4B5FD" stop-opacity="0.65" />
+      <stop offset="60%" stop-color="#7C3AED" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#080510" stop-opacity="0" />
     </radialGradient>
 
     <!-- Window Light Glow -->
@@ -28,14 +28,14 @@
   <!-- Sky Background -->
   <rect width="1920" height="1080" fill="url(#skyGrad)" />
 
-  <!-- Warm Sun behind Campus -->
+  <!-- Radiance behind Campus -->
   <circle cx="1250" cy="700" r="320" fill="url(#sunGlow)" />
 
   <!-- Distant Mountain / Forest Ridge Silhouette -->
-  <path d="M0,820 Q320,780 640,810 T1280,790 T1920,810 L1920,1080 L0,1080 Z" fill="#120305" opacity="0.85" />
+  <path d="M0,820 Q320,780 640,810 T1280,790 T1920,810 L1920,1080 L0,1080 Z" fill="#080510" opacity="0.88" />
 
   <!-- University Quad Trees Silhouette -->
-  <g fill="#120305">
+  <g fill="#080510">
     <ellipse cx="220" cy="810" rx="90" ry="120" />
     <ellipse cx="310" cy="830" rx="70" ry="90" />
     <ellipse cx="140" cy="840" rx="60" ry="80" />
@@ -46,12 +46,12 @@
 
   <!-- Campus Neoclassical Hall & Clock Tower Architecture Silhouette -->
   <!-- Main Foundation -->
-  <rect x="360" y="740" width="1200" height="220" fill="#120305" />
+  <rect x="360" y="740" width="1200" height="220" fill="#080510" />
 
   <!-- Front Portico Columns -->
-  <g fill="#1C080B">
+  <g fill="#10091D">
     <rect x="760" y="650" width="400" height="20" /> <!-- Architrave -->
-    <polygon points="740,650 960,560 1180,650" fill="#120305" /> <!-- Pediment -->
+    <polygon points="740,650 960,560 1180,650" fill="#080510" /> <!-- Pediment -->
     <!-- Columns -->
     <rect x="780" y="670" width="22" height="190" />
     <rect x="830" y="670" width="22" height="190" />
@@ -64,30 +64,30 @@
   </g>
 
   <!-- Left Wing -->
-  <rect x="380" y="700" width="380" height="160" fill="#120305" />
-  <polygon points="360,700 570,640 780,700" fill="#1C080B" />
+  <rect x="380" y="700" width="380" height="160" fill="#080510" />
+  <polygon points="360,700 570,640 780,700" fill="#130D20" />
 
   <!-- Right Wing -->
-  <rect x="1160" y="700" width="380" height="160" fill="#120305" />
-  <polygon points="1140,700 1350,640 1560,700" fill="#1C080B" />
+  <rect x="1160" y="700" width="380" height="160" fill="#080510" />
+  <polygon points="1140,700 1350,640 1560,700" fill="#130D20" />
 
   <!-- Iconic University Clock Tower (Center) -->
-  <g fill="#120305">
+  <g fill="#080510">
     <rect x="915" y="320" width="90" height="240" />
     <polygon points="895,320 960,180 1025,320" /> <!-- Spire -->
     <!-- Tower Balcony & Details -->
-    <rect x="900" y="380" width="120" height="16" fill="#1C080B" />
-    <rect x="905" y="480" width="110" height="14" fill="#1C080B" />
-    <!-- Clock Face Glowing in KDU Gold -->
-    <circle cx="960" cy="430" r="24" fill="#D4AF37" filter="url(#glow)" opacity="0.9" />
-    <circle cx="960" cy="430" r="22" fill="#FFF4D6" />
+    <rect x="900" y="380" width="120" height="16" fill="#130D20" />
+    <rect x="905" y="480" width="110" height="14" fill="#130D20" />
+    <!-- Clock Face Glowing in Soft Lavender & Electric Violet -->
+    <circle cx="960" cy="430" r="24" fill="#9333EA" filter="url(#glow)" opacity="0.9" />
+    <circle cx="960" cy="430" r="22" fill="#E9D5FF" />
     <!-- Clock Hands -->
-    <line x1="960" y1="430" x2="960" y2="415" stroke="#120305" stroke-width="3" stroke-linecap="round" />
-    <line x1="960" y1="430" x2="972" y2="438" stroke="#120305" stroke-width="2.5" stroke-linecap="round" />
+    <line x1="960" y1="430" x2="960" y2="415" stroke="#080510" stroke-width="3" stroke-linecap="round" />
+    <line x1="960" y1="430" x2="972" y2="438" stroke="#080510" stroke-width="2.5" stroke-linecap="round" />
   </g>
 
-  <!-- Warm Windows with Golden Light Glow -->
-  <g fill="#F1D77A" opacity="0.85" filter="url(#glow)">
+  <!-- Warm Windows with Soft Lavender Light Glow -->
+  <g fill="#C4B5FD" opacity="0.85" filter="url(#glow)">
     <!-- Tower Windows -->
     <rect x="948" y="505" width="10" height="22" rx="5" />
     <rect x="962" y="505" width="10" height="22" rx="5" />
@@ -120,7 +120,7 @@
   </g>
 
   <!-- Foreground Quad Lawn -->
-  <polygon points="0,920 1920,920 1920,1080 0,1080" fill="#0E0204" />
-  <!-- Walkway Reflection -->
-  <polygon points="960,920 1120,1080 800,1080" fill="#24070A" opacity="0.6" />
+  <polygon points="0,920 1920,920 1920,1080 0,1080" fill="#05030A" />
+  <!-- Walkway Reflection in Deep Violet Surface -->
+  <polygon points="960,920 1120,1080 800,1080" fill="#130D20" opacity="0.65" />
 </svg>

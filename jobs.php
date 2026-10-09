@@ -125,11 +125,11 @@ if (empty($jobs) && empty($typeFilter)) {
 ?>
 
 <!-- Cinematic Header -->
-<section style="background: var(--primary-color); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 2px solid var(--accent-color);">
+<section style="background: radial-gradient(circle at 50% 20%, rgba(147, 51, 234, 0.22) 0%, rgba(16, 9, 29, 0.95) 70%, #080510 100%); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border-color);">
     <div class="container text-center" style="text-align: center;">
         <span class="section-eyebrow">Professional Opportunities &bull; Internships &bull; Mentorship</span>
         <h1 class="section-title" style="color: var(--text-light); margin-bottom: 0.8rem;">Career Board</h1>
-        <p style="color: rgba(248, 244, 234, 0.75); max-width: 600px; margin: 0 auto;">
+        <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
             Exclusive career postings and high-impact industry roles shared by distinguished alumni.
         </p>
     </div>
@@ -146,7 +146,7 @@ if (empty($jobs) && empty($typeFilter)) {
     <!-- Header Actions and Filters -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
         <div>
-            <h2 style="color: var(--primary-color); font-size: 1.6rem; font-weight: 800; margin: 0 0 0.3rem 0;">Available Positions</h2>
+            <h2 style="color: var(--text-light); font-size: 1.6rem; font-weight: 800; margin: 0 0 0.3rem 0;">Available Positions</h2>
             <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0;">Verified opportunities from alumni organizations worldwide</p>
         </div>
         <div>
@@ -215,15 +215,15 @@ if (empty($jobs) && empty($typeFilter)) {
                 </p>
 
                 <?php if (!empty($job['requirements'])): ?>
-                    <div style="background: rgba(36, 7, 10, 0.45); border-left: 3px solid var(--accent-color); border: 1px solid rgba(212, 175, 55, 0.2); padding: 0.7rem 1rem; border-radius: 4px; font-size: 0.86rem; color: var(--text-color); margin-bottom: 1.2rem;">
+                    <div style="background: rgba(124, 58, 237, 0.12); border-left: 3px solid var(--accent-color); border: 1px solid var(--border-color); padding: 0.7rem 1rem; border-radius: 4px; font-size: 0.86rem; color: var(--text-color); margin-bottom: 1.2rem;">
                         <strong style="color: var(--accent-light);">Requirements:</strong> <?php echo htmlspecialchars($job['requirements']); ?>
                     </div>
                 <?php endif; ?>
 
                 <!-- Footer Action Area -->
-                <div style="padding-top: 1rem; border-top: 1px solid rgba(212, 175, 55, 0.2); display: flex; justify-content: space-between; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
+                <div style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
                     <div style="font-size: 0.82rem; color: var(--text-muted);">
-                        Posted by: <strong style="color: var(--accent-color);"><?php echo htmlspecialchars(!empty($job['poster_name']) ? $job['poster_name'] : 'Alumni Network'); ?></strong>
+                        Posted by: <strong style="color: var(--accent-light);"><?php echo htmlspecialchars(!empty($job['poster_name']) ? $job['poster_name'] : 'Alumni Network'); ?></strong>
                     </div>
 
                     <div style="display: flex; gap: 0.5rem; align-items: center;">
@@ -263,7 +263,7 @@ if (empty($jobs) && empty($typeFilter)) {
 
     <!-- Post a Career Opportunity Form -->
     <div id="post-job" class="card" style="margin-top: 5rem; padding: 2.5rem; border-top: 4px solid var(--accent-color);">
-        <h3 style="color: var(--primary-color); font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 800;">
+        <h3 style="color: var(--text-light); font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 800;">
             Post a Career Opportunity
         </h3>
         <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem;">

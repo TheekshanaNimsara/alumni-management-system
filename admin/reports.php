@@ -105,7 +105,7 @@ if ($db_connected && $pdo) {
             
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
                 <div>
-                    <h1 style="color: var(--primary-color); font-size: 1.8rem; font-weight: 800; margin: 0 0 0.4rem 0;">
+                    <h1 style="color: var(--text-light); font-size: 1.8rem; font-weight: 800; margin: 0 0 0.4rem 0;">
                         Moderation & Content Reports
                     </h1>
                     <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0;">

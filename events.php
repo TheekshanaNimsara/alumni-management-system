@@ -145,11 +145,11 @@ if (empty($events)) {
 ?>
 
 <!-- Cinematic Events Header -->
-<section style="background: var(--primary-color); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 2px solid var(--accent-color);">
+<section style="background: radial-gradient(circle at 50% 20%, rgba(147, 51, 234, 0.22) 0%, rgba(16, 9, 29, 0.95) 70%, #080510 100%); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border-color);">
     <div class="container text-center" style="text-align: center;">
         <span class="section-eyebrow">Alumni Gatherings &bull; Summits &bull; Reunions</span>
         <h1 class="section-title" style="color: var(--text-light); margin-bottom: 0.8rem;">University Events</h1>
-        <p style="color: rgba(248, 244, 234, 0.75); max-width: 600px; margin: 0 auto;">
+        <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
             Participate in prestigious conferences, technical workshops, and heartwarming alumni reunions.
         </p>
     </div>
@@ -166,7 +166,7 @@ if (empty($events)) {
     <!-- Action Header / Proposal Trigger -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
         <div>
-            <h2 style="color: var(--primary-color); font-size: 1.6rem; font-weight: 800; margin: 0 0 0.3rem 0;">Upcoming Gatherings</h2>
+            <h2 style="color: var(--text-light); font-size: 1.6rem; font-weight: 800; margin: 0 0 0.3rem 0;">Upcoming Gatherings</h2>
             <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0;">Scheduled calendar of university alumni events</p>
         </div>
         <div>
@@ -219,20 +219,20 @@ if (empty($events)) {
                     <p class="event-desc" style="flex: 1; margin-bottom: 1rem;"><?php echo htmlspecialchars($event['description']); ?></p>
                     
                     <!-- Attendance Progress -->
-                    <div style="font-size: 0.82rem; color: rgba(248, 244, 234, 0.8); margin-bottom: 1rem; padding: 0.5rem 0.8rem; background: rgba(0,0,0,0.25); border-radius: 4px; display: flex; justify-content: space-between;">
+                    <div style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; padding: 0.5rem 0.8rem; background: rgba(0,0,0,0.3); border-radius: 4px; display: flex; justify-content: space-between;">
                         <span>Attendees: <strong style="color: var(--accent-light);"><?php echo $attendees; ?> registered</strong></span>
                         <span>Capacity: <?php echo $capacity; ?></span>
                     </div>
 
                     <!-- Card Actions -->
-                    <div style="padding-top: 1rem; border-top: 1px solid rgba(212, 175, 55, 0.25); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
-                        <span style="font-size: 0.8rem; color: rgba(248, 244, 234, 0.7);">
-                            By: <strong style="color: var(--accent-color);"><?php echo htmlspecialchars(!empty($event['organizer_name']) ? $event['organizer_name'] : 'Alumni Relations'); ?></strong>
+                    <div style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);">
+                            By: <strong style="color: var(--accent-light);"><?php echo htmlspecialchars(!empty($event['organizer_name']) ? $event['organizer_name'] : 'Alumni Relations'); ?></strong>
                         </span>
 
                         <div style="display: flex; gap: 0.4rem;">
                             <!-- Report Event Link -->
-                            <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.72rem; padding: 0.25rem 0.45rem; border-color: rgba(255,255,255,0.2);" 
+                            <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.72rem; padding: 0.25rem 0.45rem; border-color: var(--border-color);" 
                                     onclick="openReportModal(<?php echo $event['id']; ?>, 'event', '<?php echo htmlspecialchars(addslashes($event['title'])); ?>');" title="Report Event">
                                 &#9873;
                             </button>
@@ -272,7 +272,7 @@ if (empty($events)) {
 
     <!-- Propose Event Section -->
     <div id="propose-event" class="card" style="margin-top: 5rem; padding: 2.5rem; border-top: 4px solid var(--accent-color);">
-        <h3 style="color: var(--primary-color); font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 800;">
+        <h3 style="color: var(--text-light); font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 800;">
             Host or Propose an Alumni Event
         </h3>
         <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem;">

@@ -83,7 +83,7 @@ if (empty($eventsList)) {
                 <p style="color: var(--text-muted); font-size: 0.95rem;">Review, approve, or decline community-submitted events</p>
             </div>
             <div>
-                <a href="<?php echo $baseUrl; ?>events.php" target="_blank" class="btn btn-outline-light btn-sm" style="color: var(--primary-color); border-color: var(--border-color);">
+                <a href="<?php echo $baseUrl; ?>events.php" target="_blank" class="btn btn-outline-light btn-sm" style="color: var(--text-light); border-color: var(--border-color);">
                     View Public Events &rarr;
                 </a>
             </div>
@@ -108,7 +108,7 @@ if (empty($eventsList)) {
                     <?php foreach ($eventsList as $event): ?>
                         <tr>
                             <td>
-                                <strong style="color: var(--primary-color); font-size: 1rem;">
+                                <strong style="color: var(--text-light); font-size: 1rem;">
                                     <?php echo htmlspecialchars($event['title']); ?>
                                 </strong>
                             </td>

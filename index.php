@@ -272,15 +272,15 @@ if (empty($recentJobs)) {
 </section>
 
 <!-- ------------------------------------------------------------
-     6. UNIVERSITY QUOTE & CTA BANNER (DARK MAROON)
+     6. UNIVERSITY QUOTE & CTA BANNER (MIDNIGHT PURPLE)
 ------------------------------------------------------------- -->
-<section class="section section-dark reveal" style="border-top: 1px solid rgba(212, 175, 55, 0.25);">
+<section class="section section-dark reveal" style="border-top: 1px solid var(--border-color);">
     <div class="container-narrow text-center" style="text-align: center;">
         <span class="section-eyebrow">Once a Student, Always an Alumnus</span>
         <h2 class="section-title" style="font-size: 2rem; margin: 1rem 0;">
             Ready to reconnect with your university family?
         </h2>
-        <p style="font-size: 1.1rem; margin-bottom: 2.2rem; color: rgba(248, 244, 234, 0.75);">
+        <p style="font-size: 1.1rem; margin-bottom: 2.2rem; color: var(--text-secondary);">
             Share your story, mentor aspiring students, recruit fellow alumni, and attend exclusive university gatherings.
         </p>
         <a href="auth/register.php" class="btn btn-gold gold-glow" style="padding: 1rem 2.5rem; font-size: 1.05rem;">

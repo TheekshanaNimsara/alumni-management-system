@@ -68,18 +68,20 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' || php_sapi_name() === 'cli') 
         .setup-container {
             max-width: 600px;
             margin: 4rem auto;
-            padding: 2rem;
-            background: #ffffff;
+            padding: 2.5rem;
+            background: var(--card-bg);
             border-radius: var(--border-radius);
-            box-shadow: 0 10px 30px rgba(18, 3, 5, 0.08);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border-color);
             border-top: 4px solid var(--accent-color);
         }
         .message-box {
             padding: 1rem;
             margin: 1.5rem 0;
-            border-radius: 4px;
-            background: #120305;
-            color: #F8F4EA;
+            border-radius: 6px;
+            background: #080510;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
             font-family: monospace;
             font-size: 0.9rem;
             line-height: 1.6;
@@ -88,8 +90,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' || php_sapi_name() === 'cli') 
 </head>
 <body style="background-color: var(--bg-color);">
     <div class="setup-container">
-        <h2 style="color: var(--primary-color); margin-bottom: 0.5rem;">Alumni Network Database Setup</h2>
-        <p style="color: #666; margin-bottom: 1.5rem;">Initialize or reseed the database schema and starter data in MySQL.</p>
+        <h2 style="color: var(--text-light); margin-bottom: 0.5rem;">Alumni Network Database Setup</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Initialize or reseed the database schema and starter data in MySQL.</p>
 
         <?php if (!empty($messages)): ?>
             <div class="message-box">
@@ -109,7 +111,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' || php_sapi_name() === 'cli') 
                 <button type="submit" class="btn btn-primary btn-block">Initialize Database Now</button>
             </form>
             <div style="margin-top: 1.5rem; text-align: center;">
-                <a href="../index.php" style="color: var(--primary-color); text-decoration: underline;">Return to Homepage</a>
+                <a href="../index.php" style="color: var(--accent-light); text-decoration: underline;">Return to Homepage</a>
             </div>
         <?php endif; ?>
     </div>

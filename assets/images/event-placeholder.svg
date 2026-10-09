@@ -1,44 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" width="100%" height="100%">
   <defs>
-    <!-- Deep Cinematic Background Gradient -->
+    <!-- Deep Cinematic Midnight Purple Background Gradient -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#28070B" />
-      <stop offset="45%" stop-color="#1A0407" />
-      <stop offset="100%" stop-color="#0E0204" />
+      <stop offset="0%" stop-color="#1B1230" />
+      <stop offset="45%" stop-color="#10091D" />
+      <stop offset="100%" stop-color="#080510" />
     </linearGradient>
 
-    <!-- Overhead Stage Spotlight -->
+    <!-- Overhead Stage Violet Spotlight -->
     <radialGradient id="stageSpotlight" cx="50%" cy="25%" r="65%">
-      <stop offset="0%" stop-color="#F1D77A" stop-opacity="0.45" />
-      <stop offset="25%" stop-color="#D4AF37" stop-opacity="0.25" />
-      <stop offset="55%" stop-color="#4A1116" stop-opacity="0.20" />
-      <stop offset="100%" stop-color="#0E0204" stop-opacity="0" />
+      <stop offset="0%" stop-color="#C4B5FD" stop-opacity="0.45" />
+      <stop offset="25%" stop-color="#9333EA" stop-opacity="0.30" />
+      <stop offset="55%" stop-color="#311E48" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#080510" stop-opacity="0" />
     </radialGradient>
 
-    <!-- Warm Golden Light Cones -->
+    <!-- Ambient Violet Light Cones -->
     <linearGradient id="lightBeamLeft" x1="0%" y1="0%" x2="60%" y2="100%">
-      <stop offset="0%" stop-color="#F1D77A" stop-opacity="0.28" />
-      <stop offset="40%" stop-color="#D4AF37" stop-opacity="0.12" />
-      <stop offset="100%" stop-color="#120305" stop-opacity="0" />
+      <stop offset="0%" stop-color="#C4B5FD" stop-opacity="0.28" />
+      <stop offset="40%" stop-color="#7C3AED" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#080510" stop-opacity="0" />
     </linearGradient>
     <linearGradient id="lightBeamRight" x1="100%" y1="0%" x2="40%" y2="100%">
-      <stop offset="0%" stop-color="#F1D77A" stop-opacity="0.28" />
-      <stop offset="40%" stop-color="#D4AF37" stop-opacity="0.12" />
-      <stop offset="100%" stop-color="#120305" stop-opacity="0" />
+      <stop offset="0%" stop-color="#C4B5FD" stop-opacity="0.28" />
+      <stop offset="40%" stop-color="#7C3AED" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#080510" stop-opacity="0" />
     </linearGradient>
 
     <!-- Seamless Bottom Card Blend Vignette -->
     <linearGradient id="bottomFade" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#100305" stop-opacity="0" />
-      <stop offset="60%" stop-color="#100305" stop-opacity="0.65" />
-      <stop offset="100%" stop-color="#100305" stop-opacity="0.98" />
+      <stop offset="0%" stop-color="#080510" stop-opacity="0" />
+      <stop offset="60%" stop-color="#080510" stop-opacity="0.65" />
+      <stop offset="100%" stop-color="#080510" stop-opacity="0.98" />
     </linearGradient>
 
-    <!-- Subtle Gold Wireframe Gradient -->
-    <linearGradient id="goldLine" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.05" />
-      <stop offset="50%" stop-color="#F1D77A" stop-opacity="0.45" />
-      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0.05" />
+    <!-- Subtle Lavender Wireframe Gradient -->
+    <linearGradient id="purpleLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.08" />
+      <stop offset="50%" stop-color="#C4B5FD" stop-opacity="0.45" />
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0.08" />
     </linearGradient>
   </defs>
 
@@ -49,11 +49,11 @@
   <polygon points="180,0 280,0 360,260 120,260" fill="url(#lightBeamLeft)" />
   <polygon points="420,0 320,0 240,260 480,260" fill="url(#lightBeamRight)" />
 
-  <!-- Ambient Golden Stage Radiance -->
+  <!-- Ambient Violet Stage Radiance -->
   <ellipse cx="300" cy="110" rx="260" ry="140" fill="url(#stageSpotlight)" />
 
   <!-- Architectural Grand Hall Wireframe Colonnade & Arches -->
-  <g stroke="url(#goldLine)" fill="none" stroke-width="1.2">
+  <g stroke="url(#purpleLine)" fill="none" stroke-width="1.2">
     <!-- Grand Ascending Colonnade -->
     <line x1="70" y1="280" x2="220" y2="70" stroke-opacity="0.25" />
     <line x1="110" y1="280" x2="235" y2="70" stroke-opacity="0.30" />
@@ -73,27 +73,27 @@
   </g>
 
   <!-- Ambient Light Sparks & Stardust Accents -->
-  <circle cx="280" cy="95" r="2" fill="#F1D77A" opacity="0.8" />
-  <circle cx="325" cy="80" r="1.5" fill="#F1D77A" opacity="0.75" />
-  <circle cx="240" cy="130" r="1.5" fill="#D4AF37" opacity="0.6" />
-  <circle cx="360" cy="120" r="2" fill="#F1D77A" opacity="0.85" />
+  <circle cx="280" cy="95" r="2" fill="#E9D5FF" opacity="0.8" />
+  <circle cx="325" cy="80" r="1.5" fill="#C4B5FD" opacity="0.75" />
+  <circle cx="240" cy="130" r="1.5" fill="#9333EA" opacity="0.6" />
+  <circle cx="360" cy="120" r="2" fill="#C4B5FD" opacity="0.85" />
   <circle cx="300" cy="65" r="2.5" fill="#FFFFFF" opacity="0.9" />
 
   <!-- University Ceremonial Crest Silhouette in Background -->
-  <g transform="translate(300, 115) scale(0.65)" opacity="0.22" stroke="#F1D77A" stroke-width="2" fill="none">
+  <g transform="translate(300, 115) scale(0.65)" opacity="0.22" stroke="#C4B5FD" stroke-width="2" fill="none">
     <polygon points="0,-40 35,-15 35,25 0,45 -35,25 -35,-15" />
     <circle cx="0" cy="0" r="20" stroke-dasharray="3 3" />
     <line x1="0" y1="-28" x2="0" y2="28" />
   </g>
 
-  <!-- Subtle Secondary Calendar Detail (Understated Gold Watermark) -->
-  <g transform="translate(48, 38)" opacity="0.38" stroke="#D4AF37" stroke-width="1.5" fill="none">
+  <!-- Subtle Secondary Calendar Detail (Understated Lavender Watermark) -->
+  <g transform="translate(48, 38)" opacity="0.38" stroke="#C4B5FD" stroke-width="1.5" fill="none">
     <rect x="0" y="4" width="22" height="20" rx="3" stroke-width="1.5" />
     <line x1="0" y1="10" x2="22" y2="10" />
     <line x1="5" y1="1" x2="5" y2="5" stroke-linecap="round" />
     <line x1="17" y1="1" x2="17" y2="5" stroke-linecap="round" />
-    <circle cx="7" cy="15" r="1.2" fill="#D4AF37" />
-    <circle cx="15" cy="15" r="1.2" fill="#D4AF37" />
+    <circle cx="7" cy="15" r="1.2" fill="#7C3AED" />
+    <circle cx="15" cy="15" r="1.2" fill="#7C3AED" />
   </g>
 
   <!-- Bottom Dark Vignette Fade Overlay -->

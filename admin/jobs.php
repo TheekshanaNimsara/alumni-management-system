@@ -83,7 +83,7 @@ if (empty($jobsList)) {
                 <p style="color: var(--text-muted); font-size: 0.95rem;">Review employer vacancies and verify career opportunities</p>
             </div>
             <div>
-                <a href="<?php echo $baseUrl; ?>jobs.php" target="_blank" class="btn btn-outline-light btn-sm" style="color: var(--primary-color); border-color: var(--border-color);">
+                <a href="<?php echo $baseUrl; ?>jobs.php" target="_blank" class="btn btn-outline-light btn-sm" style="color: var(--text-light); border-color: var(--border-color);">
                     View Public Jobs &rarr;
                 </a>
             </div>
@@ -108,7 +108,7 @@ if (empty($jobsList)) {
                     <?php foreach ($jobsList as $job): ?>
                         <tr>
                             <td>
-                                <strong style="color: var(--primary-color); font-size: 1rem;">
+                                <strong style="color: var(--text-light); font-size: 1rem;">
                                     <?php echo htmlspecialchars($job['title']); ?>
                                 </strong>
                             </td>

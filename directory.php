@@ -97,7 +97,7 @@ if ($db_connected && $pdo) {
 ?>
 
 <!-- Cinematic Header Section -->
-<section style="background: radial-gradient(circle at 50% 20%, rgba(74, 17, 22, 0.45) 0%, rgba(36, 7, 10, 0.95) 70%, #100305 100%); color: var(--text-light); padding: 4.5rem 0 3.5rem; border-bottom: 1px solid rgba(212, 175, 55, 0.25);">
+<section style="background: radial-gradient(circle at 50% 20%, rgba(147, 51, 234, 0.22) 0%, rgba(16, 9, 29, 0.95) 70%, #080510 100%); color: var(--text-light); padding: 4.5rem 0 3.5rem; border-bottom: 1px solid var(--border-color);">
     <div class="container text-center" style="text-align: center;">
         <span class="section-eyebrow">Distinguished Graduates &bull; Global Leaders &bull; Mentors</span>
         <h1 class="section-title" style="color: var(--text-light); margin-bottom: 0.8rem;">Alumni Directory</h1>
@@ -215,7 +215,7 @@ if ($db_connected && $pdo) {
                     <?php if (!empty($skills)): ?>
                         <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; justify-content: center; margin-bottom: 1.2rem; position: relative; z-index: 1;">
                             <?php foreach (array_slice($skills, 0, 3) as $sk): ?>
-                                <span class="badge" style="font-size: 0.72rem; background: rgba(212, 175, 55, 0.1); color: var(--accent-light); border: 1px solid rgba(212, 175, 55, 0.25);">
+                                <span class="badge" style="font-size: 0.72rem; background: rgba(124, 58, 237, 0.15); color: var(--pale-highlight); border: 1px solid rgba(196, 181, 253, 0.25);">
                                     <?php echo htmlspecialchars($sk); ?>
                                 </span>
                             <?php endforeach; ?>
@@ -223,8 +223,8 @@ if ($db_connected && $pdo) {
                     <?php endif; ?>
 
                     <!-- Action Buttons -->
-                    <div style="display: flex; gap: 0.4rem; justify-content: center; padding-top: 1rem; border-top: 1px solid rgba(212, 175, 55, 0.15); flex-wrap: wrap; position: relative; z-index: 1;">
-                        <a href="profile.php?id=<?php echo $alumnus['id']; ?>" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; color: var(--text-light); border-color: rgba(212, 175, 55, 0.3);">
+                    <div style="display: flex; gap: 0.4rem; justify-content: center; padding-top: 1rem; border-top: 1px solid var(--border-color); flex-wrap: wrap; position: relative; z-index: 1;">
+                        <a href="profile.php?id=<?php echo $alumnus['id']; ?>" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; color: var(--text-light); border-color: var(--border-color);">
                             Profile
                         </a>
 
@@ -245,7 +245,7 @@ if ($db_connected && $pdo) {
                         <?php endif; ?>
 
                         <?php if ($isLoggedIn && $alumnus['id'] != $currentUserId): ?>
-                            <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.72rem; color: var(--text-muted); border-color: rgba(255, 255, 255, 0.15);" 
+                            <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.72rem; color: var(--text-muted); border-color: var(--border-color);" 
                                     onclick="openReportModal(<?php echo $alumnus['id']; ?>, 'user', '<?php echo htmlspecialchars(addslashes($alumnus['first_name'] . ' ' . $alumnus['last_name'])); ?>');" title="Report Profile">
                                 &#9873;
                             </button>

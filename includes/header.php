@@ -73,7 +73,7 @@ if ($isLoggedIn && $db_connected && $pdo) {
                             <a href="<?php echo $baseUrl; ?>messages.php" class="nav-link <?php echo ($currentPage === 'messages') ? 'active' : ''; ?>">
                                 Messages
                                 <?php if ($unreadMessagesCount > 0): ?>
-                                    <span class="badge" style="background: var(--accent-color); color: var(--primary-color); font-size: 0.72rem; padding: 0.15rem 0.45rem; border-radius: 10px; margin-left: 0.3rem;">
+                                    <span class="badge" style="background: var(--accent-color); color: #FFFFFF; font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 10px; margin-left: 0.3rem;">
                                         <?php echo $unreadMessagesCount; ?>
                                     </span>
                                 <?php endif; ?>
@@ -81,7 +81,7 @@ if ($isLoggedIn && $db_connected && $pdo) {
                         </li>
                     <?php endif; ?>
                     <?php if ($isLoggedIn && $userRole === 'admin'): ?>
-                        <li><a href="<?php echo $baseUrl; ?>admin/index.php" class="nav-link <?php echo ($currentPage === 'admin') ? 'active' : ''; ?>" style="color: var(--accent-color); font-weight: 700;">Admin</a></li>
+                        <li><a href="<?php echo $baseUrl; ?>admin/index.php" class="nav-link <?php echo ($currentPage === 'admin') ? 'active' : ''; ?>" style="color: var(--accent-light); font-weight: 700;">Admin</a></li>
                     <?php endif; ?>
                 </ul>
 

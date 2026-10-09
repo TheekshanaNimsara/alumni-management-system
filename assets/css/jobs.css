@@ -1,43 +1,43 @@
 /* ============================================================
    JOBS.CSS — KDU ALUMNI NETWORK
    Uses the shared KDU design system:
-   Deep Maroon (#24070A) + KDU Gold (#D4AF37) + Warm Ivory (#F3EFE6)
+   Midnight Purple (#080510) + Electric Violet (#9333EA) + Soft Lavender (#C4B5FD)
    ============================================================ */
 
 /* ------------------------------------------------------------
    1. CSS CUSTOM PROPERTIES
    ------------------------------------------------------------ */
 :root {
-  --primary-color:    #24070A;
-  --primary-dark:     #120305;
-  --primary-light:    #4A1116;
+  --primary-color:    #10091D;
+  --primary-dark:     #080510;
+  --primary-light:    #311E48;
 
-  --accent-color:     #D4AF37;
-  --accent-light:     #F1D77A;
-  --accent-dark:      #A98218;
+  --accent-color:     #7C3AED;
+  --accent-light:     #C4B5FD;
+  --accent-dark:      #9333EA;
 
-  --bg-color:         #120305;
-  --surface-color:    #24070A;
-  --surface-elevated: #301015;
+  --bg-color:         #080510;
+  --surface-color:    #10091D;
+  --surface-elevated: #241735;
 
-  --text-color:       #F3EFE6;
-  --text-light:       #F8F4EA;
-  --text-muted:       #B8ADB0;
-  --text-muted-light: #D4CBCD;
+  --text-color:       #F8F7FC;
+  --text-light:       #F8F7FC;
+  --text-muted:       #B9B2C9;
+  --text-muted-light: #B9B2C9;
 
-  --border-color:     rgba(74, 17, 22, 0.7);
-  --border-gold:      rgba(212, 175, 55, 0.25);
-  --border-dark:      rgba(212, 175, 55, 0.2);
+  --border-color:     rgba(196, 181, 253, 0.16);
+  --border-gold:      rgba(196, 181, 253, 0.22);
+  --border-dark:      rgba(196, 181, 253, 0.14);
 
-  --danger-color:     #E57373;
-  --danger-bg:        rgba(229, 115, 115, 0.15);
-  --success-color:    #4CAF50;
-  --success-bg:       rgba(76, 175, 80, 0.15);
-  --warning-color:    #F1D77A;
-  --warning-bg:       rgba(241, 215, 122, 0.15);
+  --danger-color:     #EF4444;
+  --danger-bg:        rgba(239, 68, 68, 0.15);
+  --success-color:    #10B981;
+  --success-bg:       rgba(16, 185, 129, 0.15);
+  --warning-color:    #C4B5FD;
+  --warning-bg:       rgba(245, 158, 11, 0.15);
 
-  --disabled-color:   #7A7274;
-  --disabled-bg:      #1F080B;
+  --disabled-color:   #8F859F;
+  --disabled-bg:      #130D20;
 
   --border-radius:    8px;
 }
@@ -107,7 +107,7 @@ nav a:hover { color: var(--accent-light); }
   padding: 4px 9px;
   border-radius: 4px;
   font-size: 0.9rem;
-  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
+  box-shadow: 0 2px 8px rgba(196, 181, 253, 0.22);
 }
 
 .navbar-title {
@@ -343,9 +343,9 @@ h1 {
   white-space: nowrap;
 }
 
-.remote   { background-color: #ece9ff; color: #5b4bcb; border: 1px solid #dcd6ff; }
-.fulltime { background-color: var(--success-bg); color: var(--success-color); border: 1px solid #c3edd0; }
-.parttime { background-color: #e6e9ff; color: #3d4ba0; border: 1px solid #d4dbff; }
+.remote   { background-color: #1B1230; color: #9333EA; border: 1px solid #C4B5FD; }
+.fulltime { background-color: var(--success-bg); color: var(--success-color); border: 1px solid #10B981; }
+.parttime { background-color: #F8F7FC; color: #7C3AED; border: 1px solid #E9D5FF; }
 
 /* ------------------------------------------------------------
    11. JOB DETAILS / META ROW

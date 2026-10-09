@@ -8,17 +8,17 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Cinematic Header -->
-<section style="background: var(--primary-color); color: var(--text-light); padding: 4.5rem 0 3.5rem; border-bottom: 2px solid var(--accent-color);">
+<section style="background: radial-gradient(circle at 50% 20%, rgba(147, 51, 234, 0.22) 0%, rgba(16, 9, 29, 0.95) 70%, #080510 100%); color: var(--text-light); padding: 4.5rem 0 3.5rem; border-bottom: 1px solid var(--border-color);">
     <div class="container text-center" style="text-align: center;">
         <span class="section-eyebrow">Heritage &bull; Excellence &bull; Community</span>
         <h1 class="section-title" style="color: var(--text-light); margin-bottom: 0.8rem;">About Our Alumni Network</h1>
-        <p style="color: rgba(248, 244, 234, 0.75); max-width: 650px; margin: 0 auto; font-size: 1.05rem;">
+        <p style="color: var(--text-secondary); max-width: 650px; margin: 0 auto; font-size: 1.05rem;">
             Rooted in academic excellence and forward-looking leadership, our network links generations of university graduates across the world.
         </p>
     </div>
 </section>
 
-<!-- Mission & Vision Section (Dark Maroon Rhythm) -->
+<!-- Mission & Vision Section (Midnight Purple Rhythm) -->
 <section class="section section-dark reveal">
     <div class="container">
         <div class="grid grid-2" style="align-items: center;">
@@ -29,13 +29,13 @@ require_once __DIR__ . '/includes/header.php';
                 <p style="margin-bottom: 1.2rem; font-size: 1.05rem;">
                     The University Alumni Network was founded to preserve the camaraderie, intellectual curiosity, and shared pride nurtured during undergraduate and postgraduate years.
                 </p>
-                <p style="color: rgba(248, 244, 234, 0.75); font-size: 0.95rem;">
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
                     Today, it stands as an international bridge uniting scholars, industry leaders, founders, and undergraduates to create high-impact opportunities across all academic disciplines.
                 </p>
             </div>
             <div class="card card-dark" style="padding: 2.5rem; border-left: 4px solid var(--accent-color);">
-                <h3 style="color: var(--accent-color); font-size: 1.4rem; margin-bottom: 0.8rem;">Our Pillars of Impact</h3>
-                <ul style="list-style: none; color: rgba(248, 244, 234, 0.75);">
+                <h3 style="color: var(--accent-light); font-size: 1.4rem; margin-bottom: 0.8rem;">Our Pillars of Impact</h3>
+                <ul style="list-style: none; color: var(--text-secondary);">
                     <li style="margin-bottom: 1rem;">
                         <strong style="color: var(--text-light);">&#9656; Professional Mentorship:</strong> Guiding undergraduates through career pathways and research directions.
                     </li>

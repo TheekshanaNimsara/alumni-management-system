@@ -171,7 +171,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
     <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
         <div>
             <span class="section-eyebrow">Direct Alumni Communications</span>
-            <h1 class="section-title" style="color: var(--primary-color); font-size: 2rem; margin-bottom: 0.3rem;">
+            <h1 class="section-title" style="color: var(--text-light); font-size: 2rem; margin-bottom: 0.3rem;">
                 Alumni Messages
             </h1>
             <p style="color: var(--text-muted); font-size: 0.95rem;">
@@ -190,7 +190,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
     <?php endif; ?>
 
     <!-- Messaging Workspace: Two-column layout -->
-    <div class="card" style="padding: 0; overflow: hidden; display: flex; min-height: 600px; box-shadow: 0 10px 30px rgba(18, 3, 5, 0.08); border-top: 3px solid var(--accent-color);">
+    <div class="card" style="padding: 0; overflow: hidden; display: flex; min-height: 600px; box-shadow: var(--card-shadow); border-top: 3px solid var(--accent-color);">
 
         <!-- Left Column: Conversations Sidebar -->
         <div style="width: 320px; border-right: 1px solid var(--border-color); background: var(--bg-color); display: flex; flex-direction: column;">
@@ -204,7 +204,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                     <div style="padding: 2.5rem 1rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
                         <p style="font-size: 2rem; margin-bottom: 0.5rem;">&#128172;</p>
                         No active conversations yet.<br>
-                        <a href="directory.php" style="color: var(--primary-color); font-weight: 700;">Find alumni</a> to start messaging.
+                        <a href="directory.php" style="color: var(--accent-light); font-weight: 700;">Find alumni</a> to start messaging.
                     </div>
                 <?php else: ?>
                     <?php foreach ($conversations as $c): ?>
@@ -214,15 +214,15 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                             $unread = (int)($c['unread_count'] ?? 0);
                         ?>
                         <a href="messages.php?conversation_id=<?php echo $c['id']; ?>" class="conv-item" 
-                           style="display: flex; align-items: center; gap: 0.9rem; padding: 1rem 1.2rem; text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.05); transition: background 0.2s; <?php echo $isActive ? 'background: rgba(212, 175, 55, 0.15); border-left: 4px solid var(--accent-color);' : 'background: transparent;'; ?>"
-                           onmouseover="if (!this.style.borderLeft) this.style.background='rgba(0,0,0,0.03)';"
+                           style="display: flex; align-items: center; gap: 0.9rem; padding: 1rem 1.2rem; text-decoration: none; border-bottom: 1px solid var(--border-color); transition: background 0.2s; <?php echo $isActive ? 'background: rgba(124, 58, 237, 0.18); border-left: 4px solid var(--accent-color);' : 'background: transparent;'; ?>"
+                           onmouseover="if (!this.style.borderLeft) this.style.background='rgba(124, 58, 237, 0.08)';"
                            onmouseout="if (!this.style.borderLeft) this.style.background='transparent';">
                             
                             <img src="<?php echo $otherAvatar; ?>" alt="Avatar" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-color); flex-shrink: 0;">
                             
                             <div style="flex: 1; min-width: 0;">
                                 <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.2rem;">
-                                    <strong class="conv-name" style="color: var(--primary-color); font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    <strong class="conv-name" style="color: var(--text-light); font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         <?php echo htmlspecialchars($c['first_name'] . ' ' . $c['last_name']); ?>
                                     </strong>
                                     <?php if (!empty($c['last_message_time'])): ?>
@@ -236,7 +236,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                                         <?php echo htmlspecialchars($c['last_message'] ?? 'Started a conversation'); ?>
                                     </p>
                                     <?php if ($unread > 0): ?>
-                                        <span class="badge" style="background: var(--accent-color); color: var(--primary-color); font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 10px; margin-left: 0.5rem;">
+                                        <span class="badge" style="background: var(--accent-color); color: #FFFFFF; font-weight: 700; font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 10px; margin-left: 0.5rem;">
                                             <?php echo $unread; ?>
                                         </span>
                                     <?php endif; ?>
@@ -284,7 +284,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                 </div>
 
                 <!-- Message History Container (Autoscrolled) -->
-                <div id="messageContainer" style="flex: 1; overflow-y: auto; padding: 1.5rem; background: #0E0204; display: flex; flex-direction: column; gap: 1rem; max-height: 480px;">
+                <div id="messageContainer" style="flex: 1; overflow-y: auto; padding: 1.5rem; background: #10091D; display: flex; flex-direction: column; gap: 1rem; max-height: 480px;">
                     <?php if (empty($messagesList)): ?>
                         <div style="text-align: center; color: var(--text-muted); margin: auto; font-size: 0.92rem;">
                             <p>No messages yet in this conversation.</p>
@@ -296,13 +296,13 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                                 $isMe = ($msg['sender_id'] == $currentUserId);
                             ?>
                             <div style="display: flex; flex-direction: column; align-items: <?php echo $isMe ? 'flex-end' : 'flex-start'; ?>;">
-                                <div style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); <?php echo $isMe ? 'background: #4A1116; color: var(--text-light); border: 1px solid var(--border-gold); border-bottom-right-radius: 2px;' : 'background: #24070A; color: var(--text-color); border: 1px solid var(--border-color); border-bottom-left-radius: 2px;'; ?>">
+                                <div style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); <?php echo $isMe ? 'background: linear-gradient(135deg, #7C3AED, #9333EA); color: #FFFFFF; border: 1px solid rgba(196, 181, 253, 0.35); border-bottom-right-radius: 2px;' : 'background: #1B1230; color: var(--text-color); border: 1px solid var(--border-color); border-bottom-left-radius: 2px;'; ?>">
                                     <?php echo nl2br(htmlspecialchars($msg['message'])); ?>
                                 </div>
                                 <span style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; padding: 0 0.3rem;">
                                     <?php echo date('h:i A', strtotime($msg['sent_at'])); ?> 
                                     <?php if ($isMe): ?>
-                                        &bull; <?php echo ($msg['is_read'] == 1) ? '<span style="color: var(--accent-color);">&#10003;&#10003; Read</span>' : 'Sent'; ?>
+                                        &bull; <?php echo ($msg['is_read'] == 1) ? '<span style="color: var(--accent-light); font-weight: 700;">&#10003;&#10003; Read</span>' : 'Sent'; ?>
                                     <?php endif; ?>
                                 </span>
                             </div>

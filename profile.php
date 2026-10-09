@@ -200,7 +200,7 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
 ?>
 
 <!-- Profile Cover & Header -->
-<div style="background: linear-gradient(135deg, rgba(18, 3, 5, 0.98), rgba(36, 7, 10, 0.92), rgba(74, 17, 22, 0.85)); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 2px solid var(--accent-color);">
+<div style="background: radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.22) 0%, transparent 60%), linear-gradient(135deg, #10091D 0%, #130D20 60%, #1B1230 100%); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border-color);">
     <div class="container">
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem;">
             
@@ -209,7 +209,7 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
                     <img src="<?php echo $avatarUrl; ?>" alt="<?php echo htmlspecialchars($profile['first_name']); ?>" 
                          style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--accent-color); background: var(--surface-color); box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
                     <?php if ($isOwner): ?>
-                        <label for="profilePhotoInput" style="position: absolute; bottom: 0; right: 0; background: var(--accent-color); color: var(--primary-color); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.3);" title="Change Profile Picture">
+                        <label for="profilePhotoInput" style="position: absolute; bottom: 0; right: 0; background: var(--accent-color); color: #FFFFFF; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.3);" title="Change Profile Picture">
                             &#128247;
                         </label>
                         <form id="photoUploadForm" method="POST" action="profile.php" enctype="multipart/form-data" style="display: none;">
@@ -224,7 +224,7 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
                         <h1 style="font-size: 2rem; font-weight: 800; color: var(--text-light); margin: 0;">
                             <?php echo htmlspecialchars($profile['first_name'] . ' ' . $profile['last_name']); ?>
                         </h1>
-                        <span class="badge" style="background: rgba(212, 175, 55, 0.2); color: var(--accent-light); border: 1px solid var(--accent-color);">
+                        <span class="badge" style="background: rgba(124, 58, 237, 0.2); color: var(--pale-highlight); border: 1px solid rgba(196, 181, 253, 0.3);">
                             Class of <?php echo htmlspecialchars($profile['graduation_year']); ?>
                         </span>
                     </div>
@@ -236,7 +236,7 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
                         <?php endif; ?>
                     </p>
 
-                    <p style="color: rgba(248, 244, 234, 0.7); font-size: 0.92rem; margin: 0;">
+                    <p style="color: var(--text-secondary); font-size: 0.92rem; margin: 0;">
                         <span>&#127891; <?php echo htmlspecialchars($profile['degree_programme']); ?></span>
                         <?php if (!empty($profile['location'])): ?>
                             <span style="margin-left: 1rem;">&#128205; <?php echo htmlspecialchars($profile['location']); ?></span>
@@ -288,7 +288,7 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
             
             <!-- Biography Card -->
             <div class="card" style="margin-bottom: 2rem;">
-                <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid rgba(212, 175, 55, 0.2); padding-bottom: 0.6rem;">
+                <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--text-light); margin-bottom: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.6rem;">
                     About <?php echo htmlspecialchars($profile['first_name']); ?>
                 </h3>
                 <p style="color: var(--text-color); font-size: 1rem; line-height: 1.7;">
@@ -298,13 +298,13 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
 
             <!-- Professional Skills -->
             <div class="card" style="margin-bottom: 2rem;">
-                <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid rgba(212, 175, 55, 0.2); padding-bottom: 0.6rem;">
+                <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--text-light); margin-bottom: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.6rem;">
                     Key Skills & Expertise
                 </h3>
                 <?php if (!empty($skillsList)): ?>
                     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                         <?php foreach ($skillsList as $skill): ?>
-                            <span class="badge" style="background: rgba(36, 7, 10, 0.08); color: var(--primary-color); border: 1px solid var(--border-color); font-size: 0.88rem; padding: 0.4rem 0.8rem;">
+                            <span class="badge" style="background: rgba(124, 58, 237, 0.15); color: var(--pale-highlight); border: 1px solid rgba(196, 181, 253, 0.25); font-size: 0.88rem; padding: 0.4rem 0.8rem;">
                                 <?php echo htmlspecialchars($skill); ?>
                             </span>
                         <?php endforeach; ?>
@@ -317,7 +317,7 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
             <!-- Edit Profile Form (Rendered for Owner) -->
             <?php if ($isOwner): ?>
                 <div id="editProfileSection" class="card" style="border-top: 4px solid var(--accent-color);">
-                    <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--primary-color); margin-bottom: 0.5rem;">
+                    <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--text-light); margin-bottom: 0.5rem;">
                         &#9998; Edit Profile Details
                     </h3>
                     <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.8rem;">
@@ -432,7 +432,7 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
             
             <!-- Quick Meta Card -->
             <div class="card" style="margin-bottom: 2rem;">
-                <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid rgba(212, 175, 55, 0.2); padding-bottom: 0.5rem;">
+                <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--text-light); margin-bottom: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem;">
                     Academic & Contact Details
                 </h4>
 

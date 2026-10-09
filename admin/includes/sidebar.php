@@ -39,7 +39,7 @@ $baseUrl = get_base_url();
             <a href="<?php echo $baseUrl; ?>admin/reports.php" class="admin-nav-link <?php echo ($currentAdminPage === 'reports') ? 'active' : ''; ?>">
                 <span>&#9873;</span> Reports
                 <?php if ($pendingRepCount > 0): ?>
-                    <span class="badge" style="background: var(--accent-color); color: var(--primary-color); font-size: 0.72rem; padding: 0.15rem 0.45rem; border-radius: 10px; margin-left: auto;">
+                    <span class="badge" style="background: var(--accent-color); color: #FFFFFF; font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 10px; margin-left: auto;">
                         <?php echo $pendingRepCount; ?>
                     </span>
                 <?php endif; ?>
@@ -53,7 +53,7 @@ $baseUrl = get_base_url();
     </ul>
 
     <div class="admin-sidebar-footer">
-        <div style="font-size: 0.82rem; color: #C8C0B5; margin-bottom: 0.5rem;">
+        <div style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
             Signed in as <strong><?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Administrator'); ?></strong>
         </div>
         <div style="display: flex; gap: 0.5rem;">

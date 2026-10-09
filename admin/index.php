@@ -184,7 +184,7 @@ if (empty($recentPendingJobs)) {
             <!-- Events Moderation Preview -->
             <div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h3 style="color: var(--primary-color); font-weight: 800; font-size: 1.25rem;">Event Submissions</h3>
+                    <h3 style="color: var(--text-light); font-weight: 800; font-size: 1.25rem;">Event Submissions</h3>
                     <a href="events.php" style="color: var(--accent-color); font-weight: 700; font-size: 0.88rem;">Manage All &rarr;</a>
                 </div>
 
@@ -223,7 +223,7 @@ if (empty($recentPendingJobs)) {
             <!-- Jobs Moderation Preview -->
             <div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h3 style="color: var(--primary-color); font-weight: 800; font-size: 1.25rem;">Job Postings</h3>
+                    <h3 style="color: var(--text-light); font-weight: 800; font-size: 1.25rem;">Job Postings</h3>
                     <a href="jobs.php" style="color: var(--accent-color); font-weight: 700; font-size: 0.88rem;">Manage All &rarr;</a>
                 </div>
 

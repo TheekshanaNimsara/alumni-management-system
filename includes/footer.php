@@ -16,7 +16,7 @@ $baseUrl = isset($baseUrl) ? $baseUrl : get_base_url();
                     <p class="footer-tagline">
                         Connecting graduates. Creating opportunities. Building the future of our prestigious university community.
                     </p>
-                    <div style="font-size: 0.85rem; color: #C8C0B5;">
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);">
                         University Alumni Association &bull; Open to All Graduates &amp; Faculties
                     </div>
                 </div>
@@ -48,7 +48,7 @@ $baseUrl = isset($baseUrl) ? $baseUrl : get_base_url();
                     <ul class="footer-links">
                         <li><a href="mailto:alumni@university.edu">alumni@university.edu</a></li>
                         <li><a href="tel:+94112345678">+94 (11) 234-5678</a></li>
-                        <li><span style="color: #C8C0B5; font-size: 0.9rem;">University Campus Quad, Colombo</span></li>
+                        <li><span style="color: var(--text-secondary); font-size: 0.9rem;">University Campus Quad, Colombo</span></li>
                     </ul>
                 </div>
             </div>

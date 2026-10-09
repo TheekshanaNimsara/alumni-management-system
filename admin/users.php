@@ -119,7 +119,7 @@ if ($db_connected && $pdo) {
                 <p style="color: var(--text-muted); font-size: 0.95rem;">Search, manage status, adjust roles, and audit alumni accounts</p>
             </div>
             <div>
-                <a href="<?php echo $baseUrl; ?>directory.php" target="_blank" class="btn btn-outline-light btn-sm" style="color: var(--primary-color); border-color: var(--border-color);">
+                <a href="<?php echo $baseUrl; ?>directory.php" target="_blank" class="btn btn-outline-light btn-sm" style="color: var(--text-light); border-color: var(--border-color);">
                     Public Directory &rarr;
                 </a>
             </div>
@@ -194,7 +194,7 @@ if ($db_connected && $pdo) {
                                         <img src="<?php echo get_user_avatar_url($u['profile_picture'] ?? 'default-avatar.svg'); ?>" 
                                              alt="Avatar" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-color);">
                                         <div>
-                                            <strong class="user-fullname" style="color: var(--primary-color);">
+                                            <strong class="user-fullname" style="color: var(--text-light);">
                                                 <?php echo htmlspecialchars($u['first_name'] . ' ' . $u['last_name']); ?>
                                             </strong>
                                             <div class="user-email" style="font-size: 0.8rem; color: var(--text-muted);">
@@ -221,7 +221,7 @@ if ($db_connected && $pdo) {
                                 </td>
                                 <td>
                                     <?php if ($u['role'] === 'admin'): ?>
-                                        <span class="badge" style="background: rgba(212, 175, 55, 0.2); color: var(--accent-dark); border: 1px solid var(--accent-color);">Admin</span>
+                                        <span class="badge" style="background: rgba(124, 58, 237, 0.2); color: var(--pale-highlight); border: 1px solid rgba(196, 181, 253, 0.3);">Admin</span>
                                     <?php else: ?>
                                         <span class="badge badge-secondary">Alumni</span>
                                     <?php endif; ?>
@@ -237,7 +237,7 @@ if ($db_connected && $pdo) {
                                     <div style="display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap;">
                                         
                                         <!-- View Profile -->
-                                        <a href="../profile.php?id=<?php echo $u['id']; ?>" target="_blank" class="btn btn-outline-light btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem; color: var(--primary-color);" title="View Public Profile">
+                                        <a href="../profile.php?id=<?php echo $u['id']; ?>" target="_blank" class="btn btn-outline-light btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem; color: var(--accent-light);" title="View Public Profile">
                                             Profile
                                         </a>
 

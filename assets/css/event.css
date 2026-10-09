@@ -1,54 +1,54 @@
 /* ============================================================
    EVENT.CSS — KDU ALUMNI NETWORK
    Uses the shared KDU design system:
-   Deep Maroon (#24070A) + KDU Gold (#D4AF37) + Warm Ivory (#F3EFE6)
+   Midnight Purple (#080510) + Electric Violet (#9333EA) + Soft Lavender (#C4B5FD)
    ============================================================ */
 
 /* ------------------------------------------------------------
    1. CSS CUSTOM PROPERTIES (mirrors common style guide)
    ------------------------------------------------------------ */
 :root {
-  --primary-color:    #24070A;
-  --primary-dark:     #120305;
-  --primary-light:    #4A1116;
+  --primary-color:    #10091D;
+  --primary-dark:     #080510;
+  --primary-light:    #311E48;
 
-  --accent-color:     #D4AF37;
-  --accent-light:     #F1D77A;
-  --accent-dark:      #A98218;
+  --accent-color:     #7C3AED;
+  --accent-light:     #C4B5FD;
+  --accent-dark:      #9333EA;
 
-  --bg-color:         #120305;
-  --surface-color:    #24070A;
-  --surface-elevated: #301015;
+  --bg-color:         #080510;
+  --surface-color:    #10091D;
+  --surface-elevated: #241735;
 
-  --text-color:       #F3EFE6;
-  --text-light:       #F8F4EA;
-  --text-muted:       #B8ADB0;
-  --text-muted-light: #D4CBCD;
+  --text-color:       #F8F7FC;
+  --text-light:       #F8F7FC;
+  --text-muted:       #B9B2C9;
+  --text-muted-light: #B9B2C9;
 
-  --border-color:     rgba(74, 17, 22, 0.7);
-  --border-gold:      rgba(212, 175, 55, 0.25);
-  --border-dark:      rgba(212, 175, 55, 0.2);
+  --border-color:     rgba(196, 181, 253, 0.16);
+  --border-gold:      rgba(196, 181, 253, 0.22);
+  --border-dark:      rgba(196, 181, 253, 0.14);
 
-  --danger-color:     #E57373;
-  --danger-bg:        rgba(229, 115, 115, 0.15);
-  --success-color:    #4CAF50;
-  --success-bg:       rgba(76, 175, 80, 0.15);
-  --warning-color:    #F1D77A;
-  --warning-bg:       rgba(241, 215, 122, 0.15);
+  --danger-color:     #EF4444;
+  --danger-bg:        rgba(239, 68, 68, 0.15);
+  --success-color:    #10B981;
+  --success-bg:       rgba(16, 185, 129, 0.15);
+  --warning-color:    #C4B5FD;
+  --warning-bg:       rgba(245, 158, 11, 0.15);
 
-  --disabled-color:   #7A7274;
-  --disabled-bg:      #1F080B;
+  --disabled-color:   #8F859F;
+  --disabled-bg:      #130D20;
 
   --border-radius:    8px;
 
   /* Legacy aliases kept for backward-compat with any JS that reads CSS vars */
-  --navy: #24070A;
-  --gold:  #D4AF37;
-  --paper: #120305;
-  --line:  rgba(74, 17, 22, 0.7);
-  --text:  #F3EFE6;
-  --soft:  #B8ADB0;
-  --red:   #E57373;
+  --navy: #10091D;
+  --gold:  #7C3AED;
+  --paper: #080510;
+  --line:  rgba(196, 181, 253, 0.16);
+  --text:  #F8F7FC;
+  --soft:  #B9B2C9;
+  --red:   #EF4444;
 }
 
 /* ------------------------------------------------------------
@@ -172,7 +172,7 @@ img { max-width: 100%; display: block; }
   padding: 4px 9px;
   border-radius: 4px;
   font-size: 0.9rem;
-  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
+  box-shadow: 0 2px 8px rgba(196, 181, 253, 0.22);
 }
 
 .site-header nav {
@@ -328,7 +328,7 @@ img { max-width: 100%; display: block; }
   color: #fff;
   border: 1px solid var(--success-color);
 }
-.btn-approve:hover { background: #2e6647; }
+.btn-approve:hover { background: #10B981; }
 
 .btn-delete {
   background: var(--surface-color);
@@ -351,7 +351,7 @@ img { max-width: 100%; display: block; }
   color: #fff;
   border-color: var(--success-color);
 }
-.btn-primary.registered:hover { background: #2e6647; }
+.btn-primary.registered:hover { background: #10B981; }
 
 .btn:disabled, .btn.disabled {
   background-color: var(--disabled-bg);

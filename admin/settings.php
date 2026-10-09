@@ -39,13 +39,13 @@ $baseUrl = get_base_url();
         <div class="grid grid-2">
             
             <div class="card" style="padding: 2rem;">
-                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Platform Environment</h3>
+                <h3 style="color: var(--text-light); margin-bottom: 1rem;">Platform Environment</h3>
                 <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem;">
-                    <tr style="border-bottom: 1px solid rgba(216, 205, 187, 0.45);">
+                    <tr style="border-bottom: 1px solid var(--border-color);">
                         <td style="padding: 0.75rem 0; font-weight: 600;">PHP Version:</td>
                         <td style="color: var(--text-muted);"><?php echo phpversion(); ?></td>
                     </tr>
-                    <tr style="border-bottom: 1px solid rgba(216, 205, 187, 0.45);">
+                    <tr style="border-bottom: 1px solid var(--border-color);">
                         <td style="padding: 0.75rem 0; font-weight: 600;">Database Connection:</td>
                         <td>
                             <?php if ($db_connected): ?>
@@ -55,11 +55,11 @@ $baseUrl = get_base_url();
                             <?php endif; ?>
                         </td>
                     </tr>
-                    <tr style="border-bottom: 1px solid rgba(216, 205, 187, 0.45);">
+                    <tr style="border-bottom: 1px solid var(--border-color);">
                         <td style="padding: 0.75rem 0; font-weight: 600;">Database Name:</td>
                         <td style="color: var(--text-muted);"><?php echo htmlspecialchars($db_name); ?></td>
                     </tr>
-                    <tr style="border-bottom: 1px solid rgba(216, 205, 187, 0.45);">
+                    <tr style="border-bottom: 1px solid var(--border-color);">
                         <td style="padding: 0.75rem 0; font-weight: 600;">Server Software:</td>
                         <td style="color: var(--text-muted);"><?php echo htmlspecialchars($_SERVER['SERVER_SOFTWARE'] ?? 'Apache / XAMPP'); ?></td>
                     </tr>
@@ -71,25 +71,25 @@ $baseUrl = get_base_url();
             </div>
 
             <div class="card" style="padding: 2rem;">
-                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Design System Guidelines</h3>
+                <h3 style="color: var(--text-light); margin-bottom: 1rem;">Design System Guidelines</h3>
                 <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.2rem;">
-                    The platform strictly complies with the university's creative cinematic design specifications:
+                    The platform complies with the cinematic dark-purple editorial design specifications:
                 </p>
                 <div style="display: flex; gap: 0.8rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #24070A; color: #F8F4EA; border-radius: 6px; text-align: center; font-size: 0.8rem;">
-                        <strong>Deep Maroon</strong><br>#24070A
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #080510; color: #F8F7FC; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
+                        <strong>Midnight Purple</strong><br>#080510
                     </div>
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #D4AF37; color: #120305; border-radius: 6px; text-align: center; font-size: 0.8rem;">
-                        <strong>KDU Gold</strong><br>#D4AF37
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #7C3AED; color: #FFFFFF; border-radius: 6px; text-align: center; font-size: 0.8rem;">
+                        <strong>Electric Violet</strong><br>#7C3AED
                     </div>
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #F3EFE6; color: #242124; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid #D8CDBB;">
-                        <strong>Warm Ivory</strong><br>#F3EFE6
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #241735; color: #C4B5FD; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
+                        <strong>Soft Lavender</strong><br>#C4B5FD
                     </div>
                 </div>
                 <div style="font-size: 0.88rem; color: var(--text-muted);">
                     &bull; Zero external UI frameworks (No Bootstrap/Tailwind)<br>
-                    &bull; Zero animation or 3D libraries (Pure CSS transitions &amp; transforms)<br>
-                    &bull; Beginner-friendly code for university undergraduate students
+                    &bull; Zero animation or 3D libraries (Pure CSS transitions &amp; keyframes)<br>
+                    &bull; High-contrast accessible midnight-purple editorial identity
                 </div>
             </div>
 
