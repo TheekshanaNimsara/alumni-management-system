@@ -160,55 +160,76 @@
             <div class="grid grid-3 reveal-stagger">
                 <!-- Alumni 1 -->
                 <div class="card alumni-card">
+                    <div class="alumni-header-ribbon">
+                        <span class="alumni-badge-grad">Class of 2022</span>
+                    </div>
                     <div class="alumni-avatar-wrapper">
                         <img src="./assets/images/default-avatar.svg" alt="John Doe" class="alumni-avatar">
                     </div>
                     <h3 class="alumni-name">John Doe</h3>
-                    <div class="alumni-degree">B.Sc. in Computer Engineering</div>
-                    <div class="alumni-role">Software Engineer</div>
-                    <div class="alumni-company">Google</div>
-                    <div class="alumni-badge-grad">2022 Graduate</div>
-                    <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.8rem; line-height: 1.5;">
+                    <div class="alumni-credentials">
+                        <div class="alumni-role-company">
+                            <span class="alumni-role">Software Engineer</span>
+                            <span class="alumni-company-tag">Google</span>
+                        </div>
+                        <div class="alumni-degree">B.Sc. in Computer Engineering</div>
+                    </div>
+                    <div class="alumni-divider"></div>
+                    <p class="alumni-desc">
                         Specializing in distributed cloud systems, high-scale web platforms, and mentoring university students.
                     </p>
-                    <button type="button" class="btn btn-outline-gold btn-sm btn-block" style="margin-top: 1rem;" onclick="showAlumniProfile('John Doe', 'Software Engineer', 'Google', '2022', 'B.Sc. in Computer Engineering');">
-                        View Profile
+                    <button type="button" class="btn btn-outline-gold btn-sm btn-block alumni-cta" onclick="showAlumniProfile('John Doe', 'Software Engineer', 'Google', '2022', 'B.Sc. in Computer Engineering');">
+                        View Profile &rarr;
                     </button>
                 </div>
 
                 <!-- Alumni 2 -->
                 <div class="card alumni-card">
+                    <div class="alumni-header-ribbon">
+                        <span class="alumni-badge-grad">Class of 2020</span>
+                    </div>
                     <div class="alumni-avatar-wrapper">
                         <img src="./assets/images/default-avatar.svg" alt="Sarah Jenkins" class="alumni-avatar">
                     </div>
                     <h3 class="alumni-name">Sarah Jenkins</h3>
-                    <div class="alumni-degree">B.Sc. in Computer Engineering</div>
-                    <div class="alumni-role">Lead AI Researcher</div>
-                    <div class="alumni-company">Google DeepMind</div>
-                    <div class="alumni-badge-grad">2020 Graduate</div>
-                    <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.8rem; line-height: 1.5;">
+                    <div class="alumni-credentials">
+                        <div class="alumni-role-company">
+                            <span class="alumni-role">Lead AI Researcher</span>
+                            <span class="alumni-company-tag">Google DeepMind</span>
+                        </div>
+                        <div class="alumni-degree">B.Sc. in Computer Engineering</div>
+                    </div>
+                    <div class="alumni-divider"></div>
+                    <p class="alumni-desc">
                         Leading research on large generative AI models, on-device intelligence, and autonomous reasoning.
                     </p>
-                    <button type="button" class="btn btn-outline-gold btn-sm btn-block" style="margin-top: 1rem;" onclick="showAlumniProfile('Sarah Jenkins', 'Lead AI Researcher', 'Google DeepMind', '2020', 'B.Sc. in Computer Engineering');">
-                        View Profile
+                    <button type="button" class="btn btn-outline-gold btn-sm btn-block alumni-cta" onclick="showAlumniProfile('Sarah Jenkins', 'Lead AI Researcher', 'Google DeepMind', '2020', 'B.Sc. in Computer Engineering');">
+                        View Profile &rarr;
                     </button>
                 </div>
 
                 <!-- Alumni 3 -->
                 <div class="card alumni-card">
+                    <div class="alumni-header-ribbon">
+                        <span class="alumni-badge-grad">Class of 2019</span>
+                    </div>
                     <div class="alumni-avatar-wrapper">
                         <img src="./assets/images/default-avatar.svg" alt="Michael Chen" class="alumni-avatar">
                     </div>
                     <h3 class="alumni-name">Michael Chen</h3>
-                    <div class="alumni-degree">B.Sc. in Electrical Engineering</div>
-                    <div class="alumni-role">Senior Systems Architect</div>
-                    <div class="alumni-company">Intel Corporation</div>
-                    <div class="alumni-badge-grad">2019 Graduate</div>
-                    <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.8rem; line-height: 1.5;">
+                    <div class="alumni-credentials">
+                        <div class="alumni-role-company">
+                            <span class="alumni-role">Senior Systems Architect</span>
+                            <span class="alumni-company-tag">Intel Corporation</span>
+                        </div>
+                        <div class="alumni-degree">B.Sc. in Electrical Engineering</div>
+                    </div>
+                    <div class="alumni-divider"></div>
+                    <p class="alumni-desc">
                         Architecting high-performance computing chip interconnects, microelectronics, and silicon wafer design.
                     </p>
-                    <button type="button" class="btn btn-outline-gold btn-sm btn-block" style="margin-top: 1rem;" onclick="showAlumniProfile('Michael Chen', 'Senior Systems Architect', 'Intel Corporation', '2019', 'B.Sc. in Electrical Engineering');">
-                        View Profile
+                    <button type="button" class="btn btn-outline-gold btn-sm btn-block alumni-cta" onclick="showAlumniProfile('Michael Chen', 'Senior Systems Architect', 'Intel Corporation', '2019', 'B.Sc. in Electrical Engineering');">
+                        View Profile &rarr;
                     </button>
                 </div>
             </div>
@@ -239,14 +260,27 @@
                 <!-- Event 1 -->
                 <div class="card card-dark event-card">
                     <div class="event-image-box">
-                        <img src="./assets/images/event-placeholder.svg" alt="Event Banner" class="event-image">
-                        <span class="event-date-badge">24 OCT 2026</span>
+                        <img src="./assets/images/event-placeholder.svg" alt="Alumni Meet 2026" class="event-image">
+                        <div class="event-artwork-overlay"></div>
+                        <div class="event-badge-row">
+                            <span class="event-date-badge">24 OCT 2026</span>
+                            <span class="event-category-badge">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                Gala Reunion
+                            </span>
+                        </div>
                     </div>
                     <div class="event-body">
                         <div class="event-meta">
-                            <span>&#128338; 05:00 PM</span>
-                            <span>&bull;</span>
-                            <span>&#128205; Grand Auditorium</span>
+                            <span>
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                05:00 PM
+                            </span>
+                            <span class="event-meta-sep">&bull;</span>
+                            <span>
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                Grand Auditorium
+                            </span>
                         </div>
                         <h3 class="event-title">ALUMNI MEET 2026</h3>
                         <p class="event-desc">
@@ -261,14 +295,27 @@
                 <!-- Event 2 -->
                 <div class="card card-dark event-card">
                     <div class="event-image-box">
-                        <img src="./assets/images/event-placeholder.svg" alt="Event Banner" class="event-image">
-                        <span class="event-date-badge">15 NOV 2026</span>
+                        <img src="./assets/images/event-placeholder.svg" alt="Global Tech & AI Summit" class="event-image">
+                        <div class="event-artwork-overlay"></div>
+                        <div class="event-badge-row">
+                            <span class="event-date-badge">15 NOV 2026</span>
+                            <span class="event-category-badge">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                Tech Keynote
+                            </span>
+                        </div>
                     </div>
                     <div class="event-body">
                         <div class="event-meta">
-                            <span>&#128338; 10:00 AM</span>
-                            <span>&bull;</span>
-                            <span>&#128205; University Main Hall</span>
+                            <span>
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                10:00 AM
+                            </span>
+                            <span class="event-meta-sep">&bull;</span>
+                            <span>
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                University Main Hall
+                            </span>
                         </div>
                         <h3 class="event-title">GLOBAL TECH &amp; AI SUMMIT</h3>
                         <p class="event-desc">
@@ -283,14 +330,27 @@
                 <!-- Event 3 -->
                 <div class="card card-dark event-card">
                     <div class="event-image-box">
-                        <img src="./assets/images/event-placeholder.svg" alt="Event Banner" class="event-image">
-                        <span class="event-date-badge">05 DEC 2026</span>
+                        <img src="./assets/images/event-placeholder.svg" alt="Career & Internship Expo" class="event-image">
+                        <div class="event-artwork-overlay"></div>
+                        <div class="event-badge-row">
+                            <span class="event-date-badge">05 DEC 2026</span>
+                            <span class="event-category-badge">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                Career Nexus
+                            </span>
+                        </div>
                     </div>
                     <div class="event-body">
                         <div class="event-meta">
-                            <span>&#128338; 09:00 AM</span>
-                            <span>&bull;</span>
-                            <span>&#128205; Convocation Grounds</span>
+                            <span>
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                09:00 AM
+                            </span>
+                            <span class="event-meta-sep">&bull;</span>
+                            <span>
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                Convocation Grounds
+                            </span>
                         </div>
                         <h3 class="event-title">CAREER &amp; INTERNSHIP EXPO</h3>
                         <p class="event-desc">
@@ -326,43 +386,91 @@
             <div class="grid grid-3 reveal-stagger">
                 <!-- Job 1 -->
                 <div class="card job-card">
-                    <span class="job-type-pill">Full-Time</span>
+                    <div class="job-card-header">
+                        <span class="job-type-pill">Full-Time</span>
+                        <span class="job-badge-verified">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                            Alumni Network
+                        </span>
+                    </div>
                     <h3 class="job-title">Software Engineer</h3>
-                    <div class="job-company">ABC Technologies</div>
-                    <div class="job-location">&#128205; Colombo, Sri Lanka</div>
+                    <div class="job-company-row">
+                        <span class="job-company">ABC Technologies</span>
+                    </div>
+                    <div class="job-meta-strip">
+                        <span>
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Colombo, Sri Lanka
+                        </span>
+                        <span class="job-meta-sep">&bull;</span>
+                        <span>On-Site</span>
+                    </div>
+                    <div class="job-divider"></div>
                     <p class="job-desc">
                         Seeking full-stack engineers proficient in modern web applications, relational schemas, and scalable microservices.
                     </p>
-                    <button type="button" class="btn btn-primary btn-block btn-sm" onclick="triggerJobApplyDemo('Software Engineer', 'ABC Technologies');">
-                        APPLY FOR POSITION
+                    <button type="button" class="btn btn-primary btn-block btn-sm job-cta" onclick="triggerJobApplyDemo('Software Engineer', 'ABC Technologies');">
+                        Apply for Position &rarr;
                     </button>
                 </div>
 
                 <!-- Job 2 -->
                 <div class="card job-card">
-                    <span class="job-type-pill">Hybrid</span>
+                    <div class="job-card-header">
+                        <span class="job-type-pill">Hybrid</span>
+                        <span class="job-badge-verified">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                            Alumni Network
+                        </span>
+                    </div>
                     <h3 class="job-title">Cloud Solutions Architect</h3>
-                    <div class="job-company">Virtusa Corporation</div>
-                    <div class="job-location">&#128205; Colombo / Remote</div>
+                    <div class="job-company-row">
+                        <span class="job-company">Virtusa Corporation</span>
+                    </div>
+                    <div class="job-meta-strip">
+                        <span>
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Colombo / Remote
+                        </span>
+                        <span class="job-meta-sep">&bull;</span>
+                        <span>Hybrid</span>
+                    </div>
+                    <div class="job-divider"></div>
                     <p class="job-desc">
                         Lead enterprise cloud architecture implementations across AWS and Azure for multinational financial banking clients.
                     </p>
-                    <button type="button" class="btn btn-primary btn-block btn-sm" onclick="triggerJobApplyDemo('Cloud Solutions Architect', 'Virtusa Corporation');">
-                        APPLY FOR POSITION
+                    <button type="button" class="btn btn-primary btn-block btn-sm job-cta" onclick="triggerJobApplyDemo('Cloud Solutions Architect', 'Virtusa Corporation');">
+                        Apply for Position &rarr;
                     </button>
                 </div>
 
                 <!-- Job 3 -->
                 <div class="card job-card">
-                    <span class="job-type-pill">Full-Time</span>
+                    <div class="job-card-header">
+                        <span class="job-type-pill">Full-Time</span>
+                        <span class="job-badge-verified">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                            Alumni Network
+                        </span>
+                    </div>
                     <h3 class="job-title">Associate AI Engineer</h3>
-                    <div class="job-company">WSO2</div>
-                    <div class="job-location">&#128205; Colombo, Sri Lanka</div>
+                    <div class="job-company-row">
+                        <span class="job-company">WSO2</span>
+                    </div>
+                    <div class="job-meta-strip">
+                        <span>
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Colombo, Sri Lanka
+                        </span>
+                        <span class="job-meta-sep">&bull;</span>
+                        <span>On-Site</span>
+                    </div>
+                    <div class="job-divider"></div>
                     <p class="job-desc">
                         Develop LLM integrations, retrieval augmented generation systems, and open-source enterprise platform APIs.
                     </p>
-                    <button type="button" class="btn btn-primary btn-block btn-sm" onclick="triggerJobApplyDemo('Associate AI Engineer', 'WSO2');">
-                        APPLY FOR POSITION
+                    <button type="button" class="btn btn-primary btn-block btn-sm job-cta" onclick="triggerJobApplyDemo('Associate AI Engineer', 'WSO2');">
+                        Apply for Position &rarr;
                     </button>
                 </div>
             </div>

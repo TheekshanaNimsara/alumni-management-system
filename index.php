@@ -133,17 +133,29 @@ if (empty($recentJobs)) {
         <div class="grid grid-3 reveal-stagger">
             <?php foreach ($featuredAlumni as $alumni): ?>
                 <div class="card alumni-card">
+                    <div class="alumni-header-ribbon">
+                        <span class="alumni-badge-grad">Class of <?php echo htmlspecialchars($alumni['graduation_year']); ?></span>
+                    </div>
                     <div class="alumni-avatar-wrapper">
                         <img src="assets/images/<?php echo !empty($alumni['profile_picture']) ? htmlspecialchars($alumni['profile_picture']) : 'default-avatar.svg'; ?>" 
                              alt="<?php echo htmlspecialchars($alumni['first_name'] . ' ' . $alumni['last_name']); ?>" 
                              class="alumni-avatar">
                     </div>
                     <h3 class="alumni-name"><?php echo htmlspecialchars($alumni['first_name'] . ' ' . $alumni['last_name']); ?></h3>
-                    <div class="alumni-degree"><?php echo htmlspecialchars($alumni['degree_programme']); ?></div>
-                    <div class="alumni-role"><?php echo htmlspecialchars($alumni['current_job_title']); ?></div>
-                    <div class="alumni-company"><?php echo htmlspecialchars($alumni['current_company']); ?></div>
-                    <div class="alumni-badge-grad"><?php echo htmlspecialchars($alumni['graduation_year']); ?> Graduate</div>
-                    <a href="directory.php" class="btn btn-outline-gold btn-sm btn-block" style="margin-top: 1rem;">View Profile</a>
+                    <div class="alumni-credentials">
+                        <div class="alumni-role-company">
+                            <span class="alumni-role"><?php echo htmlspecialchars($alumni['current_job_title']); ?></span>
+                            <?php if (!empty($alumni['current_company'])): ?>
+                                <span class="alumni-company-tag"><?php echo htmlspecialchars($alumni['current_company']); ?></span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="alumni-degree"><?php echo htmlspecialchars($alumni['degree_programme']); ?></div>
+                    </div>
+                    <div class="alumni-divider"></div>
+                    <p class="alumni-desc">
+                        <?php echo !empty($alumni['bio']) ? htmlspecialchars(substr($alumni['bio'], 0, 110)) . '...' : 'Distinguished alumnus contributing across industry and active in student mentorship.'; ?>
+                    </p>
+                    <a href="directory.php" class="btn btn-outline-gold btn-sm btn-block alumni-cta">View Profile &rarr;</a>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -172,22 +184,35 @@ if (empty($recentJobs)) {
             <?php foreach ($upcomingEvents as $event): ?>
                 <div class="card card-dark event-card">
                     <div class="event-image-box">
-                        <img src="assets/images/event-placeholder.svg" alt="Event Banner" class="event-image">
-                        <span class="event-date-badge">
-                            <?php echo date('d M Y', strtotime($event['event_date'])); ?>
-                        </span>
+                        <img src="assets/images/event-placeholder.svg" alt="<?php echo htmlspecialchars($event['title']); ?>" class="event-image">
+                        <div class="event-artwork-overlay"></div>
+                        <div class="event-badge-row">
+                            <span class="event-date-badge">
+                                <?php echo date('d M Y', strtotime($event['event_date'])); ?>
+                            </span>
+                            <span class="event-category-badge">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                Campus Event
+                            </span>
+                        </div>
                     </div>
                     <div class="event-body">
                         <div class="event-meta">
-                            <span>&#128338; <?php echo date('h:i A', strtotime($event['event_time'])); ?></span>
-                            <span>&bull;</span>
-                            <span>&#128205; <?php echo htmlspecialchars($event['location']); ?></span>
+                            <span>
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <?php echo date('h:i A', strtotime($event['event_time'])); ?>
+                            </span>
+                            <span class="event-meta-sep">&bull;</span>
+                            <span>
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                <?php echo htmlspecialchars($event['location']); ?>
+                            </span>
                         </div>
                         <h3 class="event-title"><?php echo htmlspecialchars($event['title']); ?></h3>
                         <p class="event-desc">
                             <?php echo htmlspecialchars(substr($event['description'], 0, 110)) . '...'; ?>
                         </p>
-                        <a href="events.php" class="btn btn-outline-gold btn-block btn-sm">VIEW EVENT</a>
+                        <a href="events.php" class="btn btn-gold btn-block btn-sm">VIEW EVENT</a>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -216,12 +241,26 @@ if (empty($recentJobs)) {
         <div class="grid grid-3 reveal-stagger">
             <?php foreach ($recentJobs as $job): ?>
                 <div class="card job-card">
-                    <span class="job-type-pill"><?php echo htmlspecialchars($job['job_type']); ?></span>
+                    <div class="job-card-header">
+                        <span class="job-type-pill"><?php echo htmlspecialchars($job['job_type']); ?></span>
+                        <span class="job-badge-verified">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                            Alumni Network
+                        </span>
+                    </div>
                     <h3 class="job-title"><?php echo htmlspecialchars($job['title']); ?></h3>
-                    <div class="job-company"><?php echo htmlspecialchars($job['company']); ?></div>
-                    <div class="job-location">&#128205; <?php echo htmlspecialchars($job['location']); ?></div>
+                    <div class="job-company-row">
+                        <span class="job-company"><?php echo htmlspecialchars($job['company']); ?></span>
+                    </div>
+                    <div class="job-meta-strip">
+                        <span>
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <?php echo htmlspecialchars($job['location']); ?>
+                        </span>
+                    </div>
+                    <div class="job-divider"></div>
                     <p class="job-desc"><?php echo htmlspecialchars(substr($job['description'], 0, 120)) . '...'; ?></p>
-                    <a href="jobs.php" class="btn btn-primary btn-block btn-sm">VIEW JOB</a>
+                    <a href="jobs.php" class="btn btn-primary btn-block btn-sm job-cta">Apply for Position &rarr;</a>
                 </div>
             <?php endforeach; ?>
         </div>

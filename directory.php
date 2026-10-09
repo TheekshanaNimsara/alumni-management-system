@@ -97,11 +97,12 @@ if ($db_connected && $pdo) {
 ?>
 
 <!-- Cinematic Header Section -->
-<section style="background: var(--primary-color); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 2px solid var(--accent-color);">
+<section style="background: radial-gradient(circle at 50% 20%, rgba(74, 17, 22, 0.45) 0%, rgba(36, 7, 10, 0.95) 70%, #100305 100%); color: var(--text-light); padding: 4.5rem 0 3.5rem; border-bottom: 1px solid rgba(212, 175, 55, 0.25);">
     <div class="container text-center" style="text-align: center;">
         <span class="section-eyebrow">Distinguished Graduates &bull; Global Leaders &bull; Mentors</span>
         <h1 class="section-title" style="color: var(--text-light); margin-bottom: 0.8rem;">Alumni Directory</h1>
-        <p style="color: rgba(248, 244, 234, 0.75); max-width: 600px; margin: 0 auto;">
+        <div class="gold-divider"></div>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 1rem auto 0;">
             Connect with alumni across international technology hubs, research institutes, and entrepreneurial ventures.
         </p>
     </div>
@@ -169,49 +170,52 @@ if ($db_connected && $pdo) {
                     $skills = !empty($alumnus['skills']) ? array_filter(array_map('trim', explode(',', $alumnus['skills']))) : [];
                     $avatar = get_user_avatar_url($alumnus['profile_picture'] ?? 'default-avatar.svg');
                 ?>
-                <div class="card alumni-card" style="text-align: center; display: flex; flex-direction: column;">
+                <div class="card alumni-card">
                     
-                    <div style="margin-bottom: 1rem; position: relative;">
+                    <div class="alumni-header-ribbon">
+                        <span class="alumni-cohort-badge">Class of <?php echo htmlspecialchars($alumnus['graduation_year']); ?></span>
+                    </div>
+
+                    <div class="alumni-avatar-wrapper">
                         <img src="<?php echo $avatar; ?>" 
                              alt="<?php echo htmlspecialchars($alumnus['first_name']); ?>" 
                              class="alumni-avatar">
-                        <span class="badge" style="position: absolute; bottom: 0; right: 50%; transform: translateX(50%); background: var(--primary-color); color: var(--accent-light); border: 1px solid var(--accent-color); font-size: 0.72rem;">
-                            Class of <?php echo htmlspecialchars($alumnus['graduation_year']); ?>
-                        </span>
                     </div>
 
-                    <h3 class="alumni-name" style="margin-bottom: 0.25rem;">
-                        <a href="profile.php?id=<?php echo $alumnus['id']; ?>" style="color: var(--primary-color); text-decoration: none;">
+                    <h3 class="alumni-name">
+                        <a href="profile.php?id=<?php echo $alumnus['id']; ?>" style="color: inherit; text-decoration: none;">
                             <?php echo htmlspecialchars($alumnus['first_name'] . ' ' . $alumnus['last_name']); ?>
                         </a>
                     </h3>
                     
-                    <p class="alumni-role" style="margin-bottom: 0.4rem; font-weight: 700;">
-                        <?php echo htmlspecialchars(!empty($alumnus['current_job_title']) ? $alumnus['current_job_title'] : 'Alumnus'); ?>
-                        <?php if (!empty($alumnus['current_company'])): ?>
-                            <span class="alumni-company">&bull; <?php echo htmlspecialchars($alumnus['current_company']); ?></span>
+                    <div class="alumni-credentials">
+                        <div class="alumni-role-company">
+                            <span class="alumni-role"><?php echo htmlspecialchars(!empty($alumnus['current_job_title']) ? $alumnus['current_job_title'] : 'Alumnus'); ?></span>
+                            <?php if (!empty($alumnus['current_company'])): ?>
+                                <span class="alumni-company-tag"><?php echo htmlspecialchars($alumnus['current_company']); ?></span>
+                            <?php endif; ?>
+                        </div>
+
+                        <p class="alumni-degree">&#127891; <?php echo htmlspecialchars($alumnus['degree_programme']); ?></p>
+
+                        <?php if (!empty($alumnus['location'])): ?>
+                            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">
+                                &#128205; <?php echo htmlspecialchars($alumnus['location']); ?>
+                            </p>
                         <?php endif; ?>
-                    </p>
+                    </div>
 
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.8rem;">
-                        &#127891; <?php echo htmlspecialchars($alumnus['degree_programme']); ?>
-                    </p>
+                    <div class="alumni-divider"></div>
 
-                    <?php if (!empty($alumnus['location'])): ?>
-                        <p class="alumni-location" style="font-size: 0.82rem; margin-bottom: 0.8rem;">
-                            &#128205; <?php echo htmlspecialchars($alumnus['location']); ?>
-                        </p>
-                    <?php endif; ?>
-
-                    <p class="alumni-bio" style="flex: 1; margin-bottom: 1rem; font-size: 0.9rem;">
+                    <p class="alumni-desc">
                         <?php echo htmlspecialchars(!empty($alumnus['bio']) ? $alumnus['bio'] : 'Distinguished university graduate.'); ?>
                     </p>
 
                     <!-- Skills preview -->
                     <?php if (!empty($skills)): ?>
-                        <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; justify-content: center; margin-bottom: 1.2rem;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; justify-content: center; margin-bottom: 1.2rem; position: relative; z-index: 1;">
                             <?php foreach (array_slice($skills, 0, 3) as $sk): ?>
-                                <span class="badge" style="font-size: 0.72rem; background: rgba(36, 7, 10, 0.05); color: var(--primary-color); border: 1px solid var(--border-color);">
+                                <span class="badge" style="font-size: 0.72rem; background: rgba(212, 175, 55, 0.1); color: var(--accent-light); border: 1px solid rgba(212, 175, 55, 0.25);">
                                     <?php echo htmlspecialchars($sk); ?>
                                 </span>
                             <?php endforeach; ?>
@@ -219,8 +223,8 @@ if ($db_connected && $pdo) {
                     <?php endif; ?>
 
                     <!-- Action Buttons -->
-                    <div style="display: flex; gap: 0.4rem; justify-content: center; padding-top: 1rem; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
-                        <a href="profile.php?id=<?php echo $alumnus['id']; ?>" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; color: var(--primary-color); border-color: var(--border-color);">
+                    <div style="display: flex; gap: 0.4rem; justify-content: center; padding-top: 1rem; border-top: 1px solid rgba(212, 175, 55, 0.15); flex-wrap: wrap; position: relative; z-index: 1;">
+                        <a href="profile.php?id=<?php echo $alumnus['id']; ?>" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; color: var(--text-light); border-color: rgba(212, 175, 55, 0.3);">
                             Profile
                         </a>
 
@@ -241,7 +245,7 @@ if ($db_connected && $pdo) {
                         <?php endif; ?>
 
                         <?php if ($isLoggedIn && $alumnus['id'] != $currentUserId): ?>
-                            <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.72rem; color: var(--text-muted); border-color: var(--border-color);" 
+                            <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.72rem; color: var(--text-muted); border-color: rgba(255, 255, 255, 0.15);" 
                                     onclick="openReportModal(<?php echo $alumnus['id']; ?>, 'user', '<?php echo htmlspecialchars(addslashes($alumnus['first_name'] . ' ' . $alumnus['last_name'])); ?>');" title="Report Profile">
                                 &#9873;
                             </button>

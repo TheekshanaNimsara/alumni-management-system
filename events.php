@@ -191,7 +191,7 @@ if (empty($events)) {
                 
                 <div class="event-image-box" style="position: relative;">
                     <img src="assets/images/event-placeholder.svg" alt="Event Banner" class="event-image">
-                    
+                    <div class="event-artwork-overlay"></div>
                     <span class="event-date-badge">
                         <?php echo date('d M Y', strtotime($event['event_date'])); ?>
                     </span>

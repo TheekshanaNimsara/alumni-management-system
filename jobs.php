@@ -181,20 +181,20 @@ if (empty($jobs) && empty($typeFilter)) {
             <?php 
                 $appStatus = $job['application_status'] ?? null;
             ?>
-            <div class="card job-card" style="border-top: 3px solid var(--accent-color); display: flex; flex-direction: column;">
+            <div class="card job-card" style="display: flex; flex-direction: column;">
                 
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; gap: 0.8rem;">
                     <div>
-                        <span class="badge" style="background: rgba(36, 7, 10, 0.08); color: var(--primary-color); border: 1px solid var(--border-color); margin-bottom: 0.5rem; display: inline-block;">
+                        <span class="job-company" style="display: inline-block; margin-bottom: 0.4rem;">
                             <?php echo htmlspecialchars($job['company']); ?>
                         </span>
-                        <h3 style="color: var(--primary-color); font-size: 1.35rem; margin: 0; font-weight: 800;">
+                        <h3 class="job-title" style="margin: 0;">
                             <?php echo htmlspecialchars($job['title']); ?>
                         </h3>
                     </div>
 
                     <div style="text-align: right; flex-shrink: 0;">
-                        <span class="badge" style="background: rgba(212, 175, 55, 0.15); color: var(--accent-dark); border: 1px solid var(--accent-color);">
+                        <span class="job-type-pill">
                             <?php echo htmlspecialchars($job['job_type']); ?>
                         </span>
                     </div>
@@ -210,20 +210,20 @@ if (empty($jobs) && empty($typeFilter)) {
                     <?php endif; ?>
                 </div>
 
-                <p style="color: var(--text-color); font-size: 0.94rem; line-height: 1.6; margin-bottom: 1rem; flex: 1;">
+                <p class="job-desc" style="margin-bottom: 1rem; flex: 1;">
                     <?php echo nl2br(htmlspecialchars($job['description'])); ?>
                 </p>
 
                 <?php if (!empty($job['requirements'])): ?>
-                    <div style="background: #faf9f6; border-left: 3px solid var(--accent-color); padding: 0.7rem 1rem; border-radius: 4px; font-size: 0.86rem; color: var(--text-color); margin-bottom: 1.2rem;">
-                        <strong style="color: var(--primary-color);">Requirements:</strong> <?php echo htmlspecialchars($job['requirements']); ?>
+                    <div style="background: rgba(36, 7, 10, 0.45); border-left: 3px solid var(--accent-color); border: 1px solid rgba(212, 175, 55, 0.2); padding: 0.7rem 1rem; border-radius: 4px; font-size: 0.86rem; color: var(--text-color); margin-bottom: 1.2rem;">
+                        <strong style="color: var(--accent-light);">Requirements:</strong> <?php echo htmlspecialchars($job['requirements']); ?>
                     </div>
                 <?php endif; ?>
 
                 <!-- Footer Action Area -->
-                <div style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
+                <div style="padding-top: 1rem; border-top: 1px solid rgba(212, 175, 55, 0.2); display: flex; justify-content: space-between; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
                     <div style="font-size: 0.82rem; color: var(--text-muted);">
-                        Posted by: <strong style="color: var(--primary-color);"><?php echo htmlspecialchars(!empty($job['poster_name']) ? $job['poster_name'] : 'Alumni Network'); ?></strong>
+                        Posted by: <strong style="color: var(--accent-color);"><?php echo htmlspecialchars(!empty($job['poster_name']) ? $job['poster_name'] : 'Alumni Network'); ?></strong>
                     </div>
 
                     <div style="display: flex; gap: 0.5rem; align-items: center;">

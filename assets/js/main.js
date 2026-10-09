@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ------------------------------------------------------------
     // 2. FEATURE THREE (D): SCROLL REVEAL (INTERSECTION OBSERVER)
     // ------------------------------------------------------------
-    const revealElements = document.querySelectorAll('.reveal');
+    const revealElements = document.querySelectorAll('.reveal, .reveal-stagger');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (prefersReducedMotion) {
