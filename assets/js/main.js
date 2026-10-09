@@ -27,22 +27,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (prefersReducedMotion) {
             // Bypass animation immediately for reduced motion preference
             dismissLoader(0);
-        } else if (hasLoadedBefore) {
-            // Fast 250ms transition for subsequent page views in same session
-            dismissLoader(250);
         } else {
-            // Cinematic initial entrance (coordinated 3.2s choreographed timeline)
-            sessionStorage.setItem('kdu_cinematic_loader_shown', 'true');
-            dismissLoader(3200);
+            // Crisp, cinematic loader runs quickly (~900ms + smooth 0.35s fade)
+            dismissLoader(900);
         }
 
-        // Safety fallback: guaranteed dismissal within 4500ms regardless of assets
+        // Safety fallback: guaranteed dismissal within 1800ms regardless of assets
         setTimeout(() => {
             if (!loader.classList.contains('loader-hidden')) {
                 loader.classList.add('loader-hidden');
                 loader.style.pointerEvents = 'none';
             }
-        }, 4500);
+        }, 1800);
 
         // Handle browser back/forward cache (bfcache) restoration
         window.addEventListener('pageshow', (event) => {
