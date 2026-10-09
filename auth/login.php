@@ -126,7 +126,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 <?php endif; ?>
 
                 <form method="POST" action="login.php">
-                    <?php echo csrf_field(); ?>
                     <div class="form-group">
                         <label for="login_identity">Email Address or Username</label>
                         <input type="text" id="login_identity" name="login_identity" class="form-control" 

@@ -299,7 +299,6 @@ if ($db_connected && $pdo) {
         </p>
 
         <form method="POST" action="actions/report.php">
-            <?php echo csrf_field(); ?>
             <input type="hidden" name="reported_user_id" id="report_user_id" value="">
             
             <div class="form-group">

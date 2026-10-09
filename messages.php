@@ -313,7 +313,6 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                 <!-- Message Input Footer -->
                 <div style="padding: 1.2rem; border-top: 1px solid var(--border-color); background: #ffffff;">
                     <form method="POST" action="messages.php?conversation_id=<?php echo $activeConvId; ?>" style="display: flex; gap: 0.8rem; align-items: center;">
-                        <?php echo csrf_field(); ?>
                         <input type="hidden" name="action" value="send_message">
                         <input type="hidden" name="conversation_id" value="<?php echo $activeConvId; ?>">
                         
@@ -355,7 +354,6 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
         </p>
 
         <form method="POST" action="actions/report.php">
-            <?php echo csrf_field(); ?>
             <input type="hidden" name="reported_user_id" id="report_user_id" value="">
             
             <div class="form-group">

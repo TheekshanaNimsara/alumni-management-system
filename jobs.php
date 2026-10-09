@@ -272,7 +272,6 @@ if (empty($jobs) && empty($typeFilter)) {
 
         <?php if ($isLoggedIn): ?>
             <form method="POST" action="jobs.php#post-job">
-                <?php echo csrf_field(); ?>
                 <input type="hidden" name="action" value="post_job">
                 
                 <div class="grid grid-2" style="margin-bottom: 1.2rem; gap: 1.5rem;">
@@ -348,7 +347,6 @@ if (empty($jobs) && empty($typeFilter)) {
         <p id="applyCompany" style="color: var(--accent-dark); font-weight: 600; margin-bottom: 1.2rem; font-size: 0.92rem;"></p>
 
         <form method="POST" action="jobs.php">
-            <?php echo csrf_field(); ?>
             <input type="hidden" name="action" value="apply_job">
             <input type="hidden" name="job_id" id="apply_job_id" value="">
             
@@ -378,7 +376,6 @@ if (empty($jobs) && empty($typeFilter)) {
         </p>
 
         <form method="POST" action="actions/report.php">
-            <?php echo csrf_field(); ?>
             <input type="hidden" name="job_id" id="report_job_id" value="">
             
             <div class="form-group">

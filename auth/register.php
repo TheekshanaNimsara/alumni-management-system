@@ -148,7 +148,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 <?php endif; ?>
 
                 <form id="registerForm" method="POST" action="register.php">
-                    <?php echo csrf_field(); ?>
                     
                     <!-- Name row -->
                     <div class="auth-row">

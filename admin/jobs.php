@@ -126,7 +126,6 @@ if (empty($jobsList)) {
                                 <div style="display: flex; gap: 0.4rem;">
                                     <?php if ($job['status'] !== 'approved'): ?>
                                         <form method="POST" style="display: inline;">
-                                            <?php echo csrf_field(); ?>
                                             <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
                                             <input type="hidden" name="action" value="approve">
                                             <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.8rem;">
@@ -137,7 +136,6 @@ if (empty($jobsList)) {
 
                                     <?php if ($job['status'] !== 'rejected'): ?>
                                         <form method="POST" style="display: inline;">
-                                            <?php echo csrf_field(); ?>
                                             <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
                                             <input type="hidden" name="action" value="reject">
                                             <button type="submit" class="btn btn-sm" style="background: #FFF4D6; color: #B7791F; border: 1px solid #D8CDBB; padding: 0.3rem 0.65rem; font-size: 0.8rem;">
@@ -147,7 +145,6 @@ if (empty($jobsList)) {
                                     <?php endif; ?>
 
                                     <form method="POST" style="display: inline;" onsubmit="return confirm('Delete this job posting?');">
-                                        <?php echo csrf_field(); ?>
                                         <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
                                         <input type="hidden" name="action" value="delete">
                                         <button type="submit" class="btn btn-sm" style="background: #F8EAEA; color: #A63D40; border: 1px solid #A63D40; padding: 0.3rem 0.65rem; font-size: 0.8rem;">

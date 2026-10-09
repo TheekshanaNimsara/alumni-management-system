@@ -421,15 +421,14 @@ erDiagram
 | **SQL Injection Defense** | 100% of queries use PDO prepared statements with parameter binding. Emulated prepares disabled (`ATTR_EMULATE_PREPARES => false`). | **Verified** |
 | **Cross-Site Scripting (XSS)** | Dynamic outputs wrapped in `htmlspecialchars($text, ENT_QUOTES, 'UTF-8')`. Plaintext outputs neutralized. | **Verified** |
 | **Session Fixation Defense** | Invocation of `session_regenerate_id(true)` immediately upon credential verification during login. | **Verified** |
-| **Session Cookie Hardening** | `HttpOnly` enabled (defeats JavaScript cookie theft), `SameSite=Lax` enabled (mitigates CSRF), `use_only_cookies=1`, and `use_strict_mode=1`. | **Verified** |
+| **Session Cookie Hardening** | `HttpOnly` enabled (defeats JavaScript cookie theft), `use_only_cookies=1`, and `use_strict_mode=1`. | **Verified** |
 | **File Upload Security** | MIME-type verified via `getimagesize()`. Maximum size capped at 2MB. Extension whitelisted (`jpg`, `jpeg`, `png`, `webp`). Cryptographically random filenames generated (`avatar_{uid}_{time}_{hash}.{ext}`). | **Verified** |
 | **Upload Directory Hardening** | `.htaccess` deployed in `uploads/` and `uploads/profiles/` disabling the PHP engine (`php_flag engine off`) and denying script execution. | **Verified** |
 | **Access Control (RBAC)** | `require_login()` and `require_admin()` guard all restricted routes. Non-admin users are blocked from admin views. | **Verified** |
 | **Data Integrity & Safety** | Relational foreign keys enforce cascading deletes. Root Admin (User ID 1) protected from modification or deletion. | **Verified** |
 
-### 7.2 CSRF Handling Disclosure
-* In compliance with project guidelines, blocking CSRF token validation errors have been streamlined (`verify_csrf_token()` returns `true`).
-* Session cookies enforce `SameSite=Lax`, providing baseline browser-level cross-site request mitigation for modern browsers.
+### 7.2 CSRF Protection Disclosure
+* CSRF token protection features have been completely removed per project requirements to streamline request processing and ensure form submissions never encounter token expiration errors.
 
 ---
 

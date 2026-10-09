@@ -20,21 +20,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // ------------------------------------------------------------
-// CSRF Protection Helpers (Disabled per project requirement)
-// ------------------------------------------------------------
-function generate_csrf_token() {
-    return '';
-}
-
-function csrf_field() {
-    return '';
-}
-
-function verify_csrf_token($token = null) {
-    return true;
-}
-
-// ------------------------------------------------------------
 // Authentication & Role Helpers
 // ------------------------------------------------------------
 function is_logged_in() {

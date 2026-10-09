@@ -244,7 +244,6 @@ if ($db_connected && $pdo) {
                                         <!-- Toggle Status: Activate / Suspend -->
                                         <?php if ($u['id'] !== 1 && $u['id'] !== current_user_id()): ?>
                                             <form method="POST" action="users.php" style="display: inline;">
-                                                <?php echo csrf_field(); ?>
                                                 <input type="hidden" name="action" value="change_status">
                                                 <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
                                                 <input type="hidden" name="status" value="<?php echo ($u['status'] === 'active') ? 'suspended' : 'active'; ?>">
@@ -261,7 +260,6 @@ if ($db_connected && $pdo) {
 
                                             <!-- Toggle Role -->
                                             <form method="POST" action="users.php" style="display: inline;">
-                                                <?php echo csrf_field(); ?>
                                                 <input type="hidden" name="action" value="change_role">
                                                 <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
                                                 <input type="hidden" name="role" value="<?php echo ($u['role'] === 'admin') ? 'alumni' : 'admin'; ?>">
@@ -272,7 +270,6 @@ if ($db_connected && $pdo) {
 
                                             <!-- Delete User -->
                                             <form method="POST" action="users.php" style="display: inline;">
-                                                <?php echo csrf_field(); ?>
                                                 <input type="hidden" name="action" value="delete_user">
                                                 <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
                                                 <button type="submit" class="btn btn-sm" style="background: var(--danger-color); color: #fff; font-size: 0.75rem; padding: 0.25rem 0.5rem;" onclick="return confirm('PERMANENT DELETION: Are you sure you want to completely delete this user and all associated records?');">

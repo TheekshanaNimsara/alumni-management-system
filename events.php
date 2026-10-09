@@ -240,7 +240,6 @@ if (empty($events)) {
                             <!-- RSVP Form Button -->
                             <?php if ($isLoggedIn): ?>
                                 <form method="POST" action="events.php" style="display: inline;">
-                                    <?php echo csrf_field(); ?>
                                     <input type="hidden" name="action" value="toggle_rsvp">
                                     <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
                                     
@@ -282,7 +281,6 @@ if (empty($events)) {
 
         <?php if ($isLoggedIn): ?>
             <form method="POST" action="events.php#propose-event">
-                <?php echo csrf_field(); ?>
                 <input type="hidden" name="action" value="create_event">
                 
                 <div class="grid grid-2" style="margin-bottom: 1.2rem; gap: 1.5rem;">
@@ -344,7 +342,6 @@ if (empty($events)) {
         </p>
 
         <form method="POST" action="actions/report.php">
-            <?php echo csrf_field(); ?>
             <input type="hidden" name="event_id" id="report_event_id" value="">
             
             <div class="form-group">

@@ -213,7 +213,6 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
                             &#128247;
                         </label>
                         <form id="photoUploadForm" method="POST" action="profile.php" enctype="multipart/form-data" style="display: none;">
-                            <?php echo csrf_field(); ?>
                             <input type="hidden" name="action" value="upload_photo">
                             <input type="file" id="profilePhotoInput" name="profile_photo" accept="image/jpeg,image/png,image/webp" onchange="document.getElementById('photoUploadForm').submit();">
                         </form>
@@ -326,7 +325,6 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
                     </p>
 
                     <form method="POST" action="profile.php">
-                        <?php echo csrf_field(); ?>
                         <input type="hidden" name="action" value="update_profile">
 
                         <!-- Name Row -->
@@ -501,7 +499,6 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
         </p>
 
         <form method="POST" action="actions/report.php">
-            <?php echo csrf_field(); ?>
             <input type="hidden" name="reported_user_id" id="report_user_id" value="">
             
             <div class="form-group">

@@ -848,7 +848,7 @@ This document provides an exhaustive, source-verified technical specification of
 * **8. Authorization requirements:** Unrestricted.
 * **9. Dependencies:** `database/schema.sql`.
 * **10. Dependants:** Every PHP script in the repository.
-* **11. Security considerations:** Session cookie hardening; PDO exception mode; emulated prepares disabled; non-blocking CSRF handling.
+* **11. Security considerations:** Session cookie hardening; PDO exception mode; emulated prepares disabled; CSRF protection features completely removed per project requirements.
 * **12. Current implementation status:** `VERIFIED WORKING`.
 * **13. Known issues:** Default configuration uses empty root password suited for local XAMPP; production deployments must set secure database credentials.
 * **14. Manual testing instructions:** Check browser cookies -> verify `PHPSESSID` has `HttpOnly` and `SameSite=Lax`.
