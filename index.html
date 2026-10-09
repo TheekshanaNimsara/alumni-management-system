@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Network - Connect. Inspire. Grow.</title>
+    <!-- Master Cinematic Maroon & Gold Stylesheet -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <style>
+        /* Standalone Showcase Modal Enhancements */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 2, 4, 0.88);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-card {
+            background: var(--surface-elevated);
+            color: var(--text-color);
+            width: 90%;
+            max-width: 500px;
+            border-radius: var(--border-radius);
+            padding: 2.2rem;
+            border: 1px solid var(--border-gold);
+            border-top: 4px solid var(--accent-color);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.15);
+            animation: modalFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-15px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ------------------------------------------------------------
+         FEATURE ONE: CINEMATIC LOADING SCREEN
+    ------------------------------------------------------------- -->
+    <div id="cinematicLoader" class="cinematic-loader" aria-hidden="true">
+        <div class="loader-content">
+            <div class="loader-brand">
+                <span class="loader-badge">AN</span>
+                <span class="loader-title">ALUMNI <span class="loader-gold">NETWORK</span></span>
+            </div>
+            <div class="loader-progress-track">
+                <div class="loader-progress-bar"></div>
+            </div>
+            <p class="loader-status">Connecting Alumni &bull; Preparing Your Experience</p>
+        </div>
+    </div>
+
+    <!-- ------------------------------------------------------------
+         GLOBAL NAVIGATION BAR
+    ------------------------------------------------------------- -->
+    <header class="navbar">
+        <div class="navbar-container">
+            <a href="./index.html" class="logo" title="Alumni Network">
+                <span class="logo-badge">AN</span>
+                <span>ALUMNI <span class="logo-gold">NETWORK</span></span>
+            </a>
+
+            <button class="nav-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+
+            <nav class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="./index.html" class="nav-link active">Home</a></li>
+                    <li><a href="#alumni" class="nav-link">Alumni</a></li>
+                    <li><a href="#events" class="nav-link">Events</a></li>
+                    <li><a href="#jobs" class="nav-link">Jobs</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="./docs/README.md" class="nav-link">Docs</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <button type="button" class="btn btn-outline-light btn-sm" onclick="openLoginModal();">Login</button>
+                    <button type="button" class="btn btn-gold btn-sm gold-glow" onclick="openRegisterModal();">Join Network</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ------------------------------------------------------------
+         1. FEATURE TWO: DRAMATIC CINEMATIC HERO SECTION
+    ------------------------------------------------------------- -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <span class="hero-subtitle-tag">General Sir John Kotelawala Defence University</span>
+            <h1 class="hero-title">
+                CONNECT. <span class="highlight-gold">INSPIRE.</span> GROW.
+            </h1>
+            <p class="hero-description">
+                One community. Thousands of stories. A lifetime of connections.
+                Step into the next chapter of our university’s enduring legacy.
+            </p>
+            <div class="hero-cta-group">
+                <button type="button" class="btn btn-gold gold-glow" onclick="openRegisterModal();">JOIN THE NETWORK</button>
+                <a href="#alumni" class="btn btn-outline-light">EXPLORE DIRECTORY</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         2. ALUMNI STORY & STATS SECTION (DARK MAROON)
+    ------------------------------------------------------------- -->
+    <section class="section section-dark reveal">
+        <div class="container text-center">
+            <div class="section-header">
+                <span class="section-eyebrow">Our Legacy &bull; Our Strength</span>
+                <h2 class="section-title">
+                    MORE THAN A NETWORK.<br>
+                    IT'S A COMMUNITY OF ACHIEVERS.
+                </h2>
+                <div class="gold-divider"></div>
+                <p style="max-width: 650px; margin: 0 auto; font-size: 1.05rem;">
+                    From leading global enterprises and cultural institutions to advanced research centers, our university graduates are shaping the future across every discipline.
+                </p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">1,250+</div>
+                    <div class="stat-label">Graduates</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Campus Events</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Partner Employers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Years of Excellence</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         3. FEATURED ALUMNI ACHIEVERS (ELEVATED DARK SECTION)
+    ------------------------------------------------------------- -->
+    <section class="section section-light section-alumni reveal" id="alumni">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-eyebrow">Excellence in Action</span>
+                <h2 class="section-title">Featured Alumni</h2>
+                <div class="gold-divider"></div>
+                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+                    Meet some of the exceptional graduates and visionaries who began their journey right here.
+                </p>
+            </div>
+
+            <div class="grid grid-3 reveal-stagger">
+                <!-- Alumni 1 -->
+                <div class="card alumni-card">
+                    <div class="alumni-avatar-wrapper">
+                        <img src="./assets/images/default-avatar.svg" alt="John Doe" class="alumni-avatar">
+                    </div>
+                    <h3 class="alumni-name">John Doe</h3>
+                    <div class="alumni-degree">B.Sc. in Computer Engineering</div>
+                    <div class="alumni-role">Software Engineer</div>
+                    <div class="alumni-company">Google</div>
+                    <div class="alumni-badge-grad">2022 Graduate</div>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.8rem; line-height: 1.5;">
+                        Specializing in distributed cloud systems, high-scale web platforms, and mentoring university students.
+                    </p>
+                    <button type="button" class="btn btn-outline-gold btn-sm btn-block" style="margin-top: 1rem;" onclick="showAlumniProfile('John Doe', 'Software Engineer', 'Google', '2022', 'B.Sc. in Computer Engineering');">
+                        View Profile
+                    </button>
+                </div>
+
+                <!-- Alumni 2 -->
+                <div class="card alumni-card">
+                    <div class="alumni-avatar-wrapper">
+                        <img src="./assets/images/default-avatar.svg" alt="Sarah Jenkins" class="alumni-avatar">
+                    </div>
+                    <h3 class="alumni-name">Sarah Jenkins</h3>
+                    <div class="alumni-degree">B.Sc. in Computer Engineering</div>
+                    <div class="alumni-role">Lead AI Researcher</div>
+                    <div class="alumni-company">Google DeepMind</div>
+                    <div class="alumni-badge-grad">2020 Graduate</div>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.8rem; line-height: 1.5;">
+                        Leading research on large generative AI models, on-device intelligence, and autonomous reasoning.
+                    </p>
+                    <button type="button" class="btn btn-outline-gold btn-sm btn-block" style="margin-top: 1rem;" onclick="showAlumniProfile('Sarah Jenkins', 'Lead AI Researcher', 'Google DeepMind', '2020', 'B.Sc. in Computer Engineering');">
+                        View Profile
+                    </button>
+                </div>
+
+                <!-- Alumni 3 -->
+                <div class="card alumni-card">
+                    <div class="alumni-avatar-wrapper">
+                        <img src="./assets/images/default-avatar.svg" alt="Michael Chen" class="alumni-avatar">
+                    </div>
+                    <h3 class="alumni-name">Michael Chen</h3>
+                    <div class="alumni-degree">B.Sc. in Electrical Engineering</div>
+                    <div class="alumni-role">Senior Systems Architect</div>
+                    <div class="alumni-company">Intel Corporation</div>
+                    <div class="alumni-badge-grad">2019 Graduate</div>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.8rem; line-height: 1.5;">
+                        Architecting high-performance computing chip interconnects, microelectronics, and silicon wafer design.
+                    </p>
+                    <button type="button" class="btn btn-outline-gold btn-sm btn-block" style="margin-top: 1rem;" onclick="showAlumniProfile('Michael Chen', 'Senior Systems Architect', 'Intel Corporation', '2019', 'B.Sc. in Electrical Engineering');">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3.5rem;">
+                <button type="button" class="btn btn-primary" onclick="alert('Full dynamic directory search with multi-parameter filtering and server-side pagination is active in XAMPP (directory.php).');">
+                    Explore Full Directory &rarr;
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         4. UPCOMING GATHERINGS & EVENTS (DARK SECTION)
+    ------------------------------------------------------------- -->
+    <section class="section section-dark section-events reveal" id="events">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-eyebrow">Connect &amp; Celebrate</span>
+                <h2 class="section-title">Upcoming Gatherings</h2>
+                <div class="gold-divider"></div>
+                <p style="max-width: 600px; margin: 0 auto; color: var(--text-muted);">
+                    Join inspiring reunions, technical keynote symposiums, and university career fairs.
+                </p>
+            </div>
+
+            <div class="grid grid-3 reveal-stagger">
+                <!-- Event 1 -->
+                <div class="card card-dark event-card">
+                    <div class="event-image-box">
+                        <img src="./assets/images/event-placeholder.svg" alt="Event Banner" class="event-image">
+                        <span class="event-date-badge">24 OCT 2026</span>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-meta">
+                            <span>&#128338; 05:00 PM</span>
+                            <span>&bull;</span>
+                            <span>&#128205; Grand Auditorium</span>
+                        </div>
+                        <h3 class="event-title">ALUMNI MEET 2026</h3>
+                        <p class="event-desc">
+                            The flagship annual gathering of alumni, faculty, and graduating cadets. Reconnect with batchmates and celebrate achievements.
+                        </p>
+                        <button type="button" class="btn btn-gold btn-block btn-sm" onclick="triggerRsvpDemo('ALUMNI MEET 2026');">
+                            RSVP FOR EVENT
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="card card-dark event-card">
+                    <div class="event-image-box">
+                        <img src="./assets/images/event-placeholder.svg" alt="Event Banner" class="event-image">
+                        <span class="event-date-badge">15 NOV 2026</span>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-meta">
+                            <span>&#128338; 10:00 AM</span>
+                            <span>&bull;</span>
+                            <span>&#128205; University Main Hall</span>
+                        </div>
+                        <h3 class="event-title">GLOBAL TECH &amp; AI SUMMIT</h3>
+                        <p class="event-desc">
+                            Keynotes by prominent alumni leaders from Google, AWS, and Intel discussing scalable architectures and artificial intelligence.
+                        </p>
+                        <button type="button" class="btn btn-gold btn-block btn-sm" onclick="triggerRsvpDemo('GLOBAL TECH & AI SUMMIT');">
+                            RSVP FOR EVENT
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="card card-dark event-card">
+                    <div class="event-image-box">
+                        <img src="./assets/images/event-placeholder.svg" alt="Event Banner" class="event-image">
+                        <span class="event-date-badge">05 DEC 2026</span>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-meta">
+                            <span>&#128338; 09:00 AM</span>
+                            <span>&bull;</span>
+                            <span>&#128205; Convocation Grounds</span>
+                        </div>
+                        <h3 class="event-title">CAREER &amp; INTERNSHIP EXPO</h3>
+                        <p class="event-desc">
+                            Connect directly with multinational tech employers and startups. Resume reviews, interviews, and networking booths.
+                        </p>
+                        <button type="button" class="btn btn-gold btn-block btn-sm" onclick="triggerRsvpDemo('CAREER & INTERNSHIP EXPO');">
+                            RSVP FOR EVENT
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3.5rem;">
+                <a href="./event.html" class="btn btn-outline-gold">Open Events Board (event.html)</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         5. CAREER VACANCIES & OPPORTUNITIES (ELEVATED SECTION)
+    ------------------------------------------------------------- -->
+    <section class="section section-light section-jobs reveal" id="jobs">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-eyebrow">Professional Advancement</span>
+                <h2 class="section-title">Career Opportunities</h2>
+                <div class="gold-divider"></div>
+                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+                    Exclusive job vacancies posted by alumni recruiters and industry partners.
+                </p>
+            </div>
+
+            <div class="grid grid-3 reveal-stagger">
+                <!-- Job 1 -->
+                <div class="card job-card">
+                    <span class="job-type-pill">Full-Time</span>
+                    <h3 class="job-title">Software Engineer</h3>
+                    <div class="job-company">ABC Technologies</div>
+                    <div class="job-location">&#128205; Colombo, Sri Lanka</div>
+                    <p class="job-desc">
+                        Seeking full-stack engineers proficient in modern web applications, relational schemas, and scalable microservices.
+                    </p>
+                    <button type="button" class="btn btn-primary btn-block btn-sm" onclick="triggerJobApplyDemo('Software Engineer', 'ABC Technologies');">
+                        APPLY FOR POSITION
+                    </button>
+                </div>
+
+                <!-- Job 2 -->
+                <div class="card job-card">
+                    <span class="job-type-pill">Hybrid</span>
+                    <h3 class="job-title">Cloud Solutions Architect</h3>
+                    <div class="job-company">Virtusa Corporation</div>
+                    <div class="job-location">&#128205; Colombo / Remote</div>
+                    <p class="job-desc">
+                        Lead enterprise cloud architecture implementations across AWS and Azure for multinational financial banking clients.
+                    </p>
+                    <button type="button" class="btn btn-primary btn-block btn-sm" onclick="triggerJobApplyDemo('Cloud Solutions Architect', 'Virtusa Corporation');">
+                        APPLY FOR POSITION
+                    </button>
+                </div>
+
+                <!-- Job 3 -->
+                <div class="card job-card">
+                    <span class="job-type-pill">Full-Time</span>
+                    <h3 class="job-title">Associate AI Engineer</h3>
+                    <div class="job-company">WSO2</div>
+                    <div class="job-location">&#128205; Colombo, Sri Lanka</div>
+                    <p class="job-desc">
+                        Develop LLM integrations, retrieval augmented generation systems, and open-source enterprise platform APIs.
+                    </p>
+                    <button type="button" class="btn btn-primary btn-block btn-sm" onclick="triggerJobApplyDemo('Associate AI Engineer', 'WSO2');">
+                        APPLY FOR POSITION
+                    </button>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3.5rem;">
+                <a href="./jobs.html" class="btn btn-primary">Open Career Board (jobs.html)</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         6. ABOUT INSTITUTIONAL SECTION
+    ------------------------------------------------------------- -->
+    <section class="section section-dark reveal" id="about" style="border-top: 1px solid var(--border-gold);">
+        <div class="container text-center">
+            <span class="section-eyebrow">General Sir John Kotelawala Defence University</span>
+            <h2 class="section-title" style="font-size: 2.1rem; margin: 1rem 0;">
+                Ready to reconnect with your university family?
+            </h2>
+            <p style="font-size: 1.05rem; max-width: 700px; margin: 0 auto 2.2rem; color: var(--text-muted);">
+                The KDU Alumni Network fosters lifelong relationships, offers career mentorship, hosts inspiring reunions, and empowers graduates worldwide.
+            </p>
+            <button type="button" class="btn btn-gold gold-glow" style="padding: 1rem 2.5rem; font-size: 1.05rem;" onclick="openRegisterModal();">
+                CREATE YOUR ALUMNI ACCOUNT
+            </button>
+        </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         7. GLOBAL CINEMATIC FOOTER (FIXED & RESPONSIVE GRID)
+    ------------------------------------------------------------- -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div>
+                        <div class="footer-logo">
+                            <span class="footer-logo-badge">AN</span>
+                            <span>ALUMNI <span class="logo-gold">NETWORK</span></span>
+                        </div>
+                        <p class="footer-desc">
+                            General Sir John Kotelawala Defence University. Empowering alumni across the globe through collaboration, leadership, and service.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-col-title">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#alumni">Alumni Achievers</a></li>
+                        <li><a href="#events">Upcoming Events</a></li>
+                        <li><a href="#jobs">Career Board</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-col-title">Documentation</h4>
+                    <ul class="footer-links">
+                        <li><a href="./docs/README.md">Documentation Suite</a></li>
+                        <li><a href="./docs/01-architectural-system-overview.md">Architecture Overview</a></li>
+                        <li><a href="./docs/04-four-phase-project-roadmap.md">Four-Phase Roadmap</a></li>
+                        <li><a href="./docs/05-testing-and-acceptance-guide.md">Testing Guide</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-col-title">Contact & Support</h4>
+                    <ul class="footer-links">
+                        <li><span>Kandawala Estate, Ratmalana</span></li>
+                        <li><span>alumni@kdu.ac.lk</span></li>
+                        <li><span>+94 11 263 2028</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>&copy; 2026 KDU Alumni Network. All rights reserved.</div>
+                <div>Designed strictly with Pure HTML5, CSS3, Vanilla JS, and PHP 8+ PDO.</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ------------------------------------------------------------
+         INTERACTIVE DEMO MODALS (CINEMATIC DARK THEME)
+    ------------------------------------------------------------- -->
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal-overlay" onclick="if(event.target===this) closeModals();">
+        <div class="modal-card">
+            <h3 style="color: var(--text-light); margin-bottom: 0.3rem; font-weight: 800;">Member Login</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Access your verified alumni portal</p>
+            
+            <div style="background: rgba(212, 175, 55, 0.12); border-left: 3px solid var(--accent-color); padding: 0.75rem 1rem; margin-bottom: 1.2rem; font-size: 0.85rem; color: var(--accent-light); border-radius: 4px;">
+                <strong>Demo Credentials:</strong><br>
+                Admin: <code>admin@alumni.edu</code> / <code>Admin@123</code><br>
+                Alumnus: <code>john.doe@alumni.edu</code> / <code>Alumni@123</code>
+            </div>
+
+            <form onsubmit="event.preventDefault(); simulateLogin();">
+                <div class="form-group">
+                    <label for="demoEmail">Email or Username</label>
+                    <input type="text" id="demoEmail" class="form-control" value="john.doe@alumni.edu" required>
+                </div>
+                <div class="form-group">
+                    <label for="demoPass">Password</label>
+                    <input type="password" id="demoPass" class="form-control" value="Alumni@123" required>
+                </div>
+                <div style="display: flex; gap: 0.8rem; justify-content: flex-end; margin-top: 1.5rem;">
+                    <button type="button" class="btn btn-outline-light" onclick="closeModals();">Cancel</button>
+                    <button type="submit" class="btn btn-gold">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal-overlay" onclick="if(event.target===this) closeModals();">
+        <div class="modal-card">
+            <h3 style="color: var(--text-light); margin-bottom: 0.3rem; font-weight: 800;">Alumni Registration</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Create your profile in the KDU network</p>
+            
+            <form onsubmit="event.preventDefault(); simulateRegister();">
+                <div class="grid grid-2" style="gap: 1rem;">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" class="form-control" placeholder="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" placeholder="Doe" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>University Email</label>
+                    <input type="email" class="form-control" placeholder="your.name@alumni.edu" required>
+                </div>
+                <div class="grid grid-2" style="gap: 1rem;">
+                    <div class="form-group">
+                        <label>Graduation Year</label>
+                        <input type="number" class="form-control" value="2023" min="1960" max="2030" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Degree Programme</label>
+                        <input type="text" class="form-control" placeholder="B.Sc. in Software Eng" required>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.8rem; justify-content: flex-end; margin-top: 1.5rem;">
+                    <button type="button" class="btn btn-outline-light" onclick="closeModals();">Cancel</button>
+                    <button type="submit" class="btn btn-gold">Complete Registration</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Vanilla Scripts -->
+    <script src="./assets/js/main.js"></script>
+    <script>
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+        function openRegisterModal() {
+            document.getElementById('registerModal').style.display = 'flex';
+        }
+        function closeModals() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('registerModal').style.display = 'none';
+        }
+        function simulateLogin() {
+            alert("Authentication simulated! In the full XAMPP environment, this validates your BCRYPT password hash and establishes a hardened session.");
+            closeModals();
+        }
+        function simulateRegister() {
+            alert("Registration simulated! In the full XAMPP environment, this inserts records into both users and alumni_profiles via a database transaction.");
+            closeModals();
+        }
+        function triggerRsvpDemo(eventName) {
+            alert("RSVP Confirmed for '" + eventName + "'! Seat reservation counter updated.");
+        }
+        function triggerJobApplyDemo(jobTitle, company) {
+            alert("Application submitted for " + jobTitle + " at " + company + "! The recruiter will review your verified alumni profile.");
+        }
+        function showAlumniProfile(name, role, company, year, degree) {
+            alert(name + "\n" + role + " at " + company + "\n" + degree + " (" + year + " Cohort)\n\nFull interactive profile view with avatar uploads is available in local XAMPP (profile.php).");
+        }
+    </script>
+</body>
+</html>

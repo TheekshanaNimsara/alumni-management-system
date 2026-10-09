@@ -119,7 +119,7 @@ if (empty($recentJobs)) {
 <!-- ------------------------------------------------------------
      3. FEATURED ALUMNI SECTION (LIGHT)
 ------------------------------------------------------------- -->
-<section class="section section-light reveal">
+<section class="section section-light section-alumni reveal">
     <div class="container">
         <div class="section-header">
             <span class="section-eyebrow">Excellence in Action</span>
@@ -130,7 +130,7 @@ if (empty($recentJobs)) {
             </p>
         </div>
 
-        <div class="grid grid-3">
+        <div class="grid grid-3 reveal-stagger">
             <?php foreach ($featuredAlumni as $alumni): ?>
                 <div class="card alumni-card">
                     <div class="alumni-avatar-wrapper">
@@ -143,6 +143,7 @@ if (empty($recentJobs)) {
                     <div class="alumni-role"><?php echo htmlspecialchars($alumni['current_job_title']); ?></div>
                     <div class="alumni-company"><?php echo htmlspecialchars($alumni['current_company']); ?></div>
                     <div class="alumni-badge-grad"><?php echo htmlspecialchars($alumni['graduation_year']); ?> Graduate</div>
+                    <a href="directory.php" class="btn btn-outline-gold btn-sm btn-block" style="margin-top: 1rem;">View Profile</a>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -156,7 +157,7 @@ if (empty($recentJobs)) {
 <!-- ------------------------------------------------------------
      4. UPCOMING EVENTS SECTION (DARK NAVY)
 ------------------------------------------------------------- -->
-<section class="section section-dark reveal">
+<section class="section section-dark section-events reveal">
     <div class="container">
         <div class="section-header">
             <span class="section-eyebrow">Connect &amp; Celebrate</span>
@@ -167,7 +168,7 @@ if (empty($recentJobs)) {
             </p>
         </div>
 
-        <div class="grid grid-3">
+        <div class="grid grid-3 reveal-stagger">
             <?php foreach ($upcomingEvents as $event): ?>
                 <div class="card card-dark event-card">
                     <div class="event-image-box">
@@ -201,7 +202,7 @@ if (empty($recentJobs)) {
 <!-- ------------------------------------------------------------
      5. JOBS / CAREERS SECTION (LIGHT)
 ------------------------------------------------------------- -->
-<section class="section section-light reveal">
+<section class="section section-light section-jobs reveal">
     <div class="container">
         <div class="section-header">
             <span class="section-eyebrow">Career Opportunities</span>
@@ -212,7 +213,7 @@ if (empty($recentJobs)) {
             </p>
         </div>
 
-        <div class="grid grid-3">
+        <div class="grid grid-3 reveal-stagger">
             <?php foreach ($recentJobs as $job): ?>
                 <div class="card job-card">
                     <span class="job-type-pill"><?php echo htmlspecialchars($job['job_type']); ?></span>

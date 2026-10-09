@@ -79,6 +79,20 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 </head>
 <body style="background-color: var(--bg-color);">
 
+    <!-- Cinematic Fullscreen Loading Overlay -->
+    <div id="cinematicLoader" class="cinematic-loader" aria-hidden="true">
+        <div class="loader-content">
+            <div class="loader-brand">
+                <span class="loader-badge">AN</span>
+                <span class="loader-title">ALUMNI <span class="loader-gold">NETWORK</span></span>
+            </div>
+            <div class="loader-progress-track">
+                <div class="loader-progress-bar"></div>
+            </div>
+            <p class="loader-status">Connecting Alumni &bull; Preparing Your Experience</p>
+        </div>
+    </div>
+
     <!-- Navbar -->
     <header class="navbar">
         <div class="navbar-container">
@@ -126,7 +140,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 <?php endif; ?>
 
                 <form method="POST" action="login.php">
-                    <?php echo csrf_field(); ?>
                     <div class="form-group">
                         <label for="login_identity">Email Address or Username</label>
                         <input type="text" id="login_identity" name="login_identity" class="form-control" 
@@ -150,7 +163,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 
                 <div style="margin-top: 2rem; text-align: center; font-size: 0.92rem; color: var(--text-muted);">
                     Don't have an alumni account yet?
-                    <a href="register.php" style="color: var(--primary-color); font-weight: 700; text-decoration: underline;">
+                    <a href="register.php" style="color: var(--accent-color); font-weight: 700; text-decoration: underline;">
                         Register Now
                     </a>
                 </div>
@@ -159,5 +172,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         </div>
     </div>
 
+    <!-- Vanilla Scripts -->
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>

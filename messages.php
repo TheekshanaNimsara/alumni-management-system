@@ -255,12 +255,12 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
             <?php if ($activeConv): ?>
                 
                 <!-- Chat Window Header -->
-                <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: #ffffff;">
+                <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: var(--surface-elevated);">
                     <div style="display: flex; align-items: center; gap: 1rem;">
                         <img src="<?php echo get_user_avatar_url($activeConv['profile_picture'] ?? 'default-avatar.svg'); ?>" 
                              alt="Avatar" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-color);">
                         <div>
-                            <h3 style="margin: 0; font-size: 1.1rem; color: var(--primary-color); font-weight: 800;">
+                            <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-light); font-weight: 800;">
                                 <?php echo htmlspecialchars($activeConv['first_name'] . ' ' . $activeConv['last_name']); ?>
                             </h3>
                             <p style="margin: 0; font-size: 0.82rem; color: var(--text-muted);">
@@ -284,7 +284,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                 </div>
 
                 <!-- Message History Container (Autoscrolled) -->
-                <div id="messageContainer" style="flex: 1; overflow-y: auto; padding: 1.5rem; background: #faf9f6; display: flex; flex-direction: column; gap: 1rem; max-height: 480px;">
+                <div id="messageContainer" style="flex: 1; overflow-y: auto; padding: 1.5rem; background: #0E0204; display: flex; flex-direction: column; gap: 1rem; max-height: 480px;">
                     <?php if (empty($messagesList)): ?>
                         <div style="text-align: center; color: var(--text-muted); margin: auto; font-size: 0.92rem;">
                             <p>No messages yet in this conversation.</p>
@@ -296,7 +296,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                                 $isMe = ($msg['sender_id'] == $currentUserId);
                             ?>
                             <div style="display: flex; flex-direction: column; align-items: <?php echo $isMe ? 'flex-end' : 'flex-start'; ?>;">
-                                <div style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 2px 5px rgba(0,0,0,0.05); <?php echo $isMe ? 'background: var(--primary-color); color: var(--text-light); border-bottom-right-radius: 2px;' : 'background: #ffffff; color: var(--text-color); border: 1px solid var(--border-color); border-bottom-left-radius: 2px;'; ?>">
+                                <div style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); <?php echo $isMe ? 'background: #4A1116; color: var(--text-light); border: 1px solid var(--border-gold); border-bottom-right-radius: 2px;' : 'background: #24070A; color: var(--text-color); border: 1px solid var(--border-color); border-bottom-left-radius: 2px;'; ?>">
                                     <?php echo nl2br(htmlspecialchars($msg['message'])); ?>
                                 </div>
                                 <span style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; padding: 0 0.3rem;">
@@ -311,15 +311,14 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                 </div>
 
                 <!-- Message Input Footer -->
-                <div style="padding: 1.2rem; border-top: 1px solid var(--border-color); background: #ffffff;">
+                <div style="padding: 1.2rem; border-top: 1px solid var(--border-color); background: var(--surface-elevated);">
                     <form method="POST" action="messages.php?conversation_id=<?php echo $activeConvId; ?>" style="display: flex; gap: 0.8rem; align-items: center;">
-                        <?php echo csrf_field(); ?>
                         <input type="hidden" name="action" value="send_message">
                         <input type="hidden" name="conversation_id" value="<?php echo $activeConvId; ?>">
                         
                         <input type="text" name="message" id="messageInput" class="form-control" 
-                               placeholder="Type a message to <?php echo htmlspecialchars($activeConv['first_name']); ?>..." 
-                               autocomplete="off" required style="flex: 1;">
+                                placeholder="Type a message to <?php echo htmlspecialchars($activeConv['first_name']); ?>..." 
+                                autocomplete="off" required style="flex: 1;">
                         
                         <button type="submit" class="btn btn-gold gold-glow" style="padding: 0.65rem 1.5rem; flex-shrink: 0;">
                             Send &#10148;
@@ -331,7 +330,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                 
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); padding: 3rem; text-align: center;">
                     <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--accent-color);">&#128172;</div>
-                    <h3 style="color: var(--primary-color); font-weight: 700; margin-bottom: 0.5rem;">Select or Start a Conversation</h3>
+                    <h3 style="color: var(--text-light); font-weight: 700; margin-bottom: 0.5rem;">Select or Start a Conversation</h3>
                     <p style="max-width: 400px; font-size: 0.92rem; line-height: 1.6;">
                         Choose an existing discussion from the left panel, or connect with batchmates directly through the Alumni Directory.
                     </p>
@@ -347,15 +346,14 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
 </div>
 
 <!-- Modal for reporting message/user -->
-<div id="reportModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center;">
-    <div style="background: #ffffff; width: 90%; max-width: 480px; border-radius: var(--border-radius); padding: 2rem; border-top: 4px solid var(--accent-color); box-shadow: 0 15px 40px rgba(0,0,0,0.5);">
-        <h3 style="color: var(--primary-color); margin-bottom: 0.5rem; font-weight: 800;">Report Message or User</h3>
+<div id="reportModal" class="modal-overlay">
+    <div class="modal-box">
+        <h3 style="color: var(--text-light); margin-bottom: 0.5rem; font-weight: 800;">Report Message or User</h3>
         <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.2rem;">
             Reports are confidentially sent to the platform administrators for moderation.
         </p>
 
         <form method="POST" action="actions/report.php">
-            <?php echo csrf_field(); ?>
             <input type="hidden" name="reported_user_id" id="report_user_id" value="">
             
             <div class="form-group">
@@ -375,7 +373,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
             </div>
 
             <div style="display: flex; gap: 0.8rem; justify-content: flex-end; margin-top: 1.5rem;">
-                <button type="button" class="btn btn-outline-light" style="color: var(--text-color);" onclick="closeReportModal();">Cancel</button>
+                <button type="button" class="btn btn-outline-light" onclick="closeReportModal();">Cancel</button>
                 <button type="submit" class="btn btn-gold">Submit Report</button>
             </div>
         </form>

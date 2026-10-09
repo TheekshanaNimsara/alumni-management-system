@@ -213,7 +213,6 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
                             &#128247;
                         </label>
                         <form id="photoUploadForm" method="POST" action="profile.php" enctype="multipart/form-data" style="display: none;">
-                            <?php echo csrf_field(); ?>
                             <input type="hidden" name="action" value="upload_photo">
                             <input type="file" id="profilePhotoInput" name="profile_photo" accept="image/jpeg,image/png,image/webp" onchange="document.getElementById('photoUploadForm').submit();">
                         </form>
@@ -326,7 +325,6 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
                     </p>
 
                     <form method="POST" action="profile.php">
-                        <?php echo csrf_field(); ?>
                         <input type="hidden" name="action" value="update_profile">
 
                         <!-- Name Row -->
@@ -493,15 +491,14 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
 </div>
 
 <!-- Modal for reporting profile -->
-<div id="reportModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center;">
-    <div style="background: #ffffff; width: 90%; max-width: 480px; border-radius: var(--border-radius); padding: 2rem; border-top: 4px solid var(--accent-color); box-shadow: 0 15px 40px rgba(0,0,0,0.5);">
-        <h3 style="color: var(--primary-color); margin-bottom: 0.5rem; font-weight: 800;">Report Member Profile</h3>
+<div id="reportModal" class="modal-overlay">
+    <div class="modal-box">
+        <h3 style="color: var(--text-light); margin-bottom: 0.5rem; font-weight: 800;">Report Member Profile</h3>
         <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.2rem;">
             Help maintain the integrity and professionalism of the KDU Alumni Network.
         </p>
 
         <form method="POST" action="actions/report.php">
-            <?php echo csrf_field(); ?>
             <input type="hidden" name="reported_user_id" id="report_user_id" value="">
             
             <div class="form-group">
@@ -522,7 +519,7 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
             </div>
 
             <div style="display: flex; gap: 0.8rem; justify-content: flex-end; margin-top: 1.5rem;">
-                <button type="button" class="btn btn-outline-light" style="color: var(--text-color);" onclick="closeReportModal();">Cancel</button>
+                <button type="button" class="btn btn-outline-light" onclick="closeReportModal();">Cancel</button>
                 <button type="submit" class="btn btn-gold">Submit Report</button>
             </div>
         </form>

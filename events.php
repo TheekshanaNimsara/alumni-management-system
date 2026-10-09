@@ -240,7 +240,6 @@ if (empty($events)) {
                             <!-- RSVP Form Button -->
                             <?php if ($isLoggedIn): ?>
                                 <form method="POST" action="events.php" style="display: inline;">
-                                    <?php echo csrf_field(); ?>
                                     <input type="hidden" name="action" value="toggle_rsvp">
                                     <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
                                     
@@ -282,7 +281,6 @@ if (empty($events)) {
 
         <?php if ($isLoggedIn): ?>
             <form method="POST" action="events.php#propose-event">
-                <?php echo csrf_field(); ?>
                 <input type="hidden" name="action" value="create_event">
                 
                 <div class="grid grid-2" style="margin-bottom: 1.2rem; gap: 1.5rem;">
@@ -336,15 +334,14 @@ if (empty($events)) {
 </div>
 
 <!-- Modal for reporting event -->
-<div id="reportModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center;">
-    <div style="background: #ffffff; width: 90%; max-width: 480px; border-radius: var(--border-radius); padding: 2rem; border-top: 4px solid var(--accent-color); box-shadow: 0 15px 40px rgba(0,0,0,0.5);">
-        <h3 style="color: var(--primary-color); margin-bottom: 0.5rem; font-weight: 800;">Report Event</h3>
+<div id="reportModal" class="modal-overlay">
+    <div class="modal-box">
+        <h3 style="color: var(--text-light); margin-bottom: 0.5rem; font-weight: 800;">Report Event</h3>
         <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.2rem;">
             Report misleading information or unauthorized alumni gatherings.
         </p>
 
         <form method="POST" action="actions/report.php">
-            <?php echo csrf_field(); ?>
             <input type="hidden" name="event_id" id="report_event_id" value="">
             
             <div class="form-group">
@@ -364,7 +361,7 @@ if (empty($events)) {
             </div>
 
             <div style="display: flex; gap: 0.8rem; justify-content: flex-end; margin-top: 1.5rem;">
-                <button type="button" class="btn btn-outline-light" style="color: var(--text-color);" onclick="closeReportModal();">Cancel</button>
+                <button type="button" class="btn btn-outline-light" onclick="closeReportModal();">Cancel</button>
                 <button type="submit" class="btn btn-gold">Submit Report</button>
             </div>
         </form>

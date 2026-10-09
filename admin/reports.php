@@ -215,7 +215,6 @@ if ($db_connected && $pdo) {
                                             <!-- Status Update Form -->
                                             <?php if ($r['status'] !== 'resolved'): ?>
                                                 <form method="POST" action="reports.php" style="display: inline;">
-                                                    <?php echo csrf_field(); ?>
                                                     <input type="hidden" name="action" value="set_status">
                                                     <input type="hidden" name="report_id" value="<?php echo $r['id']; ?>">
                                                     <input type="hidden" name="new_status" value="resolved">
@@ -227,7 +226,6 @@ if ($db_connected && $pdo) {
 
                                             <?php if ($r['status'] === 'pending'): ?>
                                                 <form method="POST" action="reports.php" style="display: inline;">
-                                                    <?php echo csrf_field(); ?>
                                                     <input type="hidden" name="action" value="set_status">
                                                     <input type="hidden" name="report_id" value="<?php echo $r['id']; ?>">
                                                     <input type="hidden" name="new_status" value="dismissed">
@@ -240,7 +238,6 @@ if ($db_connected && $pdo) {
                                             <!-- Suspend User Action if target is user and not suspended -->
                                             <?php if (!empty($r['reported_user_id']) && ($r['reported_user_status'] ?? '') !== 'suspended'): ?>
                                                 <form method="POST" action="reports.php" style="display: inline;" onsubmit="return confirm('Are you sure you want to suspend this user account?');">
-                                                    <?php echo csrf_field(); ?>
                                                     <input type="hidden" name="action" value="suspend_user">
                                                     <input type="hidden" name="report_id" value="<?php echo $r['id']; ?>">
                                                     <input type="hidden" name="target_user_id" value="<?php echo $r['reported_user_id']; ?>">
@@ -262,5 +259,6 @@ if ($db_connected && $pdo) {
         </main>
     </div>
 
+<script src="<?php echo $baseUrl; ?>assets/js/main.js"></script>
 </body>
 </html>

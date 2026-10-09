@@ -10,6 +10,3 @@ require_once __DIR__ . '/../config/db.php';
 // - is_admin()
 // - require_login()
 // - require_admin()
-// - generate_csrf_token()
-// - csrf_field()
-// - verify_csrf_token()

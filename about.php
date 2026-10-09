@@ -71,7 +71,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="alumni-avatar-wrapper">
                     <img src="assets/images/default-avatar.svg" alt="Prof. K. Perera" class="alumni-avatar">
                 </div>
-                <h3 style="color: var(--primary-color); font-size: 1.25rem;">Prof. K. Perera</h3>
+                <h3 style="color: var(--text-light); font-size: 1.25rem;">Prof. K. Perera</h3>
                 <p style="font-size: 0.88rem; color: var(--text-muted);">Dean &bull; University Academic Council</p>
             </div>
 
@@ -79,7 +79,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="alumni-avatar-wrapper">
                     <img src="assets/images/default-avatar.svg" alt="Eng. Samantha Silva" class="alumni-avatar">
                 </div>
-                <h3 style="color: var(--primary-color); font-size: 1.25rem;">Eng. Samantha Silva</h3>
+                <h3 style="color: var(--text-light); font-size: 1.25rem;">Eng. Samantha Silva</h3>
                 <div style="color: var(--accent-color); font-weight: 700; font-size: 0.88rem; margin-bottom: 0.5rem;">President, Alumni Association</div>
                 <p style="font-size: 0.88rem; color: var(--text-muted);">Class of 2012 &bull; Chief Technology Officer, NexaCloud</p>
             </div>
@@ -88,7 +88,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="alumni-avatar-wrapper">
                     <img src="assets/images/default-avatar.svg" alt="Dr. Aruni Fernando" class="alumni-avatar">
                 </div>
-                <h3 style="color: var(--primary-color); font-size: 1.25rem;">Dr. Aruni Fernando</h3>
+                <h3 style="color: var(--text-light); font-size: 1.25rem;">Dr. Aruni Fernando</h3>
                 <div style="color: var(--accent-color); font-weight: 700; font-size: 0.88rem; margin-bottom: 0.5rem;">Secretary &amp; Global Relations</div>
                 <p style="font-size: 0.88rem; color: var(--text-muted);">Class of 2015 &bull; Senior Research Fellow, University AI Lab</p>
             </div>
