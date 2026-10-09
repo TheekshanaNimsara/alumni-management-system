@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumni Network - Connect. Inspire. Grow.</title>
     <!-- Master Cinematic Maroon & Gold Stylesheet -->
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css?v=3.1">
     <style>
         /* Standalone Showcase Modal Enhancements */
         .modal-overlay {
@@ -77,8 +77,8 @@
                 </ul>
 
                 <div class="nav-actions nav-auth">
-                    <button type="button" class="btn btn-outline-light btn-sm" onclick="openLoginModal();">Login</button>
-                    <button type="button" class="btn btn-gold btn-sm gold-glow" onclick="openRegisterModal();">Join Network</button>
+                    <a href="./login.html" class="btn btn-outline-light btn-sm">Login</a>
+                    <a href="./register.html" class="btn btn-gold btn-sm gold-glow">Join Network</a>
                 </div>
             </nav>
         </div>
@@ -98,7 +98,7 @@
                 Step into the next chapter of our university’s enduring legacy.
             </p>
             <div class="hero-cta-group">
-                <button type="button" class="btn btn-gold gold-glow" onclick="openRegisterModal();">JOIN THE NETWORK</button>
+                <a href="./register.html" class="btn btn-gold gold-glow">JOIN THE NETWORK</a>
                 <a href="#alumni" class="btn btn-outline-light">EXPLORE DIRECTORY</a>
             </div>
         </div>
@@ -609,7 +609,7 @@
     </div>
 
     <!-- Vanilla Scripts -->
-    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/main.js?v=3.1"></script>
     <script>
         function openLoginModal() {
             document.getElementById('loginModal').style.display = 'flex';
