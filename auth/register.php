@@ -38,7 +38,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 if ($checkStmt->fetch()) {
                     $error = "An account with this email address or username already exists.";
                 } else {
-                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
                     // Insert into users
                     $pdo->beginTransaction();
@@ -59,7 +59,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 
                     $pdo->commit();
 
-                    // Log in immediately
+                    // Log in immediately - regenerate session ID for security
+                    session_regenerate_id(true);
                     $_SESSION['user_id'] = $new_user_id;
                     $_SESSION['user_name'] = $first_name . ' ' . $last_name;
                     $_SESSION['user_role'] = 'alumni';
@@ -147,6 +148,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 <?php endif; ?>
 
                 <form id="registerForm" method="POST" action="register.php">
+                    <?php echo csrf_field(); ?>
                     
                     <!-- Name row -->
                     <div class="auth-row">
