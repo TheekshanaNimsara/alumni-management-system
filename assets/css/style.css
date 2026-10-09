@@ -2006,7 +2006,7 @@ textarea:focus-visible {
     justify-content: center;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease;
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s ease;
     pointer-events: auto;
 }
 
@@ -2050,7 +2050,7 @@ textarea:focus-visible {
     margin-bottom: 1.6rem;
     position: relative;
     z-index: 1;
-    animation: loaderFadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+    animation: loaderFadeInUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both;
 }
 
 .loader-badge {
@@ -2094,7 +2094,7 @@ textarea:focus-visible {
     background: linear-gradient(90deg, #A98218, #D4AF37, #F1D77A, #D4AF37);
     border-radius: 3px;
     box-shadow: 0 0 12px rgba(212, 175, 55, 0.85);
-    animation: loaderProgressExpand 0.55s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
+    animation: loaderProgressExpand 0.32s cubic-bezier(0.25, 1, 0.5, 1) 0.08s forwards;
 }
 
 @keyframes loaderProgressExpand {
@@ -2115,7 +2115,7 @@ textarea:focus-visible {
     opacity: 0.9;
     position: relative;
     z-index: 1;
-    animation: loaderMessageFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+    animation: loaderMessageFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
 }
 
 @keyframes loaderFadeInUp {

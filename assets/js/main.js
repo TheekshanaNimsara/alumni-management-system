@@ -28,17 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // Bypass animation immediately for reduced motion preference
             dismissLoader(0);
         } else {
-            // Crisp, cinematic loader runs quickly (~900ms + smooth 0.35s fade)
-            dismissLoader(900);
+            // Ultra-snappy, cinematic loader runs briskly (~450ms + smooth 0.25s fade)
+            dismissLoader(450);
         }
 
-        // Safety fallback: guaranteed dismissal within 1800ms regardless of assets
+        // Safety fallback: guaranteed dismissal within 900ms regardless of assets
         setTimeout(() => {
             if (!loader.classList.contains('loader-hidden')) {
                 loader.classList.add('loader-hidden');
                 loader.style.pointerEvents = 'none';
             }
-        }, 1800);
+        }, 900);
 
         // Handle browser back/forward cache (bfcache) restoration
         window.addEventListener('pageshow', (event) => {
