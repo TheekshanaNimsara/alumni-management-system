@@ -30,31 +30,48 @@
 
       <!-- Plain HTML form. It posts straight to event.php?action=save -->
       <form id="eventForm" action="event.php?action=save" method="post">
-        <label>Event title
-          <input type="text" name="title" id="title" required placeholder="e.g. Alumni Homecoming">
-        </label>
+        <div class="form-group">
+          <label for="title">Event Title *</label>
+          <input type="text" name="title" id="title" required placeholder="e.g. Alumni Homecoming 2026">
+        </div>
+
+        <div class="form-group">
+          <label for="description">Event Description *</label>
+          <textarea name="description" id="description" rows="4" required placeholder="Describe the event agenda, keynote speakers, venue details, and intended audience..."></textarea>
+        </div>
 
         <div class="row">
-          <label>Event date
+          <div class="form-group">
+            <label for="date">Event Date *</label>
             <input type="date" name="date" id="date" required>
-          </label>
-          <label>Registration deadline
+          </div>
+          <div class="form-group">
+            <label for="regDate">Registration Deadline *</label>
             <input type="date" name="regDate" id="regDate" required>
-          </label>
+          </div>
         </div>
 
         <div class="row">
-          <label>Start time
+          <div class="form-group">
+            <label for="start">Start Time *</label>
             <input type="time" name="start" id="start" required>
-          </label>
-          <label>End time
+          </div>
+          <div class="form-group">
+            <label for="end">End Time *</label>
             <input type="time" name="end" id="end" required>
-          </label>
+          </div>
         </div>
 
-        <label>Location
-          <input type="text" name="location" id="location" required placeholder="e.g. Main Auditorium">
-        </label>
+        <div class="row">
+          <div class="form-group">
+            <label for="location">Location *</label>
+            <input type="text" name="location" id="location" required placeholder="e.g. Main Auditorium / Virtual Stream">
+          </div>
+          <div class="form-group">
+            <label for="capacity">Maximum Capacity</label>
+            <input type="number" name="capacity" id="capacity" min="1" placeholder="e.g. 150 (default 100)">
+          </div>
+        </div>
 
         <div class="form-actions">
           <a class="btn btn-outline" href="event.html">Cancel</a>

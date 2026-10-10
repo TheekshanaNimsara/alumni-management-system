@@ -112,10 +112,13 @@ function showJobs() {
 
   const jobs = allJobs.filter(function (job) {
     const matchesStatus = (job.status || "approved") === "approved";
+    const loc = job.location ? job.location.toLowerCase() : "";
     const matchesSearch =
       job.title.toLowerCase().includes(searchText) ||
-      job.company.toLowerCase().includes(searchText);
-    const matchesType = selectedType === "all" || job.type === selectedType;
+      job.company.toLowerCase().includes(searchText) ||
+      loc.includes(searchText);
+    const effectiveType = job.job_type || job.type || "Full-Time";
+    const matchesType = selectedType === "all" || effectiveType.toLowerCase() === selectedType.toLowerCase();
     return matchesStatus && matchesSearch && matchesType;
   });
 
@@ -124,9 +127,14 @@ function showJobs() {
   jobs.forEach(function (job) {
     const initial = safe(job.company ? job.company.charAt(0).toUpperCase() : "J");
     const hasEmail = job.contact_email && job.contact_email.trim() !== "";
+    const effectiveType = job.job_type || job.type || "Full-Time";
+    const locText = job.location ? " &middot; " + safe(job.location) : "";
+    const deadlineText = job.deadline ? '<p class="deadline" style="margin-top: 4px; font-size: 0.82rem; color: var(--danger-color);">Deadline: ' + formatDate(job.deadline) + '</p>' : '';
+    const reqText = job.requirements ? '<p class="muted" style="font-size: 0.82rem; margin-top: 4px;"><strong>Tech / Req:</strong> ' + safe(job.requirements) + '</p>' : '';
+
     const applyBtn = hasEmail
       ? `<button type="button" class="apply-btn" data-title="${safe(job.title)}" data-email="${safe(job.contact_email)}">Apply Now</button>`
-      : `<a href="mailto:hr@company.com?subject=${encodeURIComponent('Application for ' + job.title)}" class="apply-btn">Apply Now</a>`;
+      : `<a href="mailto:careers@company.com?subject=${encodeURIComponent('Application for ' + job.title)}" class="apply-btn">Apply Now</a>`;
 
     jobList.innerHTML += `
       <div class="job-card">
@@ -134,12 +142,14 @@ function showJobs() {
           <div class="job-logo">${initial}</div>
           <div class="job-header-info">
             <h3 class="job-title" title="${safe(job.title)}">${safe(job.title)}</h3>
-            <p class="company-name">${safe(job.company)}</p>
+            <p class="company-name">${safe(job.company)}${locText}</p>
           </div>
-          <span class="tag ${tagClass(job.type)}">${safe(job.type)}</span>
+          <span class="tag ${tagClass(effectiveType)}">${safe(effectiveType)}</span>
         </div>
 
         ${job.description ? `<p class="job-desc">${safe(job.description)}</p>` : ""}
+        ${reqText}
+        ${deadlineText}
 
         <div class="job-actions">
           ${applyBtn}

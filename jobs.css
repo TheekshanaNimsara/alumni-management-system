@@ -172,10 +172,13 @@ nav a:hover { color: var(--accent-light); }
 
 .btn-outline {
   background: var(--surface-color);
-  color: var(--primary-color);
+  color: var(--text-light);
   border: 1px solid var(--border-color);
 }
-.btn-outline:hover { border-color: var(--primary-color); }
+.btn-outline:hover {
+  color: var(--accent-light);
+  border-color: var(--accent-color);
+}
 
 /* ------------------------------------------------------------
    6. TYPOGRAPHY
@@ -183,7 +186,7 @@ nav a:hover { color: var(--accent-light); }
 h1 {
   font-size: 1.9rem;
   font-weight: 800;
-  color: var(--primary-color);
+  color: var(--text-light);
   margin-bottom: 0.5rem;
 }
 
@@ -262,11 +265,13 @@ h1 {
    ------------------------------------------------------------ */
 .job-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
 }
 
 .job-card {
+  min-width: 0;
+  box-sizing: border-box;
   background: var(--surface-color);
   border: 1px solid var(--border-color);
   border-left: 4px solid var(--accent-color);
@@ -318,11 +323,10 @@ h1 {
 .job-title {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: var(--text-light);
   margin: 0 0 3px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .company-name {
@@ -477,7 +481,7 @@ footer p {
   box-shadow: 0 12px 30px rgba(18, 3, 5, 0.08);
 }
 
-.form-card h1 { margin: 0 0 6px; color: var(--primary-color); }
+.form-card h1 { margin: 0 0 6px; color: var(--text-light); }
 .form-card > p { margin: 0 0 1.5rem; color: var(--text-muted); }
 
 .form-container {
@@ -494,7 +498,7 @@ footer p {
 .form-container h1 {
   font-size: 1.6rem;
   margin-bottom: 0.5rem;
-  color: var(--primary-color);
+  color: var(--text-light);
 }
 
 .form-container .subtitle { margin-bottom: 1.5rem; }
@@ -504,7 +508,21 @@ label {
   margin-bottom: 0.4rem;
   font-size: 0.88rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: var(--text-light);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 1.1rem;
+}
+
+.form-group label {
+  margin-bottom: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-light);
 }
 
 .form-container input,
@@ -630,7 +648,7 @@ label {
 }
 .apply-modal-close:hover {
   background: var(--border-color);
-  color: var(--primary-color);
+  color: var(--text-light);
 }
 
 .apply-modal-icon {
@@ -642,7 +660,7 @@ label {
 .apply-modal-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: var(--text-light);
   margin: 0 0 6px;
   line-height: 1.35;
 }
@@ -668,14 +686,14 @@ label {
   flex: 1;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--primary-color);
+  color: var(--accent-light);
   word-break: break-all;
   text-align: left;
 }
 
 .apply-modal-copy {
-  background: var(--primary-color);
-  color: var(--accent-color);
+  background: var(--accent-color);
+  color: #fff;
   border: none;
   border-radius: var(--border-radius);
   padding: 0.45rem 0.85rem;
@@ -687,7 +705,7 @@ label {
   flex-shrink: 0;
 }
 .apply-modal-copy:hover {
-  background: var(--primary-light);
+  background: var(--accent-dark);
   transform: scale(1.04);
 }
 
@@ -758,14 +776,17 @@ label {
 }
 .reveal.show { opacity: 1; transform: translateY(0); }
 
-@media (max-width: 768px) {
-  h1 { font-size: 1.5rem; }
-  .job-list { grid-template-columns: 1fr; }
-  .form-card, .form-container { padding: 1.4rem 1.2rem; }
-  .apply-modal-box { padding: 2rem 1.5rem; }
+@media (max-width: 992px) {
+  .job-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .admin-stats { grid-template-columns: repeat(2, 1fr); }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
+  h1 { font-size: 1.5rem; }
+  .job-list { grid-template-columns: minmax(0, 1fr); }
+  .admin-stats { grid-template-columns: 1fr; }
+  .form-card, .form-container { padding: 1.4rem 1.2rem; }
+  .apply-modal-box { padding: 2rem 1.5rem; }
   .job-actions { flex-direction: column; }
   .apply-btn, .share-btn { flex: unset; width: 100%; }
 }

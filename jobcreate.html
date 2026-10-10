@@ -30,30 +30,66 @@
            padding:10px 16px;border-radius:6px;margin-bottom:16px;font-weight:600;"></div>
 
       <form action="job.php?action=create" method="POST">
-        <label for="jobTitle">Job Title</label>
-        <input type="text" id="jobTitle" name="jobTitle"
-               placeholder="e.g. Software Engineer" required />
+        <div class="form-group">
+          <label for="jobTitle">Job Title *</label>
+          <input type="text" id="jobTitle" name="jobTitle"
+                 placeholder="e.g. Senior Software Engineer" required />
+        </div>
 
-        <label for="companyName">Company Name</label>
-        <input type="text" id="companyName" name="companyName"
-               placeholder="e.g. Sysco LABS" required />
+        <div class="form-group">
+          <label for="companyName">Company Name *</label>
+          <input type="text" id="companyName" name="companyName"
+                 placeholder="e.g. Sysco LABS / Google" required />
+        </div>
 
-        <label for="location">Location</label>
-        <input type="text" id="location" name="location"
-               placeholder="e.g. Colombo, Sri Lanka" />
+        <div class="form-group">
+          <label for="description">Job Description *</label>
+          <textarea id="description" name="description" rows="4"
+                    placeholder="Describe the role responsibilities, day-to-day work, and project scope..." required></textarea>
+        </div>
 
-        <label for="jobType">Job Type</label>
-        <select id="jobType" name="jobType">
-          <option value="Full time">Full time</option>
-          <option value="Part time">Part time</option>
-          <option value="Remote">Remote</option>
-        </select>
+        <div class="form-group">
+          <label for="requirements">Requirements &amp; Tech Stack</label>
+          <textarea id="requirements" name="requirements" rows="3"
+                    placeholder="e.g. 2+ years PHP/MySQL experience, strong problem solving, Git workflow"></textarea>
+        </div>
 
-        <label for="contactEmail">Contact Email <span style="font-weight:400;color:#777">(for applicants)</span></label>
-        <input type="email" id="contactEmail" name="contactEmail"
-               placeholder="e.g. hr@company.com" />
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+          <div class="form-group">
+            <label for="location">Location *</label>
+            <input type="text" id="location" name="location"
+                   placeholder="e.g. Colombo, Sri Lanka / Remote" required />
+          </div>
 
-        <button type="submit" class="submit-btn">Post Job</button>
+          <div class="form-group">
+            <label for="jobType">Job Type *</label>
+            <select id="jobType" name="jobType" required>
+              <option value="Full-Time">Full-Time</option>
+              <option value="Part-Time">Part-Time</option>
+              <option value="Internship">Internship</option>
+              <option value="Contract">Contract</option>
+              <option value="Remote">Remote</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+          <div class="form-group">
+            <label for="contactEmail">Contact Email <span style="font-weight:400;color:var(--text-muted);">(for applicants)</span></label>
+            <input type="email" id="contactEmail" name="contactEmail"
+                   placeholder="e.g. careers@company.com" />
+          </div>
+
+          <div class="form-group">
+            <label for="deadline">Application Deadline</label>
+            <input type="date" id="deadline" name="deadline" />
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem; display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <a href="jobs.html" class="btn btn-outline">Cancel</a>
+          <button type="submit" class="btn btn-primary submit-btn">Post Opportunity</button>
+        </div>
       </form>
     </div>
   </main>

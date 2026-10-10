@@ -109,6 +109,16 @@ try {
     }
 }
 
+if ($db_connected && $pdo) {
+    try { $pdo->exec("ALTER TABLE events ADD COLUMN reg_date DATE DEFAULT NULL AFTER event_date"); } catch (Exception $e) {}
+    try { $pdo->exec("ALTER TABLE events ADD COLUMN start_time TIME DEFAULT NULL AFTER event_time"); } catch (Exception $e) {}
+    try { $pdo->exec("ALTER TABLE events ADD COLUMN end_time TIME DEFAULT NULL AFTER start_time"); } catch (Exception $e) {}
+    try { $pdo->exec("ALTER TABLE events ADD COLUMN capacity INT NOT NULL DEFAULT 100 AFTER location"); } catch (Exception $e) {}
+    try { $pdo->exec("ALTER TABLE jobs ADD COLUMN contact_email VARCHAR(200) DEFAULT NULL AFTER description"); } catch (Exception $e) {}
+    try { $pdo->exec("ALTER TABLE jobs ADD COLUMN requirements TEXT DEFAULT NULL AFTER contact_email"); } catch (Exception $e) {}
+    try { $pdo->exec("ALTER TABLE jobs ADD COLUMN deadline DATE DEFAULT NULL AFTER application_link"); } catch (Exception $e) {}
+}
+
 // ------------------------------------------------------------
 // Helper: Get base URL for clean internal routing
 // ------------------------------------------------------------

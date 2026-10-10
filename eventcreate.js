@@ -21,7 +21,7 @@ if (params.get("error")) {
     .map(function (msg) { return "<p>" + msg + "</p>"; })
     .join("");
 
-  ["title", "date", "start", "end", "location", "regDate"].forEach(function (name) {
+  ["title", "description", "date", "start", "end", "location", "regDate", "capacity"].forEach(function (name) {
     const field = document.getElementById(name);
     if (field && params.get(name)) field.value = params.get(name);
   });

@@ -45,6 +45,7 @@ function isEventExpired(dateStr, endTimeStr) {
 }
 
 // ---- Build one card for an event ----
+// ---- Build one card for an event ----
 function buildCard(ev) {
   const card = document.createElement("article");
   card.className = "event-card";
@@ -67,29 +68,36 @@ function buildCard(ev) {
     statusBadge = '<span class="badge badge-approved">Approved</span>';
   }
 
+  const isRegistered = !!ev.is_registered;
   const registerBtn = expired
     ? '<button type="button" class="btn btn-outline" disabled style="opacity: 0.6; cursor: not-allowed;">Event Closed</button>'
-    : '<button type="button" class="btn btn-primary btn-register">Register</button>';
+    : (isRegistered
+        ? '<button type="button" class="btn btn-primary btn-register registered">Registered &#10004;</button>'
+        : '<button type="button" class="btn btn-primary btn-register">Register</button>');
+
+  const eventTitle = ev.title && ev.title.trim() ? ev.title : "University Gathering";
+  const attendees = typeof ev.attendee_count !== "undefined" ? parseInt(ev.attendee_count, 10) : 1;
+  const attendeeText = attendees === 1 ? "1 person is going" : attendees + " people are going";
+  const capacityText = ev.capacity && parseInt(ev.capacity, 10) > 0 ? " &middot; Max Cap: " + ev.capacity : "";
+  const descHtml = ev.description && ev.description.trim() ? '<p class="event-desc">' + escapeHtml(ev.description) + '</p>' : "";
+  const deadlineHtml = ev.regDate ? '<p class="deadline">Reg. Deadline &mdash; ' + formatDate(ev.regDate) + "</p>" : "";
 
   card.innerHTML =
     '<div class="card-body">' +
     '<div class="card-title-row">' +
-    "<h3>" +
-    escapeHtml(ev.title) +
-    "</h3>" +
+    "<h3>" + escapeHtml(eventTitle) + "</h3>" +
     statusBadge +
     "</div>" +
+    descHtml +
     '<p class="muted">' +
     formatDate(ev.date) +
     (ev.start && ev.end ? " &middot; " + formatTime(ev.start) + " - " + formatTime(ev.end) : "") +
     "</p>" +
     '<p class="muted">' +
-    escapeHtml(ev.location) +
+    escapeHtml(ev.location || "Main Campus") +
     "</p>" +
-    '<p class="going"><span class="going-count">1</span> person is going</p>' +
-    '<p class="deadline">Reg. Last Date - ' +
-    formatDate(ev.regDate) +
-    "</p>" +
+    '<p class="going"><span class="going-count">' + attendees + '</span> ' + (attendees === 1 ? "person is going" : "people are going") + capacityText + '</p>' +
+    deadlineHtml +
     '<div class="card-actions">' +
     registerBtn +
     '<button type="button" class="btn btn-outline btn-share">Share</button>' +
@@ -106,25 +114,63 @@ grid.addEventListener("click", function (e) {
     const card = regBtn.closest(".event-card");
     if (!card) return;
 
-    const goingEl = card.querySelector(".going");
-    const countSpan = card.querySelector(".going-count");
-    let count = countSpan ? parseInt(countSpan.textContent, 10) : 1;
-    if (isNaN(count)) count = 1;
+    const eventId = card.dataset.id;
+    regBtn.disabled = true;
 
-    const isRegistered = regBtn.classList.contains("registered");
-
-    if (!isRegistered) {
-      count++;
-      regBtn.classList.add("registered");
-      regBtn.textContent = "Registered";
-    } else {
-      count--;
-      regBtn.classList.remove("registered");
-      regBtn.textContent = "Register";
-    }
-
-    const text = count === 1 ? "person is going" : "people are going";
-    goingEl.innerHTML = '<span class="going-count">' + count + "</span> " + text;
+    fetch("event.php?action=register", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: "event_id=" + encodeURIComponent(eventId),
+    })
+      .then(function (res) {
+        if (res.status === 401) {
+          window.location.href = "auth/login.php";
+          return null;
+        }
+        return res.json();
+      })
+      .then(function (data) {
+        regBtn.disabled = false;
+        if (!data) return;
+        if (data.success) {
+          const goingEl = card.querySelector(".going");
+          const count = data.attendee_count;
+          if (data.is_registered) {
+            regBtn.classList.add("registered");
+            regBtn.innerHTML = "Registered &#10004;";
+          } else {
+            regBtn.classList.remove("registered");
+            regBtn.textContent = "Register";
+          }
+          if (goingEl) {
+            const label = count === 1 ? "person is going" : "people are going";
+            goingEl.innerHTML = '<span class="going-count">' + count + "</span> " + label;
+          }
+        } else {
+          alert(data.error || "Could not register for event.");
+        }
+      })
+      .catch(function () {
+        regBtn.disabled = false;
+        // Client fallback toggle
+        const goingEl = card.querySelector(".going");
+        const countSpan = card.querySelector(".going-count");
+        let count = countSpan ? parseInt(countSpan.textContent, 10) : 1;
+        const isRegistered = regBtn.classList.contains("registered");
+        if (!isRegistered) {
+          count++;
+          regBtn.classList.add("registered");
+          regBtn.innerHTML = "Registered &#10004;";
+        } else {
+          count = Math.max(0, count - 1);
+          regBtn.classList.remove("registered");
+          regBtn.textContent = "Register";
+        }
+        if (goingEl) {
+          const label = count === 1 ? "person is going" : "people are going";
+          goingEl.innerHTML = '<span class="going-count">' + count + "</span> " + label;
+        }
+      });
     return;
   }
 
