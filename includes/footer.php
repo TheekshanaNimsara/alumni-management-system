@@ -65,6 +65,6 @@ $baseUrl = isset($baseUrl) ? $baseUrl : get_base_url();
     </footer>
 
     <!-- Vanilla JavaScript -->
-    <script src="<?php echo $baseUrl; ?>assets/js/main.js?v=4.0"></script>
+    <script src="<?php echo $baseUrl; ?>assets/js/main.js?v=4.2"></script>
 </body>
 </html>

@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (loader) {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const hasLoadedBefore = sessionStorage.getItem('kdu_cinematic_loader_shown');
 
         const dismissLoader = (delay = 0) => {
             setTimeout(() => {
@@ -24,22 +23,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }, delay);
         };
 
-        if (prefersReducedMotion || hasLoadedBefore) {
-            // Bypass animation immediately for reduced motion preference or subsequent page navigation
+        if (prefersReducedMotion) {
+            // Bypass animation immediately for reduced motion preference
             dismissLoader(0);
         } else {
-            // Ultra-snappy loader runs in a brief 120ms pulse then fades out
-            sessionStorage.setItem('kdu_cinematic_loader_shown', 'true');
-            dismissLoader(120);
+            // Balanced middle-range cinematic duration (~1.65s + smooth 0.4s fade)
+            dismissLoader(1650);
         }
 
-        // Safety fallback: guaranteed dismissal within 250ms regardless of assets
+        // Safety fallback: guaranteed dismissal within 2600ms regardless of assets
         setTimeout(() => {
             if (!loader.classList.contains('loader-hidden')) {
                 loader.classList.add('loader-hidden');
                 loader.style.pointerEvents = 'none';
             }
-        }, 250);
+        }, 2600);
 
         // Handle browser back/forward cache (bfcache) restoration
         window.addEventListener('pageshow', (event) => {

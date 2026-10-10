@@ -2011,7 +2011,7 @@ textarea:focus-visible {
     justify-content: center;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.15s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.15s ease;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
     pointer-events: auto;
 }
 
@@ -2037,15 +2037,15 @@ textarea:focus-visible {
     transform: translate(-50%, -50%);
     width: 260px;
     height: 150px;
-    background: radial-gradient(ellipse, rgba(147, 51, 234, 0.25) 0%, rgba(124, 58, 237, 0.12) 50%, transparent 75%);
+    background: radial-gradient(ellipse, rgba(147, 51, 234, 0.28) 0%, rgba(124, 58, 237, 0.14) 50%, transparent 75%);
     pointer-events: none;
-    animation: loaderGlowPulse 1.8s ease-in-out infinite;
+    animation: loaderGlowPulse 2.2s ease-in-out infinite;
     z-index: 0;
 }
 
 @keyframes loaderGlowPulse {
-    0%, 100% { opacity: 0.45; transform: translate(-50%, -50%) scale(0.95); }
-    50% { opacity: 0.95; transform: translate(-50%, -50%) scale(1.08); }
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.96); }
+    50% { opacity: 0.95; transform: translate(-50%, -50%) scale(1.06); }
 }
 
 .loader-brand {
@@ -2055,7 +2055,7 @@ textarea:focus-visible {
     margin-bottom: 1.6rem;
     position: relative;
     z-index: 1;
-    animation: loaderFadeInUp 0.1s cubic-bezier(0.16, 1, 0.3, 1) 0.01s both;
+    animation: loaderFadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
 }
 
 .loader-badge {
@@ -2099,7 +2099,7 @@ textarea:focus-visible {
     background: linear-gradient(90deg, #7C3AED, #9333EA, #C4B5FD, #9333EA);
     border-radius: 3px;
     box-shadow: 0 0 14px rgba(147, 51, 234, 0.85);
-    animation: loaderProgressExpand 0.12s cubic-bezier(0.25, 1, 0.5, 1) 0.02s forwards;
+    animation: loaderProgressExpand 1.35s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
 }
 
 @keyframes loaderProgressExpand {
@@ -2120,7 +2120,7 @@ textarea:focus-visible {
     opacity: 0.9;
     position: relative;
     z-index: 1;
-    animation: loaderMessageFade 0.1s cubic-bezier(0.16, 1, 0.3, 1) 0.03s both;
+    animation: loaderMessageFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
 }
 
 @keyframes loaderFadeInUp {
