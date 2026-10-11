@@ -188,7 +188,7 @@ if (empty($events) && $tabFilter !== 'my') {
             <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0;">Scheduled calendar of university alumni events</p>
         </div>
         <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
-            <a href="index.php" class="btn btn-outline-light btn-sm">&larr; Return to Homepage</a>
+            <a href="index.php" class="btn btn-return-home btn-outline-light btn-sm">&larr; Return to Homepage</a>
             <?php if ($isLoggedIn): ?>
                 <a href="#propose-event" class="btn btn-gold gold-glow btn-sm">
                     + Propose an Event

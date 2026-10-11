@@ -111,7 +111,7 @@ if ($db_connected && $pdo) {
 <div class="container" style="padding-top: 2rem; padding-bottom: 5rem;">
 
     <div style="display: flex; justify-content: flex-start; margin-bottom: 1.5rem;">
-        <a href="<?php echo $baseUrl; ?>index.php" class="btn btn-outline-light btn-sm">&larr; Return to Homepage</a>
+        <a href="<?php echo $baseUrl; ?>index.php" class="btn btn-return-home btn-outline-light btn-sm">&larr; Return to Homepage</a>
     </div>
 
     <!-- Filter Card -->

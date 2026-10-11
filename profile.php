@@ -203,7 +203,7 @@ $skillsList = !empty($profile['skills']) ? array_filter(array_map('trim', explod
 <div style="background: radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.22) 0%, transparent 60%), linear-gradient(135deg, #10091D 0%, #130D20 60%, #1B1230 100%); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border-color);">
     <div class="container">
         <div style="margin-bottom: 1.5rem;">
-            <a href="<?php echo $baseUrl; ?>index.php" class="btn btn-outline-light btn-sm">&larr; Return to Homepage</a>
+            <a href="<?php echo $baseUrl; ?>index.php" class="btn btn-return-home btn-outline-light btn-sm">&larr; Return to Homepage</a>
         </div>
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem;">
             

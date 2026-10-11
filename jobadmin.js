@@ -161,7 +161,7 @@ async function fetchAdminJobs() {
         <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
           <a href="auth/login.php?redirect=${encodeURIComponent("../jobadmin.html")}" class="btn btn-primary">Log In as Administrator</a>
           <a href="jobs.html" class="btn btn-outline">&larr; Back to Jobs Board</a>
-          <a href="index.html" class="btn btn-outline-glass">&larr; Return to Homepage</a>
+          <a href="index.html" class="btn btn-return-home btn-outline-glass">&larr; Return to Homepage</a>
         </div>
       </div>
     `;

@@ -22,7 +22,7 @@ require_once __DIR__ . '/includes/header.php';
 <section class="section section-dark reveal">
     <div class="container">
         <div style="margin-bottom: 2rem;">
-            <a href="<?php echo $baseUrl; ?>index.php" class="btn btn-outline-light btn-sm">&larr; Return to Homepage</a>
+            <a href="<?php echo $baseUrl; ?>index.php" class="btn btn-return-home btn-outline-light btn-sm">&larr; Return to Homepage</a>
         </div>
         <div class="grid grid-2" style="align-items: center;">
             <div>
