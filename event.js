@@ -305,23 +305,49 @@ const fallbackEvents = [
   }
 ];
 
-// ---- Fetch events from event.php ----
+// ---- Check Authentication Session from Backend ----
+const adminNavLink = document.getElementById("adminNavLink");
+function checkAuthSession() {
+  fetch("event.php?action=session")
+    .then(res => res.text())
+    .then(text => {
+      const trimmed = text.trim();
+      if (trimmed.startsWith("<")) return;
+      const data = JSON.parse(trimmed);
+      if (data && data.is_admin && adminNavLink) {
+        adminNavLink.style.display = "inline-block";
+      }
+    })
+    .catch(() => {});
+}
+
+// ---- Fetch events from event.php safely ----
 function loadSubmittedEvents() {
   fetch("event.php?action=get")
     .then(function (res) {
-      return res.json();
+      return res.text();
     })
-    .then(function (events) {
-      grid.innerHTML = "";
-      if (Array.isArray(events) && events.length > 0) {
-        events.forEach(function (ev) {
-          grid.appendChild(buildCard(ev));
-        });
+    .then(function (text) {
+      const trimmed = text.trim();
+      let events = [];
+
+      if (trimmed.startsWith("<?php") || trimmed.startsWith("<!DOCTYPE") || trimmed.startsWith("<html")) {
+        console.warn("event.php returned PHP source/HTML. Using fallback sample events.");
+        events = fallbackEvents;
       } else {
-        fallbackEvents.forEach(function (ev) {
-          grid.appendChild(buildCard(ev));
-        });
+        try {
+          const parsed = JSON.parse(trimmed);
+          events = Array.isArray(parsed) && parsed.length > 0 ? parsed : fallbackEvents;
+        } catch (e) {
+          console.warn("JSON parse error on event response. Using fallback sample events.");
+          events = fallbackEvents;
+        }
       }
+
+      grid.innerHTML = "";
+      events.forEach(function (ev) {
+        grid.appendChild(buildCard(ev));
+      });
       filterEvents();
     })
     .catch(function () {
@@ -335,6 +361,11 @@ function loadSubmittedEvents() {
 
 // ---- Handle URL tab parameters (e.g. event.html?tab=my or tab=upcoming) ----
 const params = new URLSearchParams(window.location.search);
+if (params.get("created") === "1") {
+  history.replaceState({}, "", "event.html?tab=my");
+  alert("Event submitted successfully! It is pending administrator approval and will appear publicly once approved.");
+}
+
 const tabParam = params.get("tab");
 if (tabParam === "upcoming" || tabParam === "new" || tabParam === "my" || tabParam === "all") {
   activeFilter = tabParam === "new" ? "upcoming" : tabParam;
@@ -356,7 +387,8 @@ tabs.forEach(function (tab) {
 
 searchInput.addEventListener("input", filterEvents);
 
-// Periodically update expiration & filtering so expired events automatically drop out of upcoming view
+// Periodically update expiration & filtering
 setInterval(filterEvents, 10000);
 
+checkAuthSession();
 loadSubmittedEvents();

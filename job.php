@@ -36,17 +36,23 @@ switch ($action) {
 
     // ── GET: Return jobs ───────────────────────────────────────────
     case 'get':
-        header('Content-Type: application/json');
+        header('Content-Type: application/json; charset=UTF-8');
+        $statusFilter = $_GET['status'] ?? null;
+        if ($statusFilter === 'all' && !$isAdmin) {
+            http_response_code(403);
+            echo json_encode(['error' => 'Forbidden: Administrator privileges required to access all listings.']);
+            exit;
+        }
+
         if (!$pdo) {
-            echo json_encode([]);
+            echo json_encode(get_sample_jobs());
             exit;
         }
 
         try {
-            $statusFilter = $_GET['status'] ?? null;
             $userParam = $currentUserId ? (int)$currentUserId : 0;
 
-            if ($isAdmin && $statusFilter === 'all') {
+            if ($statusFilter === 'all') {
                 $stmt = $pdo->query("
                     SELECT 
                         j.id,
@@ -84,13 +90,16 @@ switch ($action) {
                         j.status,
                         j.posted_at
                     FROM jobs j
-                    WHERE j.status = 'approved' OR j.posted_by = :uid
+                    WHERE j.status = 'approved' OR (:uid > 0 AND j.posted_by = :uid)
                     ORDER BY j.id DESC
                 ");
                 $stmt->execute([':uid' => $userParam]);
             }
 
             $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($jobs) && empty($statusFilter)) {
+                $jobs = get_sample_jobs();
+            }
             echo json_encode($jobs);
         } catch (PDOException $e) {
             http_response_code(500);
@@ -104,6 +113,18 @@ switch ($action) {
             http_response_code(405);
             header('Content-Type: application/json');
             echo json_encode(['success' => false, 'error' => 'POST method required.']);
+            exit;
+        }
+
+        // Require authentication for ordinary users
+        if (!$currentUserId) {
+            if (isAjax()) {
+                http_response_code(401);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => 'Authentication required. Please sign in to post a job.']);
+            } else {
+                header('Location: auth/login.php?redirect=' . urlencode('../jobcreate.html'));
+            }
             exit;
         }
 
@@ -137,7 +158,7 @@ switch ($action) {
             exit;
         }
 
-        $posted_by = $currentUserId ? (int)$currentUserId : 1;
+        $posted_by = (int)$currentUserId;
         $status    = $isAdmin ? 'approved' : 'pending';
 
         try {
@@ -200,6 +221,39 @@ switch ($action) {
 
         try {
             $stmt = $pdo->prepare("UPDATE jobs SET status = 'approved' WHERE id = :id");
+            $stmt->execute([':id' => $id]);
+            echo json_encode(['success' => true]);
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+        }
+        exit;
+
+    // ── REJECT: Set status = rejected ────────────────────────────
+    case 'reject':
+        header('Content-Type: application/json; charset=UTF-8');
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['success' => false, 'error' => 'POST method required.']);
+            exit;
+        }
+
+        if (!$isAdmin) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'error' => 'Forbidden: Administrator privileges required.']);
+            exit;
+        }
+
+        $id = intval($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Invalid job ID.']);
+            exit;
+        }
+
+        try {
+            $stmt = $pdo->prepare("UPDATE jobs SET status = 'rejected' WHERE id = :id");
             $stmt->execute([':id' => $id]);
             echo json_encode(['success' => true]);
         } catch (PDOException $e) {
@@ -304,6 +358,18 @@ switch ($action) {
             http_response_code(500);
             echo json_encode(['success' => false, 'error' => $e->getMessage()]);
         }
+        exit;
+
+    // ── SESSION: Auth & role status check ─────────────────────────
+    case 'session':
+        header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode([
+            'logged_in' => is_logged_in(),
+            'user_id'   => current_user_id(),
+            'user_name' => $_SESSION['user_name'] ?? null,
+            'role'      => $_SESSION['user_role'] ?? 'guest',
+            'is_admin'  => is_admin()
+        ]);
         exit;
 
     // ── SETUP: Status confirmation ────────────────────────────────

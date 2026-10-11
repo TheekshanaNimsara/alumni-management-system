@@ -9,19 +9,22 @@
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
     <link rel="shortcut icon" href="./favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
-    <link rel="stylesheet" href="jobs.css?v=4.0" />
+    <link rel="stylesheet" href="jobs.css?v=4.1" />
   </head>
   <body>
     <!-- Top navbar -->
     <header class="navbar">
       <div class="navbar-left">
-        <div class="logo-box">AN</div>
-        <span class="navbar-title">Alumni Network</span>
+        <a href="index.html" class="brand-link" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;">
+          <div class="logo-box">AN</div>
+          <span class="navbar-title">Alumni Network</span>
+        </a>
       </div>
       <nav>
+        <a href="index.html">Home</a>
         <a href="event.html">Events</a>
-        <a href="jobs.html">Jobs</a>
-        <a href="jobadmin.html">Job Admin</a>
+        <a href="jobs.html" class="active">Jobs</a>
+        <a href="jobadmin.html" id="adminNavLink" style="display: none;">Job Admin</a>
       </nav>
     </header>
 
@@ -41,7 +44,7 @@
         <input
           type="text"
           id="searchInput"
-          placeholder="Search jobs by title or company"
+          placeholder="Search jobs by title, company, or location..."
         />
 
         <select id="jobTypeFilter">
@@ -54,10 +57,19 @@
         </select>
       </div>
 
+      <!-- Moderation & Posting Filter Tabs -->
+      <div class="tabs" id="jobTabs" style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+        <button type="button" class="tab active" data-filter="all">All Opportunities</button>
+        <button type="button" class="tab" data-filter="my" id="myJobsTab" style="display: none;">My Postings</button>
+      </div>
+
+      <!-- Status / Error Notification -->
+      <div id="jobStatusNotice" style="display: none; margin-bottom: 1.5rem;"></div>
+
       <!-- Job list -->
       <div class="job-list" id="jobList"></div>
 
-      <p id="noResults" class="no-results">
+      <p id="noResults" class="no-results" style="display: none;">
         No job postings right now. Check back later!
       </p>
     </main>
@@ -67,6 +79,6 @@
       <p>CS12012 — Web Development Group Assignment</p>
     </footer>
 
-    <script src="jobs.js"></script>
+    <script src="jobs.js?v=4.1"></script>
   </body>
 </html>

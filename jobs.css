@@ -42,13 +42,13 @@
   --border-radius:    8px;
 
   /* Glassmorphism Design Tokens */
-  --glass-bg:               rgba(36, 23, 61, 0.52);
-  --glass-bg-subtle:        rgba(23, 14, 42, 0.50);
-  --glass-bg-elevated:      rgba(36, 23, 61, 0.65);
-  --glass-border:           rgba(196, 181, 253, 0.24);
-  --glass-blur:             18px;
-  --glass-shadow:           0 18px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(124, 58, 237, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  --glass-hover-shadow:     0 24px 50px rgba(0, 0, 0, 0.75), 0 0 35px rgba(124, 58, 237, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  --glass-bg:               linear-gradient(135deg, rgba(124, 58, 237, 0.16) 0%, rgba(20, 11, 38, 0.58) 100%);
+  --glass-bg-subtle:        linear-gradient(135deg, rgba(124, 58, 237, 0.10) 0%, rgba(16, 9, 29, 0.52) 100%);
+  --glass-bg-elevated:      linear-gradient(135deg, rgba(147, 51, 234, 0.22) 0%, rgba(27, 15, 50, 0.70) 100%);
+  --glass-border:           rgba(196, 181, 253, 0.26);
+  --glass-blur:             16px;
+  --glass-shadow:           0 16px 36px rgba(0, 0, 0, 0.55), 0 0 24px rgba(124, 58, 237, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.20);
+  --glass-hover-shadow:     0 22px 48px rgba(0, 0, 0, 0.72), 0 0 35px rgba(147, 51, 234, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 
 /* ------------------------------------------------------------
@@ -82,10 +82,10 @@ body::before {
   height: 65vw;
   max-width: 900px;
   max-height: 900px;
-  background: radial-gradient(circle, rgba(147, 51, 234, 0.22) 0%, rgba(124, 58, 237, 0.10) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(147, 51, 234, 0.30) 0%, rgba(124, 58, 237, 0.14) 45%, transparent 70%);
   pointer-events: none;
   z-index: 0;
-  filter: blur(50px);
+  filter: blur(60px);
 }
 
 body::after {
@@ -97,10 +97,10 @@ body::after {
   height: 60vw;
   max-width: 850px;
   max-height: 850px;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, rgba(147, 51, 234, 0.08) 50%, transparent 75%);
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.26) 0%, rgba(147, 51, 234, 0.12) 50%, transparent 75%);
   pointer-events: none;
   z-index: 0;
-  filter: blur(50px);
+  filter: blur(65px);
 }
 
 /* Custom Scrollbar */
@@ -508,6 +508,7 @@ h1 {
   color: var(--text-muted);
   margin-top: 2.5rem;
   font-size: 0.95rem;
+  display: none;
 }
 
 /* ------------------------------------------------------------

@@ -117,29 +117,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
-// Fetch approved events with live attendee counts and user RSVP status
+// Tab filter
+$tabFilter = $_GET['tab'] ?? 'all';
+
+// Fetch events based on tab filter
 $events = [];
 if ($db_connected && $pdo) {
     try {
         $userIdParam = $currentUserId ? $currentUserId : 0;
-        $stmt = $pdo->prepare("
-            SELECT e.*, 
-                   CONCAT(u.first_name, ' ', u.last_name) AS organizer_name,
-                   (SELECT COUNT(*) FROM event_registrations WHERE event_id = e.id AND status = 'attending') AS attendee_count,
-                   (SELECT COUNT(*) FROM event_registrations WHERE event_id = e.id AND user_id = ? AND status = 'attending') AS is_user_attending
-            FROM events e
-            LEFT JOIN users u ON e.organizer_id = u.id
-            WHERE e.status = 'approved'
-            ORDER BY e.event_date ASC
-        ");
-        $stmt->execute([$userIdParam]);
-        $events = $stmt->fetchAll();
+        if ($tabFilter === 'my' && $isLoggedIn) {
+            $stmt = $pdo->prepare("
+                SELECT e.*, 
+                       CONCAT(u.first_name, ' ', u.last_name) AS organizer_name,
+                       (SELECT COUNT(*) FROM event_registrations WHERE event_id = e.id AND status = 'attending') AS attendee_count,
+                       (SELECT COUNT(*) FROM event_registrations WHERE event_id = e.id AND user_id = ? AND status = 'attending') AS is_user_attending
+                FROM events e
+                LEFT JOIN users u ON e.organizer_id = u.id
+                WHERE e.organizer_id = ?
+                ORDER BY e.created_at DESC
+            ");
+            $stmt->execute([$userIdParam, $userIdParam]);
+            $events = $stmt->fetchAll();
+        } else {
+            $stmt = $pdo->prepare("
+                SELECT e.*, 
+                       CONCAT(u.first_name, ' ', u.last_name) AS organizer_name,
+                       (SELECT COUNT(*) FROM event_registrations WHERE event_id = e.id AND status = 'attending') AS attendee_count,
+                       (SELECT COUNT(*) FROM event_registrations WHERE event_id = e.id AND user_id = ? AND status = 'attending') AS is_user_attending
+                FROM events e
+                LEFT JOIN users u ON e.organizer_id = u.id
+                WHERE e.status = 'approved'
+                ORDER BY e.event_date ASC
+            ");
+            $stmt->execute([$userIdParam]);
+            $events = $stmt->fetchAll();
+        }
     } catch (Exception $e) {
         $events = [];
     }
 }
 
-if (empty($events)) {
+if (empty($events) && $tabFilter !== 'my') {
     $events = get_sample_events();
 }
 ?>
@@ -176,99 +194,136 @@ if (empty($events)) {
         </div>
     </div>
 
-    <!-- Events Grid (Cinematic Dark Cards) -->
-    <div class="grid grid-3">
-        <?php foreach ($events as $event): ?>
-            <?php
-                $attendees = intval($event['attendee_count'] ?? 0);
-                $capacity = intval($event['capacity'] ?? 100);
-                $isUserAttending = !empty($event['is_user_attending']);
-                $isPast = (strtotime($event['event_date']) < strtotime(date('Y-m-d')));
-                $isClosed = (!empty($event['is_closed']) || $isPast);
-                $isFull = ($capacity > 0 && $attendees >= $capacity);
-            ?>
-            <div class="card card-dark event-card" style="display: flex; flex-direction: column;">
-                
-                <div class="event-image-box" style="position: relative;">
-                    <img src="assets/images/event-placeholder.svg" alt="Event Banner" class="event-image">
-                    <div class="event-artwork-overlay"></div>
-                    <span class="event-date-badge">
-                        <?php echo date('d M Y', strtotime($event['event_date'])); ?>
-                    </span>
+    <!-- Main Tab Selection (All Gatherings vs My Proposals) -->
+    <div style="display: flex; gap: 0.8rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+        <a href="events.php?tab=all" 
+           class="btn btn-sm <?php echo ($tabFilter !== 'my') ? 'btn-gold' : 'btn-outline-light'; ?>">
+            All Gatherings
+        </a>
+        <?php if ($isLoggedIn): ?>
+            <a href="events.php?tab=my" 
+               class="btn btn-sm <?php echo ($tabFilter === 'my') ? 'btn-gold' : 'btn-outline-light'; ?>">
+                My Proposals
+            </a>
+        <?php endif; ?>
+    </div>
 
-                    <!-- Open / Closed Badge -->
-                    <span style="position: absolute; top: 12px; left: 12px; font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.65rem; border-radius: 4px; <?php echo ($isClosed || $isFull) ? 'background: rgba(166, 61, 64, 0.9); color: #fff;' : 'background: rgba(63, 125, 90, 0.9); color: #fff;'; ?>">
-                        <?php 
-                            if ($isPast) echo "Past Event";
-                            elseif ($isClosed) echo "Closed";
-                            elseif ($isFull) echo "Capacity Full";
-                            else echo "&#9679; Open for RSVP";
-                        ?>
-                    </span>
-                </div>
-
-                <div class="event-body" style="flex: 1; display: flex; flex-direction: column;">
+    <?php if (empty($events)): ?>
+        <div style="text-align: center; padding: 3.5rem 1.5rem; background: var(--glass-bg); border-radius: var(--border-radius); border: 1px solid var(--glass-border); margin-bottom: 2rem;">
+            <p style="color: var(--text-light); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                <?php echo ($tabFilter === 'my') ? 'No Event Proposals Found' : 'No Upcoming Events Scheduled'; ?>
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                <?php echo ($tabFilter === 'my') ? 'You have not submitted any event proposals yet. Propose your first gathering below!' : 'Check back later or propose an event below to gather fellow alumni.'; ?>
+            </p>
+            <a href="#propose-event" class="btn btn-gold gold-glow btn-sm">+ Propose an Event</a>
+        </div>
+    <?php else: ?>
+        <!-- Events Grid (Cinematic Dark Cards) -->
+        <div class="grid grid-3">
+            <?php foreach ($events as $event): ?>
+                <?php
+                    $attendees = intval($event['attendee_count'] ?? 0);
+                    $capacity = intval($event['capacity'] ?? 100);
+                    $isUserAttending = !empty($event['is_user_attending']);
+                    $isPast = (strtotime($event['event_date']) < strtotime(date('Y-m-d')));
+                    $isClosed = (!empty($event['is_closed']) || $isPast);
+                    $isFull = ($capacity > 0 && $attendees >= $capacity);
+                ?>
+                <div class="card card-dark event-card" style="display: flex; flex-direction: column;">
                     
-                    <div class="event-meta" style="margin-bottom: 0.6rem;">
-                        <span>&#128338; <?php echo date('h:i A', strtotime($event['event_time'])); ?></span>
-                        <span>&bull;</span>
-                        <span>&#128205; <?php echo htmlspecialchars($event['location']); ?></span>
-                    </div>
-
-                    <h3 class="event-title" style="margin-bottom: 0.6rem;"><?php echo htmlspecialchars($event['title']); ?></h3>
-                    <p class="event-desc" style="flex: 1; margin-bottom: 1rem;"><?php echo htmlspecialchars($event['description']); ?></p>
-                    
-                    <!-- Attendance Progress -->
-                    <div style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; padding: 0.5rem 0.8rem; background: rgba(0,0,0,0.3); border-radius: 4px; display: flex; justify-content: space-between;">
-                        <span>Attendees: <strong style="color: var(--accent-light);"><?php echo $attendees; ?> registered</strong></span>
-                        <span>Capacity: <?php echo $capacity; ?></span>
-                    </div>
-
-                    <!-- Card Actions -->
-                    <div style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
-                        <span style="font-size: 0.8rem; color: var(--text-secondary);">
-                            By: <strong style="color: var(--accent-light);"><?php echo htmlspecialchars(!empty($event['organizer_name']) ? $event['organizer_name'] : 'Alumni Relations'); ?></strong>
+                    <div class="event-image-box" style="position: relative;">
+                        <img src="assets/images/event-placeholder.svg" alt="Event Banner" class="event-image">
+                        <div class="event-artwork-overlay"></div>
+                        <span class="event-date-badge">
+                            <?php echo date('d M Y', strtotime($event['event_date'])); ?>
                         </span>
 
-                        <div style="display: flex; gap: 0.4rem;">
-                            <!-- Report Event Link -->
-                            <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.72rem; padding: 0.25rem 0.45rem; border-color: var(--border-color);" 
-                                    onclick="openReportModal(<?php echo $event['id']; ?>, 'event', '<?php echo htmlspecialchars(addslashes($event['title'])); ?>');" title="Report Event">
-                                &#9873;
-                            </button>
+                        <!-- Open / Closed Badge -->
+                        <span style="position: absolute; top: 12px; left: 12px; font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.65rem; border-radius: 4px; <?php echo ($isClosed || $isFull) ? 'background: rgba(166, 61, 64, 0.9); color: #fff;' : 'background: rgba(63, 125, 90, 0.9); color: #fff;'; ?>">
+                            <?php 
+                                if ($isPast) echo "Past Event";
+                                elseif ($isClosed) echo "Closed";
+                                elseif ($isFull) echo "Capacity Full";
+                                else echo "&#9679; Open for RSVP";
+                            ?>
+                        </span>
 
-                            <!-- RSVP Form Button -->
-                            <?php if ($isLoggedIn): ?>
-                                <form method="POST" action="events.php" style="display: inline;">
-                                    <input type="hidden" name="action" value="toggle_rsvp">
-                                    <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
-                                    
-                                    <?php if ($isUserAttending): ?>
-                                        <button type="submit" class="btn btn-sm" style="background: var(--success-color); color: #fff; font-size: 0.78rem; border: 1px solid var(--accent-color);" title="Click to Cancel RSVP">
-                                            &#10003; Attending (Cancel)
-                                        </button>
-                                    <?php elseif ($isClosed || $isFull): ?>
-                                        <button type="button" class="btn btn-sm btn-disabled" disabled style="font-size: 0.78rem;">
-                                            Closed
-                                        </button>
-                                    <?php else: ?>
-                                        <button type="submit" class="btn btn-gold btn-sm gold-glow" style="font-size: 0.78rem;">
-                                            RSVP Now
-                                        </button>
-                                    <?php endif; ?>
-                                </form>
-                            <?php else: ?>
-                                <a href="auth/login.php" class="btn btn-outline-gold btn-sm" style="font-size: 0.78rem;">
-                                    Login to RSVP
-                                </a>
-                            <?php endif; ?>
-                        </div>
+                        <!-- Status / Moderation Badge for Proposals -->
+                        <?php if (!empty($event['status']) && $event['status'] !== 'approved'): ?>
+                            <span style="position: absolute; top: 12px; right: 12px; font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.65rem; border-radius: 4px; background: <?php echo ($event['status'] === 'rejected' ? 'rgba(239, 68, 68, 0.9)' : 'rgba(245, 158, 11, 0.9)'); ?>; color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+                                <?php echo ($event['status'] === 'rejected') ? '&#10006; Rejected' : '&#9203; Pending Approval'; ?>
+                            </span>
+                        <?php elseif ($tabFilter === 'my'): ?>
+                            <span style="position: absolute; top: 12px; right: 12px; font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.65rem; border-radius: 4px; background: rgba(16, 185, 129, 0.9); color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+                                &#10003; Approved
+                            </span>
+                        <?php endif; ?>
                     </div>
 
+                    <div class="event-body" style="flex: 1; display: flex; flex-direction: column;">
+                        
+                        <div class="event-meta" style="margin-bottom: 0.6rem;">
+                            <span>&#128338; <?php echo date('h:i A', strtotime($event['event_time'])); ?></span>
+                            <span>&bull;</span>
+                            <span>&#128205; <?php echo htmlspecialchars($event['location']); ?></span>
+                        </div>
+
+                        <h3 class="event-title" style="margin-bottom: 0.6rem;"><?php echo htmlspecialchars($event['title']); ?></h3>
+                        <p class="event-desc" style="flex: 1; margin-bottom: 1rem;"><?php echo htmlspecialchars($event['description']); ?></p>
+                        
+                        <!-- Attendance Progress -->
+                        <div style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; padding: 0.5rem 0.8rem; background: rgba(0,0,0,0.3); border-radius: 4px; display: flex; justify-content: space-between;">
+                            <span>Attendees: <strong style="color: var(--accent-light);"><?php echo $attendees; ?> registered</strong></span>
+                            <span>Capacity: <?php echo $capacity; ?></span>
+                        </div>
+
+                        <!-- Card Actions -->
+                        <div style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 0.8rem; color: var(--text-secondary);">
+                                By: <strong style="color: var(--accent-light);"><?php echo htmlspecialchars(!empty($event['organizer_name']) ? $event['organizer_name'] : 'Alumni Relations'); ?></strong>
+                            </span>
+
+                            <div style="display: flex; gap: 0.4rem;">
+                                <!-- Report Event Link -->
+                                <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.72rem; padding: 0.25rem 0.45rem; border-color: var(--border-color);" 
+                                        onclick="openReportModal(<?php echo $event['id']; ?>, 'event', '<?php echo htmlspecialchars(addslashes($event['title'])); ?>');" title="Report Event">
+                                    &#9873;
+                                </button>
+
+                                <!-- RSVP Form Button -->
+                                <?php if ($isLoggedIn): ?>
+                                    <form method="POST" action="events.php" style="display: inline;">
+                                        <input type="hidden" name="action" value="toggle_rsvp">
+                                        <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
+                                        
+                                        <?php if ($isUserAttending): ?>
+                                            <button type="submit" class="btn btn-sm" style="background: var(--success-color); color: #fff; font-size: 0.78rem; border: 1px solid var(--accent-color);" title="Click to Cancel RSVP">
+                                                &#10003; Attending (Cancel)
+                                            </button>
+                                        <?php elseif ($isClosed || $isFull): ?>
+                                            <button type="button" class="btn btn-sm btn-disabled" disabled style="font-size: 0.78rem;">
+                                                Closed
+                                            </button>
+                                        <?php else: ?>
+                                            <button type="submit" class="btn btn-gold btn-sm gold-glow" style="font-size: 0.78rem;">
+                                                RSVP Now
+                                            </button>
+                                        <?php endif; ?>
+                                    </form>
+                                <?php else: ?>
+                                    <a href="auth/login.php" class="btn btn-outline-gold btn-sm" style="font-size: 0.78rem;">
+                                        Login to RSVP
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 
     <!-- Propose Event Section -->
     <div id="propose-event" class="card" style="margin-top: 5rem; padding: 2.5rem; border-top: 4px solid var(--accent-color);">

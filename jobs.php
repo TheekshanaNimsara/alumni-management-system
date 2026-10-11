@@ -90,21 +90,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 // Filter
 $typeFilter = isset($_GET['type']) ? trim($_GET['type']) : '';
+$tabFilter  = isset($_GET['tab']) ? trim($_GET['tab']) : 'all';
 
 $jobs = [];
 if ($db_connected && $pdo) {
     try {
-        $userIdParam = $currentUserId ? $currentUserId : 0;
-        $sql = "
-            SELECT j.*, 
-                   CONCAT(u.first_name, ' ', u.last_name) AS poster_name,
-                   ja.id AS application_id, ja.status AS application_status
-            FROM jobs j
-            LEFT JOIN users u ON j.posted_by = u.id
-            LEFT JOIN job_applications ja ON ja.job_id = j.id AND ja.user_id = ?
-            WHERE j.status = 'approved'
-        ";
-        $params = [$userIdParam];
+        $userIdParam = $currentUserId ? (int)$currentUserId : 0;
+        
+        if ($tabFilter === 'my' && $isLoggedIn) {
+            $sql = "
+                SELECT j.*, 
+                       CONCAT(u.first_name, ' ', u.last_name) AS poster_name,
+                       ja.id AS application_id, ja.status AS application_status
+                FROM jobs j
+                LEFT JOIN users u ON j.posted_by = u.id
+                LEFT JOIN job_applications ja ON ja.job_id = j.id AND ja.user_id = ?
+                WHERE j.posted_by = ?
+            ";
+            $params = [$userIdParam, $userIdParam];
+        } else {
+            $sql = "
+                SELECT j.*, 
+                       CONCAT(u.first_name, ' ', u.last_name) AS poster_name,
+                       ja.id AS application_id, ja.status AS application_status
+                FROM jobs j
+                LEFT JOIN users u ON j.posted_by = u.id
+                LEFT JOIN job_applications ja ON ja.job_id = j.id AND ja.user_id = ?
+                WHERE j.status = 'approved'
+            ";
+            $params = [$userIdParam];
+        }
+
         if (!empty($typeFilter)) {
             $sql .= " AND j.job_type = ?";
             $params[] = $typeFilter;
@@ -119,7 +135,7 @@ if ($db_connected && $pdo) {
     }
 }
 
-if (empty($jobs) && empty($typeFilter)) {
+if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
     $jobs = get_sample_jobs();
 }
 ?>
@@ -156,21 +172,35 @@ if (empty($jobs) && empty($typeFilter)) {
         </div>
     </div>
 
+    <!-- Main Tab Selection (All vs My Submissions) -->
+    <div style="display: flex; gap: 0.8rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+        <a href="jobs.php?tab=all<?php echo !empty($typeFilter) ? '&type=' . urlencode($typeFilter) : ''; ?>" 
+           class="btn btn-sm <?php echo ($tabFilter !== 'my') ? 'btn-gold' : 'btn-outline-light'; ?>">
+            All Positions
+        </a>
+        <?php if ($isLoggedIn): ?>
+            <a href="jobs.php?tab=my<?php echo !empty($typeFilter) ? '&type=' . urlencode($typeFilter) : ''; ?>" 
+               class="btn btn-sm <?php echo ($tabFilter === 'my') ? 'btn-gold' : 'btn-outline-light'; ?>">
+                My Submissions
+            </a>
+        <?php endif; ?>
+    </div>
+
     <!-- Filter Pills -->
     <div style="display: flex; gap: 0.6rem; margin-bottom: 2rem; flex-wrap: wrap;">
-        <a href="jobs.php" class="btn btn-sm <?php echo empty($typeFilter) ? 'btn-gold' : 'btn-outline-light'; ?>" style="<?php echo empty($typeFilter) ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+        <a href="jobs.php?tab=<?php echo urlencode($tabFilter); ?>" class="btn btn-sm <?php echo empty($typeFilter) ? 'btn-gold' : 'btn-outline-light'; ?>" style="<?php echo empty($typeFilter) ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
             All Roles
         </a>
-        <a href="jobs.php?type=Full-Time" class="btn btn-sm <?php echo ($typeFilter === 'Full-Time') ? 'btn-gold' : 'btn-outline-light'; ?>" style="<?php echo ($typeFilter === 'Full-Time') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+        <a href="jobs.php?tab=<?php echo urlencode($tabFilter); ?>&type=Full-Time" class="btn btn-sm <?php echo ($typeFilter === 'Full-Time') ? 'btn-gold' : 'btn-outline-light'; ?>" style="<?php echo ($typeFilter === 'Full-Time') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
             Full-Time
         </a>
-        <a href="jobs.php?type=Internship" class="btn btn-sm <?php echo ($typeFilter === 'Internship') ? 'btn-gold' : 'btn-outline-light'; ?>" style="<?php echo ($typeFilter === 'Internship') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+        <a href="jobs.php?tab=<?php echo urlencode($tabFilter); ?>&type=Internship" class="btn btn-sm <?php echo ($typeFilter === 'Internship') ? 'btn-gold' : 'btn-outline-light'; ?>" style="<?php echo ($typeFilter === 'Internship') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
             Internships
         </a>
-        <a href="jobs.php?type=Remote" class="btn btn-sm <?php echo ($typeFilter === 'Remote') ? 'btn-gold' : 'btn-outline-light'; ?>" style="<?php echo ($typeFilter === 'Remote') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+        <a href="jobs.php?tab=<?php echo urlencode($tabFilter); ?>&type=Remote" class="btn btn-sm <?php echo ($typeFilter === 'Remote') ? 'btn-gold' : 'btn-outline-light'; ?>" style="<?php echo ($typeFilter === 'Remote') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
             Remote
         </a>
-        <a href="jobs.php?type=Contract" class="btn btn-sm <?php echo ($typeFilter === 'Contract') ? 'btn-gold' : 'btn-outline-light'; ?>" style="<?php echo ($typeFilter === 'Contract') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+        <a href="jobs.php?tab=<?php echo urlencode($tabFilter); ?>&type=Contract" class="btn btn-sm <?php echo ($typeFilter === 'Contract') ? 'btn-gold' : 'btn-outline-light'; ?>" style="<?php echo ($typeFilter === 'Contract') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
             Contract
         </a>
     </div>
@@ -180,6 +210,7 @@ if (empty($jobs) && empty($typeFilter)) {
         <?php foreach ($jobs as $job): ?>
             <?php 
                 $appStatus = $job['application_status'] ?? null;
+                $jStatus = $job['status'] ?? 'approved';
             ?>
             <div class="card job-card" style="display: flex; flex-direction: column;">
                 
@@ -193,10 +224,17 @@ if (empty($jobs) && empty($typeFilter)) {
                         </h3>
                     </div>
 
-                    <div style="text-align: right; flex-shrink: 0;">
+                    <div style="text-align: right; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
                         <span class="job-type-pill">
                             <?php echo htmlspecialchars($job['job_type']); ?>
                         </span>
+                        <?php if ($jStatus === 'pending'): ?>
+                            <span class="badge" style="background: rgba(245, 158, 11, 0.18); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.35); padding: 0.2rem 0.5rem; font-size: 0.72rem; border-radius: 4px; font-weight: 700;">Pending Approval</span>
+                        <?php elseif ($jStatus === 'rejected'): ?>
+                            <span class="badge" style="background: rgba(239, 68, 68, 0.18); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.35); padding: 0.2rem 0.5rem; font-size: 0.72rem; border-radius: 4px; font-weight: 700;">Rejected</span>
+                        <?php elseif ($tabFilter === 'my'): ?>
+                            <span class="badge" style="background: rgba(16, 185, 129, 0.18); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.35); padding: 0.2rem 0.5rem; font-size: 0.72rem; border-radius: 4px; font-weight: 700;">Approved</span>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -239,7 +277,20 @@ if (empty($jobs) && empty($typeFilter)) {
                             </span>
                         <?php else: ?>
                             <?php if ($isLoggedIn): ?>
-                                <button type="button" class="btn btn-gold btn-sm gold-glow" onclick="openApplyModal(<?php echo $job['id']; ?>, '<?php echo htmlspecialchars(addslashes($job['title'])); ?>', '<?php echo htmlspecialchars(addslashes($job['company'])); ?>');">
+                                <button type="button" class="btn btn-gold btn-sm gold-glow" 
+                                        data-job='<?php echo htmlspecialchars(json_encode([
+                                            "id" => $job["id"],
+                                            "title" => $job["title"],
+                                            "company" => $job["company"],
+                                            "location" => $job["location"] ?? "",
+                                            "job_type" => $job["job_type"] ?? "Full-Time",
+                                            "deadline" => $job["deadline"] ?? "",
+                                            "description" => $job["description"] ?? "",
+                                            "requirements" => $job["requirements"] ?? "",
+                                            "contact_email" => $job["contact_email"] ?? "",
+                                            "application_link" => $job["application_link"] ?? ""
+                                        ]), ENT_QUOTES, "UTF-8"); ?>'
+                                        onclick="openApplyModalWithData(this);">
                                     Apply Directly
                                 </button>
                             <?php else: ?>
@@ -341,22 +392,43 @@ if (empty($jobs) && empty($typeFilter)) {
 </div>
 
 <!-- Modal for Direct Job Application -->
-<div id="applyModal" class="modal-overlay">
-    <div class="modal-box" style="max-width: 520px;">
-        <h3 id="applyJobTitle" style="color: var(--text-light); margin-bottom: 0.3rem; font-weight: 800;">Apply for Position</h3>
-        <p id="applyCompany" style="color: var(--accent-light); font-weight: 600; margin-bottom: 1.2rem; font-size: 0.92rem;"></p>
+<div id="applyModal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(8, 5, 16, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
+    <div class="modal-box" style="max-width: 620px; width: 100%; max-height: 90vh; overflow-y: auto; background: linear-gradient(145deg, rgba(32, 18, 56, 0.95) 0%, rgba(16, 9, 29, 0.98) 100%); border: 1px solid rgba(196, 181, 253, 0.28); border-top: 4px solid var(--accent-color); border-radius: 12px; padding: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+            <div>
+                <h3 id="applyJobTitle" style="color: var(--text-light); margin-bottom: 0.2rem; font-weight: 800; font-size: 1.4rem;">Apply for Position</h3>
+                <p id="applyCompany" style="color: var(--accent-light); font-weight: 600; margin: 0; font-size: 0.95rem;"></p>
+            </div>
+            <button type="button" onclick="closeApplyModal();" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(196, 181, 253, 0.2); color: var(--text-light); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">&times;</button>
+        </div>
+
+        <div id="applyJobMeta" style="display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--text-muted); padding: 0.6rem 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 1rem;">
+            <span id="applyLocation">&#128205; </span>
+            <span id="applyType">&#128188; </span>
+            <span id="applyDeadline" style="color: var(--danger-color);">&#9203; </span>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+            <h5 style="color: var(--accent-light); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem;">Position Overview</h5>
+            <p id="applyDesc" style="color: var(--text-color); font-size: 0.9rem; line-height: 1.5; margin: 0; max-height: 120px; overflow-y: auto;"></p>
+        </div>
+
+        <div id="applyReqSection" style="margin-bottom: 1.2rem; background: rgba(124, 58, 237, 0.10); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem 0.9rem; display: none;">
+            <strong style="color: var(--accent-light); font-size: 0.84rem;">Requirements &amp; Tech Stack:</strong>
+            <p id="applyReqs" style="color: var(--text-color); font-size: 0.86rem; margin: 0.3rem 0 0 0; line-height: 1.4;"></p>
+        </div>
 
         <form method="POST" action="jobs.php">
             <input type="hidden" name="action" value="apply_job">
             <input type="hidden" name="job_id" id="apply_job_id" value="">
             
-            <div class="form-group">
-                <label for="application_message">Cover Note / Why You are a Great Fit</label>
-                <textarea name="application_message" id="application_message" rows="4" class="form-control" placeholder="Introduce yourself, your degree background, and your relevant projects or GitHub/portfolio links..." required></textarea>
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label for="application_message" style="font-size: 0.88rem; font-weight: 700;">Cover Note / Motivation *</label>
+                <textarea name="application_message" id="application_message" rows="3" class="form-control" placeholder="Introduce yourself, your academic background, and relevant experience..." required></textarea>
             </div>
 
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">
-                Your verified KDU alumni profile details and contact email will be automatically shared with the posting alumnus.
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.2rem;">
+                Your verified alumni profile details and contact email will be securely forwarded to the poster.
             </p>
 
             <div style="display: flex; gap: 0.8rem; justify-content: flex-end;">
@@ -403,11 +475,37 @@ if (empty($jobs) && empty($typeFilter)) {
 </div>
 
 <script>
-function openApplyModal(jobId, title, company) {
-    document.getElementById('apply_job_id').value = jobId;
-    document.getElementById('applyJobTitle').innerText = 'Apply for ' + title;
-    document.getElementById('applyCompany').innerText = company;
-    document.getElementById('applyModal').style.display = 'flex';
+function openApplyModalWithData(btn) {
+    try {
+        const job = JSON.parse(btn.dataset.job);
+        document.getElementById('apply_job_id').value = job.id;
+        document.getElementById('applyJobTitle').innerText = job.title || 'Apply for Position';
+        document.getElementById('applyCompany').innerText = job.company || '';
+        document.getElementById('applyLocation').innerText = '📍 ' + (job.location || 'Location not specified');
+        document.getElementById('applyType').innerText = '💼 ' + (job.job_type || 'Full-Time');
+        
+        const dl = document.getElementById('applyDeadline');
+        if (job.deadline) {
+            dl.innerText = '⏱ Deadline: ' + job.deadline;
+            dl.style.display = 'inline';
+        } else {
+            dl.style.display = 'none';
+        }
+
+        document.getElementById('applyDesc').innerText = job.description || 'No description provided.';
+        
+        const reqSection = document.getElementById('applyReqSection');
+        if (job.requirements && job.requirements.trim()) {
+            document.getElementById('applyReqs').innerText = job.requirements;
+            reqSection.style.display = 'block';
+        } else {
+            reqSection.style.display = 'none';
+        }
+
+        document.getElementById('applyModal').style.display = 'flex';
+    } catch (e) {
+        console.error('Modal error:', e);
+    }
 }
 function closeApplyModal() {
     document.getElementById('applyModal').style.display = 'none';

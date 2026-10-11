@@ -25,17 +25,23 @@ switch ($action) {
 
     // ── GET: Fetch events ──────────────────────────────────────────
     case 'get':
-        header('Content-Type: application/json');
+        header('Content-Type: application/json; charset=UTF-8');
+        $statusFilter = $_GET['status'] ?? null;
+        if ($statusFilter === 'all' && !$isAdmin) {
+            http_response_code(403);
+            echo json_encode(['error' => 'Forbidden: Administrator privileges required to access all events.']);
+            exit;
+        }
+
         if (!$pdo) {
-            echo json_encode([]);
+            echo json_encode(get_sample_events());
             exit;
         }
 
         try {
             $userParam = $currentUserId ? (int)$currentUserId : 0;
-            $statusFilter = $_GET['status'] ?? null;
 
-            if ($isAdmin && $statusFilter === 'all') {
+            if ($statusFilter === 'all') {
                 $sql = "
                     SELECT 
                         e.id,
@@ -73,7 +79,7 @@ switch ($action) {
                         (SELECT COUNT(*) FROM event_registrations er WHERE er.event_id = e.id AND er.status = 'attending') AS attendee_count,
                         EXISTS(SELECT 1 FROM event_registrations er WHERE er.event_id = e.id AND er.user_id = :uid AND er.status = 'attending') AS is_registered
                     FROM events e
-                    WHERE e.status = 'approved' OR e.organizer_id = :uid_match
+                    WHERE e.status = 'approved' OR (:uid_match > 0 AND e.organizer_id = :uid_match)
                     ORDER BY e.event_date ASC
                 ";
                 $stmt = $pdo->prepare($sql);
@@ -81,6 +87,9 @@ switch ($action) {
             }
 
             $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($events) && empty($statusFilter)) {
+                $events = get_sample_events();
+            }
             echo json_encode($events);
         } catch (PDOException $e) {
             http_response_code(500);
@@ -139,7 +148,19 @@ switch ($action) {
             exit;
         }
 
-        $organizerId = $currentUserId ? (int)$currentUserId : 1;
+        // Require authentication for event creation
+        if (!$currentUserId) {
+            if (isAjax()) {
+                http_response_code(401);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => 'Authentication required. Please sign in to create an event.']);
+                exit;
+            }
+            header('Location: auth/login.php?redirect=' . urlencode('../eventcreate.html'));
+            exit;
+        }
+
+        $organizerId = (int)$currentUserId;
         $status = $isAdmin ? 'approved' : 'pending';
         $eventTime = !empty($start) ? $start : '09:00:00';
         $startTime = !empty($start) ? $start : '09:00:00';
@@ -208,6 +229,38 @@ switch ($action) {
 
         try {
             $stmt = $pdo->prepare("UPDATE events SET status = 'approved' WHERE id = :id");
+            $stmt->execute([':id' => $id]);
+            echo json_encode(['success' => true]);
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+        }
+        exit;
+
+    // ── REJECT: Administrator moderation ───────────────────────────
+    case 'reject':
+        header('Content-Type: application/json; charset=UTF-8');
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['success' => false, 'error' => 'POST method required.']);
+            exit;
+        }
+
+        if (!$isAdmin) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'error' => 'Forbidden: Administrator authorization required.']);
+            exit;
+        }
+
+        $id = intval($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Invalid event ID.']);
+            exit;
+        }
+
+        try {
+            $stmt = $pdo->prepare("UPDATE events SET status = 'rejected' WHERE id = :id");
             $stmt->execute([':id' => $id]);
             echo json_encode(['success' => true]);
         } catch (PDOException $e) {
@@ -348,6 +401,18 @@ switch ($action) {
             http_response_code(500);
             echo json_encode(['success' => false, 'error' => $e->getMessage()]);
         }
+        exit;
+
+    // ── SESSION: Auth & role check ────────────────────────────────
+    case 'session':
+        header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode([
+            'logged_in' => is_logged_in(),
+            'user_id'   => current_user_id(),
+            'user_name' => $_SESSION['user_name'] ?? null,
+            'role'      => $_SESSION['user_role'] ?? 'guest',
+            'is_admin'  => is_admin()
+        ]);
         exit;
 
     // ── SETUP: Health confirmation ────────────────────────────────

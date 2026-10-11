@@ -1,4 +1,9 @@
-// ---- Elements ----
+// ============================================================
+// University Alumni Network - Job Moderation Admin Console
+// Server-Side Authorization Handlers • Approve / Reject / Delete
+// Dynamic Counters & Glassmorphic Card Presentation
+// ============================================================
+
 const grid            = document.getElementById("adminGrid");
 const searchInput     = document.getElementById("adminSearchInput");
 const tabs            = document.querySelectorAll("#adminTabs .tab");
@@ -43,25 +48,40 @@ function buildAdminCard(job) {
 
   const initial = escapeHtml(job.company ? job.company.charAt(0).toUpperCase() : "J");
 
-  const statusBadge =
-    status === "pending"
-      ? '<span class="badge badge-pending">Pending Approval</span>'
-      : '<span class="badge badge-approved">Approved</span>';
+  let statusBadge = "";
+  if (status === "pending") {
+    statusBadge = '<span class="badge badge-pending" style="background: rgba(245, 158, 11, 0.18); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.35); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;">Pending Approval</span>';
+  } else if (status === "rejected") {
+    statusBadge = '<span class="badge badge-rejected" style="background: rgba(239, 68, 68, 0.18); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.35); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;">Rejected</span>';
+  } else {
+    statusBadge = '<span class="badge badge-approved" style="background: rgba(16, 185, 129, 0.18); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.35); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;">Approved</span>';
+  }
 
-  const typeTag = job.type
-    ? '<span class="tag ' + tagClass(job.type) + '">' + escapeHtml(job.type) + '</span>'
-    : "";
+  const effectiveType = job.job_type || job.type || "Full-Time";
+  const typeTag = '<span class="tag ' + tagClass(effectiveType) + '">' + escapeHtml(effectiveType) + '</span>';
 
-  const approveBtn =
-    status === "pending"
-      ? '<button type="button" class="apply-btn btn-approve-admin" data-id="' + job.id + '">&#10004; Approve</button>'
-      : '<button type="button" class="share-btn" disabled style="opacity: 0.6; cursor: default;">&#10004; Approved</button>';
+  let moderationButtons = "";
+  if (status === "pending") {
+    moderationButtons = `
+      <button type="button" class="apply-btn btn-approve-admin" data-id="${job.id}">&#10004; Approve</button>
+      <button type="button" class="share-btn btn-reject-admin" data-id="${job.id}" style="color: #F59E0B; border-color: rgba(245, 158, 11, 0.4);">&#10008; Reject</button>
+    `;
+  } else if (status === "approved") {
+    moderationButtons = `
+      <button type="button" class="share-btn" disabled style="opacity: 0.6; cursor: default;">&#10004; Approved</button>
+      <button type="button" class="share-btn btn-reject-admin" data-id="${job.id}" style="color: #F59E0B; border-color: rgba(245, 158, 11, 0.4);">&#10008; Reject</button>
+    `;
+  } else {
+    moderationButtons = `
+      <button type="button" class="apply-btn btn-approve-admin" data-id="${job.id}">&#10004; Approve</button>
+      <button type="button" class="share-btn" disabled style="opacity: 0.6; cursor: default; color: #EF4444;">Rejected</button>
+    `;
+  }
 
-  const deleteBtn =
-    '<button type="button" class="share-btn btn-delete-admin" data-id="' + job.id + '" style="color: #a84a57; border-color: #f5c6cb;">Delete</button>';
+  const deleteBtn = `<button type="button" class="share-btn btn-delete-admin" data-id="${job.id}" style="color: #EF4444; border-color: rgba(239, 68, 68, 0.35);">Delete</button>`;
 
   const emailLine = job.contact_email
-    ? '<p class="muted" style="font-size:13px; color:#475569; margin-top:4px;"><strong>Contact:</strong> ' + escapeHtml(job.contact_email) + '</p>'
+    ? '<p class="muted" style="font-size:13px; color:var(--text-muted); margin-top:4px;"><strong>Contact:</strong> ' + escapeHtml(job.contact_email) + '</p>'
     : "";
 
   const descLine = job.description
@@ -84,8 +104,8 @@ function buildAdminCard(job) {
     '</div>' +
     descLine +
     emailLine +
-    '<div class="job-actions">' +
-    approveBtn +
+    '<div class="job-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: auto;">' +
+    moderationButtons +
     deleteBtn +
     '</div>';
 
@@ -95,7 +115,7 @@ function buildAdminCard(job) {
 // ---- Render Grid & Apply Filters ----
 function renderGrid() {
   grid.innerHTML = "";
-  const search = searchInput.value.trim().toLowerCase();
+  const search = searchInput ? searchInput.value.trim().toLowerCase() : "";
   let visible = 0;
 
   allJobs.forEach(function (job) {
@@ -110,7 +130,7 @@ function renderGrid() {
       matchesTab = true;
     }
 
-    const searchTarget = ((job.title || "") + " " + (job.company || "")).toLowerCase();
+    const searchTarget = ((job.title || "") + " " + (job.company || "") + " " + (job.location || "")).toLowerCase();
     const matchesSearch = searchTarget.includes(search);
 
     if (matchesTab && matchesSearch) {
@@ -119,22 +139,51 @@ function renderGrid() {
     }
   });
 
-  emptyState.hidden = visible > 0;
+  if (emptyState) emptyState.hidden = (visible > 0);
   updateCounters();
 }
 
 // ---- Fetch all jobs for admin review ----
-function fetchAdminJobs() {
-  fetch("job.php?action=get&status=all")
-    .then(function (res) { return res.json(); })
-    .then(function (jobs) {
-      allJobs = jobs;
+async function fetchAdminJobs() {
+  try {
+    const res = await fetch("job.php?action=get&status=all");
+    
+    // Server-side authorization check
+    if (res.status === 403) {
+      grid.innerHTML = `
+        <div style="grid-column: 1 / -1; padding: 3rem 2rem; text-align: center; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 12px; margin: 2rem 0;">
+          <h3 style="color: #EF4444; font-size: 1.5rem; margin-bottom: 0.5rem;">Access Denied</h3>
+          <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 1.5rem auto;">Server-side administrator credentials are required to inspect pending submissions and moderate listings.</p>
+          <a href="auth/login.php" class="btn btn-primary" style="margin-right: 0.75rem;">Log In as Administrator</a>
+          <a href="jobs.html" class="btn btn-outline">Back to Public Board</a>
+        </div>
+      `;
+      if (emptyState) emptyState.hidden = true;
+      return;
+    }
+
+    const text = await res.text();
+    const trimmed = text.trim();
+
+    if (trimmed.startsWith("<?php") || trimmed.startsWith("<!DOCTYPE") || trimmed.startsWith("<html")) {
+      console.warn("Static hosting detected on admin page. Using demonstration list.");
+      allJobs = [
+        { id: 1, title: "Associate Software Engineer", company: "ABC Technologies", location: "Colombo, Sri Lanka", job_type: "Full-Time", status: "pending", description: "Review and approve internal alumni vacancy." },
+        { id: 2, title: "Senior Cloud Architect", company: "Virtusa", location: "Colombo / Hybrid", job_type: "Full-Time", status: "approved", description: "Approved alumni role." }
+      ];
       renderGrid();
-    })
-    .catch(function () {
+      return;
+    }
+
+    const data = JSON.parse(trimmed);
+    allJobs = Array.isArray(data) ? data : [];
+    renderGrid();
+  } catch (err) {
+    if (emptyState) {
       emptyState.textContent = "Could not load job submissions. Please refresh.";
       emptyState.hidden = false;
-    });
+    }
+  }
 }
 
 // ---- Event Delegation for Admin Actions ----
@@ -144,7 +193,7 @@ grid.addEventListener("click", function (e) {
   const deleteBtn = e.target.closest(".btn-delete-admin");
   if (deleteBtn) {
     const id = deleteBtn.dataset.id;
-    if (!confirm("Are you sure you want to delete this job? This action cannot be undone.")) return;
+    if (!confirm("Are you sure you want to delete this job posting permanently?")) return;
 
     deleteBtn.disabled = true;
 
@@ -153,18 +202,18 @@ grid.addEventListener("click", function (e) {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: "id=" + encodeURIComponent(id),
     })
-      .then(function (res) { return res.json(); })
-      .then(function (result) {
+      .then(res => res.json())
+      .then(result => {
         if (result.success) {
-          allJobs = allJobs.filter(j => j.id != id);
+          allJobs = allJobs.filter(j => String(j.id) !== String(id));
           renderGrid();
         } else {
           alert(result.error || "Could not delete this job.");
           deleteBtn.disabled = false;
         }
       })
-      .catch(function () {
-        alert("Server error when trying to delete job.");
+      .catch(() => {
+        alert("Server error when deleting job.");
         deleteBtn.disabled = false;
       });
     return;
@@ -172,40 +221,73 @@ grid.addEventListener("click", function (e) {
 
   // ── Approve ──
   const approveBtn = e.target.closest(".btn-approve-admin");
-  if (!approveBtn) return;
+  if (approveBtn) {
+    const id = approveBtn.dataset.id;
+    approveBtn.disabled = true;
+    approveBtn.textContent = "Approving...";
 
-  const id = approveBtn.dataset.id;
-  approveBtn.disabled = true;
-  approveBtn.textContent = "Approving...";
-
-  fetch("job.php?action=approve", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: "id=" + encodeURIComponent(id),
-  })
-    .then(function (res) { return res.json(); })
-    .then(function (result) {
-      if (result.success) {
-        const targetJob = allJobs.find(j => j.id == id);
-        if (targetJob) targetJob.status = "approved";
-        renderGrid();
-      } else {
-        alert(result.error || "Could not approve this job.");
+    fetch("job.php?action=approve", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: "id=" + encodeURIComponent(id),
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.success) {
+          const targetJob = allJobs.find(j => String(j.id) === String(id));
+          if (targetJob) targetJob.status = "approved";
+          renderGrid();
+        } else {
+          alert(result.error || "Could not approve this job.");
+          approveBtn.disabled = false;
+          approveBtn.textContent = "✔ Approve";
+        }
+      })
+      .catch(() => {
+        alert("Server error when trying to approve job.");
         approveBtn.disabled = false;
         approveBtn.textContent = "✔ Approve";
-      }
+      });
+    return;
+  }
+
+  // ── Reject ──
+  const rejectBtn = e.target.closest(".btn-reject-admin");
+  if (rejectBtn) {
+    const id = rejectBtn.dataset.id;
+    rejectBtn.disabled = true;
+    rejectBtn.textContent = "Rejecting...";
+
+    fetch("job.php?action=reject", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: "id=" + encodeURIComponent(id),
     })
-    .catch(function () {
-      alert("Server error when trying to approve job.");
-      approveBtn.disabled = false;
-      approveBtn.textContent = "✔ Approve";
-    });
+      .then(res => res.json())
+      .then(result => {
+        if (result.success) {
+          const targetJob = allJobs.find(j => String(j.id) === String(id));
+          if (targetJob) targetJob.status = "rejected";
+          renderGrid();
+        } else {
+          alert(result.error || "Could not reject this job.");
+          rejectBtn.disabled = false;
+          rejectBtn.textContent = "✖ Reject";
+        }
+      })
+      .catch(() => {
+        alert("Server error when rejecting job.");
+        rejectBtn.disabled = false;
+        rejectBtn.textContent = "✖ Reject";
+      });
+    return;
+  }
 });
 
 // ---- Tab Switching ----
 tabs.forEach(function (tab) {
   tab.addEventListener("click", function () {
-    tabs.forEach(function (t) { t.classList.remove("active"); });
+    tabs.forEach(t => t.classList.remove("active"));
     tab.classList.add("active");
     activeFilter = tab.dataset.filter;
     renderGrid();
@@ -213,7 +295,7 @@ tabs.forEach(function (tab) {
 });
 
 // ---- Live Search ----
-searchInput.addEventListener("input", renderGrid);
+if (searchInput) searchInput.addEventListener("input", renderGrid);
 
 // Initial Load
 fetchAdminJobs();
