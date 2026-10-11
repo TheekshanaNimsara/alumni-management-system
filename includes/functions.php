@@ -23,9 +23,11 @@ function time_ago($datetime) {
 function get_user_avatar_url($profile_picture = null) {
     $baseUrl = get_base_url();
     if (!empty($profile_picture) && $profile_picture !== 'default-avatar.svg') {
-        if (file_exists(__DIR__ . '/../uploads/profiles/' . $profile_picture)) {
-            return $baseUrl . 'uploads/profiles/' . htmlspecialchars($profile_picture);
+        $cleanPic = basename($profile_picture);
+        if ($cleanPic === $profile_picture && file_exists(__DIR__ . '/../uploads/profiles/' . $cleanPic)) {
+            return $baseUrl . 'uploads/profiles/' . htmlspecialchars($cleanPic, ENT_QUOTES, 'UTF-8');
         }
     }
     return $baseUrl . 'assets/images/default-avatar.svg';
 }
+

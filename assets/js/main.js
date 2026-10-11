@@ -23,13 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }, delay);
         };
 
-        if (prefersReducedMotion) {
-            // Bypass animation immediately for reduced motion preference
-            dismissLoader(0);
-        } else {
-            // Balanced middle-range cinematic duration (~1.65s + smooth 0.4s fade)
-            dismissLoader(1650);
-        }
+        // Balanced middle-range cinematic duration (~1.5s progress + smooth 0.5s fade)
+        dismissLoader(1500);
 
         // Safety fallback: guaranteed dismissal within 2600ms regardless of assets
         setTimeout(() => {

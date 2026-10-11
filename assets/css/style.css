@@ -2011,7 +2011,7 @@ textarea:focus-visible {
     justify-content: center;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
     pointer-events: auto;
 }
 
@@ -2099,7 +2099,7 @@ textarea:focus-visible {
     background: linear-gradient(90deg, #7C3AED, #9333EA, #C4B5FD, #9333EA);
     border-radius: 3px;
     box-shadow: 0 0 14px rgba(147, 51, 234, 0.85);
-    animation: loaderProgressExpand 1.35s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
+    animation: loaderProgressExpand 1.5s cubic-bezier(0.25, 1, 0.5, 1) 0.15s forwards;
 }
 
 @keyframes loaderProgressExpand {
@@ -2156,8 +2156,10 @@ textarea:focus-visible {
         scroll-behavior: auto !important;
     }
 
-    .cinematic-loader {
-        display: none !important;
+    /* Keep loader visible and functional */
+    .cinematic-loader .loader-progress-bar {
+        animation: none !important;
+        width: 100% !important;
     }
 
     .reveal,
