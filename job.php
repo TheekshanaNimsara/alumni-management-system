@@ -121,9 +121,9 @@ switch ($action) {
             if (isAjax()) {
                 http_response_code(401);
                 header('Content-Type: application/json');
-                echo json_encode(['success' => false, 'error' => 'Authentication required. Please sign in to post a job.']);
+                echo json_encode(['success' => false, 'error' => 'Please log in to continue.', 'redirect' => 'auth/login.php?redirect=' . urlencode('../jobcreate.html') . '&msg=auth_required']);
             } else {
-                header('Location: auth/login.php?redirect=' . urlencode('../jobcreate.html'));
+                header('Location: auth/login.php?redirect=' . urlencode('../jobcreate.html') . '&msg=auth_required');
             }
             exit;
         }
@@ -317,7 +317,13 @@ switch ($action) {
 
         if (!is_logged_in()) {
             http_response_code(401);
-            echo json_encode(['success' => false, 'error' => 'Please sign in to submit an application.', 'redirect' => 'auth/login.php']);
+            $retJob = intval($_POST['job_id'] ?? 0);
+            $retParam = $retJob > 0 ? '../job-details.html?id=' . $retJob : '../jobs.html';
+            echo json_encode([
+                'success' => false, 
+                'error' => 'Please log in to continue.', 
+                'redirect' => 'auth/login.php?redirect=' . urlencode($retParam) . '&msg=auth_required'
+            ]);
             exit;
         }
 

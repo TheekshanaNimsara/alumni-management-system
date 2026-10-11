@@ -292,7 +292,7 @@
                         <p class="event-desc">
                             The flagship annual gathering of alumni, faculty, and graduating cadets. Reconnect with batchmates and celebrate achievements.
                         </p>
-                        <button type="button" class="btn btn-gold btn-block btn-sm" onclick="triggerRsvpDemo('ALUMNI MEET 2026');">
+                        <button type="button" class="btn btn-gold btn-block btn-sm" onclick="triggerRsvpDemo('ALUMNI MEET 2026', 'fb-1');">
                             RSVP FOR EVENT
                         </button>
                     </div>
@@ -327,7 +327,7 @@
                         <p class="event-desc">
                             Keynotes by prominent alumni leaders from Google, AWS, and Intel discussing scalable architectures and artificial intelligence.
                         </p>
-                        <button type="button" class="btn btn-gold btn-block btn-sm" onclick="triggerRsvpDemo('GLOBAL TECH & AI SUMMIT');">
+                        <button type="button" class="btn btn-gold btn-block btn-sm" onclick="triggerRsvpDemo('GLOBAL TECH & AI SUMMIT', 'fb-2');">
                             RSVP FOR EVENT
                         </button>
                     </div>
@@ -362,7 +362,7 @@
                         <p class="event-desc">
                             Connect directly with multinational tech employers and startups. Resume reviews, interviews, and networking booths.
                         </p>
-                        <button type="button" class="btn btn-gold btn-block btn-sm" onclick="triggerRsvpDemo('CAREER & INTERNSHIP EXPO');">
+                        <button type="button" class="btn btn-gold btn-block btn-sm" onclick="triggerRsvpDemo('CAREER & INTERNSHIP EXPO', 'fb-3');">
                             RSVP FOR EVENT
                         </button>
                     </div>
@@ -415,7 +415,7 @@
                     <p class="job-desc">
                         Seeking full-stack engineers proficient in modern web applications, relational schemas, and scalable microservices.
                     </p>
-                    <button type="button" class="btn btn-primary btn-block btn-sm job-cta" onclick="triggerJobApplyDemo('Software Engineer', 'ABC Technologies');">
+                    <button type="button" class="btn btn-primary btn-block btn-sm job-cta" onclick="triggerJobApplyDemo('Software Engineer', 'ABC Technologies', 1);">
                         Apply for Position &rarr;
                     </button>
                 </div>
@@ -445,7 +445,7 @@
                     <p class="job-desc">
                         Lead enterprise cloud architecture implementations across AWS and Azure for multinational financial banking clients.
                     </p>
-                    <button type="button" class="btn btn-primary btn-block btn-sm job-cta" onclick="triggerJobApplyDemo('Cloud Solutions Architect', 'Virtusa Corporation');">
+                    <button type="button" class="btn btn-primary btn-block btn-sm job-cta" onclick="triggerJobApplyDemo('Cloud Solutions Architect', 'Virtusa Corporation', 2);">
                         Apply for Position &rarr;
                     </button>
                 </div>
@@ -475,7 +475,7 @@
                     <p class="job-desc">
                         Develop LLM integrations, retrieval augmented generation systems, and open-source enterprise platform APIs.
                     </p>
-                    <button type="button" class="btn btn-primary btn-block btn-sm job-cta" onclick="triggerJobApplyDemo('Associate AI Engineer', 'WSO2');">
+                    <button type="button" class="btn btn-primary btn-block btn-sm job-cta" onclick="triggerJobApplyDemo('Associate AI Engineer', 'WSO2', 3);">
                         Apply for Position &rarr;
                     </button>
                 </div>
@@ -636,11 +636,42 @@
             alert("Registration simulated! In the full XAMPP environment, this inserts records into both users and alumni_profiles via a database transaction.");
             closeModals();
         }
-        function triggerRsvpDemo(eventName) {
-            alert("RSVP Confirmed for '" + eventName + "'! Seat reservation counter updated.");
+        let isUserLoggedIn = sessionStorage.getItem("alumni_logged_in") === "true";
+        fetch("job.php?action=session")
+            .then(function (res) { return res.text(); })
+            .then(function (text) {
+                const trimmed = text.trim();
+                if (!trimmed.startsWith("<")) {
+                    const data = JSON.parse(trimmed);
+                    if (data && data.logged_in) isUserLoggedIn = true;
+                }
+            })
+            .catch(function () {});
+
+        function getIndexRedirectUrl(target) {
+            const isStatic = window.location.protocol === "file:" || window.location.hostname.endsWith("github.io");
+            if (isStatic) {
+                return "login.html?redirect=" + encodeURIComponent(target) + "&msg=auth_required";
+            }
+            return "auth/login.php?redirect=" + encodeURIComponent("../" + target) + "&msg=auth_required";
         }
-        function triggerJobApplyDemo(jobTitle, company) {
-            alert("Application submitted for " + jobTitle + " at " + company + "! The recruiter will review your verified alumni profile.");
+
+        function triggerRsvpDemo(eventName, eventId) {
+            if (!isUserLoggedIn) {
+                const target = eventId ? "event.html?rsvp=" + encodeURIComponent(eventId) : "event.html";
+                window.location.href = getIndexRedirectUrl(target);
+                return;
+            }
+            window.location.href = eventId ? "event.html?rsvp=" + encodeURIComponent(eventId) : "event.html";
+        }
+
+        function triggerJobApplyDemo(jobTitle, company, jobId) {
+            if (!isUserLoggedIn) {
+                const target = jobId ? "job-details.html?id=" + encodeURIComponent(jobId) + "#applySection" : "jobs.html";
+                window.location.href = getIndexRedirectUrl(target);
+                return;
+            }
+            window.location.href = jobId ? "job-details.html?id=" + encodeURIComponent(jobId) + "#applySection" : "jobs.html";
         }
         function showAlumniProfile(name, role, company, year, degree) {
             alert(name + "\n" + role + " at " + company + "\n" + degree + " (" + year + " Cohort)\n\nFull interactive profile view with avatar uploads is available in local XAMPP (profile.php).");

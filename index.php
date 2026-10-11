@@ -260,7 +260,11 @@ if (empty($recentJobs)) {
                     </div>
                     <div class="job-divider"></div>
                     <p class="job-desc"><?php echo htmlspecialchars(substr($job['description'], 0, 120)) . '...'; ?></p>
-                    <a href="jobs.php" class="btn btn-primary btn-block btn-sm job-cta">Apply for Position &rarr;</a>
+                    <?php if ($isLoggedIn): ?>
+                        <a href="job-details.php?id=<?php echo $job['id']; ?>" class="btn btn-primary btn-block btn-sm job-cta">Apply for Position &rarr;</a>
+                    <?php else: ?>
+                        <a href="auth/login.php?redirect=<?php echo urlencode('job-details.php?id=' . $job['id']); ?>&msg=auth_required" class="btn btn-primary btn-block btn-sm job-cta">Apply for Position &rarr;</a>
+                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         </div>

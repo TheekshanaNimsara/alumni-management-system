@@ -15,8 +15,10 @@ $currentUserId = current_user_id();
 // 1. Handle Internal Job Application
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'apply_job') {
     if (!$isLoggedIn) {
-        $message = "Please log in to submit a job application.";
-        $messageType = "danger";
+        $jobId = intval($_POST['job_id'] ?? 0);
+        $redir = 'jobs.php' . ($jobId > 0 ? '#job-' . $jobId : '');
+        header("Location: auth/login.php?redirect=" . urlencode($redir) . "&msg=auth_required");
+        exit;
     } else {
         $jobId = intval($_POST['job_id'] ?? 0);
         $coverMessage = trim($_POST['application_message'] ?? '');
@@ -51,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // 2. Handle Job Posting Submission by logged-in users
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'post_job') {
     if (!$isLoggedIn) {
-        header("Location: auth/login.php?redirect=" . urlencode("jobs.php#post-job"));
+        header("Location: auth/login.php?redirect=" . urlencode("jobs.php#post-job") . "&msg=auth_required");
         exit;
     } else {
         $title = trim($_POST['title'] ?? '');
@@ -172,7 +174,7 @@ if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
                     + Post an Opportunity
                 </a>
             <?php else: ?>
-                <a href="auth/login.php?redirect=<?php echo urlencode('jobs.php#post-job'); ?>" class="btn btn-gold gold-glow btn-sm">
+                <a href="auth/login.php?redirect=<?php echo urlencode('jobs.php#post-job'); ?>&msg=auth_required" class="btn btn-gold gold-glow btn-sm">
                     + Post an Opportunity
                 </a>
             <?php endif; ?>
@@ -219,7 +221,7 @@ if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
                 $appStatus = $job['application_status'] ?? null;
                 $jStatus = $job['status'] ?? 'approved';
             ?>
-            <div class="card job-card" style="display: flex; flex-direction: column;">
+            <div class="card job-card" id="job-<?php echo $job['id']; ?>" style="display: flex; flex-direction: column;">
                 
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; gap: 0.8rem;">
                     <div>
@@ -307,7 +309,7 @@ if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
                                     Apply Directly
                                 </button>
                             <?php else: ?>
-                                <a href="auth/login.php" class="btn btn-gold btn-sm">
+                                <a href="auth/login.php?redirect=<?php echo urlencode('jobs.php#job-' . $job['id']); ?>&msg=auth_required" class="btn btn-gold btn-sm">
                                     Login to Apply
                                 </a>
                             <?php endif; ?>
@@ -395,7 +397,7 @@ if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
                     Please log in with your verified alumni account to submit job opportunities.
                 </p>
                 <div style="display: flex; gap: 1rem; justify-content: center;">
-                    <a href="auth/login.php?redirect=<?php echo urlencode('jobs.php#post-job'); ?>" class="btn btn-primary btn-sm">Login to Your Account</a>
+                    <a href="auth/login.php?redirect=<?php echo urlencode('jobs.php#post-job'); ?>&msg=auth_required" class="btn btn-primary btn-sm">Login to Your Account</a>
                     <a href="auth/register.php" class="btn btn-gold btn-sm">Register as Alumni</a>
                 </div>
             </div>

@@ -148,16 +148,34 @@
     return params.get("id");
   }
 
-  // ── Authentication Check ────────────────────────────────────────────
+  // ── Authentication Check & Login Redirect Helper ───────────────────
   let currentUser = { logged_in: false, is_admin: false, user_name: null };
+
+  function getLoginRedirectUrl(target) {
+    const isStatic = window.location.protocol === "file:" ||
+                     window.location.hostname.endsWith("github.io") ||
+                     (currentUser && currentUser.is_static === true);
+    if (isStatic) {
+      return "login.html?redirect=" + encodeURIComponent(target) + "&msg=auth_required";
+    }
+    const safeTarget = target.startsWith("../") ? target : "../" + target.replace(/^\.\//, "");
+    return "auth/login.php?redirect=" + encodeURIComponent(safeTarget) + "&msg=auth_required";
+  }
 
   async function checkAuth() {
     try {
       const res = await fetch("job.php?action=session");
-      if (!res.ok) return;
+      if (!res.ok) throw new Error("HTTP error");
       const text = await res.text();
-      if (text.trim().startsWith("<")) return;
-      const data = JSON.parse(text);
+      const trimmed = text.trim();
+      if (trimmed.startsWith("<")) {
+        currentUser.is_static = true;
+        if (sessionStorage.getItem("alumni_logged_in") === "true") {
+          currentUser.logged_in = true;
+        }
+        return;
+      }
+      const data = JSON.parse(trimmed);
       if (data && typeof data === "object") {
         currentUser = data;
         const adminLink = document.getElementById("adminNavLink");
@@ -172,7 +190,12 @@
         }
       }
     } catch (e) {
-      // Guest state
+      if (window.location.hostname.endsWith("github.io")) {
+        currentUser.is_static = true;
+        if (sessionStorage.getItem("alumni_logged_in") === "true") {
+          currentUser.logged_in = true;
+        }
+      }
     }
   }
 
@@ -351,6 +374,18 @@
     });
   }
 
+  // ── Hero Apply Button Auth Check ────────────────────────────────────
+  const heroApplyBtn = document.getElementById("heroApplyBtn");
+  if (heroApplyBtn) {
+    heroApplyBtn.addEventListener("click", function (e) {
+      if (!currentUser || !currentUser.logged_in) {
+        e.preventDefault();
+        const returnUrl = `job-details.html?id=${encodeURIComponent(currentJob ? currentJob.id : 1)}#applySection`;
+        window.location.href = getLoginRedirectUrl(returnUrl);
+      }
+    });
+  }
+
   // ── Quick Application Form Submission ───────────────────────────────
   const quickForm = document.getElementById("quickApplyForm");
   const feedbackEl = document.getElementById("applicationFeedback");
@@ -358,6 +393,12 @@
   if (quickForm) {
     quickForm.addEventListener("submit", async function (e) {
       e.preventDefault();
+
+      if (!currentUser || !currentUser.logged_in) {
+        const returnUrl = `job-details.html?id=${encodeURIComponent(currentJob ? currentJob.id : 1)}#applySection`;
+        window.location.href = getLoginRedirectUrl(returnUrl);
+        return;
+      }
 
       const name = document.getElementById("applicantName").value.trim();
       const email = document.getElementById("applicantEmail").value.trim();
@@ -383,6 +424,12 @@
           method: "POST",
           body: formData
         });
+
+        if (res.status === 401) {
+          const returnUrl = `job-details.html?id=${encodeURIComponent(currentJob.id)}#applySection`;
+          window.location.href = getLoginRedirectUrl(returnUrl);
+          return;
+        }
 
         if (res.ok) {
           const data = await res.json();

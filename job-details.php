@@ -88,9 +88,15 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <div class="job-hero-actions">
-            <a href="#applySection" class="btn btn-primary" id="heroApplyBtn" style="justify-content: center; width: 100%;">
-                Apply for Position &rarr;
-            </a>
+            <?php if ($isLoggedIn): ?>
+                <a href="#applySection" class="btn btn-primary" id="heroApplyBtn" style="justify-content: center; width: 100%;">
+                    Apply for Position &rarr;
+                </a>
+            <?php else: ?>
+                <a href="auth/login.php?redirect=<?php echo urlencode('../job-details.php?id=' . ($job['id'] ?? 1) . '#applySection'); ?>&msg=auth_required" class="btn btn-primary" id="heroApplyBtn" style="justify-content: center; width: 100%;">
+                    Apply for Position &rarr;
+                </a>
+            <?php endif; ?>
             <?php if (!empty($job['application_link'])): ?>
                 <a href="<?php echo htmlspecialchars($job['application_link']); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-outline-gold" id="heroPortalBtn" style="justify-content: center; width: 100%;">
                     Official Portal &rarr;
@@ -191,37 +197,51 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
 
                 <!-- In-Page Direct Alumni Application Form -->
-                <div style="background: rgba(16, 9, 29, 0.70); border: 1px solid rgba(196, 181, 253, 0.18); border-radius: 10px; padding: 1.4rem;">
-                    <h4 style="color: #FFFFFF; font-size: 1rem; margin-bottom: 0.4rem; font-weight: 700;">
-                        Quick Alumni Application Note
-                    </h4>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
-                        Submit a direct note with your alumni graduation year and profile link directly to the employer recruiter.
-                    </p>
-                    <form id="quickApplyForm">
-                        <div style="margin-bottom: 1rem;">
-                            <label for="applicantName" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem; font-weight: 600;">
-                                Your Full Name
-                            </label>
-                            <input type="text" id="applicantName" class="form-control" placeholder="e.g. Anuka Perera" required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 5, 16, 0.85); color: #FFFFFF; font-family: inherit;">
-                        </div>
-                        <div style="margin-bottom: 1rem;">
-                            <label for="applicantEmail" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem; font-weight: 600;">
-                                University / Contact Email
-                            </label>
-                            <input type="email" id="applicantEmail" class="form-control" placeholder="e.g. anuka.alumni@kdu.ac.lk" required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 5, 16, 0.85); color: #FFFFFF; font-family: inherit;">
-                        </div>
-                        <div style="margin-bottom: 1.2rem;">
-                            <label for="applicationMessage" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem; font-weight: 600;">
-                                Introduction &amp; Why You Are a Strong Fit (Include LinkedIn/GitHub/Portfolio)
-                            </label>
-                            <textarea id="applicationMessage" rows="4" class="form-control" placeholder="Introduce yourself, mention your faculty/intake, and share links to your resume, portfolio, or GitHub repository..." required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 5, 16, 0.85); color: #FFFFFF; font-family: inherit; resize: vertical;"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-gold gold-glow" style="padding: 0.75rem 1.8rem; font-size: 0.95rem;">
-                            Submit Verified Application
-                        </button>
-                    </form>
-                </div>
+                <?php if ($isLoggedIn): ?>
+                    <div style="background: rgba(16, 9, 29, 0.70); border: 1px solid rgba(196, 181, 253, 0.18); border-radius: 10px; padding: 1.4rem;">
+                        <h4 style="color: #FFFFFF; font-size: 1rem; margin-bottom: 0.4rem; font-weight: 700;">
+                            Quick Alumni Application Note
+                        </h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+                            Submit a direct note with your alumni graduation year and profile link directly to the employer recruiter.
+                        </p>
+                        <form id="quickApplyForm">
+                            <div style="margin-bottom: 1rem;">
+                                <label for="applicantName" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem; font-weight: 600;">
+                                    Your Full Name
+                                </label>
+                                <input type="text" id="applicantName" class="form-control" value="<?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>" placeholder="e.g. Anuka Perera" required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 5, 16, 0.85); color: #FFFFFF; font-family: inherit;">
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <label for="applicantEmail" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem; font-weight: 600;">
+                                    University / Contact Email
+                                </label>
+                                <input type="email" id="applicantEmail" class="form-control" value="<?php echo htmlspecialchars($_SESSION['user_email'] ?? ''); ?>" placeholder="e.g. anuka.alumni@kdu.ac.lk" required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 5, 16, 0.85); color: #FFFFFF; font-family: inherit;">
+                            </div>
+                            <div style="margin-bottom: 1.2rem;">
+                                <label for="applicationMessage" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem; font-weight: 600;">
+                                    Introduction &amp; Why You Are a Strong Fit (Include LinkedIn/GitHub/Portfolio)
+                                </label>
+                                <textarea id="applicationMessage" rows="4" class="form-control" placeholder="Introduce yourself, mention your faculty/intake, and share links to your resume, portfolio, or GitHub repository..." required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 5, 16, 0.85); color: #FFFFFF; font-family: inherit; resize: vertical;"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-gold gold-glow" style="padding: 0.75rem 1.8rem; font-size: 0.95rem;">
+                                Submit Verified Application
+                            </button>
+                        </form>
+                    </div>
+                <?php else: ?>
+                    <div style="background: rgba(16, 9, 29, 0.70); border: 1px solid rgba(196, 181, 253, 0.18); border-radius: 10px; padding: 1.8rem; text-align: center;">
+                        <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">
+                            Sign In Required to Apply
+                        </h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.3rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+                            To ensure verified alumni applications and protect our employer partner network, please sign in with your verified alumni account before submitting an application.
+                        </p>
+                        <a href="auth/login.php?redirect=<?php echo urlencode('../job-details.php?id=' . ($job['id'] ?? 1) . '#applySection'); ?>&msg=auth_required" class="btn btn-gold gold-glow">
+                            Sign In to Apply
+                        </a>
+                    </div>
+                <?php endif; ?>
             </article>
         </div>
 

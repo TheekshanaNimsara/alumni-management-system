@@ -15,8 +15,10 @@ $currentUserId = current_user_id();
 // 1. Handle RSVP Action
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'toggle_rsvp') {
     if (!$isLoggedIn) {
-        $message = "Please log in to RSVP for events.";
-        $messageType = "danger";
+        $eventId = intval($_POST['event_id'] ?? 0);
+        $redir = 'events.php' . ($eventId > 0 ? '#event-' . $eventId : '');
+        header("Location: auth/login.php?redirect=" . urlencode($redir) . "&msg=auth_required");
+        exit;
     } else {
         $eventId = intval($_POST['event_id'] ?? 0);
         if ($eventId > 0 && $db_connected && $pdo) {
@@ -82,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // 2. Handle Event Proposal Submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_event') {
     if (!$isLoggedIn) {
-        header("Location: auth/login.php?redirect=" . urlencode("events.php#propose-event"));
+        header("Location: auth/login.php?redirect=" . urlencode("events.php#propose-event") . "&msg=auth_required");
         exit;
     } else {
         $title = trim($_POST['title'] ?? '');
@@ -194,7 +196,7 @@ if (empty($events) && $tabFilter !== 'my') {
                     + Propose an Event
                 </a>
             <?php else: ?>
-                <a href="auth/login.php?redirect=<?php echo urlencode('events.php#propose-event'); ?>" class="btn btn-gold gold-glow btn-sm">
+                <a href="auth/login.php?redirect=<?php echo urlencode('events.php#propose-event'); ?>&msg=auth_required" class="btn btn-gold gold-glow btn-sm">
                     + Propose an Event
                 </a>
             <?php endif; ?>
@@ -237,7 +239,7 @@ if (empty($events) && $tabFilter !== 'my') {
                     $isClosed = (!empty($event['is_closed']) || $isPast);
                     $isFull = ($capacity > 0 && $attendees >= $capacity);
                 ?>
-                <div class="card card-dark event-card" style="display: flex; flex-direction: column;">
+                <div class="card card-dark event-card" id="event-<?php echo $event['id']; ?>" style="display: flex; flex-direction: column;">
                     
                     <div class="event-image-box" style="position: relative;">
                         <img src="assets/images/event-placeholder.svg" alt="Event Banner" class="event-image">
@@ -319,7 +321,7 @@ if (empty($events) && $tabFilter !== 'my') {
                                         <?php endif; ?>
                                     </form>
                                 <?php else: ?>
-                                    <a href="auth/login.php" class="btn btn-outline-gold btn-sm" style="font-size: 0.78rem;">
+                                    <a href="auth/login.php?redirect=<?php echo urlencode('events.php#event-' . $event['id']); ?>&msg=auth_required" class="btn btn-outline-gold btn-sm" style="font-size: 0.78rem;">
                                         Login to RSVP
                                     </a>
                                 <?php endif; ?>
@@ -386,7 +388,7 @@ if (empty($events) && $tabFilter !== 'my') {
                     Please sign in with your verified alumni account to submit event proposals.
                 </p>
                 <div style="display: flex; gap: 1rem; justify-content: center;">
-                    <a href="auth/login.php?redirect=<?php echo urlencode('events.php#propose-event'); ?>" class="btn btn-primary btn-sm">Login to Your Account</a>
+                    <a href="auth/login.php?redirect=<?php echo urlencode('events.php#propose-event'); ?>&msg=auth_required" class="btn btn-primary btn-sm">Login to Your Account</a>
                     <a href="auth/register.php" class="btn btn-gold btn-sm">Join the Network</a>
                 </div>
             </div>

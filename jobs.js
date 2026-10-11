@@ -274,14 +274,32 @@ function formatDate(dateStr) {
   return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 }
 
+function getLoginRedirectUrl(target) {
+  const isStatic = window.location.protocol === "file:" ||
+                   window.location.hostname.endsWith("github.io") ||
+                   (currentUser && currentUser.is_static === true);
+  if (isStatic) {
+    return "login.html?redirect=" + encodeURIComponent(target) + "&msg=auth_required";
+  }
+  const safeTarget = target.startsWith("../") ? target : "../" + target.replace(/^\.\//, "");
+  return "auth/login.php?redirect=" + encodeURIComponent(safeTarget) + "&msg=auth_required";
+}
+
 /* ── Check Authentication Session from Backend ───────────────────────────── */
 async function checkAuthSession() {
   try {
     const res = await fetch("job.php?action=session");
-    if (!res.ok) return;
+    if (!res.ok) throw new Error("HTTP error");
     const text = await res.text();
-    if (text.trim().startsWith("<")) return; // HTML/PHP raw source on static host
-    const data = JSON.parse(text);
+    const trimmed = text.trim();
+    if (trimmed.startsWith("<")) {
+      currentUser.is_static = true;
+      if (sessionStorage.getItem("alumni_logged_in") === "true") {
+        currentUser.logged_in = true;
+      }
+      return;
+    }
+    const data = JSON.parse(trimmed);
     if (data && typeof data === "object") {
       currentUser = data;
 
@@ -296,7 +314,12 @@ async function checkAuthSession() {
       }
     }
   } catch (err) {
-    // Fail silently in guest state
+    if (window.location.hostname.endsWith("github.io")) {
+      currentUser.is_static = true;
+      if (sessionStorage.getItem("alumni_logged_in") === "true") {
+        currentUser.logged_in = true;
+      }
+    }
   }
 }
 
@@ -306,7 +329,7 @@ if (postJobBtn) {
   postJobBtn.addEventListener("click", function (e) {
     if (!currentUser || !currentUser.logged_in) {
       e.preventDefault();
-      window.location.href = "auth/login.php?redirect=" + encodeURIComponent("../jobcreate.html");
+      window.location.href = getLoginRedirectUrl("jobcreate.html");
     }
   });
 }
@@ -458,8 +481,15 @@ jobList.addEventListener("click", function (e) {
   // ── Apply / Details button ──
   const applyBtn = e.target.closest(".apply-btn");
   if (applyBtn) {
+    e.preventDefault();
+    const jobId = applyBtn.dataset.jobId;
+    if (!currentUser || !currentUser.logged_in) {
+      const returnUrl = `job-details.html?id=${encodeURIComponent(jobId)}`;
+      window.location.href = getLoginRedirectUrl(returnUrl);
+      return;
+    }
     // Navigate directly to the dedicated full job & company details page
-    window.location.href = `job-details.html?id=${encodeURIComponent(applyBtn.dataset.jobId)}`;
+    window.location.href = `job-details.html?id=${encodeURIComponent(jobId)}`;
     return;
   }
 

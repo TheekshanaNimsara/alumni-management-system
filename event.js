@@ -115,6 +115,13 @@ grid.addEventListener("click", function (e) {
     if (!card) return;
 
     const eventId = card.dataset.id;
+
+    // Strict authentication check: unauthenticated visitors must log in
+    if (!currentEventUser || !currentEventUser.logged_in) {
+      window.location.href = getLoginRedirectUrl("event.html?rsvp=" + encodeURIComponent(eventId));
+      return;
+    }
+
     regBtn.disabled = true;
 
     fetch("event.php?action=register", {
@@ -124,7 +131,7 @@ grid.addEventListener("click", function (e) {
     })
       .then(function (res) {
         if (res.status === 401) {
-          window.location.href = "auth/login.php";
+          window.location.href = getLoginRedirectUrl("event.html?rsvp=" + encodeURIComponent(eventId));
           return null;
         }
         return res.json();
@@ -147,28 +154,36 @@ grid.addEventListener("click", function (e) {
             goingEl.innerHTML = '<span class="going-count">' + count + "</span> " + label;
           }
         } else {
-          alert(data.error || "Could not register for event.");
+          if (data.redirect) {
+            window.location.href = data.redirect;
+          } else {
+            alert(data.error || "Could not register for event.");
+          }
         }
       })
       .catch(function () {
         regBtn.disabled = false;
-        // Client fallback toggle
-        const goingEl = card.querySelector(".going");
-        const countSpan = card.querySelector(".going-count");
-        let count = countSpan ? parseInt(countSpan.textContent, 10) : 1;
-        const isRegistered = regBtn.classList.contains("registered");
-        if (!isRegistered) {
-          count++;
-          regBtn.classList.add("registered");
-          regBtn.innerHTML = "Registered &#10004;";
+        // In static environment or if verified logged in via client session
+        if (currentEventUser && currentEventUser.is_static && currentEventUser.logged_in) {
+          const goingEl = card.querySelector(".going");
+          const countSpan = card.querySelector(".going-count");
+          let count = countSpan ? parseInt(countSpan.textContent, 10) : 1;
+          const isRegistered = regBtn.classList.contains("registered");
+          if (!isRegistered) {
+            count++;
+            regBtn.classList.add("registered");
+            regBtn.innerHTML = "Registered &#10004;";
+          } else {
+            count = Math.max(0, count - 1);
+            regBtn.classList.remove("registered");
+            regBtn.textContent = "Register";
+          }
+          if (goingEl) {
+            const label = count === 1 ? "person is going" : "people are going";
+            goingEl.innerHTML = '<span class="going-count">' + count + "</span> " + label;
+          }
         } else {
-          count = Math.max(0, count - 1);
-          regBtn.classList.remove("registered");
-          regBtn.textContent = "Register";
-        }
-        if (goingEl) {
-          const label = count === 1 ? "person is going" : "people are going";
-          goingEl.innerHTML = '<span class="going-count">' + count + "</span> " + label;
+          alert("Could not connect to event server. Please try again.");
         }
       });
     return;
@@ -305,24 +320,56 @@ const fallbackEvents = [
   }
 ];
 
-// ---- Check Authentication Session from Backend ----
+// ---- Authentication and Navigation Helper ----
 let currentEventUser = { logged_in: false, is_admin: false };
 const adminNavLink = document.getElementById("adminNavLink");
+
+function getLoginRedirectUrl(target) {
+  const isStatic = window.location.protocol === "file:" ||
+                   window.location.hostname.endsWith("github.io") ||
+                   (currentEventUser && currentEventUser.is_static === true);
+  if (isStatic) {
+    return "login.html?redirect=" + encodeURIComponent(target) + "&msg=auth_required";
+  }
+  const safeTarget = target.startsWith("../") ? target : "../" + target.replace(/^\.\//, "");
+  return "auth/login.php?redirect=" + encodeURIComponent(safeTarget) + "&msg=auth_required";
+}
+
 function checkAuthSession() {
-  fetch("event.php?action=session")
+  return fetch("event.php?action=session")
     .then(res => res.text())
     .then(text => {
       const trimmed = text.trim();
-      if (trimmed.startsWith("<")) return;
-      const data = JSON.parse(trimmed);
-      if (data && typeof data === "object") {
-        currentEventUser = data;
-        if (adminNavLink) {
-          adminNavLink.style.display = (data.is_admin === true) ? "inline-block" : "none";
+      if (trimmed.startsWith("<")) {
+        currentEventUser.is_static = true;
+        if (sessionStorage.getItem("alumni_logged_in") === "true") {
+          currentEventUser.logged_in = true;
+        }
+        return currentEventUser;
+      }
+      try {
+        const data = JSON.parse(trimmed);
+        if (data && typeof data === "object") {
+          currentEventUser = data;
+          if (adminNavLink) {
+            adminNavLink.style.display = (data.is_admin === true) ? "inline-block" : "none";
+          }
+        }
+      } catch (e) {
+        currentEventUser.is_static = true;
+        if (sessionStorage.getItem("alumni_logged_in") === "true") {
+          currentEventUser.logged_in = true;
         }
       }
+      return currentEventUser;
     })
-    .catch(() => {});
+    .catch(() => {
+      currentEventUser.is_static = true;
+      if (sessionStorage.getItem("alumni_logged_in") === "true") {
+        currentEventUser.logged_in = true;
+      }
+      return currentEventUser;
+    });
 }
 
 // Redirect unauthenticated visitors attempting to create events
@@ -331,14 +378,14 @@ if (createEventBtn) {
   createEventBtn.addEventListener("click", function (e) {
     if (!currentEventUser || !currentEventUser.logged_in) {
       e.preventDefault();
-      window.location.href = "auth/login.php?redirect=" + encodeURIComponent("../eventcreate.html");
+      window.location.href = getLoginRedirectUrl("eventcreate.html");
     }
   });
 }
 
 // ---- Fetch events from event.php safely ----
 function loadSubmittedEvents() {
-  fetch("event.php?action=get")
+  return fetch("event.php?action=get")
     .then(function (res) {
       return res.text();
     })
@@ -364,6 +411,7 @@ function loadSubmittedEvents() {
         grid.appendChild(buildCard(ev));
       });
       filterEvents();
+      return events;
     })
     .catch(function () {
       grid.innerHTML = "";
@@ -371,7 +419,24 @@ function loadSubmittedEvents() {
         grid.appendChild(buildCard(ev));
       });
       filterEvents();
+      return fallbackEvents;
     });
+}
+
+function handlePendingRsvp() {
+  const rsvpId = params.get("rsvp");
+  if (!rsvpId) return;
+  if (!currentEventUser || !currentEventUser.logged_in) return;
+
+  const card = document.querySelector(`.event-card[data-id="${rsvpId}"]`);
+  if (card) {
+    card.scrollIntoView({ behavior: "smooth", block: "center" });
+    const regBtn = card.querySelector(".btn-register");
+    if (regBtn && !regBtn.classList.contains("registered") && !regBtn.disabled) {
+      regBtn.click();
+    }
+    history.replaceState({}, "", window.location.pathname + (activeFilter !== "all" ? "?tab=" + activeFilter : ""));
+  }
 }
 
 // ---- Handle URL tab parameters (e.g. event.html?tab=my or tab=upcoming) ----
@@ -405,5 +470,7 @@ searchInput.addEventListener("input", filterEvents);
 // Periodically update expiration & filtering
 setInterval(filterEvents, 10000);
 
-checkAuthSession();
-loadSubmittedEvents();
+// Check auth session, load events, and handle any pending RSVP after login
+Promise.all([checkAuthSession(), loadSubmittedEvents()]).then(function () {
+  handlePendingRsvp();
+});

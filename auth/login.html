@@ -188,6 +188,21 @@
             });
         }
 
+        // Display auth required banner if passed in URL
+        (function checkUrlNotice() {
+            const params = new URLSearchParams(window.location.search);
+            const msg = params.get('msg') || params.get('message');
+            if (msg) {
+                const alertBox = document.getElementById('authAlert');
+                const alertMsg = document.getElementById('alertMessage');
+                if (alertBox && alertMsg) {
+                    alertBox.className = 'auth-alert auth-alert-warning';
+                    alertBox.style.cssText = 'display: flex; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); color: #FBBF24;';
+                    alertMsg.textContent = msg === 'auth_required' ? 'Please log in to continue.' : decodeURIComponent(msg);
+                }
+            }
+        })();
+
         // Handle Demo Login for Static GitHub Pages
         function handleDemoLogin(e) {
             e.preventDefault();
@@ -198,17 +213,25 @@
 
             if (!identity || !password) {
                 alertBox.className = 'auth-alert auth-alert-error';
+                alertBox.style.cssText = 'display: flex;';
                 alertMsg.innerText = 'Please enter both your email address/username and password.';
-                alertBox.style.display = 'flex';
                 return;
             }
 
             alertBox.className = 'auth-alert auth-alert-success';
-            alertMsg.innerText = 'Authentication successful! Redirecting to alumni homepage...';
-            alertBox.style.display = 'flex';
+            alertBox.style.cssText = 'display: flex;';
+            alertMsg.innerText = 'Authentication successful! Redirecting...';
+            sessionStorage.setItem('alumni_logged_in', 'true');
+
+            const params = new URLSearchParams(window.location.search);
+            let target = '../index.html?login_success=1';
+            const redirectParam = params.get('redirect');
+            if (redirectParam && !redirectParam.includes('://') && !redirectParam.startsWith('//') && !redirectParam.startsWith('javascript:')) {
+                target = redirectParam;
+            }
 
             setTimeout(() => {
-                window.location.href = '../index.html?login_success=1';
+                window.location.href = target;
             }, 1000);
         }
     </script>

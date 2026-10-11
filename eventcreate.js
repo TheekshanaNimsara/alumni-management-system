@@ -51,6 +51,7 @@ regDateField.addEventListener("change", checkDeadline);
 
 // Require authentication prior to event creation
 (async function verifyAuth() {
+  const isStatic = window.location.protocol === "file:" || window.location.hostname.endsWith("github.io");
   try {
     const res = await fetch("event.php?action=session");
     if (res.ok) {
@@ -58,12 +59,22 @@ regDateField.addEventListener("change", checkDeadline);
       if (!text.trim().startsWith("<")) {
         const data = JSON.parse(text);
         if (!data || !data.logged_in) {
-          window.location.href = "auth/login.php?redirect=" + encodeURIComponent("../eventcreate.html");
+          const loginTarget = isStatic
+            ? "login.html?redirect=" + encodeURIComponent("eventcreate.html") + "&msg=auth_required"
+            : "auth/login.php?redirect=" + encodeURIComponent("../eventcreate.html") + "&msg=auth_required";
+          window.location.href = loginTarget;
+          return;
+        }
+      } else {
+        if (sessionStorage.getItem("alumni_logged_in") !== "true") {
+          window.location.href = "login.html?redirect=" + encodeURIComponent("eventcreate.html") + "&msg=auth_required";
           return;
         }
       }
     }
   } catch (e) {
-    // Fallback for static host / offline
+    if (isStatic && sessionStorage.getItem("alumni_logged_in") !== "true") {
+      window.location.href = "login.html?redirect=" + encodeURIComponent("eventcreate.html") + "&msg=auth_required";
+    }
   }
 })();

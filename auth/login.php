@@ -8,6 +8,13 @@ require_once __DIR__ . '/../config/db.php';
 
 $error = '';
 $identity = '';
+$notice = '';
+$rawMsg = $_GET['msg'] ?? $_GET['message'] ?? '';
+if ($rawMsg === 'auth_required') {
+    $notice = 'Please log in to continue.';
+} elseif (!empty($rawMsg)) {
+    $notice = $rawMsg;
+}
 
 // If already authenticated, redirect to appropriate destination
 if (is_logged_in()) {
@@ -136,6 +143,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="auth-form-subtitle">Please enter your account details</p>
                 </div>
 
+                <?php if (!empty($notice) && empty($error)): ?>
+                    <div class="auth-alert auth-alert-warning" role="alert" style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); color: #FBBF24; display: flex; align-items: center; gap: 0.6rem; padding: 0.8rem 1rem; border-radius: 8px; margin-bottom: 1.2rem; font-size: 0.92rem; font-weight: 600;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <span><?php echo htmlspecialchars($notice); ?></span>
+                    </div>
+                <?php endif; ?>
+
                 <?php if (!empty($error)): ?>
                     <div class="auth-alert auth-alert-error" role="alert">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -147,7 +165,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 <?php endif; ?>
 
-                <form method="POST" action="login.php<?php echo isset($_GET['redirect']) ? '?redirect=' . urlencode($_GET['redirect']) : ''; ?>" novalidate>
+                <form method="POST" action="login.php<?php 
+                    $params = [];
+                    if (!empty($_GET['redirect'])) $params['redirect'] = $_GET['redirect'];
+                    if (!empty($_GET['msg'])) $params['msg'] = $_GET['msg'];
+                    echo !empty($params) ? '?' . htmlspecialchars(http_build_query($params)) : ''; 
+                ?>" novalidate>
                     <div class="auth-form-group">
                         <label for="identity" class="auth-label">Email or Username</label>
                         <div class="auth-input-wrapper">

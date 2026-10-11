@@ -109,10 +109,14 @@ switch ($action) {
             if (isAjax()) {
                 http_response_code(401);
                 header('Content-Type: application/json');
-                echo json_encode(['success' => false, 'error' => 'Authentication required. Please sign in to create an event.']);
+                echo json_encode([
+                    'success' => false,
+                    'error' => 'Please log in to continue.',
+                    'redirect' => 'auth/login.php?redirect=' . urlencode('../eventcreate.html') . '&msg=auth_required'
+                ]);
                 exit;
             }
-            header('Location: auth/login.php?redirect=' . urlencode('../eventcreate.html'));
+            header('Location: auth/login.php?redirect=' . urlencode('../eventcreate.html') . '&msg=auth_required');
             exit;
         }
 
@@ -322,7 +326,13 @@ switch ($action) {
 
         if (!is_logged_in()) {
             http_response_code(401);
-            echo json_encode(['success' => false, 'error' => 'Please sign in to RSVP for events.', 'redirect' => 'auth/login.php']);
+            $retEventId = intval($_POST['event_id'] ?? 0);
+            $redir = 'auth/login.php?redirect=' . urlencode('../event.html' . ($retEventId > 0 ? '?rsvp=' . $retEventId : '')) . '&msg=auth_required';
+            echo json_encode([
+                'success' => false,
+                'error' => 'Please log in to continue.',
+                'redirect' => $redir
+            ]);
             exit;
         }
 
