@@ -227,7 +227,9 @@ if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
                             <?php echo htmlspecialchars($job['company']); ?>
                         </span>
                         <h3 class="job-title" style="margin: 0;">
-                            <?php echo htmlspecialchars($job['title']); ?>
+                            <a href="job-details.html?id=<?php echo $job['id']; ?>" style="color: inherit; text-decoration: none;">
+                                <?php echo htmlspecialchars($job['title']); ?>
+                            </a>
                         </h3>
                     </div>
 
@@ -277,6 +279,10 @@ if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
                                 onclick="openReportModal(<?php echo $job['id']; ?>, 'job', '<?php echo htmlspecialchars(addslashes($job['title'])); ?>');" title="Report Job">
                             &#9873;
                         </button>
+
+                        <a href="job-details.html?id=<?php echo $job['id']; ?>" class="btn btn-outline-glass btn-sm">
+                            View Details &rarr;
+                        </a>
 
                         <?php if ($appStatus): ?>
                             <span class="badge badge-success" style="padding: 0.4rem 0.75rem;">

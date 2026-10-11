@@ -422,7 +422,7 @@ function showJobs() {
         <div class="job-header">
           <div class="job-logo">${initial}</div>
           <div class="job-header-info">
-            <h3 class="job-title" title="${safe(job.title)}">${safe(job.title)}</h3>
+            <h3 class="job-title" title="${safe(job.title)}"><a href="job-details.html?id=${job.id}" style="color: inherit; text-decoration: none;">${safe(job.title)}</a></h3>
             <p class="company-name">${safe(job.company)}${locText}</p>
           </div>
           <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
@@ -436,7 +436,7 @@ function showJobs() {
         ${deadlineText}
 
         <div class="job-actions">
-          <button type="button" class="apply-btn" data-job-id="${job.id}">View &amp; Apply</button>
+          <a href="job-details.html?id=${job.id}" class="apply-btn" data-job-id="${job.id}">View &amp; Apply</a>
           <button type="button" class="share-btn">Share</button>
         </div>
       </div>
@@ -458,8 +458,8 @@ jobList.addEventListener("click", function (e) {
   // ── Apply / Details button ──
   const applyBtn = e.target.closest(".apply-btn");
   if (applyBtn) {
-    e.preventDefault();
-    openApplyModal(applyBtn.dataset.jobId);
+    // Navigate directly to the dedicated full job & company details page
+    window.location.href = `job-details.html?id=${encodeURIComponent(applyBtn.dataset.jobId)}`;
     return;
   }
 

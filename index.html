@@ -499,9 +499,9 @@
             <p style="font-size: 1.05rem; max-width: 700px; margin: 0 auto 2.2rem; color: var(--text-muted);">
                 The KDU Alumni Network fosters lifelong relationships, offers career mentorship, hosts inspiring reunions, and empowers graduates worldwide.
             </p>
-            <button type="button" class="btn btn-gold gold-glow" style="padding: 1rem 2.5rem; font-size: 1.05rem;" onclick="openRegisterModal();">
+            <a href="./register.html" class="btn btn-gold gold-glow" style="padding: 1rem 2.5rem; font-size: 1.05rem; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
                 CREATE YOUR ALUMNI ACCOUNT
-            </button>
+            </a>
         </div>
     </section>
 
@@ -622,7 +622,7 @@
             document.getElementById('loginModal').style.display = 'flex';
         }
         function openRegisterModal() {
-            document.getElementById('registerModal').style.display = 'flex';
+            window.location.href = './register.html';
         }
         function closeModals() {
             document.getElementById('loginModal').style.display = 'none';
