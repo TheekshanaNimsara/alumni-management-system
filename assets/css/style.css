@@ -75,6 +75,16 @@
     --card-hover-shadow: 0 24px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(124, 58, 237, 0.25);
     --purple-glow: rgba(124, 58, 237, 0.24);
     --gold-glow: 0 0 24px rgba(124, 58, 237, 0.35);
+
+    /* Glassmorphism Tokens */
+    --glass-bg: rgba(27, 18, 48, 0.70);
+    --glass-bg-subtle: rgba(16, 9, 29, 0.65);
+    --glass-bg-elevated: rgba(36, 23, 53, 0.78);
+    --glass-border: rgba(196, 181, 253, 0.18);
+    --glass-border-light: rgba(196, 181, 253, 0.30);
+    --glass-blur: blur(14px);
+    --glass-shadow: 0 16px 38px rgba(0, 0, 0, 0.60), 0 0 18px rgba(124, 58, 237, 0.10);
+    --glass-hover-shadow: 0 24px 50px rgba(0, 0, 0, 0.78), 0 0 28px rgba(124, 58, 237, 0.24);
 }
 
 /* ------------------------------------------------------------
@@ -326,21 +336,23 @@ textarea:focus-visible {
    5. NAVIGATION BAR & MICRO-INTERACTIONS
    ------------------------------------------------------------ */
 .navbar {
-    background: rgba(8, 5, 16, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(8, 5, 16, 0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     color: var(--text-light);
     position: sticky;
     top: 0;
     z-index: 1000;
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    border-bottom: 1px solid var(--border-gold);
+    border-bottom: 1px solid rgba(196, 181, 253, 0.16);
 }
 
 .navbar.scrolled {
-    background: rgba(8, 5, 16, 0.98);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
-    border-bottom-color: rgba(124, 58, 237, 0.35);
+    background: rgba(16, 9, 29, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65), 0 0 16px rgba(124, 58, 237, 0.12);
+    border-bottom-color: rgba(196, 181, 253, 0.28);
 }
 
 .navbar-container {
@@ -765,11 +777,13 @@ textarea:focus-visible {
    8. CARD SYSTEM (ELEVATED SURFACES)
    ------------------------------------------------------------ */
 .card {
-    background: linear-gradient(165deg, #1B1230 0%, #130D20 60%, #080510 100%);
+    background: linear-gradient(165deg, rgba(27, 18, 48, 0.72) 0%, rgba(19, 13, 32, 0.65) 60%, rgba(8, 5, 16, 0.75) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     color: var(--text-color);
     border-radius: var(--border-radius);
-    border: 1px solid var(--border-gold);
-    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(196, 181, 253, 0.18);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.60), 0 0 16px rgba(124, 58, 237, 0.08);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
                 box-shadow 0.35s ease, 
                 border-color 0.3s ease;
@@ -779,15 +793,17 @@ textarea:focus-visible {
 
 .card:hover {
     transform: translateY(-7px);
-    border-color: rgba(196, 181, 253, 0.45);
-    box-shadow: var(--card-hover-shadow);
+    border-color: rgba(196, 181, 253, 0.40);
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(124, 58, 237, 0.25);
 }
 
 /* Dark Card Accent */
 .card-dark {
-    background: linear-gradient(165deg, #1B1230 0%, #130D20 50%, #080510 100%);
+    background: linear-gradient(165deg, rgba(27, 18, 48, 0.70) 0%, rgba(19, 13, 32, 0.60) 50%, rgba(8, 5, 16, 0.80) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     color: var(--text-light);
-    border: 1px solid var(--border-gold);
+    border: 1px solid rgba(196, 181, 253, 0.20);
 }
 
 .card-dark:hover {
@@ -820,11 +836,12 @@ textarea:focus-visible {
 
 .stat-item {
     padding: 2.4rem 1.6rem;
-    background: linear-gradient(145deg, rgba(36, 23, 53, 0.75), rgba(19, 13, 32, 0.85));
+    background: linear-gradient(145deg, rgba(36, 23, 53, 0.70), rgba(19, 13, 32, 0.75));
     border-radius: var(--border-radius);
-    border: 1px solid var(--border-gold);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(196, 181, 253, 0.18);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55), 0 0 14px rgba(124, 58, 237, 0.08);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -860,10 +877,12 @@ textarea:focus-visible {
     flex-direction: column;
     text-align: center;
     padding: 2.6rem 2.2rem 2.2rem;
-    background: linear-gradient(170deg, #1B1230 0%, #130D20 55%, #080510 100%);
-    border: 1px solid rgba(212, 175, 55, 0.22);
+    background: linear-gradient(170deg, rgba(27, 18, 48, 0.72) 0%, rgba(19, 13, 32, 0.65) 55%, rgba(8, 5, 16, 0.78) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(196, 181, 253, 0.18);
     border-radius: var(--border-radius);
-    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(233, 213, 255, 0.14);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.60), inset 0 1px 0 rgba(233, 213, 255, 0.14);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.4s ease,
                 border-color 0.35s ease;
@@ -1042,10 +1061,12 @@ textarea:focus-visible {
    11. UPCOMING GATHERINGS (EDITORIAL EVENT FEATURE PANELS)
    ------------------------------------------------------------ */
 .event-card {
-    background: linear-gradient(170deg, #1B1230 0%, #130D20 55%, #080510 100%);
-    border: 1px solid rgba(212, 175, 55, 0.22);
+    background: linear-gradient(170deg, rgba(27, 18, 48, 0.72) 0%, rgba(19, 13, 32, 0.65) 55%, rgba(8, 5, 16, 0.78) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(196, 181, 253, 0.18);
     border-radius: var(--border-radius);
-    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(233, 213, 255, 0.14);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.60), inset 0 1px 0 rgba(233, 213, 255, 0.14);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -1208,11 +1229,13 @@ textarea:focus-visible {
    ------------------------------------------------------------ */
 .job-card {
     padding: 2.4rem 2.2rem 2.2rem;
-    background: linear-gradient(170deg, #1B1230 0%, #130D20 55%, #080510 100%);
-    border: 1px solid rgba(212, 175, 55, 0.22);
+    background: linear-gradient(170deg, rgba(27, 18, 48, 0.72) 0%, rgba(19, 13, 32, 0.65) 55%, rgba(8, 5, 16, 0.78) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(196, 181, 253, 0.18);
     border-left: 4px solid var(--accent-color);
     border-radius: var(--border-radius);
-    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(233, 213, 255, 0.14);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.60), inset 0 1px 0 rgba(233, 213, 255, 0.14);
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -1359,7 +1382,9 @@ textarea:focus-visible {
     border: 1px solid var(--border-color);
     border-radius: 6px;
     color: var(--text-color);
-    background-color: #130D20;
+    background-color: rgba(19, 13, 32, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
 }
 
@@ -1373,8 +1398,8 @@ textarea:focus-visible {
 .form-control:focus {
     outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25);
-    background-color: #1B1230;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25), 0 0 16px rgba(124, 58, 237, 0.12);
+    background-color: rgba(27, 18, 48, 0.88);
 }
 
 /* Form validation states */
@@ -1409,10 +1434,12 @@ textarea:focus-visible {
     width: 100%;
     max-width: 960px;
     min-height: 560px;
-    background: var(--surface-elevated);
+    background: rgba(36, 23, 53, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-radius: var(--border-radius);
-    border: 1px solid var(--border-gold);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(196, 181, 253, 0.20);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 30px rgba(124, 58, 237, 0.15);
     overflow: hidden;
 }
 
@@ -1523,12 +1550,14 @@ textarea:focus-visible {
 
 .admin-sidebar {
     width: 260px;
-    background: linear-gradient(180deg, #080510, #10091D);
+    background: linear-gradient(180deg, rgba(8, 5, 16, 0.88), rgba(16, 9, 29, 0.92));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     color: #F8F7FC;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    border-right: 1px solid var(--border-gold);
+    border-right: 1px solid rgba(196, 181, 253, 0.16);
 }
 
 .admin-sidebar-header {
@@ -1628,12 +1657,14 @@ textarea:focus-visible {
 }
 
 .admin-stat-card {
-    background-color: var(--surface-elevated);
+    background: rgba(36, 23, 53, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     padding: 1.8rem;
     border-radius: var(--border-radius);
-    border: 1px solid var(--border-gold);
+    border: 1px solid rgba(196, 181, 253, 0.18);
     border-left: 4px solid var(--accent-color);
-    box-shadow: var(--card-shadow);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55), 0 0 14px rgba(124, 58, 237, 0.08);
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -1642,8 +1673,8 @@ textarea:focus-visible {
 
 .admin-stat-card:hover {
     transform: translateY(-4px);
-    border-color: var(--accent-color);
-    box-shadow: var(--card-hover-shadow);
+    border-color: rgba(196, 181, 253, 0.4);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75), 0 0 24px rgba(124, 58, 237, 0.22);
 }
 
 .admin-stat-number {
@@ -1679,10 +1710,12 @@ textarea:focus-visible {
    ------------------------------------------------------------ */
 .table-responsive {
     overflow-x: auto;
-    background-color: var(--surface-elevated);
+    background-color: rgba(36, 23, 53, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-radius: var(--border-radius);
-    border: 1px solid var(--border-gold);
-    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(196, 181, 253, 0.18);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.60);
 }
 
 .admin-table {
@@ -1840,8 +1873,8 @@ textarea:focus-visible {
     position: fixed;
     inset: 0;
     background: rgba(8, 5, 16, 0.88);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     z-index: 9999;
     align-items: center;
     justify-content: center;
@@ -1849,13 +1882,15 @@ textarea:focus-visible {
 
 .modal-card,
 .modal-box {
-    background: var(--surface-elevated);
+    background: rgba(36, 23, 53, 0.82);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     color: var(--text-color);
     width: 90%;
     max-width: 520px;
     border-radius: var(--border-radius);
     padding: 2.2rem;
-    border: 1px solid var(--border-gold);
+    border: 1px solid rgba(196, 181, 253, 0.22);
     border-top: 4px solid var(--accent-color);
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(124, 58, 237, 0.2);
     animation: modalScaleIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1876,7 +1911,9 @@ textarea:focus-visible {
    20. CINEMATIC FOOTER (GRID ALIGNMENT & RESPONSIVENESS)
    ------------------------------------------------------------ */
 .footer {
-    background: linear-gradient(180deg, #10091D 0%, #080510 100%);
+    background: linear-gradient(180deg, rgba(16, 9, 29, 0.88) 0%, rgba(8, 5, 16, 0.95) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     color: var(--text-color);
     padding: 5rem 0 2.2rem;
     border-top: 2px solid var(--accent-color);
@@ -2168,3 +2205,59 @@ textarea:focus-visible {
         transform: none !important;
     }
 }
+
+/* ------------------------------------------------------------
+   23. REUSABLE GLASSMORPHISM UTILITY & FALLBACKS
+   ------------------------------------------------------------ */
+.glass-surface {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+.glass-surface-subtle {
+    background: var(--glass-bg-subtle);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+}
+
+.glass-surface-elevated {
+    background: var(--glass-bg-elevated);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid var(--glass-border-light);
+    box-shadow: var(--glass-shadow);
+}
+
+/* Graceful Fallback for browsers without backdrop-filter support */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .navbar,
+    .navbar.scrolled {
+        background: #080510 !important;
+    }
+    .card,
+    .card-dark,
+    .alumni-card,
+    .event-card,
+    .job-card,
+    .form-card,
+    .table-responsive,
+    .admin-stat-card,
+    .admin-sidebar,
+    .modal-card,
+    .modal-box,
+    .auth-split-card,
+    .glass-surface,
+    .glass-surface-elevated {
+        background: #1B1230 !important;
+    }
+    .stat-item,
+    .form-control,
+    .glass-surface-subtle {
+        background: #130D20 !important;
+    }
+}
+

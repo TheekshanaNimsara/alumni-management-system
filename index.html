@@ -10,30 +10,32 @@
     <link rel="shortcut icon" href="./favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
     <!-- Master Cinematic Midnight Purple Stylesheet -->
-    <link rel="stylesheet" href="./assets/css/style.css?v=4.2">
+    <link rel="stylesheet" href="./assets/css/style.css?v=5.0">
     <style>
         /* Standalone Showcase Modal Enhancements */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(8, 5, 16, 0.88);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(8, 5, 16, 0.72);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 9999;
             align-items: center;
             justify-content: center;
         }
         .modal-card {
-            background: var(--surface-elevated);
+            background: var(--glass-bg-elevated);
             color: var(--text-color);
             width: 90%;
             max-width: 500px;
             border-radius: var(--border-radius);
             padding: 2.2rem;
-            border: 1px solid var(--border-gold);
+            border: 1px solid var(--glass-border);
             border-top: 4px solid var(--accent-color);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(124, 58, 237, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 40px rgba(124, 58, 237, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
             animation: modalFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes modalFadeIn {
