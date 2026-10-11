@@ -51,8 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // 2. Handle Job Posting Submission by logged-in users
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'post_job') {
     if (!$isLoggedIn) {
-        $message = "Please log in to post a career opportunity.";
-        $messageType = "danger";
+        header("Location: auth/login.php?redirect=" . urlencode("jobs.php#post-job"));
+        exit;
     } else {
         $title = trim($_POST['title'] ?? '');
         $company = trim($_POST['company'] ?? '');
@@ -165,10 +165,17 @@ if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
             <h2 style="color: var(--text-light); font-size: 1.6rem; font-weight: 800; margin: 0 0 0.3rem 0;">Available Positions</h2>
             <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0;">Verified opportunities from alumni organizations worldwide</p>
         </div>
-        <div>
-            <a href="#post-job" class="btn btn-gold gold-glow btn-sm">
-                + Post an Opportunity
-            </a>
+        <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+            <a href="index.php" class="btn btn-outline-light btn-sm">&larr; Return to Homepage</a>
+            <?php if ($isLoggedIn): ?>
+                <a href="#post-job" class="btn btn-gold gold-glow btn-sm">
+                    + Post an Opportunity
+                </a>
+            <?php else: ?>
+                <a href="auth/login.php?redirect=<?php echo urlencode('jobs.php#post-job'); ?>" class="btn btn-gold gold-glow btn-sm">
+                    + Post an Opportunity
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -382,7 +389,7 @@ if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
                     Please log in with your verified alumni account to submit job opportunities.
                 </p>
                 <div style="display: flex; gap: 1rem; justify-content: center;">
-                    <a href="auth/login.php" class="btn btn-primary btn-sm">Login to Your Account</a>
+                    <a href="auth/login.php?redirect=<?php echo urlencode('jobs.php#post-job'); ?>" class="btn btn-primary btn-sm">Login to Your Account</a>
                     <a href="auth/register.php" class="btn btn-gold btn-sm">Register as Alumni</a>
                 </div>
             </div>

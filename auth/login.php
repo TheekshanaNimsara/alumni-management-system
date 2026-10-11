@@ -11,7 +11,13 @@ $identity = '';
 
 // If already authenticated, redirect to appropriate destination
 if (is_logged_in()) {
-    if (is_admin()) {
+    $redirect = $_GET['redirect'] ?? '';
+    if (!empty($redirect) && is_string($redirect) && 
+        !preg_match('#^(https?:|//|javascript:|data:)#i', $redirect) && 
+        strpos($redirect, "\r") === false && strpos($redirect, "\n") === false) {
+        $dest = (str_starts_with($redirect, '..') || str_starts_with($redirect, '/')) ? $redirect : '../' . ltrim($redirect, '/');
+        header("Location: " . $dest);
+    } elseif (is_admin()) {
         header("Location: ../admin/index.php");
     } else {
         header("Location: ../index.php");
@@ -50,17 +56,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $_SESSION['user_role'] = $user['role'];
                         $_SESSION['user_email'] = $user['email'];
 
-                        // Safe redirect based on verified role
-                        if ($user['role'] === 'admin') {
-                            header("Location: ../admin/index.php");
-                        } else {
-                            $redirect = $_GET['redirect'] ?? '../index.php';
-                            // Restrict to safe internal relative paths
-                            if (!is_string($redirect) || str_starts_with($redirect, '//') || str_contains($redirect, '://') || !str_starts_with($redirect, '..')) {
-                                $redirect = '../index.php';
+                        // Safe redirect based on verified role and validated internal redirect
+                        $targetRedirect = $_POST['redirect'] ?? $_GET['redirect'] ?? '';
+                        $safeRedirect = ($user['role'] === 'admin') ? '../admin/index.php' : '../index.php';
+
+                        if (!empty($targetRedirect) && is_string($targetRedirect)) {
+                            // Disallow protocol-relative, external schemes, header injection
+                            if (!preg_match('#^(https?:|//|javascript:|data:)#i', $targetRedirect) && 
+                                strpos($targetRedirect, "\r") === false && 
+                                strpos($targetRedirect, "\n") === false) {
+                                if (str_starts_with($targetRedirect, '..') || str_starts_with($targetRedirect, '/')) {
+                                    $safeRedirect = $targetRedirect;
+                                } else {
+                                    $safeRedirect = '../' . ltrim($targetRedirect, '/');
+                                }
                             }
-                            header("Location: " . $redirect);
                         }
+                        header("Location: " . $safeRedirect);
                         exit;
                     }
                 } else {

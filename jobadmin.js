@@ -145,44 +145,66 @@ function renderGrid() {
 
 // ---- Fetch all jobs for admin review ----
 async function fetchAdminJobs() {
-  try {
-    const res = await fetch("job.php?action=get&status=all");
-    
-    // Server-side authorization check
-    if (res.status === 403) {
-      grid.innerHTML = `
-        <div style="grid-column: 1 / -1; padding: 3rem 2rem; text-align: center; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 12px; margin: 2rem 0;">
-          <h3 style="color: #EF4444; font-size: 1.5rem; margin-bottom: 0.5rem;">Access Denied</h3>
-          <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 1.5rem auto;">Server-side administrator credentials are required to inspect pending submissions and moderate listings.</p>
-          <a href="auth/login.php" class="btn btn-primary" style="margin-right: 0.75rem;">Log In as Administrator</a>
-          <a href="jobs.html" class="btn btn-outline">Back to Public Board</a>
+  const statsEl = document.querySelector(".admin-stats");
+  const tabsEl = document.getElementById("adminTabs");
+  const searchEl = document.getElementById("adminSearchInput");
+
+  function showAccessDenied(reason) {
+    document.querySelectorAll(".admin-only-nav").forEach(el => el.style.display = "none");
+    if (statsEl) statsEl.style.display = "none";
+    if (tabsEl) tabsEl.style.display = "none";
+    if (searchEl) searchEl.style.display = "none";
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; padding: 3rem 2rem; text-align: center; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 12px; margin: 2rem 0;">
+        <h3 style="color: #EF4444; font-size: 1.5rem; margin-bottom: 0.5rem;">Access Denied</h3>
+        <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 1.5rem auto;">${escapeHtml(reason || "Server-side administrator credentials are required to inspect pending submissions and moderate listings.")}</p>
+        <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+          <a href="auth/login.php?redirect=${encodeURIComponent("../jobadmin.html")}" class="btn btn-primary">Log In as Administrator</a>
+          <a href="jobs.html" class="btn btn-outline">&larr; Back to Jobs Board</a>
+          <a href="index.html" class="btn btn-outline-glass">&larr; Return to Homepage</a>
         </div>
-      `;
-      if (emptyState) emptyState.hidden = true;
+      </div>
+    `;
+    if (emptyState) emptyState.hidden = true;
+  }
+
+  try {
+    // 1. Validate session first
+    const sessRes = await fetch("job.php?action=session");
+    if (!sessRes.ok) {
+      showAccessDenied();
+      return;
+    }
+    const sessText = await sessRes.text();
+    if (sessText.trim().startsWith("<")) {
+      showAccessDenied("Administrative moderation requires an active PHP/MySQL backend session.");
+      return;
+    }
+    const sessData = JSON.parse(sessText);
+    if (!sessData || sessData.is_admin !== true) {
+      showAccessDenied("Your account does not possess administrator privileges.");
+      return;
+    }
+
+    // Authenticated administrator verified: reveal admin-only navigation
+    document.querySelectorAll(".admin-only-nav").forEach(el => el.style.display = "inline-block");
+    if (statsEl) statsEl.style.display = "";
+    if (tabsEl) tabsEl.style.display = "";
+    if (searchEl) searchEl.style.display = "";
+
+    // 2. Fetch all jobs
+    const res = await fetch("job.php?action=get&status=all");
+    if (res.status === 403) {
+      showAccessDenied("Forbidden: Administrator privileges required.");
       return;
     }
 
     const text = await res.text();
-    const trimmed = text.trim();
-
-    if (trimmed.startsWith("<?php") || trimmed.startsWith("<!DOCTYPE") || trimmed.startsWith("<html")) {
-      console.warn("Static hosting detected on admin page. Using demonstration list.");
-      allJobs = [
-        { id: 1, title: "Associate Software Engineer", company: "ABC Technologies", location: "Colombo, Sri Lanka", job_type: "Full-Time", status: "pending", description: "Review and approve internal alumni vacancy." },
-        { id: 2, title: "Senior Cloud Architect", company: "Virtusa", location: "Colombo / Hybrid", job_type: "Full-Time", status: "approved", description: "Approved alumni role." }
-      ];
-      renderGrid();
-      return;
-    }
-
-    const data = JSON.parse(trimmed);
+    const data = JSON.parse(text);
     allJobs = Array.isArray(data) ? data : [];
     renderGrid();
   } catch (err) {
-    if (emptyState) {
-      emptyState.textContent = "Could not load job submissions. Please refresh.";
-      emptyState.hidden = false;
-    }
+    showAccessDenied("Could not verify administrative session. Please log in.");
   }
 }
 

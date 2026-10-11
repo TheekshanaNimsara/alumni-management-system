@@ -306,6 +306,7 @@ const fallbackEvents = [
 ];
 
 // ---- Check Authentication Session from Backend ----
+let currentEventUser = { logged_in: false, is_admin: false };
 const adminNavLink = document.getElementById("adminNavLink");
 function checkAuthSession() {
   fetch("event.php?action=session")
@@ -314,11 +315,25 @@ function checkAuthSession() {
       const trimmed = text.trim();
       if (trimmed.startsWith("<")) return;
       const data = JSON.parse(trimmed);
-      if (data && data.is_admin && adminNavLink) {
-        adminNavLink.style.display = "inline-block";
+      if (data && typeof data === "object") {
+        currentEventUser = data;
+        if (adminNavLink) {
+          adminNavLink.style.display = (data.is_admin === true) ? "inline-block" : "none";
+        }
       }
     })
     .catch(() => {});
+}
+
+// Redirect unauthenticated visitors attempting to create events
+const createEventBtn = document.getElementById("createEventBtn");
+if (createEventBtn) {
+  createEventBtn.addEventListener("click", function (e) {
+    if (!currentEventUser || !currentEventUser.logged_in) {
+      e.preventDefault();
+      window.location.href = "auth/login.php?redirect=" + encodeURIComponent("../eventcreate.html");
+    }
+  });
 }
 
 // ---- Fetch events from event.php safely ----

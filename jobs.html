@@ -24,7 +24,7 @@
         <a href="index.html">Home</a>
         <a href="event.html">Events</a>
         <a href="jobs.html" class="active">Jobs</a>
-        <a href="jobadmin.html" id="adminNavLink" style="display: none;">Job Admin</a>
+        <a href="jobadmin.html" id="adminNavLink" class="admin-only-nav" style="display: none;">Job Admin</a>
       </nav>
     </header>
 
@@ -37,7 +37,10 @@
             Opportunities shared by fellow alumni. Give back by posting one yourself.
           </p>
         </div>
-        <a href="jobcreate.html" class="btn btn-primary">+ Post a Job</a>
+        <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+          <a href="index.html" class="btn btn-outline-glass btn-sm">&larr; Return to Homepage</a>
+          <a href="jobcreate.html" id="postJobBtn" class="btn btn-primary">+ Post a Job</a>
+        </div>
       </div>
       <!-- Search bar -->
       <div class="search-bar">

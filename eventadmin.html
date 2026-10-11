@@ -21,7 +21,8 @@
         <a href="index.html">Home</a>
         <a href="event.html">Events</a>
         <a href="jobs.html">Jobs</a>
-        <a href="eventadmin.html" class="active-nav">Admin Portal</a>
+        <a href="eventadmin.html" class="active-nav admin-only-nav" style="display: none;">Event Admin</a>
+        <a href="jobadmin.html" class="admin-only-nav" style="display: none;">Job Admin</a>
       </nav>
     </div>
   </header>
@@ -32,7 +33,10 @@
         <h1>Admin Portal &mdash; Event Approvals</h1>
         <p class="muted">Review and manage event submissions before publishing them to the public network.</p>
       </div>
-      <a class="btn btn-outline" href="event.html">&larr; Back to Events Page</a>
+      <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+        <a class="btn btn-outline-glass" href="index.html">&larr; Return to Homepage</a>
+        <a class="btn btn-outline" href="event.html">&larr; Back to Events Page</a>
+      </div>
     </div>
 
     <!-- Admin Dashboard Summary Cards -->

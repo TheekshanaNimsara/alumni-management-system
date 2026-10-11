@@ -286,18 +286,29 @@ async function checkAuthSession() {
       currentUser = data;
 
       // Only show admin nav link if authenticated administrator
-      if (adminNavLink && currentUser.is_admin === true) {
-        adminNavLink.style.display = "inline-block";
+      if (adminNavLink) {
+        adminNavLink.style.display = (currentUser.is_admin === true) ? "inline-block" : "none";
       }
 
       // Show 'My Postings' tab if logged in
-      if (myJobsTab && currentUser.logged_in === true) {
-        myJobsTab.style.display = "inline-block";
+      if (myJobsTab) {
+        myJobsTab.style.display = (currentUser.logged_in === true) ? "inline-block" : "none";
       }
     }
   } catch (err) {
     // Fail silently in guest state
   }
+}
+
+// Redirect unauthenticated visitors attempting to post jobs
+const postJobBtn = document.getElementById("postJobBtn");
+if (postJobBtn) {
+  postJobBtn.addEventListener("click", function (e) {
+    if (!currentUser || !currentUser.logged_in) {
+      e.preventDefault();
+      window.location.href = "auth/login.php?redirect=" + encodeURIComponent("../jobcreate.html");
+    }
+  });
 }
 
 /* ── Show success banner if redirected from job creation ─────────────────── */

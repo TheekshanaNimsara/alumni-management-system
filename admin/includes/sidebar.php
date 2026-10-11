@@ -56,9 +56,9 @@ $baseUrl = get_base_url();
         <div style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
             Signed in as <strong><?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Administrator'); ?></strong>
         </div>
-        <div style="display: flex; gap: 0.5rem;">
-            <a href="<?php echo $baseUrl; ?>index.php" class="btn btn-outline-light btn-sm" style="flex: 1;">View Site</a>
-            <a href="<?php echo $baseUrl; ?>auth/logout.php" class="btn btn-gold btn-sm" style="flex: 1;">Logout</a>
+        <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+            <a href="<?php echo $baseUrl; ?>index.php" class="btn btn-outline-light btn-sm" style="width: 100%; justify-content: center;">&larr; Return to Homepage</a>
+            <a href="<?php echo $baseUrl; ?>auth/logout.php" class="btn btn-gold btn-sm" style="width: 100%; justify-content: center;">Logout</a>
         </div>
     </div>
 </aside>

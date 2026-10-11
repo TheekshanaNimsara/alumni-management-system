@@ -205,11 +205,18 @@
 
             // In live GitHub Pages static hosting:
             alertBox.className = 'auth-alert auth-alert-success';
-            alertMsg.innerText = 'Authentication successful! Redirecting to alumni homepage...';
+            alertMsg.innerText = 'Authentication successful! Redirecting...';
             alertBox.style.display = 'flex';
 
+            const params = new URLSearchParams(window.location.search);
+            let target = './index.html?login_success=1';
+            const redirectParam = params.get('redirect');
+            if (redirectParam && !redirectParam.includes('://') && !redirectParam.startsWith('//') && !redirectParam.startsWith('javascript:')) {
+                target = redirectParam;
+            }
+
             setTimeout(() => {
-                window.location.href = './index.html?login_success=1';
+                window.location.href = target;
             }, 1000);
         }
     </script>

@@ -795,6 +795,48 @@ textarea:focus-visible {
     box-shadow: 0 8px 25px rgba(124, 58, 237, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
+.btn-outline-glass {
+    background: rgba(36, 23, 61, 0.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    color: var(--text-light);
+    border: 1px solid rgba(196, 181, 253, 0.30);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.btn-outline-glass:hover {
+    background: rgba(124, 58, 237, 0.28);
+    border-color: rgba(196, 181, 253, 0.60);
+    color: #FFFFFF;
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.30), 0 0 14px rgba(124, 58, 237, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.btn-return-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(36, 23, 61, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--accent-light);
+    border: 1px solid rgba(196, 181, 253, 0.28);
+    border-radius: var(--border-radius);
+    padding: 0.55rem 1.1rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transition: all 0.25s ease;
+}
+
+.btn-return-home:hover {
+    background: rgba(124, 58, 237, 0.25);
+    border-color: rgba(196, 181, 253, 0.55);
+    color: #FFFFFF;
+    transform: translateX(-3px);
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.20);
+}
+
 /* Disabled Button State */
 .btn:disabled, .btn.disabled {
     background-color: var(--disabled-bg);

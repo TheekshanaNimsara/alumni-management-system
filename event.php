@@ -104,6 +104,18 @@ switch ($action) {
             exit;
         }
 
+        // Require authentication for event creation
+        if (!$currentUserId) {
+            if (isAjax()) {
+                http_response_code(401);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => 'Authentication required. Please sign in to create an event.']);
+                exit;
+            }
+            header('Location: auth/login.php?redirect=' . urlencode('../eventcreate.html'));
+            exit;
+        }
+
         $title       = trim($_POST['title'] ?? '');
         $description = trim($_POST['description'] ?? '');
         $date        = trim($_POST['date'] ?? '');
@@ -145,18 +157,6 @@ switch ($action) {
                 'capacity'    => $capacity,
             ]);
             header('Location: eventcreate.html?' . $query);
-            exit;
-        }
-
-        // Require authentication for event creation
-        if (!$currentUserId) {
-            if (isAjax()) {
-                http_response_code(401);
-                header('Content-Type: application/json');
-                echo json_encode(['success' => false, 'error' => 'Authentication required. Please sign in to create an event.']);
-                exit;
-            }
-            header('Location: auth/login.php?redirect=' . urlencode('../eventcreate.html'));
             exit;
         }
 

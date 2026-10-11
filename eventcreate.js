@@ -48,3 +48,22 @@ startField.addEventListener("change", checkTimes);
 endField.addEventListener("change", checkTimes);
 dateField.addEventListener("change", checkDeadline);
 regDateField.addEventListener("change", checkDeadline);
+
+// Require authentication prior to event creation
+(async function verifyAuth() {
+  try {
+    const res = await fetch("event.php?action=session");
+    if (res.ok) {
+      const text = await res.text();
+      if (!text.trim().startsWith("<")) {
+        const data = JSON.parse(text);
+        if (!data || !data.logged_in) {
+          window.location.href = "auth/login.php?redirect=" + encodeURIComponent("../eventcreate.html");
+          return;
+        }
+      }
+    }
+  } catch (e) {
+    // Fallback for static host / offline
+  }
+})();

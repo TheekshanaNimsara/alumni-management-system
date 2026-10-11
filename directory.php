@@ -108,7 +108,11 @@ if ($db_connected && $pdo) {
     </div>
 </section>
 
-<div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+<div class="container" style="padding-top: 2rem; padding-bottom: 5rem;">
+
+    <div style="display: flex; justify-content: flex-start; margin-bottom: 1.5rem;">
+        <a href="<?php echo $baseUrl; ?>index.php" class="btn btn-outline-light btn-sm">&larr; Return to Homepage</a>
+    </div>
 
     <!-- Filter Card -->
     <div class="card" style="margin-bottom: 3rem; padding: 2rem; border-top: 3px solid var(--accent-color);">

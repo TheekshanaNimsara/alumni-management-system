@@ -22,8 +22,8 @@
         <a href="index.html">Home</a>
         <a href="event.html">Events</a>
         <a href="jobs.html">Jobs</a>
-        <a href="eventadmin.html">Event Admin</a>
-        <a href="jobadmin.html" class="active-nav">Job Admin</a>
+        <a href="eventadmin.html" class="admin-only-nav" style="display: none;">Event Admin</a>
+        <a href="jobadmin.html" class="active-nav admin-only-nav" style="display: none;">Job Admin</a>
       </nav>
     </div>
   </header>
@@ -34,7 +34,10 @@
         <h1>Admin Portal &mdash; Job Approvals</h1>
         <p class="muted">Review and manage job submissions before publishing them to the alumni network.</p>
       </div>
-      <a class="btn btn-outline" href="jobs.html">&larr; Back to Jobs Page</a>
+      <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+        <a class="btn btn-outline-glass" href="index.html">&larr; Return to Homepage</a>
+        <a class="btn btn-outline" href="jobs.html">&larr; Back to Jobs Page</a>
+      </div>
     </div>
 
     <!-- Dashboard Summary Cards -->

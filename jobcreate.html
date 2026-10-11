@@ -29,6 +29,11 @@
   </header>
 
   <main class="form-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.75rem;">
+      <a class="back btn-return-home" href="index.html">&larr; Return to Homepage</a>
+      <a class="back" href="jobs.html">&larr; Back to Jobs Board</a>
+    </div>
+
     <div class="form-card">
       <h1>Post a Job</h1>
       <p class="subtitle">Share an opportunity with fellow alumni. Submissions will be sent for admin approval before appearing on the job board.</p>
@@ -103,6 +108,25 @@
   </main>
 
   <script>
+    // Require authentication prior to job creation
+    (async function verifyAuth() {
+      try {
+        const res = await fetch("job.php?action=session");
+        if (res.ok) {
+          const text = await res.text();
+          if (!text.trim().startsWith("<")) {
+            const data = JSON.parse(text);
+            if (!data || !data.logged_in) {
+              window.location.href = "auth/login.php?redirect=" + encodeURIComponent("../jobcreate.html");
+              return;
+            }
+          }
+        }
+      } catch (e) {
+        // Fallback for static host / offline
+      }
+    })();
+
     // Show error message if redirected back from job.php with ?error=
     (function () {
       const params = new URLSearchParams(window.location.search);

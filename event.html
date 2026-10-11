@@ -20,7 +20,7 @@
         <a href="index.html">Home</a>
         <a href="event.html" class="active-nav">Events</a>
         <a href="jobs.html">Jobs</a>
-        <a href="eventadmin.html" id="adminNavLink" style="display: none;">Admin Portal</a>
+        <a href="eventadmin.html" id="adminNavLink" class="admin-only-nav" style="display: none;">Admin Portal</a>
       </nav>
     </div>
   </header>
@@ -31,7 +31,10 @@
         <h1>Alumni Events</h1>
         <p class="muted">Reunions, webinars, and career talks hosted by the alumni community.</p>
       </div>
-      <a class="btn btn-primary" href="eventcreate.html">+ Create Event</a>
+      <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+        <a class="btn btn-outline-glass btn-sm" href="index.html">&larr; Return to Homepage</a>
+        <a class="btn btn-primary" href="eventcreate.html" id="createEventBtn">+ Create Event</a>
+      </div>
     </div>
 
     <input type="search" id="searchInput" class="search" placeholder="Search events...">
