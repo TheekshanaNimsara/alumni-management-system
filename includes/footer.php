@@ -64,6 +64,8 @@ $baseUrl = isset($baseUrl) ? $baseUrl : get_base_url();
         </div>
     </footer>
 
+    <!-- Theme Controller Script -->
+    <script src="<?php echo $baseUrl; ?>assets/js/theme.js"></script>
     <!-- Vanilla JavaScript -->
     <script src="<?php echo $baseUrl; ?>assets/js/main.js?v=4.2"></script>
 </body>

@@ -4,7 +4,10 @@
    Pure CSS3 • No External Frameworks • Accessible & Fully Responsive
    ============================================================ */
 
-:root {
+@import "./theme.css";
+
+:root,
+[data-theme="dark"] {
     /* Required Cinematic Dark Purple Tokens */
     --auth-bg-main: #080510;
     --auth-bg-secondary: #10091D;
@@ -33,6 +36,32 @@
     --auth-glass-border: rgba(196, 181, 253, 0.20);
     --auth-glass-blur: 20px;
     --auth-glass-shadow: 0 25px 65px rgba(0, 0, 0, 0.75), 0 0 50px rgba(124, 58, 237, 0.22);
+}
+
+[data-theme="light"] {
+    /* Light Auth Tokens */
+    --auth-bg-main: #F7F5FC;
+    --auth-bg-secondary: #EFEBF8;
+    --auth-container: #FFFFFF;
+    --auth-surface: #FFFFFF;
+    --auth-purple-primary: #7C3AED;
+    --auth-violet-electric: #9333EA;
+    --auth-lavender-soft: #6D28D9;
+    --auth-pale-highlight: #7C3AED;
+    --auth-text-primary: #211632;
+    --auth-text-secondary: #625773;
+    --auth-input-bg: #FFFFFF;
+    --auth-input-text: #211632;
+    --auth-btn-dark: #FFFFFF;
+    --auth-border-subtle: rgba(91, 63, 130, 0.16);
+    --auth-purple-glow: rgba(124, 58, 237, 0.16);
+
+    /* Glassmorphism Tokens */
+    --auth-glass-container: rgba(255, 255, 255, 0.88);
+    --auth-glass-surface: rgba(255, 255, 255, 0.94);
+    --auth-glass-border: rgba(124, 58, 237, 0.18);
+    --auth-glass-blur: 20px;
+    --auth-glass-shadow: 0 20px 50px rgba(91, 63, 130, 0.12), 0 0 30px rgba(124, 58, 237, 0.10);
 }
 
 * {

@@ -32,13 +32,19 @@ if ($isLoggedIn && $db_connected && $pdo) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($pageTitle); ?></title>
+    <!-- Zero FOUC Theme Initializer -->
+    <script>
+      (function(){try{var s=localStorage.getItem('alumni_theme_preference');var t=(s==='light'||(s!=='dark'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches))?'light':'dark';document.documentElement.setAttribute('data-theme',t);if(s)document.documentElement.setAttribute('data-theme-preference',s);}catch(e){}})();
+    </script>
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $baseUrl; ?>assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $baseUrl; ?>assets/favicon-16x16.png">
     <link rel="shortcut icon" href="<?php echo $baseUrl; ?>favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $baseUrl; ?>assets/apple-touch-icon.png">
     <!-- Cinematic Style -->
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/theme.css">
     <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css">
+    <script src="<?php echo $baseUrl; ?>assets/js/theme.js" defer></script>
 </head>
 <body>
 
@@ -91,6 +97,20 @@ if ($isLoggedIn && $db_connected && $pdo) {
                 </ul>
 
                 <div class="nav-auth">
+                    <div class="theme-switcher" role="radiogroup" aria-label="Select appearance theme">
+                        <button type="button" class="theme-option" data-theme-value="dark" role="radio" aria-checked="false" title="Dark theme (always dark)">
+                            <svg class="theme-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                            <span class="theme-label">Dark</span>
+                        </button>
+                        <button type="button" class="theme-option" data-theme-value="light" role="radio" aria-checked="false" title="Light theme (always light)">
+                            <svg class="theme-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                            <span class="theme-label">Light</span>
+                        </button>
+                        <button type="button" class="theme-option" data-theme-value="system" role="radio" aria-checked="false" title="System theme (syncs with OS)">
+                            <svg class="theme-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                            <span class="theme-label">Auto</span>
+                        </button>
+                    </div>
                     <?php if ($isLoggedIn): ?>
                         <a href="<?php echo $baseUrl; ?>profile.php" class="nav-user" style="text-decoration: none;" title="View & Edit Your Profile">
                             <img src="<?php echo $userAvatar; ?>" alt="Profile" class="nav-user-avatar">

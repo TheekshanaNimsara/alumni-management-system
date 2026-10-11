@@ -4,10 +4,13 @@
    Midnight Purple (#080510) + Electric Violet (#9333EA) + Soft Lavender (#C4B5FD)
    ============================================================ */
 
+@import "./assets/css/theme.css";
+
 /* ------------------------------------------------------------
    1. CSS CUSTOM PROPERTIES (mirrors common style guide)
    ------------------------------------------------------------ */
-:root {
+:root,
+[data-theme="dark"] {
   --primary-color:    #10091D;
   --primary-dark:     #080510;
   --primary-light:    #311E48;
@@ -57,6 +60,59 @@
   --line:  rgba(196, 181, 253, 0.16);
   --text:  #F8F7FC;
   --soft:  #B9B2C9;
+  --red:   #EF4444;
+}
+
+[data-theme="light"] {
+  --primary-color:    #F7F5FC;
+  --primary-dark:     #EFEBF8;
+  --primary-light:    #E0D7F5;
+
+  --accent-color:     #7C3AED;
+  --accent-light:     #6D28D9;
+  --accent-dark:      #5B21B6;
+
+  --bg-color:         #F7F5FC;
+  --surface-color:    #FFFFFF;
+  --surface-elevated: #F9F7FD;
+
+  --text-color:       #211632;
+  --text-light:       #180D29;
+  --text-muted:       #625773;
+  --text-muted-light: #4A3E5C;
+
+  --border-color:     rgba(91, 63, 130, 0.16);
+  --border-gold:      rgba(124, 58, 237, 0.22);
+  --border-dark:      rgba(91, 63, 130, 0.22);
+
+  --danger-color:     #EF4444;
+  --danger-bg:        rgba(239, 68, 68, 0.12);
+  --success-color:    #059669;
+  --success-bg:       rgba(5, 150, 105, 0.12);
+  --warning-color:    #D97706;
+  --warning-bg:       rgba(217, 119, 6, 0.12);
+
+  --disabled-color:   #8F859F;
+  --disabled-bg:      #EAE5F5;
+
+  --border-radius:    8px;
+
+  /* Glassmorphism Design Tokens */
+  --glass-bg:               rgba(255, 255, 255, 0.85);
+  --glass-bg-subtle:        rgba(255, 255, 255, 0.70);
+  --glass-bg-elevated:      rgba(255, 255, 255, 0.95);
+  --glass-border:           rgba(124, 58, 237, 0.18);
+  --glass-blur:             16px;
+  --glass-shadow:           0 14px 34px rgba(91, 63, 130, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.90);
+  --glass-hover-shadow:     0 20px 44px rgba(91, 63, 130, 0.14), 0 0 25px rgba(124, 58, 237, 0.16), inset 0 1px 0 rgba(255, 255, 255, 1);
+
+  /* Legacy aliases */
+  --navy:  #F7F5FC;
+  --gold:  #7C3AED;
+  --paper: #F7F5FC;
+  --line:  rgba(91, 63, 130, 0.16);
+  --text:  #211632;
+  --soft:  #625773;
   --red:   #EF4444;
 }
 

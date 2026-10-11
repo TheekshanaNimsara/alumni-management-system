@@ -6,10 +6,13 @@
    Pure CSS3 - Transitions, Keyframes & Intersection Observer
    ============================================================ */
 
+@import "./theme.css";
+
 /* ------------------------------------------------------------
    1. MASTER COLOR PALETTE & CSS CUSTOM PROPERTIES
    ------------------------------------------------------------ */
-:root {
+:root,
+[data-theme="dark"] {
     /* 1. Cinematic Midnight Purple Palette */
     --near-black: #05030A;
     --deep-burgundy: #10091D;
@@ -85,6 +88,52 @@
     --glass-blur: blur(18px);
     --glass-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(124, 58, 237, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     --glass-hover-shadow: 0 24px 50px rgba(0, 0, 0, 0.75), 0 0 35px rgba(124, 58, 237, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+[data-theme="light"] {
+    --bg-color: #F7F5FC;
+    --bg-dark: #EFEBF8;
+    --bg-secondary: #EAE5F5;
+
+    --main-container: #FFFFFF;
+    --surface-color: #FFFFFF;
+    --surface-dark: #F3EFFB;
+    --surface-elevated: #FFFFFF;
+
+    --primary-color: #7C3AED;
+    --primary-dark: #5B21B6;
+    --primary-light: #9333EA;
+    --secondary-color: #6D28D9;
+
+    --accent-color: #7C3AED;
+    --accent-light: #6D28D9;
+    --accent-dark: #5B21B6;
+    --pale-highlight: #7C3AED;
+    --violet-electric: #9333EA;
+    --lavender-soft: #6D28D9;
+
+    --text-color: #211632;
+    --text-main: #211632;
+    --text-light: #180D29;
+    --text-muted: #625773;
+    --text-muted-light: #4A3E5C;
+
+    --border-color: rgba(91, 63, 130, 0.16);
+    --border-gold: rgba(124, 58, 237, 0.22);
+    --border-dark: rgba(91, 63, 130, 0.22);
+
+    --card-shadow: 0 12px 30px rgba(91, 63, 130, 0.08);
+    --card-hover-shadow: 0 18px 42px rgba(91, 63, 130, 0.14), 0 0 22px rgba(124, 58, 237, 0.16);
+    --purple-glow: rgba(124, 58, 237, 0.12);
+    --gold-glow: 0 0 20px rgba(124, 58, 237, 0.20);
+
+    --glass-bg: rgba(255, 255, 255, 0.82);
+    --glass-bg-subtle: rgba(255, 255, 255, 0.70);
+    --glass-bg-elevated: rgba(255, 255, 255, 0.94);
+    --glass-border: rgba(124, 58, 237, 0.16);
+    --glass-border-light: rgba(124, 58, 237, 0.28);
+    --glass-shadow: 0 12px 32px rgba(91, 63, 130, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.90);
+    --glass-hover-shadow: 0 18px 44px rgba(91, 63, 130, 0.14), 0 0 25px rgba(124, 58, 237, 0.15), inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 /* ------------------------------------------------------------
