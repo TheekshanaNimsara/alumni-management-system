@@ -918,3 +918,333 @@ body.auth-body::after {
         display: none !important;
     }
 }
+
+/* ============================================================
+   AUTH BUTTON SPINNER
+   ============================================================ */
+.auth-btn-spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #FFFFFF;
+    border-radius: 50%;
+    animation: authBtnSpin 0.75s linear infinite;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+@keyframes authBtnSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   AUTH SUCCESS ANIMATION OVERLAY (LIQUID GLASS • APPLE/MACOS)
+   ============================================================ */
+.auth-success-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.38s ease;
+    isolation: isolate;
+}
+
+.auth-success-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Atmospheric Layered Glass Backdrop */
+.auth-success-backdrop {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 40%, rgba(20, 10, 36, 0.94) 0%, rgba(8, 5, 16, 0.98) 100%);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    z-index: 1;
+}
+
+[data-theme="light"] .auth-success-backdrop {
+    background: radial-gradient(circle at 50% 40%, rgba(243, 238, 255, 0.94) 0%, rgba(235, 227, 250, 0.98) 100%);
+}
+
+/* Tier-2 Liquid Glass Success Card */
+.auth-success-card {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 480px;
+    background: rgba(27, 18, 48, 0.92);
+    border: 1px solid rgba(196, 181, 253, 0.28);
+    border-radius: 28px;
+    padding: 3.2rem 2.4rem 2.4rem;
+    text-align: center;
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.85),
+        0 0 60px rgba(124, 58, 237, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transform: scale(0.90) translateY(18px);
+    opacity: 0;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+}
+
+[data-theme="light"] .auth-success-card {
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(124, 58, 237, 0.24);
+    box-shadow:
+        0 25px 70px rgba(76, 29, 149, 0.18),
+        0 0 45px rgba(124, 58, 237, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.auth-success-overlay.active .auth-success-card {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+/* Top Liquid Glass Surface Gleam */
+.auth-success-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.10) 0%, transparent 100%);
+    pointer-events: none;
+    border-radius: 28px 28px 0 0;
+}
+
+/* Pulsing Radial Aura behind Checkmark */
+.auth-success-glow {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, rgba(147, 51, 234, 0.5) 0%, rgba(124, 58, 237, 0.22) 50%, transparent 70%);
+    filter: blur(24px);
+    pointer-events: none;
+    animation: successPulseGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes successPulseGlow {
+    0% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.7; }
+    100% { transform: translate(-50%, -50%) scale(1.18); opacity: 1; }
+}
+
+/* Circular Checkmark Badge */
+.auth-success-badge {
+    position: relative;
+    width: 92px;
+    height: 92px;
+    margin: 0 auto 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-success-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 8px 22px rgba(124, 58, 237, 0.55));
+}
+
+/* Circular Track Background */
+.auth-success-circle-bg {
+    fill: rgba(124, 58, 237, 0.18);
+    stroke: rgba(196, 181, 253, 0.22);
+    stroke-width: 4;
+}
+
+[data-theme="light"] .auth-success-circle-bg {
+    fill: rgba(124, 58, 237, 0.08);
+    stroke: rgba(124, 58, 237, 0.16);
+}
+
+/* Animated Drawing Perimeter Circle */
+.auth-success-circle {
+    fill: none;
+    stroke: url(#purpleSuccessGradient);
+    stroke-width: 4.5;
+    stroke-linecap: round;
+    stroke-dasharray: 230;
+    stroke-dashoffset: 230;
+    transform-origin: 50% 50%;
+    transform: rotate(-90deg);
+}
+
+.auth-success-overlay.active .auth-success-circle {
+    animation: strokeCircle 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.12s forwards;
+}
+
+@keyframes strokeCircle {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Animated Drawing Checkmark */
+.auth-success-check {
+    fill: none;
+    stroke: #FFFFFF;
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 55;
+    stroke-dashoffset: 55;
+}
+
+[data-theme="light"] .auth-success-check {
+    stroke: #7C3AED;
+}
+
+.auth-success-overlay.active .auth-success-check {
+    animation: strokeCheck 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+@keyframes strokeCheck {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Success Typography */
+.auth-success-title {
+    color: #F8F7FC;
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.65rem;
+    line-height: 1.25;
+}
+
+[data-theme="light"] .auth-success-title {
+    color: #211632;
+}
+
+.auth-success-message {
+    color: #C4B5FD;
+    font-size: 1rem;
+    line-height: 1.55;
+    margin-bottom: 2rem;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+[data-theme="light"] .auth-success-message {
+    color: #6D28D9;
+}
+
+/* Animated Linear Progress Indicator */
+.auth-success-progress-wrap {
+    margin-bottom: 1.6rem;
+}
+
+.auth-success-progress-track {
+    width: 100%;
+    height: 7px;
+    background: rgba(124, 58, 237, 0.18);
+    border: 1px solid rgba(196, 181, 253, 0.22);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 0.65rem;
+}
+
+[data-theme="light"] .auth-success-progress-track {
+    background: rgba(124, 58, 237, 0.10);
+    border-color: rgba(124, 58, 237, 0.18);
+}
+
+.auth-success-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #7C3AED 0%, #9333EA 50%, #C4B5FD 100%);
+    border-radius: 999px;
+    box-shadow: 0 0 14px rgba(147, 51, 234, 0.85);
+}
+
+.auth-success-overlay.active .auth-success-progress-bar {
+    animation: progressBarFill 1.8s linear forwards;
+}
+
+@keyframes progressBarFill {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+.auth-success-status-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.84rem;
+    color: #B9B2C9;
+    font-weight: 500;
+}
+
+[data-theme="light"] .auth-success-status-text {
+    color: #625773;
+}
+
+/* Fallback Manual Link */
+.auth-success-manual-link {
+    display: inline-block;
+    color: #C4B5FD;
+    font-size: 0.85rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+}
+
+.auth-success-manual-link:hover {
+    color: #FFFFFF;
+}
+
+[data-theme="light"] .auth-success-manual-link {
+    color: #7C3AED;
+}
+[data-theme="light"] .auth-success-manual-link:hover {
+    color: #5B21B6;
+}
+
+/* Reduced Motion Safeguard */
+@media (prefers-reduced-motion: reduce) {
+    .auth-btn-spinner {
+        animation: none !important;
+        border-top-color: #FFFFFF;
+    }
+    .auth-success-overlay,
+    .auth-success-card {
+        transition: none !important;
+        animation: none !important;
+    }
+    .auth-success-circle,
+    .auth-success-check {
+        stroke-dashoffset: 0 !important;
+        animation: none !important;
+    }
+    .auth-success-progress-bar {
+        width: 100% !important;
+        animation: none !important;
+    }
+    .auth-success-glow {
+        animation: none !important;
+    }
+}
+

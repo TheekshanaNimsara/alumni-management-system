@@ -4,44 +4,111 @@
    Vanilla JS • No External Frameworks • Pure CSS3 & DOM APIs
    ============================================================ */
 
+// ------------------------------------------------------------
+// 1. FEATURE ONE: GLOBAL CINEMATIC LOADING SCREEN CONTROLLER
+// ------------------------------------------------------------
+window.AlumniLoader = {
+    show: function(statusText) {
+        const loader = document.getElementById('cinematicLoader');
+        if (!loader) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        const statusEl = loader.querySelector('.loader-status');
+        if (statusEl && statusText) {
+            statusEl.textContent = statusText;
+        }
+
+        const bar = loader.querySelector('.loader-progress-bar');
+        if (bar) {
+            bar.style.animation = 'none';
+            void bar.offsetWidth; // trigger reflow
+            bar.style.animation = 'loaderProgressExpand 1.5s cubic-bezier(0.25, 1, 0.5, 1) 0.15s forwards';
+        }
+
+        loader.classList.remove('loader-hidden');
+        loader.setAttribute('aria-hidden', 'false');
+        loader.style.pointerEvents = 'auto';
+
+        // Guaranteed auto-dismissal failsafe (3.8s max)
+        clearTimeout(window._alumniLoaderTimer);
+        window._alumniLoaderTimer = setTimeout(() => {
+            window.AlumniLoader.hide();
+        }, 3800);
+    },
+    hide: function() {
+        const loader = document.getElementById('cinematicLoader');
+        if (!loader) return;
+        loader.classList.add('loader-hidden');
+        loader.setAttribute('aria-hidden', 'true');
+        loader.style.pointerEvents = 'none';
+        clearTimeout(window._alumniLoaderTimer);
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ------------------------------------------------------------
-    // 1. FEATURE ONE: CINEMATIC LOADING SCREEN CONTROLLER
-    // ------------------------------------------------------------
     const loader = document.getElementById('cinematicLoader');
 
     if (loader) {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        const dismissLoader = (delay = 0) => {
+        // If loader is initially visible on page load, dismiss it smoothly
+        if (!loader.classList.contains('loader-hidden')) {
             setTimeout(() => {
-                loader.classList.add('loader-hidden');
-                loader.setAttribute('aria-hidden', 'true');
-                // Allow page interactions immediately
-                loader.style.pointerEvents = 'none';
-            }, delay);
-        };
+                window.AlumniLoader.hide();
+            }, 800);
+        }
 
-        // Balanced middle-range cinematic duration (~1.5s progress + smooth 0.5s fade)
-        dismissLoader(1500);
-
-        // Safety fallback: guaranteed dismissal within 2600ms regardless of assets
+        // Safety fallback: guaranteed dismissal within 2200ms
         setTimeout(() => {
-            if (!loader.classList.contains('loader-hidden')) {
-                loader.classList.add('loader-hidden');
-                loader.style.pointerEvents = 'none';
-            }
-        }, 2600);
+            window.AlumniLoader.hide();
+        }, 2200);
 
         // Handle browser back/forward cache (bfcache) restoration
         window.addEventListener('pageshow', (event) => {
-            if (event.persisted) {
-                loader.classList.add('loader-hidden');
-                loader.style.pointerEvents = 'none';
-            }
+            window.AlumniLoader.hide();
         });
     }
+
+    // Intercept Major Section Navigation Links
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (!link) return;
+
+        // Skip modified or non-primary clicks
+        if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        if (link.target && link.target !== '_self') return;
+
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+
+        // Exclude micro-interactions (theme switchers, modal buttons, tabs, conversation items)
+        if (link.closest('.theme-switcher') || link.closest('.modal-overlay') || link.closest('.modal-box') || link.hasAttribute('data-no-loader') || link.closest('[data-no-loader]') || link.closest('.conv-item')) return;
+
+        // Logout Action
+        if (href.includes('logout.php')) {
+            window.AlumniLoader.show('Signing out securely...');
+            return;
+        }
+
+        // Major Section Navigation (Navbar links, logo, user profile, return home)
+        if (link.classList.contains('nav-link') || link.classList.contains('nav-user') || link.classList.contains('logo') || link.classList.contains('btn-return-home')) {
+            try {
+                const dest = new URL(link.href, window.location.href);
+                if (dest.origin === window.location.origin && dest.pathname === window.location.pathname && dest.search === window.location.search) {
+                    return; // Same page, do nothing
+                }
+            } catch (err) {}
+
+            let label = link.textContent.trim();
+            if (link.classList.contains('logo')) label = 'Alumni Network';
+            if (link.classList.contains('nav-user')) label = 'Your Profile';
+            if (link.classList.contains('btn-return-home')) label = 'Homepage';
+
+            window.AlumniLoader.show('Connecting Alumni • ' + label);
+        }
+    });
+
+    // Auth pages (login & register) handle their own dedicated Liquid Glass success animations
+    // and inline validation states; do not trigger global full-screen cinematic loader here.
 
     // ------------------------------------------------------------
     // 2. FEATURE THREE (D): SCROLL REVEAL (INTERSECTION OBSERVER)
@@ -125,44 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ------------------------------------------------------------
-    // 6. CLIENT-SIDE REGISTRATION FORM VALIDATION
-    // ------------------------------------------------------------
-    const registerForm = document.getElementById('registerForm');
-    if (registerForm) {
-        const passwordInput = document.getElementById('reg_password');
-        const confirmInput = document.getElementById('reg_confirm_password');
-        const errorAlert = document.getElementById('registerErrorAlert');
-
-        registerForm.addEventListener('submit', (event) => {
-            const password = passwordInput ? passwordInput.value : '';
-            const confirm = confirmInput ? confirmInput.value : '';
-
-            // Password length check
-            if (password.length < 8) {
-                event.preventDefault();
-                showError('Password must be at least 8 characters long.');
-                if (passwordInput) passwordInput.focus();
-                return;
-            }
-
-            // Matching passwords check
-            if (password !== confirm) {
-                event.preventDefault();
-                showError('Passwords do not match. Please re-enter carefully.');
-                if (confirmInput) confirmInput.focus();
-                return;
-            }
-        });
-
-        function showError(message) {
-            if (errorAlert) {
-                errorAlert.textContent = message;
-                errorAlert.style.display = 'block';
-            } else {
-                alert(message);
-            }
-        }
-    }
+    // Note: Auth forms (login & register) encapsulate their own validation,
+    // inline spinners, error alerts, and Liquid Glass success animations.
+    // main.js avoids attaching duplicate listeners to prevent handler collisions.
 
 });

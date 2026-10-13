@@ -33,11 +33,17 @@ if (is_logged_in()) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $isAjax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') || !empty($_POST['ajax']);
     $identity = trim($_POST['identity'] ?? '');
     $password = $_POST['password'] ?? '';
 
     if (empty($identity) || empty($password)) {
         $error = "Please enter both your email address or username and password.";
+        if ($isAjax) {
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['success' => false, 'error' => $error]);
+            exit;
+        }
     } else {
         if ($db_connected && $pdo) {
             try {
@@ -54,6 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($user && password_verify($password, $user['password'])) {
                     if ($user['status'] === 'suspended') {
                         $error = "This account has been suspended. Please contact the administrator.";
+                        if ($isAjax) {
+                            header('Content-Type: application/json; charset=utf-8');
+                            echo json_encode(['success' => false, 'error' => $error]);
+                            exit;
+                        }
                     } else {
                         // Regenerate session ID upon privilege escalation
                         session_regenerate_id(true);
@@ -63,35 +74,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $_SESSION['user_role'] = $user['role'];
                         $_SESSION['user_email'] = $user['email'];
 
-                        // Safe redirect based on verified role and validated internal redirect
-                        $targetRedirect = $_POST['redirect'] ?? $_GET['redirect'] ?? '';
-                        $safeRedirect = ($user['role'] === 'admin') ? '../admin/index.php' : '../index.php';
+                        // Initialize auth success session state
+                        $_SESSION['auth_success_type'] = 'login';
+                        $successPage = 'login-success.php';
 
-                        if (!empty($targetRedirect) && is_string($targetRedirect)) {
-                            // Disallow protocol-relative, external schemes, header injection
-                            if (!preg_match('#^(https?:|//|javascript:|data:)#i', $targetRedirect) && 
-                                strpos($targetRedirect, "\r") === false && 
-                                strpos($targetRedirect, "\n") === false) {
-                                if (str_starts_with($targetRedirect, '..') || str_starts_with($targetRedirect, '/')) {
-                                    $safeRedirect = $targetRedirect;
-                                } else {
-                                    $safeRedirect = '../' . ltrim($targetRedirect, '/');
-                                }
-                            }
+                        if ($isAjax) {
+                            header('Content-Type: application/json; charset=utf-8');
+                            echo json_encode([
+                                'success' => true,
+                                'title' => 'Login Successful!',
+                                'message' => 'Welcome back to Alumni Connect.',
+                                'redirect' => $successPage,
+                                'delay' => 2.0
+                            ]);
+                            exit;
+                        } else {
+                            header("Location: " . $successPage);
+                            exit;
                         }
-                        header("Location: " . $safeRedirect);
-                        exit;
                     }
                 } else {
                     // Generic credential error to prevent user enumeration
                     $error = "Invalid email/username or password. Please verify your credentials and try again.";
+                    if ($isAjax) {
+                        header('Content-Type: application/json; charset=utf-8');
+                        echo json_encode(['success' => false, 'error' => $error]);
+                        exit;
+                    }
                 }
             } catch (Exception $e) {
                 error_log("Login database exception: " . $e->getMessage());
                 $error = "Authentication system error. Please try again shortly.";
+                if ($isAjax) {
+                    header('Content-Type: application/json; charset=utf-8');
+                    echo json_encode(['success' => false, 'error' => $error]);
+                    exit;
+                }
             }
         } else {
             $error = "Database service is temporarily unavailable. Please try again shortly.";
+            if ($isAjax) {
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode(['success' => false, 'error' => $error]);
+                exit;
+            }
         }
     }
 }
@@ -116,6 +142,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../assets/css/auth.css">
 </head>
 <body class="auth-body">
+
+    <!-- Cinematic Fullscreen Loading Overlay -->
+    <div id="cinematicLoader" class="cinematic-loader loader-hidden" aria-hidden="true">
+        <div class="loader-content">
+            <div class="loader-brand">
+                <span class="loader-badge">AN</span>
+                <span class="loader-title">ALUMNI <span class="loader-gold">NETWORK</span></span>
+            </div>
+            <div class="loader-progress-track">
+                <div class="loader-progress-bar"></div>
+            </div>
+            <p class="loader-status">Authenticating &bull; Welcome back...</p>
+        </div>
+    </div>
 
     <!-- Top Navigation -->
     <header class="auth-nav">
@@ -191,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (!empty($_GET['redirect'])) $params['redirect'] = $_GET['redirect'];
                     if (!empty($_GET['msg'])) $params['msg'] = $_GET['msg'];
                     echo !empty($params) ? '?' . htmlspecialchars(http_build_query($params)) : ''; 
-                ?>" novalidate>
+                ?>" id="loginForm" novalidate>
                     <div class="auth-form-group">
                         <label for="identity" class="auth-label">Email or Username</label>
                         <div class="auth-input-wrapper">
@@ -325,7 +365,99 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             });
         }
+
+        // Login Form AJAX Controller
+        const loginForm = document.getElementById('loginForm');
+
+        function showAuthError(message) {
+            let errorAlert = document.querySelector('.auth-column-form .auth-alert-error');
+            const warningAlert = document.querySelector('.auth-column-form .auth-alert-warning');
+            if (warningAlert) warningAlert.style.display = 'none';
+
+            if (!errorAlert) {
+                errorAlert = document.createElement('div');
+                errorAlert.className = 'auth-alert auth-alert-error';
+                errorAlert.setAttribute('role', 'alert');
+                errorAlert.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span class="auth-error-msg"></span>
+                `;
+                if (loginForm && loginForm.parentNode) {
+                    loginForm.parentNode.insertBefore(errorAlert, loginForm);
+                }
+            }
+            const msgSpan = errorAlert.querySelector('.auth-error-msg') || errorAlert.querySelector('span:last-child');
+            if (msgSpan) {
+                msgSpan.textContent = message;
+            }
+            errorAlert.style.display = 'flex';
+        }
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const idInput = document.getElementById('identity');
+                const pwdInput = document.getElementById('password');
+                const identityVal = idInput ? idInput.value.trim() : '';
+                const passwordVal = pwdInput ? pwdInput.value : '';
+
+                if (!identityVal || !passwordVal) {
+                    showAuthError('Please enter both your email address or username and password.');
+                    if (!identityVal && idInput) idInput.focus();
+                    else if (!passwordVal && pwdInput) pwdInput.focus();
+                    return;
+                }
+
+                const submitBtn = loginForm.querySelector('button[type="submit"]');
+                const originalBtnContent = submitBtn ? submitBtn.innerHTML : '';
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<span class="auth-btn-spinner" aria-hidden="true"></span><span>Signing In...</span>';
+                }
+
+                const formData = new FormData(loginForm);
+                formData.append('ajax', '1');
+
+                fetch(loginForm.getAttribute('action') || window.location.href, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('HTTP error ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.success) {
+                        window.location.href = data.redirect || 'login-success.php';
+                    } else {
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalBtnContent;
+                        }
+                        showAuthError(data && data.error ? data.error : 'Invalid credentials. Please verify your details.');
+                    }
+                })
+                .catch(err => {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnContent;
+                    }
+                    showAuthError('A network or server error occurred. Please try again.');
+                });
+            });
+        }
     </script>
     <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>

@@ -27,6 +27,8 @@ $formData = [
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $isAjax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') || !empty($_POST['ajax']);
+
     $formData['first_name'] = trim($_POST['first_name'] ?? '');
     $formData['last_name']  = trim($_POST['last_name'] ?? '');
     $formData['username']   = trim($_POST['username'] ?? '');
@@ -62,6 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Passwords do not match. Please re-enter.";
     } elseif ($gradYearInt < 1960 || $gradYearInt > 2030) {
         $error = "Please specify a valid graduation year between 1960 and 2030.";
+    }
+
+    if (!empty($error)) {
+        if ($isAjax) {
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['success' => false, 'error' => $error]);
+            exit;
+        }
     } else {
         if ($db_connected && $pdo) {
             try {
@@ -71,6 +81,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 if ($checkStmt->fetch()) {
                     $error = "An account with that email address or username already exists. Please sign in or use different details.";
+                    if ($isAjax) {
+                        header('Content-Type: application/json; charset=utf-8');
+                        echo json_encode(['success' => false, 'error' => $error]);
+                        exit;
+                    }
                 } else {
                     // Hash password securely with PHP standard bcrypt
                     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -106,15 +121,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     $pdo->commit();
 
-                    // Post/Redirect/Get: Establish authenticated session & regenerate ID
+                    // Establish authenticated session & regenerate ID
                     session_regenerate_id(true);
                     $_SESSION['user_id'] = $newUserId;
                     $_SESSION['user_name'] = $formData['first_name'] . ' ' . $formData['last_name'];
                     $_SESSION['user_role'] = 'alumni';
                     $_SESSION['user_email'] = $formData['email'];
+                    $_SESSION['auth_success_type'] = 'signup';
 
-                    header("Location: ../index.php?registered=1");
-                    exit;
+                    $successPage = 'signup-success.php';
+
+                    if ($isAjax) {
+                        header('Content-Type: application/json; charset=utf-8');
+                        echo json_encode([
+                            'success' => true,
+                            'title' => 'Account Created Successfully!',
+                            'message' => 'Welcome to Alumni Connect! Your journey starts here.',
+                            'redirect' => $successPage,
+                            'delay' => 2.0
+                        ]);
+                        exit;
+                    } else {
+                        header("Location: " . $successPage);
+                        exit;
+                    }
                 }
             } catch (Exception $e) {
                 if ($pdo->inTransaction()) {
@@ -122,9 +152,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 error_log("Registration transaction failed: " . $e->getMessage());
                 $error = "A system error occurred while creating your account. Please try again.";
+                if ($isAjax) {
+                    header('Content-Type: application/json; charset=utf-8');
+                    echo json_encode(['success' => false, 'error' => $error]);
+                    exit;
+                }
             }
         } else {
             $error = "Database service is temporarily unavailable. Please try again shortly.";
+            if ($isAjax) {
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode(['success' => false, 'error' => $error]);
+                exit;
+            }
         }
     }
 }
@@ -149,6 +189,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../assets/css/auth.css">
 </head>
 <body class="auth-body">
+
+    <!-- Cinematic Fullscreen Loading Overlay -->
+    <div id="cinematicLoader" class="cinematic-loader loader-hidden" aria-hidden="true">
+        <div class="loader-content">
+            <div class="loader-brand">
+                <span class="loader-badge">AN</span>
+                <span class="loader-title">ALUMNI <span class="loader-gold">NETWORK</span></span>
+            </div>
+            <div class="loader-progress-track">
+                <div class="loader-progress-bar"></div>
+            </div>
+            <p class="loader-status">Creating Your Account &bull; Welcome to Alumni Network...</p>
+        </div>
+    </div>
 
     <!-- Top Navigation -->
     <header class="auth-nav">
@@ -208,7 +262,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 <?php endif; ?>
 
-                <form method="POST" action="register.php" novalidate>
+                <form method="POST" action="register.php" id="registerForm" novalidate>
                     
                     <!-- Full Name (first_name, last_name) -->
                     <div class="auth-grid-2">
@@ -441,7 +495,132 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         setupPasswordToggle('toggleRegPwdBtn', 'reg_password', 'eyeIconReg');
         setupPasswordToggle('toggleRegConfirmBtn', 'reg_confirm_password', 'eyeIconConfirm');
+
+        // Register Form AJAX Controller
+        const registerForm = document.getElementById('registerForm');
+
+        function showAuthError(message) {
+            let errorAlert = document.querySelector('.auth-column-form .auth-alert-error');
+
+            if (!errorAlert) {
+                errorAlert = document.createElement('div');
+                errorAlert.className = 'auth-alert auth-alert-error';
+                errorAlert.setAttribute('role', 'alert');
+                errorAlert.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span class="auth-error-msg"></span>
+                `;
+                if (registerForm && registerForm.parentNode) {
+                    registerForm.parentNode.insertBefore(errorAlert, registerForm);
+                }
+            }
+            const msgSpan = errorAlert.querySelector('.auth-error-msg') || errorAlert.querySelector('span:last-child');
+            if (msgSpan) {
+                msgSpan.textContent = message;
+            }
+            errorAlert.style.display = 'flex';
+            errorAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        if (registerForm) {
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const firstName = (document.getElementById('first_name')?.value || '').trim();
+                const lastName = (document.getElementById('last_name')?.value || '').trim();
+                const username = (document.getElementById('username')?.value || '').trim();
+                const email = (document.getElementById('email')?.value || '').trim();
+                const degree = (document.getElementById('degree')?.value || '').trim();
+                const department = (document.getElementById('department')?.value || '').trim();
+                const gradYearVal = document.getElementById('grad_year')?.value || '';
+                const gradYear = parseInt(gradYearVal, 10);
+                const password = document.getElementById('reg_password')?.value || '';
+                const confirmPassword = document.getElementById('reg_confirm_password')?.value || '';
+
+                if (!firstName || !lastName || !username || !email || !degree || !department || !gradYearVal || !password || !confirmPassword) {
+                    showAuthError('All fields are required. Please complete the registration form.');
+                    return;
+                }
+
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showAuthError('Please provide a valid email address.');
+                    document.getElementById('email')?.focus();
+                    return;
+                }
+
+                if (!/^[a-zA-Z0-9_.-]{3,30}$/.test(username)) {
+                    showAuthError('Username must be between 3 and 30 characters and contain only letters, numbers, underscores, dots, or hyphens.');
+                    document.getElementById('username')?.focus();
+                    return;
+                }
+
+                if (password.length < 8) {
+                    showAuthError('Password must be at least 8 characters long.');
+                    document.getElementById('reg_password')?.focus();
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    showAuthError('Passwords do not match. Please re-enter.');
+                    document.getElementById('reg_confirm_password')?.focus();
+                    return;
+                }
+
+                if (isNaN(gradYear) || gradYear < 1960 || gradYear > 2030) {
+                    showAuthError('Please specify a valid graduation year between 1960 and 2030.');
+                    document.getElementById('grad_year')?.focus();
+                    return;
+                }
+
+                const submitBtn = registerForm.querySelector('button[type="submit"]');
+                const originalBtnContent = submitBtn ? submitBtn.innerHTML : '';
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<span class="auth-btn-spinner" aria-hidden="true"></span><span>Creating Account...</span>';
+                }
+
+                const formData = new FormData(registerForm);
+                formData.append('ajax', '1');
+
+                fetch(registerForm.getAttribute('action') || window.location.href, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('HTTP error ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.success) {
+                        window.location.href = data.redirect || 'signup-success.php';
+                    } else {
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalBtnContent;
+                        }
+                        showAuthError(data && data.error ? data.error : 'Registration could not be completed. Please check your details.');
+                    }
+                })
+                .catch(err => {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnContent;
+                    }
+                    showAuthError('A network or server error occurred. Please try again.');
+                });
+            });
+        }
     </script>
     <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>
