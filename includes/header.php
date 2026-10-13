@@ -8,13 +8,14 @@ $baseUrl = get_base_url();
 $pageTitle = isset($pageTitle) ? $pageTitle . ' - Alumni Network' : 'Alumni Network - Connect. Inspire. Grow.';
 $currentPage = isset($currentPage) ? $currentPage : '';
 $isLoggedIn = isset($_SESSION['user_id']);
+$currentUserId = current_user_id();
 $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : '';
 $userName = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : '';
 $userAvatar = $baseUrl . 'assets/images/default-avatar.svg';
 $unreadMessagesCount = 0;
 if ($isLoggedIn && $db_connected && $pdo) {
     try {
-        $uStmt = $pdo->prepare("SELECT profile_picture FROM alumni_profiles WHERE user_id = ? LIMIT 1");
+        $uStmt = $pdo->prepare("SELECT profile_picture FROM alumni_profiles WHERE user_id = ? ORDER BY id DESC LIMIT 1");
         $uStmt->execute([$_SESSION['user_id']]);
         $pic = $uStmt->fetchColumn();
         if ($pic && $pic !== 'default-avatar.svg' && file_exists(__DIR__ . '/../uploads/profiles/' . $pic)) {

@@ -5,40 +5,44 @@
 $pageTitle = 'Home';
 $currentPage = 'home';
 require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/includes/functions.php';
 
-// Fetch alumni, events, and jobs from DB with fallback
+// Fetch alumni, events, and jobs from DB with fallback (2 examples each)
 $featuredAlumni = [];
 $upcomingEvents = [];
 $recentJobs = [];
 
 if ($db_connected && $pdo) {
     try {
-        // Fetch up to 3 featured public alumni
+        // Fetch up to 2 featured public alumni (deduplicated)
         $stmt = $pdo->query("
-            SELECT u.first_name, u.last_name, p.degree_programme, p.department, p.current_job_title, p.current_company, p.graduation_year, p.profile_picture
+            SELECT u.first_name, u.last_name, p.degree_programme, p.department, p.current_job_title, p.current_company, p.graduation_year, p.profile_picture, p.bio
             FROM users u
-            JOIN alumni_profiles p ON u.id = p.user_id
-            WHERE u.status = 'active' AND p.is_public = 1
+            JOIN (
+                SELECT ap.* FROM alumni_profiles ap
+                INNER JOIN (SELECT MAX(id) as max_id FROM alumni_profiles GROUP BY user_id) latest ON ap.id = latest.max_id
+            ) p ON u.id = p.user_id
+            WHERE u.status = 'active' AND p.is_public = 1 AND u.id NOT IN (4, 5, 6, 7)
             ORDER BY u.id ASC
-            LIMIT 3
+            LIMIT 2
         ");
         $featuredAlumni = $stmt->fetchAll();
 
-        // Fetch up to 3 upcoming approved events
+        // Fetch up to 2 upcoming approved events
         $stmt = $pdo->query("
             SELECT * FROM events
             WHERE status = 'approved'
             ORDER BY event_date ASC
-            LIMIT 3
+            LIMIT 2
         ");
         $upcomingEvents = $stmt->fetchAll();
 
-        // Fetch up to 3 approved jobs
+        // Fetch up to 2 approved jobs
         $stmt = $pdo->query("
             SELECT * FROM jobs
             WHERE status = 'approved'
             ORDER BY posted_at DESC
-            LIMIT 3
+            LIMIT 2
         ");
         $recentJobs = $stmt->fetchAll();
     } catch (Exception $e) {
@@ -46,15 +50,15 @@ if ($db_connected && $pdo) {
     }
 }
 
-// Fallbacks if database query yielded empty results
+// Fallbacks if database query yielded empty results (exactly 2 examples each)
 if (empty($featuredAlumni)) {
-    $featuredAlumni = array_slice(get_sample_alumni(), 0, 3);
+    $featuredAlumni = array_slice(get_sample_alumni(), 0, 2);
 }
 if (empty($upcomingEvents)) {
-    $upcomingEvents = get_sample_events();
+    $upcomingEvents = array_slice(get_sample_events(), 0, 2);
 }
 if (empty($recentJobs)) {
-    $recentJobs = array_slice(get_sample_jobs(), 0, 3);
+    $recentJobs = array_slice(get_sample_jobs(), 0, 2);
 }
 ?>
 
@@ -130,14 +134,14 @@ if (empty($recentJobs)) {
             </p>
         </div>
 
-        <div class="grid grid-3 reveal-stagger">
+        <div class="grid grid-2 reveal-stagger">
             <?php foreach ($featuredAlumni as $alumni): ?>
                 <div class="card alumni-card">
                     <div class="alumni-header-ribbon">
                         <span class="alumni-badge-grad">Class of <?php echo htmlspecialchars($alumni['graduation_year']); ?></span>
                     </div>
                     <div class="alumni-avatar-wrapper">
-                        <img src="assets/images/<?php echo !empty($alumni['profile_picture']) ? htmlspecialchars($alumni['profile_picture']) : 'default-avatar.svg'; ?>" 
+                        <img src="<?php echo get_user_avatar_url($alumni['profile_picture'] ?? 'default-avatar.svg'); ?>" 
                              alt="<?php echo htmlspecialchars($alumni['first_name'] . ' ' . $alumni['last_name']); ?>" 
                              class="alumni-avatar">
                     </div>
@@ -180,7 +184,7 @@ if (empty($recentJobs)) {
             </p>
         </div>
 
-        <div class="grid grid-3 reveal-stagger">
+        <div class="grid grid-2 reveal-stagger">
             <?php foreach ($upcomingEvents as $event): ?>
                 <div class="card card-dark event-card">
                     <div class="event-image-box">
@@ -238,7 +242,7 @@ if (empty($recentJobs)) {
             </p>
         </div>
 
-        <div class="grid grid-3 reveal-stagger">
+        <div class="grid grid-2 reveal-stagger">
             <?php foreach ($recentJobs as $job): ?>
                 <div class="card job-card">
                     <div class="job-card-header">
