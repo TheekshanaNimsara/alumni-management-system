@@ -11,3 +11,8 @@ desktop.ini
 # IDE Configurations
 .vscode/
 .idea/
+
+# Database Backups
+database/*backup*.sql
+*.backup.sql
+

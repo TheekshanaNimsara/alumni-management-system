@@ -117,6 +117,7 @@ if ($db_connected && $pdo) {
     try { $pdo->exec("ALTER TABLE jobs ADD COLUMN contact_email VARCHAR(200) DEFAULT NULL AFTER description"); } catch (Exception $e) {}
     try { $pdo->exec("ALTER TABLE jobs ADD COLUMN requirements TEXT DEFAULT NULL AFTER contact_email"); } catch (Exception $e) {}
     try { $pdo->exec("ALTER TABLE jobs ADD COLUMN deadline DATE DEFAULT NULL AFTER application_link"); } catch (Exception $e) {}
+    try { $pdo->exec("ALTER TABLE alumni_profiles ADD COLUMN skills TEXT NULL AFTER bio"); } catch (Exception $e) {}
 }
 
 // ------------------------------------------------------------
@@ -167,58 +168,6 @@ function get_sample_alumni() {
             'location' => 'London, UK',
             'profile_picture' => 'default-avatar.svg',
             'bio' => 'Focusing on large generative AI models and efficient on-device intelligence. Proud university alumna.'
-        ],
-        [
-            'id' => 4,
-            'first_name' => 'Michael',
-            'last_name' => 'Chen',
-            'degree_programme' => 'B.Sc. in Electrical Engineering',
-            'department' => 'Electrical Engineering',
-            'current_job_title' => 'Senior Systems Architect',
-            'current_company' => 'Intel Corporation',
-            'graduation_year' => 2019,
-            'location' => 'Austin, TX',
-            'profile_picture' => 'default-avatar.svg',
-            'bio' => 'Developing next-generation high performance computing architectures and semiconductor interconnects.'
-        ],
-        [
-            'id' => 5,
-            'first_name' => 'Ananya',
-            'last_name' => 'Perera',
-            'degree_programme' => 'B.Sc. in Software Engineering',
-            'department' => 'Computer Engineering',
-            'current_job_title' => 'Senior Cloud Consultant',
-            'current_company' => 'Amazon Web Services',
-            'graduation_year' => 2021,
-            'location' => 'Singapore',
-            'profile_picture' => 'default-avatar.svg',
-            'bio' => 'Helping enterprises build resilient architectures on AWS. Active participant in community hackathons.'
-        ],
-        [
-            'id' => 6,
-            'first_name' => 'David',
-            'last_name' => 'Kim',
-            'degree_programme' => 'B.Sc. in Information Technology',
-            'department' => 'Information Technology',
-            'current_job_title' => 'Director of Engineering',
-            'current_company' => 'Stripe',
-            'graduation_year' => 2018,
-            'location' => 'Dublin, Ireland',
-            'profile_picture' => 'default-avatar.svg',
-            'bio' => 'Leading developer experience and payments infrastructure teams. Committed to tech talent growth.'
-        ],
-        [
-            'id' => 7,
-            'first_name' => 'Priya',
-            'last_name' => 'Sharma',
-            'degree_programme' => 'B.Sc. in Computer Engineering',
-            'department' => 'Computer Engineering',
-            'current_job_title' => 'Product Lead',
-            'current_company' => 'Microsoft',
-            'graduation_year' => 2021,
-            'location' => 'Seattle, WA',
-            'profile_picture' => 'default-avatar.svg',
-            'bio' => 'Building intelligent enterprise workplace products. Passionate about empowering women in engineering.'
         ]
     ];
 }
@@ -246,16 +195,6 @@ function get_sample_events() {
             'event_time' => '10:00',
             'location' => 'University Main Hall',
             'organizer_name' => 'University Alumni Council',
-            'status' => 'approved'
-        ],
-        [
-            'id' => 3,
-            'title' => 'ANNUAL CAREER & INTERNSHIP EXPO',
-            'description' => 'Connect directly with leading multinational tech giants, research institutes, and innovative startups. Resume reviews, on-site interviews, and networking booths.',
-            'event_date' => '2026-12-05',
-            'event_time' => '09:00',
-            'location' => 'University Convocation Grounds',
-            'organizer_name' => 'Career Guidance Unit',
             'status' => 'approved'
         ]
     ];
@@ -287,28 +226,53 @@ function get_sample_jobs() {
             'application_link' => 'https://virtusa.com/careers',
             'status' => 'approved',
             'posted_at' => '2026-10-02'
-        ],
-        [
-            'id' => 3,
-            'title' => 'Associate AI Engineer',
-            'company' => 'WSO2',
-            'location' => 'Colombo, Sri Lanka',
-            'job_type' => 'Full-Time',
-            'description' => 'Work on open-source API management combined with LLM orchestrations. Great opportunity for recent university graduates.',
-            'application_link' => 'https://wso2.com/careers',
-            'status' => 'approved',
-            'posted_at' => '2026-10-03'
-        ],
-        [
-            'id' => 4,
-            'title' => 'DevOps & Platform Intern',
-            'company' => 'Sysco LABS',
-            'location' => 'Colombo, Sri Lanka',
-            'job_type' => 'Internship',
-            'description' => 'Exciting 6-month internship on continuous deployment pipelines, Kubernetes cluster management, and infrastructure observability.',
-            'application_link' => 'https://syscolabs.com/careers',
-            'status' => 'approved',
-            'posted_at' => '2026-10-04'
         ]
     ];
 }
+
+// ------------------------------------------------------------
+// Helper: Fallback Reports Data (Two Examples)
+// ------------------------------------------------------------
+function get_sample_reports() {
+    return [
+        [
+            'id' => 1,
+            'reporter_id' => 2,
+            'reporter_name' => 'John Doe',
+            'reporter_email' => 'john.doe@alumni.edu',
+            'reported_user_id' => 7,
+            'reported_user_name' => 'Priya Sharma',
+            'reported_user_email' => 'priya.s@alumni.edu',
+            'reported_user_status' => 'active',
+            'event_id' => null,
+            'event_title' => null,
+            'job_id' => null,
+            'job_title' => null,
+            'message_id' => null,
+            'reason' => 'Suspicious / Inactive Profile Information',
+            'description' => 'Please verify profile details and graduation credentials.',
+            'status' => 'pending',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-2 days'))
+        ],
+        [
+            'id' => 2,
+            'reporter_id' => 3,
+            'reporter_name' => 'Sarah Jenkins',
+            'reporter_email' => 'sarah.j@alumni.edu',
+            'reported_user_id' => null,
+            'reported_user_name' => null,
+            'reported_user_email' => null,
+            'reported_user_status' => null,
+            'event_id' => 1,
+            'event_title' => 'ALUMNI MEET 2026',
+            'job_id' => null,
+            'job_title' => null,
+            'message_id' => null,
+            'reason' => 'Outdated Venue Location',
+            'description' => 'Event location mentions the old campus quad instead of the newly expanded Grand Auditorium.',
+            'status' => 'reviewed',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-5 days'))
+        ]
+    ];
+}
+
