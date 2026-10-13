@@ -38,28 +38,45 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['event_id'], $
     }
 }
 
-// Fetch all events for moderation
+// Status Filter
+$statusFilter = trim($_GET['status'] ?? '');
+
+// Fetch events for moderation
 $eventsList = [];
 if ($db_connected && $pdo) {
     try {
-        $stmt = $pdo->query("
+        $sql = "
             SELECT e.*, CONCAT(u.first_name, ' ', u.last_name) AS creator_name, u.email AS creator_email
             FROM events e
             LEFT JOIN users u ON e.organizer_id = u.id
-            ORDER BY FIELD(e.status, 'pending', 'approved', 'rejected'), e.event_date ASC
-        ");
+        ";
+        $params = [];
+        if (!empty($statusFilter)) {
+            $sql .= " WHERE e.status = ?";
+            $params[] = $statusFilter;
+        }
+        $sql .= " ORDER BY FIELD(e.status, 'pending', 'approved', 'rejected'), e.event_date ASC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
         $eventsList = $stmt->fetchAll();
     } catch (Exception $e) {
         $eventsList = [];
     }
 }
 
-if (empty($eventsList)) {
+// Fallback dummy records (reduced to two examples)
+if (empty($eventsList) && empty($statusFilter)) {
     $eventsList = [
         ['id' => 1, 'title' => 'ALUMNI MEET 2026', 'creator_name' => 'System Administrator', 'status' => 'approved', 'event_date' => '2026-10-24', 'location' => 'Main Campus Grand Auditorium'],
-        ['id' => 2, 'title' => 'GLOBAL TECH & AI SUMMIT', 'creator_name' => 'John Doe', 'status' => 'approved', 'event_date' => '2026-11-15', 'location' => 'University Main Hall'],
-        ['id' => 3, 'title' => 'ANNUAL CAREER & INTERNSHIP EXPO', 'creator_name' => 'Sarah Jenkins', 'status' => 'approved', 'event_date' => '2026-12-05', 'location' => 'Convocation Grounds'],
-        ['id' => 4, 'title' => 'Alumni Mentorship & Tech Fireside', 'creator_name' => 'Mike Chen', 'status' => 'pending', 'event_date' => '2026-12-18', 'location' => 'Zoom Live']
+        ['id' => 4, 'title' => 'Alumni Mentorship & Tech Fireside', 'creator_name' => 'Michael Chen', 'status' => 'pending', 'event_date' => '2026-12-18', 'location' => 'Zoom Live']
+    ];
+} elseif (empty($eventsList) && $statusFilter === 'pending') {
+    $eventsList = [
+        ['id' => 4, 'title' => 'Alumni Mentorship & Tech Fireside', 'creator_name' => 'Michael Chen', 'status' => 'pending', 'event_date' => '2026-12-18', 'location' => 'Zoom Live']
+    ];
+} elseif (empty($eventsList) && $statusFilter === 'approved') {
+    $eventsList = [
+        ['id' => 1, 'title' => 'ALUMNI MEET 2026', 'creator_name' => 'System Administrator', 'status' => 'approved', 'event_date' => '2026-10-24', 'location' => 'Main Campus Grand Auditorium']
     ];
 }
 ?>
@@ -97,6 +114,22 @@ if (empty($eventsList)) {
         <?php if (!empty($msg)): ?>
             <div class="alert alert-success"><?php echo htmlspecialchars($msg); ?></div>
         <?php endif; ?>
+
+        <!-- Status Filter Tabs -->
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+            <a href="events.php" class="btn <?php echo empty($statusFilter) ? 'btn-gold' : 'btn-outline-light'; ?> btn-sm" style="<?php echo empty($statusFilter) ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+                All Events
+            </a>
+            <a href="events.php?status=pending" class="btn <?php echo ($statusFilter === 'pending') ? 'btn-gold' : 'btn-outline-light'; ?> btn-sm" style="<?php echo ($statusFilter === 'pending') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+                Pending Review
+            </a>
+            <a href="events.php?status=approved" class="btn <?php echo ($statusFilter === 'approved') ? 'btn-gold' : 'btn-outline-light'; ?> btn-sm" style="<?php echo ($statusFilter === 'approved') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+                Approved
+            </a>
+            <a href="events.php?status=rejected" class="btn <?php echo ($statusFilter === 'rejected') ? 'btn-gold' : 'btn-outline-light'; ?> btn-sm" style="<?php echo ($statusFilter === 'rejected') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+                Rejected
+            </a>
+        </div>
 
         <div class="table-responsive">
             <table class="admin-table">

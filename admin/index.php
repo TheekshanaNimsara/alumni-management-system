@@ -40,23 +40,23 @@ if ($db_connected && $pdo) {
         // Reports stats
         $pendingReportsCount = (int)$pdo->query("SELECT COUNT(*) FROM reports WHERE status = 'pending'")->fetchColumn();
 
-        // Fetch pending events list
+        // Fetch pending events list (two preview examples)
         $stmt = $pdo->query("
             SELECT e.*, CONCAT(u.first_name, ' ', u.last_name) AS creator_name
             FROM events e
             LEFT JOIN users u ON e.organizer_id = u.id
             ORDER BY e.created_at DESC
-            LIMIT 5
+            LIMIT 2
         ");
         $recentPendingEvents = $stmt->fetchAll();
 
-        // Fetch pending jobs list
+        // Fetch pending jobs list (two preview examples)
         $stmt = $pdo->query("
             SELECT j.*, CONCAT(u.first_name, ' ', u.last_name) AS poster_name
             FROM jobs j
             LEFT JOIN users u ON j.posted_by = u.id
             ORDER BY j.posted_at DESC
-            LIMIT 5
+            LIMIT 2
         ");
         $recentPendingJobs = $stmt->fetchAll();
 
@@ -65,20 +65,18 @@ if ($db_connected && $pdo) {
     }
 }
 
-// Fallback dummy records if empty
+// Fallback dummy records if empty (reduced to two examples per section)
 if (empty($recentPendingEvents)) {
     $recentPendingEvents = [
         ['id' => 101, 'title' => 'Alumni Meetup & Tech Fireside', 'creator_name' => 'John Doe', 'status' => 'pending', 'event_date' => '2026-11-20'],
-        ['id' => 102, 'title' => 'Career Fair 2026', 'creator_name' => 'Sarah Jenkins', 'status' => 'approved', 'event_date' => '2026-12-05'],
-        ['id' => 103, 'title' => 'Tech Conference & Research Day', 'creator_name' => 'Mike Chen', 'status' => 'pending', 'event_date' => '2026-12-18']
+        ['id' => 102, 'title' => 'Career Fair 2026', 'creator_name' => 'Sarah Jenkins', 'status' => 'approved', 'event_date' => '2026-12-05']
     ];
 }
 
 if (empty($recentPendingJobs)) {
     $recentPendingJobs = [
         ['id' => 201, 'title' => 'Software Engineer', 'company' => 'ABC Technologies', 'status' => 'pending', 'job_type' => 'Full-Time'],
-        ['id' => 202, 'title' => 'Web Developer', 'company' => 'XYZ Global', 'status' => 'approved', 'job_type' => 'Full-Time'],
-        ['id' => 203, 'title' => 'Data Science Intern', 'company' => 'Octave Labs', 'status' => 'pending', 'job_type' => 'Internship']
+        ['id' => 202, 'title' => 'Web Developer', 'company' => 'XYZ Global', 'status' => 'approved', 'job_type' => 'Full-Time']
     ];
 }
 ?>
@@ -114,72 +112,72 @@ if (empty($recentPendingJobs)) {
             </div>
         </div>
 
-        <!-- Comprehensive Statistics Cards -->
+        <!-- Comprehensive Statistics Cards (Clickable Navigation) -->
         <div class="admin-stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
             
-            <div class="admin-stat-card">
+            <a href="users.php" class="admin-stat-card" title="View & manage all registered users" aria-label="Total Users: <?php echo number_format($totalUsersCount); ?>">
                 <div>
                     <div class="admin-stat-number"><?php echo number_format($totalUsersCount); ?></div>
                     <div class="admin-stat-label">Total Users</div>
                 </div>
                 <div class="admin-stat-icon">&#128101;</div>
-            </div>
+            </a>
 
-            <div class="admin-stat-card">
+            <a href="users.php?status=active" class="admin-stat-card" title="Filter active alumni accounts" aria-label="Active Users: <?php echo number_format($activeUsersCount); ?>">
                 <div>
                     <div class="admin-stat-number" style="color: var(--success-color);"><?php echo number_format($activeUsersCount); ?></div>
                     <div class="admin-stat-label">Active Users</div>
                 </div>
                 <div class="admin-stat-icon">&#9989;</div>
-            </div>
+            </a>
 
-            <div class="admin-stat-card">
+            <a href="users.php?status=suspended" class="admin-stat-card" title="Filter blocked and suspended accounts" aria-label="Blocked or Suspended Users: <?php echo number_format($suspendedUsersCount); ?>">
                 <div>
                     <div class="admin-stat-number" style="color: var(--danger-color);"><?php echo number_format($suspendedUsersCount); ?></div>
                     <div class="admin-stat-label">Blocked / Suspended</div>
                 </div>
                 <div class="admin-stat-icon">&#128683;</div>
-            </div>
+            </a>
 
-            <div class="admin-stat-card">
+            <a href="events.php?status=pending" class="admin-stat-card" title="Review pending community events" aria-label="Pending Events: <?php echo $pendingEventsCount; ?>">
                 <div>
                     <div class="admin-stat-number" style="color: var(--warning-color);"><?php echo $pendingEventsCount; ?></div>
                     <div class="admin-stat-label">Pending Events</div>
                 </div>
                 <div class="admin-stat-icon">&#9203;</div>
-            </div>
+            </a>
 
-            <div class="admin-stat-card">
+            <a href="events.php?status=approved" class="admin-stat-card" title="View approved events list" aria-label="Approved Events: <?php echo $approvedEventsCount; ?>">
                 <div>
                     <div class="admin-stat-number" style="color: var(--success-color);"><?php echo $approvedEventsCount; ?></div>
                     <div class="admin-stat-label">Approved Events</div>
                 </div>
                 <div class="admin-stat-icon">&#128197;</div>
-            </div>
+            </a>
 
-            <div class="admin-stat-card">
+            <a href="jobs.php?status=pending" class="admin-stat-card" title="Review pending job vacancies" aria-label="Pending Jobs: <?php echo $pendingJobsCount; ?>">
                 <div>
                     <div class="admin-stat-number" style="color: var(--warning-color);"><?php echo $pendingJobsCount; ?></div>
                     <div class="admin-stat-label">Pending Jobs</div>
                 </div>
                 <div class="admin-stat-icon">&#9203;</div>
-            </div>
+            </a>
 
-            <div class="admin-stat-card">
+            <a href="jobs.php?status=approved" class="admin-stat-card" title="View approved career postings" aria-label="Approved Jobs: <?php echo $approvedJobsCount; ?>">
                 <div>
                     <div class="admin-stat-number" style="color: var(--success-color);"><?php echo $approvedJobsCount; ?></div>
                     <div class="admin-stat-label">Approved Jobs</div>
                 </div>
                 <div class="admin-stat-icon">&#128188;</div>
-            </div>
+            </a>
 
-            <div class="admin-stat-card">
+            <a href="reports.php?status=pending" class="admin-stat-card" title="Review moderation reports queue" aria-label="Reports Queue: <?php echo $pendingReportsCount; ?>">
                 <div>
                     <div class="admin-stat-number" style="color: <?php echo ($pendingReportsCount > 0) ? 'var(--danger-color)' : 'var(--text-muted)'; ?>;"><?php echo $pendingReportsCount; ?></div>
                     <div class="admin-stat-label">Reports Queue</div>
                 </div>
                 <div class="admin-stat-icon">&#9873;</div>
-            </div>
+            </a>
 
         </div>
 

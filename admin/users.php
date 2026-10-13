@@ -68,7 +68,9 @@ if ($db_connected && $pdo) {
         $sql = "
             SELECT u.*, p.degree_programme, p.graduation_year, p.current_company, p.current_job_title, p.profile_picture
             FROM users u
-            LEFT JOIN alumni_profiles p ON u.id = p.user_id
+            LEFT JOIN alumni_profiles p ON p.id = (
+                SELECT id FROM alumni_profiles WHERE user_id = u.id ORDER BY id DESC LIMIT 1
+            )
             WHERE 1=1
         ";
         $params = [];

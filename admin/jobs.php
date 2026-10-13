@@ -38,28 +38,45 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['job_id'], $_P
     }
 }
 
+// Status Filter
+$statusFilter = trim($_GET['status'] ?? '');
+
 // Fetch all jobs for moderation
 $jobsList = [];
 if ($db_connected && $pdo) {
     try {
-        $stmt = $pdo->query("
+        $sql = "
             SELECT j.*, CONCAT(u.first_name, ' ', u.last_name) AS poster_name, u.email AS poster_email
             FROM jobs j
             LEFT JOIN users u ON j.posted_by = u.id
-            ORDER BY FIELD(j.status, 'pending', 'approved', 'rejected'), j.posted_at DESC
-        ");
+        ";
+        $params = [];
+        if (!empty($statusFilter)) {
+            $sql .= " WHERE j.status = ?";
+            $params[] = $statusFilter;
+        }
+        $sql .= " ORDER BY FIELD(j.status, 'pending', 'approved', 'rejected'), j.posted_at DESC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
         $jobsList = $stmt->fetchAll();
     } catch (Exception $e) {
         $jobsList = [];
     }
 }
 
-if (empty($jobsList)) {
+// Fallback dummy records (reduced to two examples)
+if (empty($jobsList) && empty($statusFilter)) {
     $jobsList = [
         ['id' => 1, 'title' => 'Software Engineer', 'company' => 'ABC Technologies', 'location' => 'Colombo, Sri Lanka', 'job_type' => 'Full-Time', 'status' => 'pending'],
-        ['id' => 2, 'title' => 'Web Developer', 'company' => 'XYZ Global', 'location' => 'Remote', 'job_type' => 'Full-Time', 'status' => 'approved'],
-        ['id' => 3, 'title' => 'Cloud Solutions Architect', 'company' => 'Virtusa', 'location' => 'Colombo / Hybrid', 'job_type' => 'Full-Time', 'status' => 'approved'],
-        ['id' => 4, 'title' => 'Associate AI Engineer', 'company' => 'WSO2', 'location' => 'Colombo', 'job_type' => 'Full-Time', 'status' => 'approved']
+        ['id' => 2, 'title' => 'Web Developer', 'company' => 'XYZ Global', 'location' => 'Remote', 'job_type' => 'Full-Time', 'status' => 'approved']
+    ];
+} elseif (empty($jobsList) && $statusFilter === 'pending') {
+    $jobsList = [
+        ['id' => 1, 'title' => 'Software Engineer', 'company' => 'ABC Technologies', 'location' => 'Colombo, Sri Lanka', 'job_type' => 'Full-Time', 'status' => 'pending']
+    ];
+} elseif (empty($jobsList) && $statusFilter === 'approved') {
+    $jobsList = [
+        ['id' => 2, 'title' => 'Web Developer', 'company' => 'XYZ Global', 'location' => 'Remote', 'job_type' => 'Full-Time', 'status' => 'approved']
     ];
 }
 ?>
@@ -97,6 +114,22 @@ if (empty($jobsList)) {
         <?php if (!empty($msg)): ?>
             <div class="alert alert-success"><?php echo htmlspecialchars($msg); ?></div>
         <?php endif; ?>
+
+        <!-- Status Filter Tabs -->
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+            <a href="jobs.php" class="btn <?php echo empty($statusFilter) ? 'btn-gold' : 'btn-outline-light'; ?> btn-sm" style="<?php echo empty($statusFilter) ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+                All Jobs
+            </a>
+            <a href="jobs.php?status=pending" class="btn <?php echo ($statusFilter === 'pending') ? 'btn-gold' : 'btn-outline-light'; ?> btn-sm" style="<?php echo ($statusFilter === 'pending') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+                Pending Review
+            </a>
+            <a href="jobs.php?status=approved" class="btn <?php echo ($statusFilter === 'approved') ? 'btn-gold' : 'btn-outline-light'; ?> btn-sm" style="<?php echo ($statusFilter === 'approved') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+                Approved
+            </a>
+            <a href="jobs.php?status=rejected" class="btn <?php echo ($statusFilter === 'rejected') ? 'btn-gold' : 'btn-outline-light'; ?> btn-sm" style="<?php echo ($statusFilter === 'rejected') ? '' : 'color: var(--text-color); border-color: var(--border-color);'; ?>">
+                Rejected
+            </a>
+        </div>
 
         <div class="table-responsive">
             <table class="admin-table">
