@@ -37,6 +37,86 @@ switch ($action) {
     // ── GET: Return jobs ───────────────────────────────────────────
     case 'get':
         header('Content-Type: application/json; charset=UTF-8');
+
+        // 1. Single Job Details Request by ID
+        if (isset($_GET['id'])) {
+            $requestedId = intval($_GET['id']);
+            if ($requestedId <= 0) {
+                http_response_code(400);
+                echo json_encode(['error' => 'Invalid job ID.']);
+                exit;
+            }
+
+            if (!$pdo) {
+                $samples = get_sample_jobs();
+                foreach ($samples as $s) {
+                    if ((int)$s['id'] === $requestedId) {
+                        echo json_encode($s);
+                        exit;
+                    }
+                }
+                http_response_code(404);
+                echo json_encode(['error' => 'Job not found.']);
+                exit;
+            }
+
+            try {
+                $userParam = $currentUserId ? (int)$currentUserId : 0;
+                $stmt = $pdo->prepare("
+                    SELECT 
+                        j.id,
+                        j.title,
+                        j.company,
+                        j.location,
+                        j.job_type,
+                        j.job_type AS type,
+                        COALESCE(j.description, '') AS description,
+                        COALESCE(j.requirements, '') AS requirements,
+                        COALESCE(j.contact_email, '') AS contact_email,
+                        j.deadline,
+                        j.application_link,
+                        j.posted_by,
+                        j.status,
+                        j.posted_at,
+                        CONCAT(u.first_name, ' ', u.last_name) AS poster_name,
+                        u.email AS poster_email
+                    FROM jobs j
+                    LEFT JOIN users u ON j.posted_by = u.id
+                    WHERE j.id = :id
+                ");
+                $stmt->execute([':id' => $requestedId]);
+                $singleJob = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if (!$singleJob) {
+                    $samples = get_sample_jobs();
+                    foreach ($samples as $s) {
+                        if ((int)$s['id'] === $requestedId) {
+                            echo json_encode($s);
+                            exit;
+                        }
+                    }
+                    http_response_code(404);
+                    echo json_encode(['error' => 'Job not found.']);
+                    exit;
+                }
+
+                // If job is pending or rejected, only creator or admin can view details
+                if ($singleJob['status'] !== 'approved' && !$isAdmin && ($userParam <= 0 || (int)$singleJob['posted_by'] !== $userParam)) {
+                    http_response_code(404);
+                    echo json_encode(['error' => 'Opportunity is awaiting review or no longer active.']);
+                    exit;
+                }
+
+                echo json_encode($singleJob);
+                exit;
+            } catch (PDOException $e) {
+                http_response_code(500);
+                echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+                exit;
+            }
+        }
+
+        // 2. Job Listings (Array)
         $statusFilter = $_GET['status'] ?? null;
         if ($statusFilter === 'all' && !$isAdmin) {
             http_response_code(403);

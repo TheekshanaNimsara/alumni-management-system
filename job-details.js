@@ -162,6 +162,12 @@
     return "auth/login.php?redirect=" + encodeURIComponent(safeTarget) + "&msg=auth_required";
   }
 
+  function getCurrentJobReturnUrl() {
+    const pageTarget = window.location.pathname.endsWith(".php") ? "job-details.php" : "job-details.html";
+    const jid = (currentJob && currentJob.id) ? currentJob.id : (getJobIdFromUrl() || 1);
+    return `${pageTarget}?id=${encodeURIComponent(jid)}#applySection`;
+  }
+
   async function checkAuth() {
     try {
       const res = await fetch("job.php?action=session");
@@ -202,37 +208,75 @@
   // ── Main Job Loader & Renderer ──────────────────────────────────────
   let currentJob = null;
 
+  function renderNotFound(message) {
+    document.title = "Opportunity Not Found — Alumni Network";
+    const crumb = document.getElementById("crumbTitle");
+    if (crumb) crumb.textContent = "Opportunity Not Found";
+    const heroCard = document.getElementById("heroCard");
+    if (heroCard) heroCard.style.display = "none";
+    const grid = document.querySelector(".job-detail-grid");
+    if (grid) grid.style.display = "none";
+
+    let notFoundCard = document.getElementById("jobNotFoundCard");
+    if (!notFoundCard) {
+      notFoundCard = document.createElement("section");
+      notFoundCard.id = "jobNotFoundCard";
+      notFoundCard.className = "job-detail-hero";
+      notFoundCard.style.cssText = "text-align: center; padding: 3.5rem 1.5rem; max-width: 680px; margin: 2rem auto; display: block;";
+      const wrap = document.querySelector(".job-detail-wrap") || document.querySelector("main");
+      if (wrap) wrap.appendChild(notFoundCard);
+    }
+    const backUrl = window.location.pathname.endsWith(".php") ? "jobs.php" : "jobs.html";
+    notFoundCard.innerHTML = `
+      <div style="font-size: 3rem; margin-bottom: 1rem;">&#128269;</div>
+      <h1 style="color: var(--text-light, #FFFFFF); font-size: 1.8rem; margin-bottom: 0.8rem;">Opportunity Not Found</h1>
+      <p style="color: var(--text-muted, #A1A1AA); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">${safe(message || "The requested position could not be located.")}</p>
+      <a href="${backUrl}" class="btn btn-primary" style="display: inline-flex; justify-content: center;">&larr; Return to Alumni Job Board</a>
+    `;
+  }
+
   async function loadJobDetails() {
+    // If server already provided verified job data, use it directly
+    if (window.INITIAL_JOB_DATA && typeof window.INITIAL_JOB_DATA === "object" && window.INITIAL_JOB_DATA.id) {
+      currentJob = window.INITIAL_JOB_DATA;
+      renderJob(currentJob);
+      return;
+    }
+
     const targetId = getJobIdFromUrl();
-    let jobs = fallbackJobs;
+    if (!targetId || isNaN(Number(targetId)) || Number(targetId) <= 0) {
+      renderNotFound("Invalid job ID specified.");
+      return;
+    }
 
     try {
-      const res = await fetch("job.php?action=get");
+      const res = await fetch(`job.php?action=get&id=${encodeURIComponent(targetId)}`);
       if (res.ok) {
         const text = await res.text();
         const trimmed = text.trim();
         if (!trimmed.startsWith("<?php") && !trimmed.startsWith("<!DOCTYPE") && !trimmed.startsWith("<html")) {
-          const data = JSON.parse(text);
-          if (Array.isArray(data) && data.length > 0) {
-            jobs = data;
+          const data = JSON.parse(trimmed);
+          if (data && !data.error && data.id) {
+            currentJob = data;
+            renderJob(currentJob);
+            return;
           }
         }
       }
     } catch (err) {
-      console.warn("Using offline / fallback job metadata:", err);
+      console.warn("API single-job lookup failed, checking offline fallback:", err);
     }
 
-    if (targetId) {
-      currentJob = jobs.find(j => String(j.id) === String(targetId));
-    }
-    if (!currentJob && jobs.length > 0) {
-      currentJob = jobs[0];
-    }
-    if (!currentJob) {
-      currentJob = fallbackJobs[0];
+    // Check offline fallback samples for exact matching ID
+    const match = fallbackJobs.find(j => String(j.id) === String(targetId));
+    if (match) {
+      currentJob = match;
+      renderJob(currentJob);
+      return;
     }
 
-    renderJob(currentJob);
+    // Do NOT fall back to jobs[0] or fallbackJobs[0]!
+    renderNotFound("The requested position could not be found, has expired, or is awaiting moderation.");
   }
 
   function renderJob(job) {
@@ -380,8 +424,7 @@
     heroApplyBtn.addEventListener("click", function (e) {
       if (!currentUser || !currentUser.logged_in) {
         e.preventDefault();
-        const returnUrl = `job-details.html?id=${encodeURIComponent(currentJob ? currentJob.id : 1)}#applySection`;
-        window.location.href = getLoginRedirectUrl(returnUrl);
+        window.location.href = getLoginRedirectUrl(getCurrentJobReturnUrl());
       }
     });
   }
@@ -395,8 +438,7 @@
       e.preventDefault();
 
       if (!currentUser || !currentUser.logged_in) {
-        const returnUrl = `job-details.html?id=${encodeURIComponent(currentJob ? currentJob.id : 1)}#applySection`;
-        window.location.href = getLoginRedirectUrl(returnUrl);
+        window.location.href = getLoginRedirectUrl(getCurrentJobReturnUrl());
         return;
       }
 
@@ -426,8 +468,7 @@
         });
 
         if (res.status === 401) {
-          const returnUrl = `job-details.html?id=${encodeURIComponent(currentJob.id)}#applySection`;
-          window.location.href = getLoginRedirectUrl(returnUrl);
+          window.location.href = getLoginRedirectUrl(getCurrentJobReturnUrl());
           return;
         }
 

@@ -6,41 +6,49 @@
 
 require_once __DIR__ . '/config/db.php';
 
-$jobId = isset($_GET['id']) ? intval($_GET['id']) : 1;
+$jobId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $job = null;
 
-if ($pdo) {
+if ($jobId > 0 && $pdo) {
     try {
         $stmt = $pdo->prepare("
             SELECT 
                 j.*,
-                u.name AS poster_name,
+                CONCAT(u.first_name, ' ', u.last_name) AS poster_name,
                 u.email AS poster_email
             FROM jobs j
             LEFT JOIN users u ON j.posted_by = u.id
-            WHERE j.id = ?
+            WHERE j.id = :id
         ");
-        $stmt->execute([$jobId]);
+        $stmt->execute([':id' => $jobId]);
         $job = $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         $job = null;
     }
 }
 
-if (!$job) {
+// Fallback to sample data only if exact ID matches a sample job
+if (!$job && $jobId > 0) {
     $samples = get_sample_jobs();
     foreach ($samples as $s) {
-        if ($s['id'] == $jobId) {
+        if ((int)$s['id'] === $jobId) {
             $job = $s;
             break;
         }
     }
-    if (!$job && !empty($samples)) {
-        $job = $samples[0];
+}
+
+// If job is pending or rejected, only creator or admin can view details
+if ($job && isset($job['status']) && $job['status'] !== 'approved') {
+    $isAdmin = is_admin();
+    $currentUserId = current_user_id();
+    $isOwner = $currentUserId && isset($job['posted_by']) && ((int)$job['posted_by'] === (int)$currentUserId);
+    if (!$isAdmin && !$isOwner) {
+        $job = null;
     }
 }
 
-$pageTitle = ($job ? htmlspecialchars($job['title']) : 'Job Details') . ' — Alumni Network';
+$pageTitle = ($job ? htmlspecialchars($job['title']) : 'Opportunity Not Found') . ' — Alumni Network';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
@@ -54,11 +62,23 @@ require_once __DIR__ . '/includes/header.php';
             <span>&rsaquo;</span>
             <a href="jobs.php">Alumni Job Board</a>
             <span>&rsaquo;</span>
-            <span class="current"><?php echo htmlspecialchars($job['title'] ?? 'Job Details'); ?></span>
+            <span class="current"><?php echo htmlspecialchars($job['title'] ?? 'Opportunity Not Found'); ?></span>
         </nav>
         <a href="jobs.php" class="btn btn-return-home btn-outline-glass btn-sm">&larr; Return to Job Board</a>
     </div>
 
+    <?php if (!$job): ?>
+    <section class="job-detail-hero" style="text-align: center; padding: 3.5rem 1.5rem; max-width: 680px; margin: 2rem auto;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">&#128269;</div>
+        <h1 style="color: #FFFFFF; font-size: 1.8rem; margin-bottom: 0.8rem;">Opportunity Not Found</h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+            The requested career posting could not be found, has expired, or is currently awaiting administrator moderation.
+        </p>
+        <a href="jobs.php" class="btn btn-primary" style="display: inline-flex; justify-content: center;">
+            &larr; Return to Alumni Job Board
+        </a>
+    </section>
+    <?php else: ?>
     <!-- Hero Header Card (Apple Liquid Glass) -->
     <section class="job-detail-hero" id="heroCard">
         <div class="job-hero-main">
@@ -306,7 +326,13 @@ require_once __DIR__ . '/includes/header.php';
             </article>
         </aside>
     </div>
+    <?php endif; ?>
 </main>
 
+<?php if ($job): ?>
+<script>
+    window.INITIAL_JOB_DATA = <?php echo json_encode($job); ?>;
+</script>
 <script src="job-details.js?v=4.2"></script>
+<?php endif; ?>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

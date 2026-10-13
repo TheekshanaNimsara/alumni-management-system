@@ -68,12 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         if (!empty($title) && !empty($company) && !empty($location) && !empty($description)) {
             if ($db_connected && $pdo) {
                 try {
+                    $postStatus = is_admin() ? 'approved' : 'pending';
                     $stmt = $pdo->prepare("
                         INSERT INTO jobs (title, company, location, job_type, description, requirements, deadline, application_link, posted_by, status)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ");
-                    $stmt->execute([$title, $company, $location, $job_type, $description, $requirements, $deadline, $application_link, $currentUserId]);
-                    $message = "Your job opportunity has been submitted for admin approval.";
+                    $stmt->execute([$title, $company, $location, $job_type, $description, $requirements, $deadline, $application_link, $currentUserId, $postStatus]);
+                    $message = is_admin() ? "Job opportunity published successfully." : "Your job opportunity has been submitted for admin approval.";
                     $messageType = "success";
                 } catch (Exception $e) {
                     $message = "Error posting job: " . $e->getMessage();
@@ -229,7 +230,7 @@ if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
                             <?php echo htmlspecialchars($job['company']); ?>
                         </span>
                         <h3 class="job-title" style="margin: 0;">
-                            <a href="job-details.html?id=<?php echo $job['id']; ?>" style="color: inherit; text-decoration: none;">
+                            <a href="job-details.php?id=<?php echo (int)$job['id']; ?>" style="color: inherit; text-decoration: none;">
                                 <?php echo htmlspecialchars($job['title']); ?>
                             </a>
                         </h3>
@@ -282,7 +283,7 @@ if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
                             &#9873;
                         </button>
 
-                        <a href="job-details.html?id=<?php echo $job['id']; ?>" class="btn btn-outline-glass btn-sm">
+                        <a href="job-details.php?id=<?php echo (int)$job['id']; ?>" class="btn btn-outline-glass btn-sm">
                             View Details &rarr;
                         </a>
 
