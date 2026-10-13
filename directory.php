@@ -8,6 +8,8 @@ $currentPage = 'alumni';
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/functions.php';
 
+$currentUserId = current_user_id();
+
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $yearFilter = isset($_GET['year']) ? trim($_GET['year']) : '';
 $degreeFilter = isset($_GET['degree']) ? trim($_GET['degree']) : '';
@@ -21,7 +23,7 @@ $alumniList = [];
 
 if ($db_connected && $pdo) {
     try {
-        $whereSql = " WHERE u.status = 'active' AND p.is_public = 1";
+        $whereSql = " WHERE u.status = 'active' AND p.is_public = 1 AND u.id NOT IN (4, 5, 6, 7)";
         $params = [];
 
         if ($search !== '') {
@@ -49,22 +51,32 @@ if ($db_connected && $pdo) {
             $params[':dept'] = "%{$deptFilter}%";
         }
 
-        // Count total matching profiles
-        $countStmt = $pdo->prepare("SELECT COUNT(*) FROM users u JOIN alumni_profiles p ON u.id = p.user_id" . $whereSql);
+        // Count total matching deduplicated profiles
+        $countStmt = $pdo->prepare("
+            SELECT COUNT(*) 
+            FROM users u 
+            JOIN (
+                SELECT ap.* FROM alumni_profiles ap
+                INNER JOIN (SELECT MAX(id) as max_id FROM alumni_profiles GROUP BY user_id) latest ON ap.id = latest.max_id
+            ) p ON u.id = p.user_id
+            " . $whereSql);
         $countStmt->execute($params);
         $totalCount = (int)$countStmt->fetchColumn();
         $totalPages = max(1, (int)ceil($totalCount / $perPage));
         if ($page > $totalPages) $page = $totalPages;
         $offset = ($page - 1) * $perPage;
 
-        // Fetch paginated results
+        // Fetch paginated deduplicated results
         $sql = "
             SELECT u.id, u.username, u.first_name, u.last_name, u.email,
                    p.graduation_year, p.degree_programme, p.department,
                    p.current_job_title, p.current_company, p.location,
                    p.linkedin_url, p.bio, p.skills, p.profile_picture
             FROM users u
-            JOIN alumni_profiles p ON u.id = p.user_id
+            JOIN (
+                SELECT ap.* FROM alumni_profiles ap
+                INNER JOIN (SELECT MAX(id) as max_id FROM alumni_profiles GROUP BY user_id) latest ON ap.id = latest.max_id
+            ) p ON u.id = p.user_id
             {$whereSql}
             ORDER BY p.graduation_year DESC, u.first_name ASC
             LIMIT " . intval($perPage) . " OFFSET " . intval($offset);
@@ -87,11 +99,11 @@ $availableYears = [];
 $availableDegrees = [];
 if ($db_connected && $pdo) {
     try {
-        $availableYears = $pdo->query("SELECT DISTINCT graduation_year FROM alumni_profiles ORDER BY graduation_year DESC")->fetchAll(PDO::FETCH_COLUMN);
-        $availableDegrees = $pdo->query("SELECT DISTINCT degree_programme FROM alumni_profiles ORDER BY degree_programme ASC")->fetchAll(PDO::FETCH_COLUMN);
+        $availableYears = $pdo->query("SELECT DISTINCT graduation_year FROM alumni_profiles WHERE user_id NOT IN (4, 5, 6, 7) AND is_public = 1 AND graduation_year IS NOT NULL ORDER BY graduation_year DESC")->fetchAll(PDO::FETCH_COLUMN);
+        $availableDegrees = $pdo->query("SELECT DISTINCT degree_programme FROM alumni_profiles WHERE user_id NOT IN (4, 5, 6, 7) AND is_public = 1 AND degree_programme IS NOT NULL AND degree_programme != '' ORDER BY degree_programme ASC")->fetchAll(PDO::FETCH_COLUMN);
     } catch (Exception $e) {
-        $availableYears = [2022, 2021, 2020, 2019, 2018];
-        $availableDegrees = ['B.Sc. in Computer Engineering', 'B.Sc. in Software Engineering', 'B.Sc. in Electrical Engineering', 'B.Sc. in Information Technology'];
+        $availableYears = [2022, 2020, 2019];
+        $availableDegrees = ['B.Sc. in Computer Engineering', 'B.Sc. in Electrical Engineering'];
     }
 }
 ?>
@@ -216,23 +228,23 @@ if ($db_connected && $pdo) {
                     </p>
 
                     <!-- Skills preview -->
-                    <?php if (!empty($skills)): ?>
-                        <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; justify-content: center; margin-bottom: 1.2rem; position: relative; z-index: 1;">
+                    <div class="alumni-skills-preview">
+                        <?php if (!empty($skills)): ?>
                             <?php foreach (array_slice($skills, 0, 3) as $sk): ?>
-                                <span class="badge" style="font-size: 0.72rem; background: rgba(124, 58, 237, 0.15); color: var(--pale-highlight); border: 1px solid rgba(196, 181, 253, 0.25);">
+                                <span class="badge alumni-skill-badge">
                                     <?php echo htmlspecialchars($sk); ?>
                                 </span>
                             <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
 
                     <!-- Action Buttons -->
-                    <div style="display: flex; gap: 0.4rem; justify-content: center; padding-top: 1rem; border-top: 1px solid var(--border-color); flex-wrap: wrap; position: relative; z-index: 1;">
+                    <div class="alumni-card-actions">
                         <a href="profile.php?id=<?php echo $alumnus['id']; ?>" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; color: var(--text-light); border-color: var(--border-color);">
                             Profile
                         </a>
 
-                        <?php if ($isLoggedIn && $alumnus['id'] != $currentUserId): ?>
+                        <?php if ($isLoggedIn && $currentUserId && $alumnus['id'] != $currentUserId): ?>
                             <a href="messages.php?user_id=<?php echo $alumnus['id']; ?>" class="btn btn-gold btn-sm gold-glow" style="font-size: 0.8rem;">
                                 Message
                             </a>
@@ -248,7 +260,7 @@ if ($db_connected && $pdo) {
                             </a>
                         <?php endif; ?>
 
-                        <?php if ($isLoggedIn && $alumnus['id'] != $currentUserId): ?>
+                        <?php if ($isLoggedIn && $currentUserId && $alumnus['id'] != $currentUserId): ?>
                             <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.72rem; color: var(--text-muted); border-color: var(--border-color);" 
                                     onclick="openReportModal(<?php echo $alumnus['id']; ?>, 'user', '<?php echo htmlspecialchars(addslashes($alumnus['first_name'] . ' ' . $alumnus['last_name'])); ?>');" title="Report Profile">
                                 &#9873;
