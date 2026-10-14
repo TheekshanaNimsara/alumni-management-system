@@ -488,22 +488,23 @@ textarea:focus-visible {
     max-width: 1400px;
     width: 100%;
     margin: 0 auto;
-    padding: 0.95rem 1.75rem;
+    padding: 0.85rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 2.2rem;
+    gap: 1.5rem;
+    position: relative;
 }
 
 /* Brand Logo */
 .logo {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.65rem;
     text-decoration: none;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 800;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.6px;
     color: var(--text-light);
     flex-shrink: 0;
     white-space: nowrap;
@@ -521,9 +522,9 @@ textarea:focus-visible {
     background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
     color: var(--bg-dark);
     font-weight: 900;
-    padding: 4px 9px;
+    padding: 4px 8px;
     border-radius: 5px;
-    font-size: 0.92rem;
+    font-size: 0.90rem;
     line-height: 1;
     box-shadow: 0 2px 10px rgba(216, 185, 106, 0.35);
     flex-shrink: 0;
@@ -545,7 +546,7 @@ textarea:focus-visible {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 1.75rem;
+    gap: 1.4rem;
     min-width: 0;
     flex: 1 1 auto;
 }
@@ -554,18 +555,19 @@ textarea:focus-visible {
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 1.35rem;
+    gap: 1.15rem;
     margin: 0;
     padding: 0;
-    flex-shrink: 0;
+    flex-shrink: 1;
+    min-width: 0;
 }
 
 .nav-link {
     color: var(--text-muted-light);
     font-weight: 600;
-    font-size: 0.92rem;
+    font-size: 0.90rem;
     position: relative;
-    padding: 0.4rem 0;
+    padding: 0.35rem 0;
     transition: color 0.25s ease;
     display: inline-block;
     white-space: nowrap;
@@ -601,16 +603,16 @@ textarea:focus-visible {
 .nav-actions {
     display: flex;
     align-items: center;
-    gap: 1.15rem;
-    padding-left: 1.35rem;
+    gap: 0.95rem;
+    padding-left: 1.15rem;
     border-left: 1px solid var(--border-gold);
     flex-shrink: 0;
 }
 
 .nav-auth .btn,
 .nav-actions .btn {
-    padding: 0.45rem 1.1rem;
-    font-size: 0.86rem;
+    padding: 0.42rem 0.95rem;
+    font-size: 0.84rem;
     white-space: nowrap;
     flex-shrink: 0;
 }
@@ -618,12 +620,13 @@ textarea:focus-visible {
 .nav-user {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
     color: var(--text-light);
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 600;
     white-space: nowrap;
-    max-width: 180px;
+    max-width: 150px;
+    flex-shrink: 0;
 }
 
 .nav-user span {
@@ -649,39 +652,43 @@ textarea:focus-visible {
     color: var(--text-light);
     font-size: 1.6rem;
     cursor: pointer;
-    padding: 0.2rem;
+    padding: 0.3rem 0.5rem;
+    line-height: 1;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-toggle:hover {
+    background-color: rgba(216, 185, 106, 0.15);
+    color: var(--accent-color);
 }
 
 /* Intermediate screen compaction to ensure zero collisions on laptops/tablets */
-@media (max-width: 1260px) {
+@media (max-width: 1320px) {
     .navbar-container {
-        gap: 1.5rem;
-        padding: 0.85rem 1.25rem;
+        gap: 1.1rem;
+        padding: 0.75rem 1.2rem;
     }
 
     .nav-menu {
-        gap: 1.25rem;
-    }
-
-    .nav-links {
         gap: 1rem;
     }
 
+    .nav-links {
+        gap: 0.9rem;
+    }
+
     .nav-link {
-        font-size: 0.88rem;
+        font-size: 0.87rem;
     }
 
     .nav-auth,
     .nav-actions {
-        gap: 0.85rem;
-        padding-left: 1rem;
+        gap: 0.75rem;
+        padding-left: 0.9rem;
     }
 
-    .nav-user {
-        max-width: 140px;
-    }
-
-    /* Collapse theme switcher text to icons only, saving ~80px */
+    /* Collapse theme switcher text to icons only, saving ~85px */
     .theme-option .theme-label {
         display: none;
     }
@@ -689,34 +696,50 @@ textarea:focus-visible {
     .theme-option {
         padding: 5px 8px;
     }
-}
 
-@media (max-width: 1040px) {
-    .navbar-container {
-        gap: 1.1rem;
-    }
-
-    .nav-menu {
-        gap: 1rem;
-    }
-
-    .nav-links {
-        gap: 0.8rem;
-    }
-
-    .nav-link {
-        font-size: 0.84rem;
+    .nav-user {
+        max-width: 120px;
     }
 
     .nav-auth .btn,
     .nav-actions .btn {
-        padding: 0.4rem 0.85rem;
+        padding: 0.38rem 0.85rem;
         font-size: 0.82rem;
     }
 }
 
-/* Mobile drawer trigger at 992px to prevent any cramped layout */
-@media (max-width: 992px) {
+@media (max-width: 1140px) {
+    .navbar-container {
+        gap: 0.85rem;
+        padding: 0.7rem 1rem;
+    }
+
+    .nav-menu {
+        gap: 0.85rem;
+    }
+
+    .nav-links {
+        gap: 0.7rem;
+    }
+
+    .nav-link {
+        font-size: 0.83rem;
+    }
+
+    /* Hide username text on laptops to prevent cutting off Logout button, retaining avatar */
+    .nav-user span {
+        display: none;
+    }
+
+    .nav-auth,
+    .nav-actions {
+        gap: 0.65rem;
+        padding-left: 0.75rem;
+    }
+}
+
+/* Mobile & Tablet Drawer Trigger at 1040px: prevents any right-side cutoff on 1024px screens */
+@media (max-width: 1040px) {
     .nav-toggle {
         display: block;
     }
@@ -729,14 +752,17 @@ textarea:focus-visible {
         top: 100%;
         left: 0;
         background-color: rgba(16, 13, 16, 0.98);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        padding: 1.8rem;
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        padding: 1.5rem 1.8rem 2rem;
         border-top: 1px solid var(--border-gold);
-        box-shadow: 0 16px 35px rgba(0, 0, 0, 0.7);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
         transform: translateY(-8px);
         opacity: 0;
-        transition: transform 0.3s ease, opacity 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+        max-height: calc(100vh - 75px);
+        overflow-y: auto;
+        z-index: 1001;
     }
 
     .nav-menu.open {
@@ -747,10 +773,22 @@ textarea:focus-visible {
 
     .nav-links {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-        margin-bottom: 1.5rem;
+        align-items: stretch;
+        gap: 0;
+        margin-bottom: 1.25rem;
         width: 100%;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 0.7rem 0.5rem;
+        font-size: 0.98rem;
+        width: 100%;
+        border-bottom: 1px solid rgba(216, 185, 106, 0.12);
     }
 
     .nav-auth,
@@ -761,10 +799,31 @@ textarea:focus-visible {
         border-left: none;
         gap: 1rem;
         width: 100%;
+        padding-top: 0.5rem;
     }
 
     .nav-user {
         max-width: 100%;
+        padding: 0.5rem 0.25rem;
+        font-size: 0.95rem;
+    }
+
+    .nav-user span {
+        display: inline;
+    }
+
+    .nav-auth .btn,
+    .nav-actions .btn {
+        width: 100%;
+        text-align: center;
+        padding: 0.65rem 1rem;
+        font-size: 0.92rem;
+    }
+
+    .theme-switcher {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 0.5rem;
     }
 
     .theme-option .theme-label {
