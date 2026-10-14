@@ -1,148 +1,302 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
   <defs>
-    <!-- Cinematic Royal Burgundy & Champagne Gold Twilight Sky -->
+    <!-- Sky Twilight Gradient: Midnight Plum to Royal Burgundy to Champagne Gold Horizon -->
     <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#09060B" />
-      <stop offset="28%" stop-color="#100810" />
-      <stop offset="52%" stop-color="#1A101B" />
-      <stop offset="70%" stop-color="#451629" />
-      <stop offset="86%" stop-color="#762D48" />
-      <stop offset="94%" stop-color="#98415F" />
-      <stop offset="100%" stop-color="#E8C77E" stop-opacity="0.85" />
+      <stop offset="0%" stop-color="#08040A" />
+      <stop offset="25%" stop-color="#120914" />
+      <stop offset="50%" stop-color="#241020" />
+      <stop offset="68%" stop-color="#4E1A30" />
+      <stop offset="82%" stop-color="#762D48" />
+      <stop offset="93%" stop-color="#C25A78" />
+      <stop offset="100%" stop-color="#E8C77E" />
     </linearGradient>
 
-    <!-- Warm Champagne Gold & Rose Radiance behind Campus Silhouette -->
-    <radialGradient id="sunGlow" cx="65%" cy="72%" r="48%">
+    <!-- Radiant Dawn Glow directly behind University Hall & Tower -->
+    <radialGradient id="sunGlow" cx="50%" cy="62%" r="55%">
       <stop offset="0%" stop-color="#FFFDF7" stop-opacity="0.95" />
-      <stop offset="18%" stop-color="#F5DDA0" stop-opacity="0.85" />
-      <stop offset="38%" stop-color="#E8C77E" stop-opacity="0.60" />
-      <stop offset="62%" stop-color="#B65B78" stop-opacity="0.35" />
-      <stop offset="82%" stop-color="#762D48" stop-opacity="0.15" />
+      <stop offset="18%" stop-color="#F5DDA0" stop-opacity="0.80" />
+      <stop offset="38%" stop-color="#E8C77E" stop-opacity="0.55" />
+      <stop offset="62%" stop-color="#B65B78" stop-opacity="0.30" />
+      <stop offset="85%" stop-color="#451629" stop-opacity="0.10" />
       <stop offset="100%" stop-color="#100810" stop-opacity="0" />
     </radialGradient>
 
-    <!-- Window & Clock Light Glow -->
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="6" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    <!-- Lateral Burgundy Ambient Radiance -->
+    <radialGradient id="lateralGlowLeft" cx="20%" cy="68%" r="40%">
+      <stop offset="0%" stop-color="#98415F" stop-opacity="0.45" />
+      <stop offset="60%" stop-color="#451629" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#08040A" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="lateralGlowRight" cx="80%" cy="68%" r="40%">
+      <stop offset="0%" stop-color="#B9A0FF" stop-opacity="0.35" />
+      <stop offset="60%" stop-color="#762D48" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#08040A" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Luminous Window & Clock Glow -->
+    <filter id="windowGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7" result="blur1" />
+      <feGaussianBlur stdDeviation="3" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
     </filter>
 
-    <!-- Clock Core Glow -->
-    <radialGradient id="clockGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#FFFDF7" />
-      <stop offset="55%" stop-color="#F5DDA0" />
-      <stop offset="85%" stop-color="#E8C77E" />
-      <stop offset="100%" stop-color="#BE984B" />
+    <!-- Clock Core Radiance -->
+    <radialGradient id="clockFace" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="45%" stop-color="#FFF5D6" />
+      <stop offset="80%" stop-color="#F5DDA0" />
+      <stop offset="100%" stop-color="#E8C77E" />
     </radialGradient>
+
+    <!-- Ground Uplight Gradients for Portico Columns -->
+    <linearGradient id="columnUplight" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#E8C77E" stop-opacity="0.40" />
+      <stop offset="35%" stop-color="#98415F" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#2D1726" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Campus Walkway Reflection -->
+    <linearGradient id="walkwayGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#E8C77E" stop-opacity="0.45" />
+      <stop offset="40%" stop-color="#762D48" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#150A14" stop-opacity="0.80" />
+    </linearGradient>
   </defs>
 
-  <!-- Sky Background -->
+  <!-- 1. Sky & Celestial Atmosphere -->
   <rect width="1920" height="1080" fill="url(#skyGrad)" />
+  <circle cx="960" cy="620" r="480" fill="url(#sunGlow)" />
+  <circle cx="350" cy="660" r="380" fill="url(#lateralGlowLeft)" />
+  <circle cx="1570" cy="660" r="380" fill="url(#lateralGlowRight)" />
 
-  <!-- Radiance behind Campus -->
-  <circle cx="1250" cy="690" r="360" fill="url(#sunGlow)" />
-
-  <!-- Secondary Soft Violet-Burgundy Ambient Horizon Orb -->
-  <circle cx="480" cy="740" r="280" fill="url(#sunGlow)" opacity="0.45" />
-
-  <!-- Distant Mountain / Forest Ridge Silhouette -->
-  <path d="M0,820 Q320,775 640,805 T1280,785 T1920,805 L1920,1080 L0,1080 Z" fill="#0D070E" opacity="0.92" />
-
-  <!-- University Quad Trees Silhouette -->
-  <g fill="#0D070E">
-    <ellipse cx="220" cy="805" rx="95" ry="125" />
-    <ellipse cx="310" cy="825" rx="75" ry="95" />
-    <ellipse cx="140" cy="835" rx="65" ry="85" />
-    <ellipse cx="1680" cy="795" rx="105" ry="135" />
-    <ellipse cx="1780" cy="815" rx="85" ry="105" />
-    <ellipse cx="1580" cy="825" rx="75" ry="95" />
+  <!-- Constellations & Glistening Stars in Upper Sky -->
+  <g fill="#FFFDF7" opacity="0.85">
+    <circle cx="160" cy="110" r="2.2" />
+    <circle cx="280" cy="190" r="1.5" />
+    <circle cx="340" cy="90" r="2.5" />
+    <circle cx="480" cy="160" r="1.8" />
+    <circle cx="560" cy="80" r="2.0" />
+    <circle cx="720" cy="140" r="1.5" />
+    <circle cx="850" cy="95" r="2.8" />
+    <circle cx="1080" cy="110" r="2.0" />
+    <circle cx="1210" cy="70" r="2.4" />
+    <circle cx="1350" cy="150" r="1.8" />
+    <circle cx="1480" cy="90" r="2.6" />
+    <circle cx="1620" cy="170" r="1.6" />
+    <circle cx="1760" cy="100" r="2.2" />
+    <circle cx="1840" cy="180" r="1.5" />
+    <!-- Golden Accent Stars -->
+    <circle cx="420" cy="220" r="2.8" fill="#F5DDA0" />
+    <circle cx="1400" cy="210" r="3.0" fill="#F5DDA0" />
+    <circle cx="960" cy="70" r="3.2" fill="#FFEAA7" filter="url(#windowGlow)" />
   </g>
 
-  <!-- Campus Neoclassical Hall & Clock Tower Architecture Silhouette -->
-  <!-- Main Foundation -->
-  <rect x="360" y="740" width="1200" height="220" fill="#09060B" />
+  <!-- 2. Distant Campus Quad Ridge & Hills -->
+  <path d="M0,740 Q480,680 960,710 T1920,695 L1920,1080 L0,1080 Z" fill="#180B17" opacity="0.88" />
 
-  <!-- Front Portico Columns & Pediment -->
-  <g fill="#150F17">
-    <rect x="760" y="650" width="400" height="20" fill="#211721" /> <!-- Architrave -->
-    <polygon points="740,650 960,560 1180,650" fill="#0D070E" /> <!-- Pediment -->
-    <!-- Architectural Dentils / Gold Trim on Pediment -->
-    <polygon points="750,648 960,564 1170,648" fill="none" stroke="#E8C77E" stroke-width="1.5" opacity="0.35" />
-    <!-- Columns -->
-    <rect x="780" y="670" width="22" height="190" />
-    <rect x="830" y="670" width="22" height="190" />
-    <rect x="880" y="670" width="22" height="190" />
-    <rect x="930" y="670" width="22" height="190" />
-    <rect x="980" y="670" width="22" height="190" />
-    <rect x="1030" y="670" width="22" height="190" />
-    <rect x="1080" y="670" width="22" height="190" />
-    <rect x="1130" y="670" width="22" height="190" />
+  <!-- 3. University Quad Trees & Botanical Borders -->
+  <g fill="#140813">
+    <!-- Left grove -->
+    <ellipse cx="140" cy="730" rx="90" ry="120" />
+    <ellipse cx="230" cy="750" rx="80" ry="100" />
+    <ellipse cx="320" cy="765" rx="70" ry="85" />
+    <ellipse cx="80" cy="770" rx="65" ry="80" />
+    <!-- Right grove -->
+    <ellipse cx="1780" cy="725" rx="95" ry="125" />
+    <ellipse cx="1690" cy="745" rx="85" ry="105" />
+    <ellipse cx="1600" cy="760" rx="75" ry="90" />
+    <ellipse cx="1840" cy="765" rx="65" ry="80" />
   </g>
 
-  <!-- Left Wing -->
-  <rect x="380" y="700" width="380" height="160" fill="#09060B" />
-  <polygon points="360,700 570,640 780,700" fill="#150F17" />
+  <!-- 4. Grand Classical University Architecture (High-Contrast Layered Facade) -->
 
-  <!-- Right Wing -->
-  <rect x="1160" y="700" width="380" height="160" fill="#09060B" />
-  <polygon points="1140,700 1350,640 1560,700" fill="#150F17" />
+  <!-- Distant Background Wings -->
+  <rect x="260" y="660" width="1400" height="180" fill="#20101C" />
 
-  <!-- Iconic University Clock Tower (Center) -->
-  <g fill="#09060B">
-    <rect x="915" y="320" width="90" height="240" />
-    <polygon points="895,320 960,180 1025,320" fill="#0D070E" /> <!-- Spire -->
-    <!-- Spire Gold Finial -->
-    <circle cx="960" cy="180" r="5" fill="#E8C77E" filter="url(#glow)" />
-    <!-- Tower Balcony & Details -->
-    <rect x="900" y="380" width="120" height="16" fill="#1A101B" />
-    <rect x="905" y="480" width="110" height="14" fill="#1A101B" />
-    
-    <!-- Clock Face Glowing in Champagne Gold -->
-    <circle cx="960" cy="430" r="26" fill="#E8C77E" filter="url(#glow)" opacity="0.95" />
-    <circle cx="960" cy="430" r="22" fill="url(#clockGlow)" />
-    <!-- Clock Ring Border -->
-    <circle cx="960" cy="430" r="22" fill="none" stroke="#BE984B" stroke-width="1.5" />
-    <!-- Clock Hands -->
-    <line x1="960" y1="430" x2="960" y2="414" stroke="#100810" stroke-width="3" stroke-linecap="round" />
-    <line x1="960" y1="430" x2="973" y2="437" stroke="#100810" stroke-width="2.5" stroke-linecap="round" />
+  <!-- Left Main Wing -->
+  <rect x="340" y="620" width="420" height="200" fill="#2B1525" />
+  <!-- Wing Roof & Balustrade -->
+  <polygon points="320,620 550,560 770,620" fill="#3D1E34" />
+  <line x1="320" y1="620" x2="770" y2="620" stroke="#E8C77E" stroke-width="2.5" opacity="0.6" />
+  <line x1="340" y1="610" x2="750" y2="610" stroke="#F5DDA0" stroke-width="1.5" opacity="0.4" />
+
+  <!-- Right Main Wing -->
+  <rect x="1160" y="620" width="420" height="200" fill="#2B1525" />
+  <!-- Wing Roof & Balustrade -->
+  <polygon points="1150,620 1370,560 1600,620" fill="#3D1E34" />
+  <line x1="1150" y1="620" x2="1600" y2="620" stroke="#E8C77E" stroke-width="2.5" opacity="0.6" />
+  <line x1="1170" y1="610" x2="1580" y2="610" stroke="#F5DDA0" stroke-width="1.5" opacity="0.4" />
+
+  <!-- Grand Central Neoclassical Rotunda & Dome -->
+  <path d="M840,490 Q960,360 1080,490 Z" fill="#4E233E" />
+  <!-- Dome Ribs with Champagne Gold Detailing -->
+  <path d="M870,490 Q960,390 1050,490" fill="none" stroke="#E8C77E" stroke-width="2" opacity="0.5" />
+  <path d="M910,490 Q960,420 1010,490" fill="none" stroke="#E8C77E" stroke-width="1.5" opacity="0.5" />
+  <line x1="960" y1="360" x2="960" y2="490" stroke="#F5DDA0" stroke-width="2.5" opacity="0.7" />
+  <!-- Dome Cupola / Lantern -->
+  <rect x="942" y="325" width="36" height="35" fill="#3A192E" />
+  <polygon points="936,325 960,285 984,325" fill="#E8C77E" filter="url(#windowGlow)" />
+  <circle cx="960" cy="282" r="5" fill="#FFFFFF" filter="url(#windowGlow)" />
+
+  <!-- Soaring Central University Clock Tower -->
+  <!-- Tower Body -->
+  <rect x="910" y="240" width="100" height="280" fill="#36172B" />
+  <rect x="920" y="240" width="80" height="280" fill="#451D37" />
+  <!-- Tower Cornices -->
+  <rect x="895" y="300" width="130" height="16" fill="#582444" />
+  <line x1="895" y1="316" x2="1025" y2="316" stroke="#E8C77E" stroke-width="2" opacity="0.7" />
+  <rect x="900" y="415" width="120" height="14" fill="#582444" />
+  <line x1="900" y1="429" x2="1020" y2="429" stroke="#E8C77E" stroke-width="2" opacity="0.7" />
+
+  <!-- Iconic Clock Tower Spire -->
+  <polygon points="890,240 960,80 1030,240" fill="#240D1D" />
+  <!-- Spire Gold Trim & Beacon -->
+  <line x1="960" y1="80" x2="960" y2="240" stroke="#E8C77E" stroke-width="2" opacity="0.6" />
+  <circle cx="960" cy="78" r="7" fill="#FFFFFF" filter="url(#windowGlow)" />
+  <circle cx="960" cy="78" r="14" fill="#F5DDA0" opacity="0.45" filter="url(#windowGlow)" />
+
+  <!-- Glowing University Clock Face -->
+  <circle cx="960" cy="360" r="34" fill="#E8C77E" filter="url(#windowGlow)" opacity="0.9" />
+  <circle cx="960" cy="360" r="30" fill="url(#clockFace)" />
+  <circle cx="960" cy="360" r="30" fill="none" stroke="#BE984B" stroke-width="2.5" />
+  <!-- Clock Roman Hour Markers -->
+  <circle cx="960" cy="336" r="2.5" fill="#21140B" />
+  <circle cx="984" cy="360" r="2.5" fill="#21140B" />
+  <circle cx="960" cy="384" r="2.5" fill="#21140B" />
+  <circle cx="936" cy="360" r="2.5" fill="#21140B" />
+  <!-- Clock Hands pointing to 10:10 (Symbol of University Excellence) -->
+  <line x1="960" y1="360" x2="946" y2="344" stroke="#21140B" stroke-width="3.5" stroke-linecap="round" />
+  <line x1="960" y1="360" x2="978" y2="350" stroke="#21140B" stroke-width="2.8" stroke-linecap="round" />
+  <circle cx="960" cy="360" r="4" fill="#762D48" />
+
+  <!-- Central Monumental Portico & Colonnade -->
+  <!-- Portico Tympanum / Pediment -->
+  <polygon points="720,570 960,460 1200,570" fill="#4B203B" />
+  <polygon points="730,568 960,466 1190,568" fill="none" stroke="#E8C77E" stroke-width="3" />
+  <!-- Portico Relief Sculptural Cartouche -->
+  <circle cx="960" cy="525" r="18" fill="#6A2E53" stroke="#F5DDA0" stroke-width="2" />
+  <text x="960" y="531" font-family="'Times New Roman', serif" font-size="16" font-weight="bold" fill="#F5DDA0" text-anchor="middle">A</text>
+
+  <!-- Entablature & Architrave -->
+  <rect x="730" y="570" width="460" height="24" fill="#3D1730" />
+  <line x1="730" y1="594" x2="1190" y2="594" stroke="#E8C77E" stroke-width="3" />
+
+  <!-- Monumental Columns (8 Classical Fluted Columns) -->
+  <g fill="#431C35">
+    <!-- Base capitals -->
+    <rect x="748" y="594" width="28" height="8" fill="#E8C77E" opacity="0.7" />
+    <rect x="808" y="594" width="28" height="8" fill="#E8C77E" opacity="0.7" />
+    <rect x="868" y="594" width="28" height="8" fill="#E8C77E" opacity="0.7" />
+    <rect x="928" y="594" width="28" height="8" fill="#E8C77E" opacity="0.7" />
+    <rect x="988" y="594" width="28" height="8" fill="#E8C77E" opacity="0.7" />
+    <rect x="1048" y="594" width="28" height="8" fill="#E8C77E" opacity="0.7" />
+    <rect x="1108" y="594" width="28" height="8" fill="#E8C77E" opacity="0.7" />
+    <rect x="1168" y="594" width="28" height="8" fill="#E8C77E" opacity="0.7" />
+
+    <!-- Shafts -->
+    <rect x="752" y="602" width="20" height="218" fill="#38162C" />
+    <rect x="756" y="602" width="12" height="218" fill="url(#columnUplight)" />
+
+    <rect x="812" y="602" width="20" height="218" fill="#38162C" />
+    <rect x="816" y="602" width="12" height="218" fill="url(#columnUplight)" />
+
+    <rect x="872" y="602" width="20" height="218" fill="#38162C" />
+    <rect x="876" y="602" width="12" height="218" fill="url(#columnUplight)" />
+
+    <rect x="932" y="602" width="20" height="218" fill="#38162C" />
+    <rect x="936" y="602" width="12" height="218" fill="url(#columnUplight)" />
+
+    <rect x="992" y="602" width="20" height="218" fill="#38162C" />
+    <rect x="996" y="602" width="12" height="218" fill="url(#columnUplight)" />
+
+    <rect x="1052" y="602" width="20" height="218" fill="#38162C" />
+    <rect x="1056" y="602" width="12" height="218" fill="url(#columnUplight)" />
+
+    <rect x="1112" y="602" width="20" height="218" fill="#38162C" />
+    <rect x="1116" y="602" width="12" height="218" fill="url(#columnUplight)" />
+
+    <rect x="1172" y="602" width="20" height="218" fill="#38162C" />
+    <rect x="1176" y="602" width="12" height="218" fill="url(#columnUplight)" />
+
+    <!-- Plinths / Bases -->
+    <rect x="746" y="812" width="32" height="10" fill="#582444" />
+    <rect x="806" y="812" width="32" height="10" fill="#582444" />
+    <rect x="866" y="812" width="32" height="10" fill="#582444" />
+    <rect x="926" y="812" width="32" height="10" fill="#582444" />
+    <rect x="986" y="812" width="32" height="10" fill="#582444" />
+    <rect x="1046" y="812" width="32" height="10" fill="#582444" />
+    <rect x="1106" y="812" width="32" height="10" fill="#582444" />
+    <rect x="1166" y="812" width="32" height="10" fill="#582444" />
   </g>
 
-  <!-- Warm Windows with Radiant Champagne Gold Light Glow -->
-  <g fill="#F5DDA0" opacity="0.90" filter="url(#glow)">
+  <!-- Grand University Entryway Portals (Behind Columns) -->
+  <g fill="#180A16">
+    <path d="M848,740 Q860,710 872,740 L872,820 L848,820 Z" />
+    <path d="M944,720 Q960,680 976,720 L976,820 L944,820 Z" />
+    <path d="M1048,740 Q1060,710 1072,740 L1072,820 L1048,820 Z" />
+    <!-- Warm Portal Light Glow -->
+    <rect x="948" y="740" width="24" height="80" fill="#F5DDA0" opacity="0.75" filter="url(#windowGlow)" />
+  </g>
+
+  <!-- 5. Warm Glowing Campus Windows (Arched & Rectangular Hall Windows) -->
+  <g fill="#FFF3D0" filter="url(#windowGlow)">
     <!-- Tower Windows -->
-    <rect x="948" y="505" width="10" height="22" rx="5" />
-    <rect x="962" y="505" width="10" height="22" rx="5" />
-    <!-- Left Wing Windows -->
-    <rect x="420" y="730" width="20" height="35" rx="3" />
-    <rect x="470" y="730" width="20" height="35" rx="3" />
-    <rect x="520" y="730" width="20" height="35" rx="3" />
-    <rect x="570" y="730" width="20" height="35" rx="3" />
-    <rect x="620" y="730" width="20" height="35" rx="3" />
-    <rect x="670" y="730" width="20" height="35" rx="3" />
-    <rect x="420" y="790" width="20" height="35" rx="3" />
-    <rect x="470" y="790" width="20" height="35" rx="3" />
-    <rect x="520" y="790" width="20" height="35" rx="3" />
-    <rect x="570" y="790" width="20" height="35" rx="3" />
-    <rect x="620" y="790" width="20" height="35" rx="3" />
-    <rect x="670" y="790" width="20" height="35" rx="3" />
-    <!-- Right Wing Windows -->
-    <rect x="1230" y="730" width="20" height="35" rx="3" />
-    <rect x="1280" y="730" width="20" height="35" rx="3" />
-    <rect x="1330" y="730" width="20" height="35" rx="3" />
-    <rect x="1380" y="730" width="20" height="35" rx="3" />
-    <rect x="1430" y="730" width="20" height="35" rx="3" />
-    <rect x="1480" y="730" width="20" height="35" rx="3" />
-    <rect x="1230" y="790" width="20" height="35" rx="3" />
-    <rect x="1280" y="790" width="20" height="35" rx="3" />
-    <rect x="1330" y="790" width="20" height="35" rx="3" />
-    <rect x="1380" y="790" width="20" height="35" rx="3" />
-    <rect x="1430" y="790" width="20" height="35" rx="3" />
-    <rect x="1480" y="790" width="20" height="35" rx="3" />
+    <rect x="938" y="445" width="16" height="34" rx="8" />
+    <rect x="966" y="445" width="16" height="34" rx="8" />
+
+    <!-- Left Wing Upper Tier (Arched Neoclassical Windows) -->
+    <path d="M375,670 Q387,648 399,670 L399,695 L375,695 Z" />
+    <path d="M435,670 Q447,648 459,670 L459,695 L435,695 Z" />
+    <path d="M495,670 Q507,648 519,670 L519,695 L495,695 Z" />
+    <path d="M555,670 Q567,648 579,670 L579,695 L555,695 Z" />
+    <path d="M615,670 Q627,648 639,670 L639,695 L615,695 Z" />
+    <path d="M675,670 Q687,648 699,670 L699,695 L675,695 Z" />
+
+    <!-- Left Wing Lower Tier -->
+    <rect x="375" y="725" width="24" height="42" rx="3" />
+    <rect x="435" y="725" width="24" height="42" rx="3" />
+    <rect x="495" y="725" width="24" height="42" rx="3" />
+    <rect x="555" y="725" width="24" height="42" rx="3" />
+    <rect x="615" y="725" width="24" height="42" rx="3" />
+    <rect x="675" y="725" width="24" height="42" rx="3" />
+
+    <!-- Right Wing Upper Tier (Arched Neoclassical Windows) -->
+    <path d="M1245,670 Q1257,648 1269,670 L1269,695 L1245,695 Z" />
+    <path d="M1305,670 Q1317,648 1329,670 L1329,695 L1305,695 Z" />
+    <path d="M1365,670 Q1377,648 1389,670 L1389,695 L1365,695 Z" />
+    <path d="M1425,670 Q1437,648 1449,670 L1449,695 L1425,695 Z" />
+    <path d="M1485,670 Q1497,648 1509,670 L1509,695 L1485,695 Z" />
+    <path d="M1545,670 Q1557,648 1569,670 L1569,695 L1545,695 Z" />
+
+    <!-- Right Wing Lower Tier -->
+    <rect x="1245" y="725" width="24" height="42" rx="3" />
+    <rect x="1305" y="725" width="24" height="42" rx="3" />
+    <rect x="1365" y="725" width="24" height="42" rx="3" />
+    <rect x="1425" y="725" width="24" height="42" rx="3" />
+    <rect x="1485" y="725" width="24" height="42" rx="3" />
+    <rect x="1545" y="725" width="24" height="42" rx="3" />
   </g>
 
-  <!-- Foreground Quad Lawn -->
-  <polygon points="0,920 1920,920 1920,1080 0,1080" fill="#09060B" />
-  <!-- Walkway Reflection in Warm Burgundy & Champagne Surface -->
-  <polygon points="960,920 1140,1080 780,1080" fill="#30202E" opacity="0.75" />
-  <line x1="960" y1="920" x2="960" y2="1080" stroke="#E8C77E" stroke-width="2" opacity="0.30" />
+  <!-- 6. Classical Foundation, Grand Steps & Colonnaded Terrace -->
+  <rect x="220" y="822" width="1480" height="24" fill="#200D1C" />
+  <line x1="220" y1="822" x2="1700" y2="822" stroke="#E8C77E" stroke-width="2.5" opacity="0.75" />
+  <!-- Grand Terrace Steps -->
+  <polygon points="680,846 1240,846 1270,890 650,890" fill="#2D1326" />
+  <line x1="680" y1="846" x2="1240" y2="846" stroke="#F5DDA0" stroke-width="2" opacity="0.6" />
+  <line x1="665" y1="868" x2="1255" y2="868" stroke="#E8C77E" stroke-width="1.5" opacity="0.5" />
+  <line x1="650" y1="890" x2="1270" y2="890" stroke="#E8C77E" stroke-width="2" opacity="0.7" />
+
+  <!-- 7. Foreground Quad Lawn & Golden Walkway Reflection -->
+  <polygon points="0,885 1920,885 1920,1080 0,1080" fill="#0C050D" />
+  <path d="M0,885 Q960,865 1920,885 L1920,895 Q960,875 0,895 Z" fill="#762D48" opacity="0.6" />
+
+  <!-- Central Promenade / Walkway with Champagne Light Reflection -->
+  <polygon points="960,890 1200,1080 720,1080" fill="url(#walkwayGrad)" />
+  <line x1="960" y1="890" x2="960" y2="1080" stroke="#FFF5D6" stroke-width="2.5" opacity="0.6" filter="url(#windowGlow)" />
+  <line x1="930" y1="940" x2="990" y2="940" stroke="#F5DDA0" stroke-width="2" opacity="0.4" />
+  <line x1="890" y1="1010" x2="1030" y2="1010" stroke="#F5DDA0" stroke-width="2" opacity="0.4" />
 </svg>

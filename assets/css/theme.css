@@ -528,11 +528,13 @@ html.theme-transitioning *::after {
 }
 
 [data-theme="light"] .hero-title .highlight-gold {
-    background: linear-gradient(135deg, #762D48 0%, #98415F 35%, #BE984B 70%, #762D48 100%);
+    color: #762D48;
+    background: linear-gradient(120deg, #762D48 0%, #B65B78 25%, #E8C77E 50%, #98415F 75%, #762D48 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 2px 8px rgba(190, 152, 75, 0.35));
+    filter: drop-shadow(0 2px 10px rgba(190, 152, 75, 0.40));
 }
 
 [data-theme="light"] .hero-description {
