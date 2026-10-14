@@ -183,7 +183,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Cinematic Events Header -->
-<section style="background: radial-gradient(circle at 50% 20%, rgba(216, 185, 106, 0.12) 0%, rgba(84, 25, 35, 0.75) 50%, #100D10 100%); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border-color);">
+<section style="background: radial-gradient(circle at 50% 20%, rgba(216, 185, 106, 0.12) 0%, rgba(90, 26, 43, 0.75) 50%, #0F0C12 100%); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border-color);">
     <div class="container text-center" style="text-align: center;">
         <span class="section-eyebrow">Alumni Gatherings &bull; Summits &bull; Reunions</span>
         <h1 class="section-title" style="color: var(--text-light); margin-bottom: 0.8rem;">University Events</h1>

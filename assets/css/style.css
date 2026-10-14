@@ -1,8 +1,9 @@
 /* ============================================================
-   ALUMNI CONNECT - BURGUNDY, CHAMPAGNE GOLD & CHARCOAL DESIGN SYSTEM
-   Burgundy: #541923 | Dark Charcoal: #0A080A | Base: #100D10 | Surface: #1C171A | Elevated: #282025
-   Champagne Gold: #D8B96A, #E8CB83, #B49345 | Secondary Burgundy: #85414A, #6B2632
-   Typography: #F4EEE7 (Main) | #B7A9AD (Muted) | #21170A (On Gold)
+   ALUMNI CONNECT - WINE BURGUNDY, CHAMPAGNE GOLD, PEACOCK TEAL & LIQUID GLASS UI
+   Plum-Charcoal: #0F0C12, #08060A, #1D1620 | Burgundy: #5A1A2B, #34101A, #7A2A3E
+   Champagne Gold: #D8B96A, #E8CB83, #B49345 | Peacock Teal: #2F8F8A, #6CC4BA, #1B4B4A
+   Rose Quartz & Copper: #E3AEB4, #2E1B22 | #C97B4A, #2D1E16
+   Typography: #F5EFE8 (Main) | #B9AAB2 (Muted) | #21170A (On Gold) | #061A19 (On Teal)
    Handcrafted Liquid Glass Buttons & Accessible Responsive CSS3 UI
    ============================================================ */
 
@@ -12,44 +13,59 @@
    1. MASTER COLOR PALETTE & CSS CUSTOM PROPERTIES
    ------------------------------------------------------------ */
 :root {
-    /* Backgrounds */
-    --bg-color: #100D10;
-    --bg-dark: #0A080A;
-    --bg-secondary: #171216;
+    /* Backgrounds (plum-tinted charcoal) */
+    --bg-color: #0F0C12;
+    --bg-dark: #08060A;
+    --bg-secondary: #171119;
 
     /* Card and component surfaces */
-    --surface-color: #1C171A;
-    --surface-dark: #120E11;
-    --surface-elevated: #282025;
+    --surface-color: #1D1620;
+    --surface-dark: #130E15;
+    --surface-elevated: #2A2030;
 
     /* Burgundy brand colors */
-    --primary-color: #541923;
-    --primary-dark: #351017;
-    --primary-light: #6B2632;
-    --secondary-color: #85414A;
+    --primary-color: #5A1A2B;
+    --primary-dark: #34101A;
+    --primary-light: #7A2A3E;
+    --secondary-color: #9A4B58;
 
     /* Champagne gold accents */
     --accent-color: #D8B96A;
     --accent-light: #E8CB83;
     --accent-dark: #B49345;
 
+    /* Peacock teal (cool complement to burgundy) */
+    --teal-color: #2F8F8A;
+    --teal-light: #6CC4BA;
+    --teal-dark: #1B4B4A;
+    --teal-bg: #11262A;
+
+    /* Rose quartz and copper (small supporting accents) */
+    --rose-color: #E3AEB4;
+    --rose-bg: #2E1B22;
+    --copper-color: #C97B4A;
+    --copper-bg: #2D1E16;
+
     /* Typography */
-    --text-color: #F4EEE7;
-    --text-main: #F4EEE7;
+    --text-color: #F5EFE8;
+    --text-main: #F5EFE8;
     --text-light: #FFFFFF;
-    --text-muted: #B7A9AD;
-    --text-muted-light: #D8CDD0;
+    --text-muted: #B9AAB2;
+    --text-muted-light: #DACFD5;
     --text-on-gold: #21170A;
+    --text-on-teal: #061A19;
 
     /* Borders */
-    --border-color: #3A2B30;
+    --border-color: #3B2B36;
     --border-gold: rgba(216, 185, 106, 0.35);
+    --border-teal: rgba(108, 196, 186, 0.35);
     --border-dark: rgba(255, 255, 255, 0.08);
 
     /* Liquid Glass */
-    --glass-bg: rgba(40, 32, 37, 0.62);
-    --glass-bg-primary: rgba(84, 25, 35, 0.58);
-    --glass-border: rgba(244, 238, 231, 0.12);
+    --glass-bg: rgba(42, 32, 48, 0.62);
+    --glass-bg-primary: rgba(90, 26, 43, 0.58);
+    --glass-bg-teal: rgba(27, 75, 74, 0.52);
+    --glass-border: rgba(245, 239, 232, 0.12);
     --glass-border-gold: rgba(216, 185, 106, 0.45);
     --glass-highlight: rgba(255, 255, 255, 0.09);
     --glass-blur: 14px;
@@ -60,15 +76,15 @@
     --btn-primary-text: #21170A;
 
     /* Burgundy button */
-    --btn-secondary-bg: #541923;
-    --btn-secondary-hover: #6B2632;
+    --btn-secondary-bg: #5A1A2B;
+    --btn-secondary-hover: #7A2A3E;
     --btn-secondary-text: #FFFFFF;
 
     /* Translucent glass button */
-    --btn-glass-bg: rgba(40, 32, 37, 0.68);
-    --btn-glass-hover: rgba(84, 25, 35, 0.78);
-    --btn-glass-text: #F4EEE7;
-    --btn-glass-border: rgba(244, 238, 231, 0.16);
+    --btn-glass-bg: rgba(42, 32, 48, 0.68);
+    --btn-glass-hover: rgba(90, 26, 43, 0.78);
+    --btn-glass-text: #F5EFE8;
+    --btn-glass-border: rgba(245, 239, 232, 0.16);
 
     /* Status colors */
     --success-color: #78C99A;
@@ -80,17 +96,25 @@
     --danger-color: #F08C91;
     --danger-bg: #32191D;
 
-    --info-color: #8DC8F0;
-    --info-bg: #172731;
+    --info-color: #6CC4BA;
+    --info-bg: #11262A;
 
-    --disabled-color: #8B8084;
-    --disabled-bg: #211A1E;
+    --disabled-color: #8B8086;
+    --disabled-bg: #211A20;
+
+    /* Ambient background gradients (decorative, very low opacity) */
+    --ambient-burgundy: radial-gradient(ellipse at 12% 0%, rgba(122, 42, 62, 0.32), transparent 55%);
+    --ambient-teal: radial-gradient(ellipse at 100% 100%, rgba(47, 143, 138, 0.14), transparent 50%);
+    --ambient-gold: radial-gradient(ellipse at 50% -10%, rgba(216, 185, 106, 0.08), transparent 45%);
+    --hero-gradient: linear-gradient(135deg, #34101A 0%, #5A1A2B 45%, #1D1620 100%);
+    --gold-hairline: linear-gradient(90deg, transparent, rgba(216, 185, 106, 0.6), transparent);
 
     /* Shared component geometry */
     --border-radius: 10px;
     --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
     --card-hover-shadow: 0 14px 36px rgba(0, 0, 0, 0.38);
     --gold-glow: 0 0 16px rgba(216, 185, 106, 0.16);
+    --teal-glow: 0 0 16px rgba(108, 196, 186, 0.14);
 
     /* Structural and legacy backwards-compatibility mappings */
     --card-bg: var(--surface-color);
@@ -110,13 +134,13 @@
     --pale-highlight: var(--accent-light);
     --warm-white: var(--text-color);
     --purple-glow: var(--gold-glow);
-    --glass-bg-subtle: rgba(23, 18, 22, 0.52);
-    --glass-bg-elevated: rgba(40, 32, 37, 0.75);
+    --glass-bg-subtle: rgba(29, 22, 32, 0.52);
+    --glass-bg-elevated: rgba(42, 32, 48, 0.75);
     --glass-border-light: var(--glass-border-gold);
-    --glass-modal-bg: linear-gradient(155deg, rgba(28, 23, 26, 0.96) 0%, rgba(16, 13, 16, 0.98) 100%);
+    --glass-modal-bg: linear-gradient(155deg, rgba(29, 22, 32, 0.96) 0%, rgba(15, 12, 18, 0.98) 100%);
     --glass-shadow: var(--card-shadow);
     --glass-hover-shadow: var(--card-hover-shadow);
-    --input-bg: rgba(28, 23, 26, 0.85);
+    --input-bg: var(--surface-dark);
     --input-text: var(--text-color);
     --input-border: var(--border-color);
     --input-placeholder: var(--text-muted);
@@ -132,15 +156,25 @@
     --surface-dark: #F3EFE9;
     --surface-elevated: #FFFFFF;
 
-    --primary-color: #541923;
-    --primary-dark: #351017;
-    --primary-light: #6B2632;
-    --secondary-color: #85414A;
+    --primary-color: #5A1A2B;
+    --primary-dark: #34101A;
+    --primary-light: #7A2A3E;
+    --secondary-color: #9A4B58;
 
     --accent-color: #B49345;
     --accent-light: #D8B96A;
     --accent-dark: #8C6D28;
     --pale-highlight: #B49345;
+
+    --teal-color: #2F8F8A;
+    --teal-light: #1B4B4A;
+    --teal-dark: #11262A;
+    --teal-bg: #E6F4F2;
+
+    --rose-color: #A0525D;
+    --rose-bg: #FAEFF1;
+    --copper-color: #964F25;
+    --copper-bg: #F8EFE9;
 
     --text-color: #1A1315;
     --text-main: #1A1315;
@@ -148,22 +182,25 @@
     --text-muted: #6B5E63;
     --text-muted-light: #4A3E43;
     --text-on-gold: #21170A;
+    --text-on-teal: #061A19;
 
-    --border-color: rgba(58, 43, 48, 0.16);
+    --border-color: rgba(59, 43, 54, 0.16);
     --border-gold: rgba(180, 147, 69, 0.35);
-    --border-dark: rgba(58, 43, 48, 0.22);
+    --border-teal: rgba(47, 143, 138, 0.35);
+    --border-dark: rgba(59, 43, 54, 0.22);
 
-    --card-shadow: 0 10px 28px rgba(58, 43, 48, 0.08);
-    --card-hover-shadow: 0 16px 38px rgba(58, 43, 48, 0.14);
+    --card-shadow: 0 10px 28px rgba(59, 43, 54, 0.08);
+    --card-hover-shadow: 0 16px 38px rgba(59, 43, 54, 0.14);
     --gold-glow: 0 0 16px rgba(180, 147, 69, 0.20);
+    --teal-glow: 0 0 16px rgba(47, 143, 138, 0.18);
 
     --glass-bg: rgba(255, 255, 255, 0.88);
     --glass-bg-subtle: rgba(255, 255, 255, 0.72);
     --glass-bg-elevated: rgba(255, 255, 255, 0.96);
-    --glass-border: rgba(58, 43, 48, 0.14);
+    --glass-border: rgba(59, 43, 54, 0.14);
     --glass-border-gold: rgba(180, 147, 69, 0.32);
-    --glass-shadow: 0 10px 30px rgba(58, 43, 48, 0.08);
-    --glass-hover-shadow: 0 16px 38px rgba(58, 43, 48, 0.14);
+    --glass-shadow: 0 10px 30px rgba(59, 43, 54, 0.08);
+    --glass-hover-shadow: 0 16px 38px rgba(59, 43, 54, 0.14);
 }
 
 /* ------------------------------------------------------------
@@ -181,6 +218,10 @@ html {
 
 body {
     background-color: var(--bg-color);
+    background-image: var(--ambient-burgundy), var(--ambient-teal), var(--ambient-gold);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     color: var(--text-color);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.6;
@@ -189,45 +230,15 @@ body {
     position: relative;
 }
 
-/* Atmospheric Layered Radial Glows for Full-Site Glass Refraction */
-body::before {
-    content: '';
-    position: fixed;
-    top: -10%;
-    right: -5%;
-    width: 65vw;
-    height: 65vw;
-    max-width: 900px;
-    max-height: 900px;
-    background: radial-gradient(circle, rgba(216, 185, 106, 0.12) 0%, rgba(84, 25, 35, 0.18) 45%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-    filter: blur(50px);
-}
-
-body::after {
-    content: '';
-    position: fixed;
-    bottom: -15%;
-    left: -5%;
-    width: 60vw;
-    height: 60vw;
-    max-width: 850px;
-    max-height: 850px;
-    background: radial-gradient(circle, rgba(84, 25, 35, 0.25) 0%, rgba(216, 185, 106, 0.08) 50%, transparent 75%);
-    pointer-events: none;
-    z-index: 0;
-    filter: blur(50px);
-}
-
 a {
-    color: var(--accent-light);
+    color: var(--teal-light);
     text-decoration: none;
-    transition: color 0.25s ease, opacity 0.25s ease;
+    transition: color 0.25s ease, text-decoration 0.25s ease;
 }
 
 a:hover {
-    color: var(--accent-color);
+    color: var(--teal-color);
+    text-decoration: underline;
 }
 
 img {
@@ -237,12 +248,16 @@ img {
 
 /* Accessible Keyboard Focus Indicators */
 a:focus-visible,
-button:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--accent-light);
+    outline-offset: 3px;
+}
+
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 3px;
+    outline: 2px solid var(--teal-light);
+    outline-offset: 2px;
 }
 
 /* Cinematic Custom Scrollbar */
@@ -250,14 +265,16 @@ textarea:focus-visible {
     width: 10px;
 }
 ::-webkit-scrollbar-track {
-    background: #0A080A;
+    background: var(--bg-dark);
 }
 ::-webkit-scrollbar-thumb {
-    background: #1C171A;
+    background: var(--surface-color);
     border: 1px solid var(--border-gold);
     border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
+    background: var(--surface-elevated);
+}
     background: var(--accent-color, #D8B96A);
 }
 
@@ -382,7 +399,7 @@ textarea:focus-visible {
     transform: translate(-50%, -50%);
     width: 460px;
     height: 160px;
-    background: radial-gradient(ellipse, rgba(147, 51, 234, 0.2) 0%, rgba(124, 58, 237, 0.08) 50%, transparent 75%);
+    background: radial-gradient(ellipse, rgba(90, 26, 43, 0.22) 0%, rgba(216, 185, 106, 0.08) 50%, transparent 75%);
     pointer-events: none;
     z-index: -1;
     filter: blur(12px);
@@ -405,7 +422,7 @@ textarea:focus-visible {
     line-height: 1.22;
     color: var(--text-color);
     text-transform: uppercase;
-    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8), 0 0 35px rgba(124, 58, 237, 0.3);
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8), 0 0 35px rgba(216, 185, 106, 0.25);
 }
 
 .gold-divider {
@@ -427,7 +444,7 @@ textarea:focus-visible {
     width: 8px;
     height: 8px;
     background: var(--accent-color);
-    box-shadow: 0 0 10px rgba(196, 181, 253, 0.75);
+    box-shadow: 0 0 10px rgba(216, 185, 106, 0.55);
 }
 
 @keyframes goldDividerPulse {
@@ -447,7 +464,7 @@ textarea:focus-visible {
    5. NAVIGATION BAR & MICRO-INTERACTIONS
    ------------------------------------------------------------ */
 .navbar {
-    background: rgba(19, 13, 32, 0.58);
+    background: rgba(29, 22, 32, 0.72);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     color: var(--text-light);
@@ -455,16 +472,16 @@ textarea:focus-visible {
     top: 0;
     z-index: 1000;
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    border-bottom: 1px solid rgba(196, 181, 253, 0.24);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .navbar.scrolled {
-    background: rgba(16, 9, 29, 0.78);
+    background: rgba(19, 14, 21, 0.90);
     backdrop-filter: blur(24px) saturate(190%);
     -webkit-backdrop-filter: blur(24px) saturate(190%);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.70), 0 0 24px rgba(124, 58, 237, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.14);
-    border-bottom-color: rgba(196, 181, 253, 0.38);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.70), var(--gold-glow), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    border-bottom-color: var(--border-gold);
 }
 
 .navbar-container {
@@ -588,7 +605,7 @@ textarea:focus-visible {
     height: 32px;
     border-radius: 50%;
     border: 2px solid var(--accent-color);
-    box-shadow: 0 0 10px rgba(124, 58, 237, 0.35);
+    box-shadow: 0 0 10px rgba(216, 185, 106, 0.35);
 }
 
 /* Mobile Toggle */
@@ -661,10 +678,9 @@ textarea:focus-visible {
     position: relative;
     padding: 7rem 1.5rem 6.5rem;
     background:
-        radial-gradient(ellipse at 50% 25%, rgba(84, 25, 35, 0.45) 0%, rgba(10, 2, 4, 0.88) 65%, #0A080A 100%),
-        linear-gradient(180deg, rgba(10, 2, 4, 0.78) 0%, rgba(28, 23, 26, 0.92) 75%, #0A080A 100%),
+        var(--hero-gradient),
         url("../images/campus-hero.svg") center/cover no-repeat;
-    color: #F8F7FC;
+    color: var(--text-color);
     overflow: hidden;
 }
 
@@ -672,7 +688,7 @@ textarea:focus-visible {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 20%, rgba(216, 185, 106, 0.12) 0%, transparent 60%);
+    background: radial-gradient(circle at 50% 20%, rgba(216, 185, 106, 0.10) 0%, transparent 60%);
     pointer-events: none;
     z-index: 1;
 }
@@ -681,13 +697,13 @@ textarea:focus-visible {
     max-width: 960px;
     position: relative;
     z-index: 2;
-    background: rgba(23, 14, 42, 0.48);
+    background: var(--glass-bg);
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(196, 181, 253, 0.25);
+    border: 1px solid var(--border-gold);
     border-radius: 28px;
     padding: 3.8rem 2.8rem;
-    box-shadow: 0 25px 65px rgba(0, 0, 0, 0.65), 0 0 50px rgba(124, 58, 237, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 25px 65px rgba(0, 0, 0, 0.65), var(--gold-glow), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .hero-subtitle-tag {
@@ -699,12 +715,12 @@ textarea:focus-visible {
     text-transform: uppercase;
     margin-bottom: 1.4rem;
     padding: 0.45rem 1.5rem;
-    background: rgba(124, 58, 237, 0.20);
+    background: rgba(90, 26, 43, 0.45);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(196, 181, 253, 0.40);
+    border: 1px solid var(--border-gold);
     border-radius: 50px;
-    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.20);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.20);
     animation: heroRevealTag 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -715,13 +731,13 @@ textarea:focus-visible {
     letter-spacing: -0.5px;
     margin-bottom: 1.6rem;
     text-transform: uppercase;
-    color: #F8F7FC;
+    color: var(--text-light);
     animation: heroRevealTitle 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
 }
 
 .hero-title .highlight-gold {
     color: var(--accent-color);
-    text-shadow: 0 0 35px rgba(147, 51, 234, 0.5);
+    text-shadow: 0 0 35px rgba(216, 185, 106, 0.35);
 }
 
 .hero-description {
@@ -948,7 +964,32 @@ textarea:focus-visible {
     transform: translateY(-2px);
 }
 
-/* 4. Subdued Danger Action: Delete & Reject (.btn-glass-danger, .btn-danger, .btn-delete, .btn-delete-admin, .btn-reject, .btn-reject-admin) */
+/* 4. Networking & Informational Action: Peacock Teal Glass (.btn-glass-teal) */
+.btn-glass-teal {
+    color: var(--text-light);
+    background: var(--glass-bg-teal);
+    border: 1px solid var(--border-teal);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 4px 12px rgba(0, 0, 0, 0.22);
+}
+
+.btn-glass-teal:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: rgba(47, 143, 138, 0.65);
+    color: #FFFFFF;
+    border-color: var(--teal-light);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 8px 20px rgba(0, 0, 0, 0.35),
+        var(--teal-glow);
+    transform: translateY(-2px);
+}
+
+.btn-glass-teal:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(0.98);
+}
+
+/* 5. Subdued Danger Action: Delete & Reject (.btn-glass-danger, .btn-danger, .btn-delete, .btn-delete-admin, .btn-reject, .btn-reject-admin) */
 .btn-glass-danger,
 .btn-danger,
 .btn-delete,
@@ -974,7 +1015,7 @@ textarea:focus-visible {
     transform: translateY(-2px);
 }
 
-/* 5. Restrained Success Action: Approve (.btn-glass-success, .btn-success, .btn-approve, .btn-approve-admin) */
+/* 6. Restrained Success Action: Approve (.btn-glass-success, .btn-success, .btn-approve, .btn-approve-admin) */
 .btn-glass-success,
 .btn-success,
 .btn-approve,
@@ -996,7 +1037,7 @@ textarea:focus-visible {
     transform: translateY(-2px);
 }
 
-/* 6. Icon-Only Button (.btn-glass-icon) */
+/* 7. Icon-Only Button (.btn-glass-icon) */
 .btn-glass-icon {
     min-height: 38px;
     width: 38px;
@@ -1007,7 +1048,7 @@ textarea:focus-visible {
     justify-content: center;
 }
 
-/* 7. Special Return to Homepage Button (.btn-return-home) */
+/* 8. Special Return to Homepage Button (.btn-return-home) */
 .btn-return-home {
     display: inline-flex;
     align-items: center;
@@ -1052,13 +1093,20 @@ textarea:focus-visible {
     box-shadow: var(--gold-glow);
 }
 
+.teal-glow {
+    box-shadow: var(--teal-glow);
+}
+
 /* Fallback for browsers without backdrop-filter support */
 @supports not (
     (backdrop-filter: blur(1px)) or
     (-webkit-backdrop-filter: blur(1px))
 ) {
     .btn-glass {
-        background: #282025;
+        background: #2A2030;
+    }
+    .btn-glass-teal {
+        background: var(--teal-dark);
     }
     .btn-gold,
     .btn-glass-primary {
@@ -1067,7 +1115,7 @@ textarea:focus-visible {
     .btn-primary,
     .btn-secondary,
     .btn-glass-secondary {
-        background: #541923;
+        background: #5A1A2B;
     }
     .btn-outline,
     .btn-outline-gold,
@@ -1075,7 +1123,7 @@ textarea:focus-visible {
     .btn-outline-glass,
     .btn-glass-outline,
     .btn-return-home {
-        background: #1C171A;
+        background: #1D1620;
     }
 }
 
@@ -1105,13 +1153,13 @@ textarea:focus-visible {
    8. CARD SYSTEM (ELEVATED SURFACES)
    ------------------------------------------------------------ */
 .card {
-    background: linear-gradient(155deg, rgba(48, 16, 21, 0.65) 0%, rgba(28, 23, 26, 0.75) 100%);
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    background: var(--surface-color);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
     color: var(--text-color);
     border-radius: var(--border-radius);
-    border: 1px solid rgba(196, 181, 253, 0.24);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(124, 58, 237, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
                 box-shadow 0.35s ease, 
                 border-color 0.3s ease;
@@ -1120,24 +1168,24 @@ textarea:focus-visible {
 }
 
 .card:hover {
-    transform: translateY(-7px);
-    border-color: rgba(196, 181, 253, 0.48);
-    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.75), 0 0 35px rgba(124, 58, 237, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transform: translateY(-6px);
+    border-color: var(--border-gold);
+    box-shadow: var(--card-hover-shadow);
 }
 
 /* Dark Card Accent */
 .card-dark {
-    background: linear-gradient(155deg, rgba(31, 19, 53, 0.55) 0%, rgba(16, 9, 29, 0.62) 100%);
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    background: var(--surface-dark);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
     color: var(--text-light);
-    border: 1px solid rgba(196, 181, 253, 0.24);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(124, 58, 237, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
 }
 
 .card-dark:hover {
-    transform: translateY(-7px);
-    border-color: rgba(196, 181, 253, 0.45);
+    transform: translateY(-6px);
+    border-color: var(--border-gold);
     box-shadow: var(--card-hover-shadow);
 }
 
@@ -1165,19 +1213,19 @@ textarea:focus-visible {
 
 .stat-item {
     padding: 2.4rem 1.6rem;
-    background: linear-gradient(155deg, rgba(36, 23, 61, 0.48) 0%, rgba(23, 14, 42, 0.55) 100%);
+    background: var(--surface-color);
     border-radius: var(--border-radius);
-    border: 1px solid rgba(196, 181, 253, 0.24);
+    border: 1px solid var(--border-color);
     backdrop-filter: blur(16px) saturate(150%);
     -webkit-backdrop-filter: blur(16px) saturate(150%);
-    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.50), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    box-shadow: var(--card-shadow);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .stat-item:hover {
     transform: translateY(-5px);
-    border-color: rgba(196, 181, 253, 0.50);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(124, 58, 237, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    border-color: var(--border-gold);
+    box-shadow: var(--card-hover-shadow), var(--gold-glow);
 }
 
 .stat-number {
@@ -1187,7 +1235,7 @@ textarea:focus-visible {
     line-height: 1;
     margin-bottom: 0.5rem;
     letter-spacing: -1px;
-    text-shadow: 0 2px 15px rgba(124, 58, 237, 0.4);
+    text-shadow: 0 2px 15px rgba(216, 185, 106, 0.35);
 }
 
 .stat-label {
@@ -1199,19 +1247,19 @@ textarea:focus-visible {
 }
 
 /* ------------------------------------------------------------
-   10. ALUMNI DIRECTORY (EDITORIAL PROFILES & PORTRAIT HALOS)
+   10. ALUMNI DIRECTORY (PEACOCK TEAL MOOD ACCENT)
    ------------------------------------------------------------ */
 .alumni-card {
     display: flex;
     flex-direction: column;
     text-align: center;
     padding: 2.6rem 2.2rem 2.2rem;
-    background: linear-gradient(170deg, rgba(48, 16, 21, 0.72) 0%, rgba(28, 23, 26, 0.65) 55%, rgba(10, 2, 4, 0.78) 100%);
+    background: var(--surface-color);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid var(--border-gold);
+    border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
-    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.60), inset 0 1px 0 rgba(216, 185, 106, 0.18);
+    box-shadow: var(--card-shadow);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.4s ease,
                 border-color 0.35s ease;
@@ -1220,7 +1268,7 @@ textarea:focus-visible {
     overflow: hidden;
 }
 
-/* Subtle Ambient Backlight Glow */
+/* Peacock Teal Ambient Backlight Glow */
 .alumni-card::before {
     content: '';
     position: absolute;
@@ -1229,15 +1277,15 @@ textarea:focus-visible {
     transform: translateX(-50%);
     width: 220px;
     height: 140px;
-    background: radial-gradient(ellipse at top, rgba(147, 51, 234, 0.15) 0%, rgba(124, 58, 237, 0.08) 50%, transparent 80%);
+    background: radial-gradient(ellipse at top, rgba(47, 143, 138, 0.16) 0%, rgba(27, 75, 74, 0.08) 50%, transparent 80%);
     pointer-events: none;
     z-index: 0;
 }
 
 .alumni-card:hover {
     transform: translateY(-8px);
-    border-color: rgba(216, 185, 106, 0.50);
-    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.85), 0 0 28px rgba(216, 185, 106, 0.25), inset 0 1px 0 rgba(216, 185, 106, 0.25);
+    border-color: var(--border-teal);
+    box-shadow: var(--card-hover-shadow), var(--teal-glow);
 }
 
 .alumni-header-ribbon {
@@ -1249,15 +1297,15 @@ textarea:focus-visible {
 .alumni-badge-grad {
     display: inline-block;
     padding: 0.3rem 0.95rem;
-    background: rgba(124, 58, 237, 0.2);
-    color: var(--accent-light);
-    border: 1px solid rgba(196, 181, 253, 0.35);
+    background: var(--teal-bg);
+    color: var(--teal-light);
+    border: 1px solid var(--border-teal);
     border-radius: 20px;
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.8px;
     text-transform: uppercase;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .alumni-avatar-wrapper {
@@ -1266,20 +1314,20 @@ textarea:focus-visible {
     margin: 0 auto 1.4rem;
     border-radius: 50%;
     padding: 3px;
-    background: linear-gradient(135deg, var(--accent-color), var(--accent-light), var(--accent-dark));
-    box-shadow: 0 0 24px rgba(216, 185, 106, 0.35), 0 0 45px rgba(84, 25, 35, 0.45);
+    background: linear-gradient(135deg, var(--teal-light), var(--teal-color), var(--teal-dark));
+    box-shadow: 0 0 24px rgba(108, 196, 186, 0.28), 0 0 45px rgba(47, 143, 138, 0.22);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
     position: relative;
     z-index: 1;
 }
 
-/* Concentric Ambient Halo */
+/* Concentric Peacock Teal Halo */
 .alumni-avatar-wrapper::before {
     content: '';
     position: absolute;
     inset: -8px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(216, 185, 106, 0.35) 0%, rgba(84, 25, 35, 0.25) 50%, transparent 75%);
+    background: radial-gradient(circle, rgba(108, 196, 186, 0.35) 0%, rgba(47, 143, 138, 0.20) 50%, transparent 75%);
     opacity: 0.65;
     transition: opacity 0.4s ease, transform 0.4s ease;
     pointer-events: none;
@@ -1287,7 +1335,7 @@ textarea:focus-visible {
 
 .alumni-card:hover .alumni-avatar-wrapper {
     transform: scale(1.06);
-    box-shadow: 0 0 35px rgba(216, 185, 106, 0.5), 0 0 60px rgba(84, 25, 35, 0.4);
+    box-shadow: 0 0 32px rgba(108, 196, 186, 0.45);
 }
 
 .alumni-card:hover .alumni-avatar-wrapper::before {
@@ -1300,12 +1348,12 @@ textarea:focus-visible {
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #0A080A;
-    border: 2px solid #0A080A;
+    background-color: var(--bg-dark);
+    border: 2px solid var(--bg-dark);
 }
 
 .alumni-name {
-    color: #F8F7FC;
+    color: var(--text-light);
     font-size: 1.45rem;
     font-weight: 800;
     letter-spacing: 0.4px;
@@ -1330,15 +1378,15 @@ textarea:focus-visible {
 }
 
 .alumni-role {
-    color: var(--accent-light);
+    color: var(--teal-light);
     font-weight: 700;
     font-size: 1rem;
 }
 
 .alumni-company-tag {
-    background: rgba(124, 58, 237, 0.18);
-    border: 1px solid rgba(216, 185, 106, 0.3);
-    color: #F8F7FC;
+    background: var(--teal-bg);
+    border: 1px solid var(--border-teal);
+    color: var(--teal-light);
     padding: 0.15rem 0.55rem;
     border-radius: 4px;
     font-size: 0.82rem;
@@ -1355,7 +1403,7 @@ textarea:focus-visible {
 .alumni-divider {
     width: 100%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(196, 181, 253, 0.25), transparent);
+    background: linear-gradient(90deg, transparent, var(--border-teal), transparent);
     margin: 1.1rem 0;
     position: relative;
     z-index: 1;
@@ -1391,12 +1439,17 @@ textarea:focus-visible {
     font-size: 0.72rem;
     padding: 0.25rem 0.6rem;
     border-radius: 9999px;
-    background: rgba(124, 58, 237, 0.15);
-    color: var(--pale-highlight);
-    border: 1px solid rgba(196, 181, 253, 0.25);
+    background: var(--teal-bg);
+    color: var(--teal-light);
+    border: 1px solid var(--border-teal);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     transition: all 0.25s ease;
+}
+
+.alumni-skill-badge:hover {
+    border-color: var(--teal-light);
+    box-shadow: var(--teal-glow);
 }
 
 .alumni-card-actions {
@@ -1421,23 +1474,23 @@ textarea:focus-visible {
 }
 
 .alumni-card:hover .alumni-cta {
-    background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
-    color: #0A080A;
+    background: rgba(47, 143, 138, 0.85);
+    color: #FFFFFF;
     font-weight: 700;
-    border-color: var(--accent-light);
-    box-shadow: 0 4px 18px rgba(216, 185, 106, 0.4);
+    border-color: var(--teal-light);
+    box-shadow: 0 4px 18px rgba(47, 143, 138, 0.4);
 }
 
 /* ------------------------------------------------------------
-   11. UPCOMING GATHERINGS (EDITORIAL EVENT FEATURE PANELS)
+   11. UPCOMING GATHERINGS (COPPER & ROSE QUARTZ MOOD ACCENT)
    ------------------------------------------------------------ */
 .event-card {
-    background: linear-gradient(170deg, rgba(48, 16, 21, 0.72) 0%, rgba(28, 23, 26, 0.65) 55%, rgba(10, 2, 4, 0.78) 100%);
+    background: var(--surface-color);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid var(--border-gold);
+    border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
-    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.60), inset 0 1px 0 rgba(216, 185, 106, 0.18);
+    box-shadow: var(--card-shadow);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -1450,15 +1503,15 @@ textarea:focus-visible {
 
 .event-card:hover {
     transform: translateY(-8px);
-    border-color: rgba(216, 185, 106, 0.50);
-    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.85), 0 0 28px rgba(216, 185, 106, 0.25), inset 0 1px 0 rgba(216, 185, 106, 0.25);
+    border-color: rgba(201, 123, 74, 0.45);
+    box-shadow: var(--card-hover-shadow), 0 0 16px rgba(201, 123, 74, 0.20);
 }
 
 .event-image-box {
     position: relative;
     height: 220px;
     overflow: hidden;
-    background: #0A080A;
+    background: var(--bg-dark);
 }
 
 .event-image {
@@ -1477,7 +1530,7 @@ textarea:focus-visible {
 .event-artwork-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(8, 5, 16, 0.15) 0%, rgba(8, 5, 16, 0.5) 55%, rgba(27, 18, 48, 0.96) 100%);
+    background: linear-gradient(180deg, rgba(8, 6, 10, 0.15) 0%, rgba(8, 6, 10, 0.5) 55%, rgba(29, 22, 32, 0.96) 100%);
     pointer-events: none;
     transition: opacity 0.4s ease;
 }
@@ -1486,7 +1539,7 @@ textarea:focus-visible {
     opacity: 0.85;
 }
 
-/* Floating Date Badge & Secondary Detail Bar */
+/* Floating Date Badge (Copper) & Category (Rose Quartz) */
 .event-badge-row {
     position: absolute;
     top: 1.1rem;
@@ -1500,31 +1553,31 @@ textarea:focus-visible {
 }
 
 .event-date-badge {
-    background: rgba(16, 9, 29, 0.92);
+    background: var(--copper-bg);
+    color: var(--copper-color);
+    border: 1px solid rgba(201, 123, 74, 0.35);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid var(--pale-highlight);
-    color: #FFFFFF;
     padding: 0.38rem 0.85rem;
     border-radius: 6px;
     font-size: 0.8rem;
     font-weight: 800;
     letter-spacing: 1px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.75), 0 0 12px rgba(124, 58, 237, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .event-card:hover .event-date-badge {
-    border-color: var(--accent-light);
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.85), 0 0 16px rgba(196, 181, 253, 0.4);
+    border-color: var(--copper-color);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.85), 0 0 16px rgba(201, 123, 74, 0.3);
 }
 
 .event-category-badge {
-    background: rgba(36, 23, 53, 0.85);
+    background: var(--rose-bg);
+    color: var(--rose-color);
+    border: 1px solid rgba(227, 174, 180, 0.35);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(216, 185, 106, 0.3);
-    color: var(--text-muted-light);
     padding: 0.34rem 0.75rem;
     border-radius: 6px;
     font-size: 0.74rem;
@@ -1536,7 +1589,7 @@ textarea:focus-visible {
 }
 
 .event-category-badge svg {
-    color: var(--accent-color);
+    color: var(--rose-color);
 }
 
 .event-body {
@@ -1564,13 +1617,13 @@ textarea:focus-visible {
 }
 
 .event-meta-sep {
-    color: rgba(196, 181, 253, 0.45);
+    color: rgba(227, 174, 180, 0.45);
 }
 
 .event-title {
     font-size: 1.45rem;
     font-weight: 800;
-    color: #F8F7FC;
+    color: var(--text-light);
     margin-bottom: 0.85rem;
     line-height: 1.28;
     letter-spacing: 0.4px;
@@ -1591,22 +1644,22 @@ textarea:focus-visible {
 }
 
 .event-card:hover .event-body .btn-gold {
-    box-shadow: 0 4px 22px rgba(124, 58, 237, 0.45);
+    box-shadow: 0 4px 22px rgba(201, 123, 74, 0.35);
     transform: translateY(-2px);
 }
 
 /* ------------------------------------------------------------
-   12. CAREER OPPORTUNITIES (EDITORIAL PANELS & GOLD ACCENTS)
+   12. CAREER OPPORTUNITIES (CHAMPAGNE GOLD MOOD ACCENT)
    ------------------------------------------------------------ */
 .job-card {
     padding: 2.4rem 2.2rem 2.2rem;
-    background: linear-gradient(170deg, rgba(48, 16, 21, 0.72) 0%, rgba(28, 23, 26, 0.65) 55%, rgba(10, 2, 4, 0.78) 100%);
+    background: var(--surface-color);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid var(--border-gold);
+    border: 1px solid var(--border-color);
     border-left: 4px solid var(--accent-color);
     border-radius: var(--border-radius);
-    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.60), inset 0 1px 0 rgba(216, 185, 106, 0.18);
+    box-shadow: var(--card-shadow);
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -1620,9 +1673,9 @@ textarea:focus-visible {
 
 .job-card:hover {
     transform: translateY(-8px);
-    border-color: rgba(196, 181, 253, 0.45);
+    border-color: var(--border-gold);
     border-left-color: var(--accent-light);
-    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.85), 0 0 28px rgba(124, 58, 237, 0.25), inset 0 1px 0 rgba(233, 213, 255, 0.25);
+    box-shadow: var(--card-hover-shadow), var(--gold-glow);
 }
 
 .job-card-header {
@@ -1633,9 +1686,9 @@ textarea:focus-visible {
 }
 
 .job-type-pill {
-    background: rgba(124, 58, 237, 0.18);
+    background: var(--warning-bg);
     color: var(--accent-light);
-    border: 1px solid rgba(196, 181, 253, 0.35);
+    border: 1px solid var(--border-gold);
     font-size: 0.75rem;
     font-weight: 800;
     padding: 0.3rem 0.85rem;
@@ -1646,7 +1699,7 @@ textarea:focus-visible {
 
 .job-badge-verified {
     font-size: 0.76rem;
-    color: var(--accent-light);
+    color: var(--teal-light);
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
@@ -1655,13 +1708,13 @@ textarea:focus-visible {
 }
 
 .job-badge-verified svg {
-    color: var(--accent-color);
+    color: var(--teal-light);
 }
 
 .job-title {
     font-size: 1.45rem;
     font-weight: 800;
-    color: #F8F7FC;
+    color: var(--text-light);
     margin-bottom: 0.35rem;
     line-height: 1.28;
     letter-spacing: 0.3px;
@@ -1673,7 +1726,7 @@ textarea:focus-visible {
 
 .job-company {
     font-weight: 700;
-    color: var(--accent-color);
+    color: var(--accent-light);
     font-size: 1.05rem;
     letter-spacing: 0.3px;
 }
@@ -1694,13 +1747,13 @@ textarea:focus-visible {
 }
 
 .job-meta-sep {
-    color: rgba(196, 181, 253, 0.4);
+    color: var(--border-gold);
 }
 
 .job-divider {
     width: 100%;
     height: 1px;
-    background: linear-gradient(90deg, rgba(196, 181, 253, 0.25), transparent);
+    background: linear-gradient(90deg, var(--border-gold), transparent);
     margin-bottom: 1.1rem;
 }
 
@@ -1714,25 +1767,26 @@ textarea:focus-visible {
 
 .job-cta {
     margin-top: auto;
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.9), rgba(147, 51, 234, 0.9));
-    border: 1px solid var(--pale-highlight);
-    color: #FFFFFF;
+    background: var(--btn-primary-bg);
+    border: 1px solid var(--accent-color);
+    color: var(--btn-primary-text);
     font-weight: 700;
     letter-spacing: 0.8px;
     text-transform: uppercase;
+    box-shadow: var(--gold-glow);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .job-card:hover .job-cta {
-    background: linear-gradient(135deg, var(--accent-light), var(--accent-color));
-    color: #0A080A;
+    background: var(--btn-primary-hover);
+    color: var(--btn-primary-text);
     border-color: var(--accent-light);
     box-shadow: 0 4px 18px rgba(216, 185, 106, 0.4);
     transform: translateY(-2px);
 }
 
 /* ------------------------------------------------------------
-   13. FORMS & ACCESSIBLE INPUTS
+   13. FORMS & ACCESSIBLE INPUTS (TEAL FOCUS RING)
    ------------------------------------------------------------ */
 .form-group {
     margin-bottom: 1.4rem;
@@ -1750,28 +1804,35 @@ textarea:focus-visible {
     width: 100%;
     padding: 0.85rem 1.05rem;
     font-size: 0.95rem;
-    border: 1px solid var(--input-border, rgba(216, 185, 106, 0.22));
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    color: var(--input-text, var(--text-color));
-    background-color: var(--input-bg, rgba(28, 23, 26, 0.75));
-    backdrop-filter: blur(12px) saturate(150%);
-    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    color: var(--text-color);
+    background-color: var(--surface-dark);
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
-    transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .form-control::placeholder {
-    color: var(--input-placeholder, #B7A9AD);
+    color: var(--text-muted);
     opacity: 1;
     font-size: 0.9rem;
 }
 
-/* Focus state with Refined macOS Focus Ring */
-.form-control:focus {
+/* Focus state with Peacock Teal Focus Ring (Separates Typing from Clicking) */
+.form-control:focus,
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+select:focus,
+textarea:focus {
     outline: none;
-    border-color: var(--accent-color, #D8B96A);
-    box-shadow: 0 0 0 3px rgba(216, 185, 106, 0.28), 0 0 20px rgba(216, 185, 106, 0.16), inset 0 1px 2px rgba(0, 0, 0, 0.2);
-    background-color: rgba(48, 16, 21, 0.92);
+    border-color: var(--teal-light);
+    box-shadow: 0 0 0 3px rgba(108, 196, 186, 0.22), var(--teal-glow), inset 0 1px 2px rgba(0, 0, 0, 0.2);
+    background-color: var(--surface-dark);
 }
 
 /* Form validation states */
@@ -1922,19 +1983,19 @@ textarea:focus-visible {
 
 .admin-sidebar {
     width: 260px;
-    background: linear-gradient(180deg, rgba(8, 5, 16, 0.88), rgba(16, 9, 29, 0.92));
+    background: var(--surface-dark);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    color: #F8F7FC;
+    color: var(--text-light);
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    border-right: 1px solid rgba(196, 181, 253, 0.16);
+    border-right: 1px solid var(--border-color);
 }
 
 .admin-sidebar-header {
     padding: 1.8rem 1.5rem;
-    border-bottom: 1px solid var(--border-gold);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .admin-nav {
@@ -1959,12 +2020,12 @@ textarea:focus-visible {
 }
 
 .admin-nav-link:hover {
-    background-color: rgba(124, 58, 237, 0.12);
+    background-color: rgba(90, 26, 43, 0.35);
     color: var(--accent-light);
 }
 
 .admin-nav-link.active {
-    background-color: #311E48;
+    background-color: var(--primary-dark);
     color: var(--accent-color);
     border-left: 3px solid var(--accent-color);
     font-weight: 700;
@@ -1972,7 +2033,7 @@ textarea:focus-visible {
 
 .admin-sidebar-footer {
     padding: 1.5rem;
-    border-top: 1px solid var(--border-gold);
+    border-top: 1px solid var(--border-color);
 }
 
 .admin-main {
@@ -2008,7 +2069,7 @@ textarea:focus-visible {
     }
 }
 
-/* Admin Stat Cards */
+/* Admin Stat Cards: Alternating Gold, Teal, Rose Quartz, and Copper */
 .admin-stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -2029,14 +2090,14 @@ textarea:focus-visible {
 }
 
 .admin-stat-card {
-    background: rgba(36, 23, 53, 0.72);
+    background: var(--surface-color);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     padding: 1.8rem;
     border-radius: var(--border-radius);
-    border: 1px solid var(--border-gold);
+    border: 1px solid var(--border-color);
     border-left: 4px solid var(--accent-color);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55), 0 0 14px rgba(124, 58, 237, 0.08);
+    box-shadow: var(--card-shadow);
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -2046,10 +2107,22 @@ textarea:focus-visible {
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
+.admin-stats-grid > :nth-child(4n+1) { border-left-color: var(--accent-color); }
+.admin-stats-grid > :nth-child(4n+1) .admin-stat-icon { background: var(--warning-bg); color: var(--accent-color); }
+
+.admin-stats-grid > :nth-child(4n+2) { border-left-color: var(--teal-color); }
+.admin-stats-grid > :nth-child(4n+2) .admin-stat-icon { background: var(--teal-bg); color: var(--teal-light); }
+
+.admin-stats-grid > :nth-child(4n+3) { border-left-color: var(--rose-color); }
+.admin-stats-grid > :nth-child(4n+3) .admin-stat-icon { background: var(--rose-bg); color: var(--rose-color); }
+
+.admin-stats-grid > :nth-child(4n+4) { border-left-color: var(--copper-color); }
+.admin-stats-grid > :nth-child(4n+4) .admin-stat-icon { background: var(--copper-bg); color: var(--copper-color); }
+
 .admin-stat-card:hover {
     transform: translateY(-4px);
-    border-color: rgba(196, 181, 253, 0.55);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75), 0 0 24px rgba(124, 58, 237, 0.28);
+    border-color: var(--border-gold);
+    box-shadow: var(--card-hover-shadow);
     text-decoration: none;
     color: inherit;
 }
@@ -2084,7 +2157,7 @@ textarea:focus-visible {
     width: 44px;
     height: 44px;
     border-radius: 8px;
-    background: rgba(124, 58, 237, 0.18);
+    background: var(--surface-dark);
     color: var(--accent-color);
     display: flex;
     align-items: center;
@@ -2097,12 +2170,12 @@ textarea:focus-visible {
    ------------------------------------------------------------ */
 .table-responsive {
     overflow-x: auto;
-    background-color: rgba(36, 23, 53, 0.65);
+    background-color: var(--surface-color);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-radius: var(--border-radius);
-    border: 1px solid var(--border-gold);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.60);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
 }
 
 .admin-table {
@@ -2112,8 +2185,8 @@ textarea:focus-visible {
 }
 
 .admin-table th {
-    background-color: #1C171A;
-    color: var(--pale-highlight);
+    background-color: var(--surface-dark);
+    color: var(--accent-light);
     padding: 1.1rem 1.2rem;
     font-size: 0.85rem;
     text-transform: uppercase;
@@ -2124,14 +2197,14 @@ textarea:focus-visible {
 
 .admin-table td {
     padding: 1.1rem 1.2rem;
-    background-color: var(--surface-elevated);
+    background-color: var(--surface-color);
     color: var(--text-color);
     border-bottom: 1px solid var(--border-color);
     font-size: 0.92rem;
 }
 
 .admin-table tr:hover td {
-    background-color: #282025;
+    background-color: var(--surface-elevated);
 }
 
 /* Status Badges */
@@ -2146,27 +2219,52 @@ textarea:focus-visible {
 }
 
 .badge-approved, .badge-active {
-    background: rgba(76, 175, 80, 0.15);
-    color: #10B981;
-    border: 1px solid rgba(76, 175, 80, 0.4);
+    background: var(--success-bg);
+    color: var(--success-color);
+    border: 1px solid rgba(120, 201, 154, 0.35);
 }
 
 .badge-pending {
-    background: rgba(232, 203, 131, 0.15);
-    color: #E8CB83;
-    border: 1px solid rgba(232, 203, 131, 0.4);
+    background: var(--warning-bg);
+    color: var(--warning-color);
+    border: 1px solid rgba(232, 203, 131, 0.35);
 }
 
 .badge-rejected, .badge-suspended, .badge-blocked {
-    background: rgba(229, 115, 115, 0.15);
-    color: #EF4444;
-    border: 1px solid rgba(229, 115, 115, 0.4);
+    background: var(--danger-bg);
+    color: var(--danger-color);
+    border: 1px solid rgba(240, 140, 145, 0.35);
 }
 
 .badge-inactive {
-    background: rgba(122, 114, 116, 0.2);
-    color: var(--text-muted);
+    background: var(--disabled-bg);
+    color: var(--disabled-color);
     border: 1px solid var(--border-color);
+}
+
+/* Section Mood Badges */
+.badge-teal, .badge-verified {
+    background: var(--teal-bg);
+    color: var(--teal-light);
+    border: 1px solid var(--border-teal);
+}
+
+.badge-gold, .badge-featured {
+    background: var(--warning-bg);
+    color: var(--accent-light);
+    border: 1px solid var(--border-gold);
+}
+
+.badge-copper, .badge-event, .badge-upcoming {
+    background: var(--copper-bg);
+    color: var(--copper-color);
+    border: 1px solid rgba(201, 123, 74, 0.35);
+}
+
+.badge-rose, .badge-new {
+    background: var(--rose-bg);
+    color: var(--rose-color);
+    border: 1px solid rgba(227, 174, 180, 0.35);
 }
 
 /* ------------------------------------------------------------
@@ -2232,24 +2330,31 @@ textarea:focus-visible {
 }
 
 .alert-success {
-    background: rgba(76, 175, 80, 0.15);
-    color: #A7F3D0;
-    border-left: 4px solid #10B981;
-    border: 1px solid rgba(76, 175, 80, 0.3);
+    background: var(--success-bg);
+    color: var(--success-color);
+    border: 1px solid rgba(120, 201, 154, 0.35);
+    border-left: 4px solid var(--success-color);
 }
 
 .alert-danger {
-    background: rgba(229, 115, 115, 0.15);
-    color: #FECACA;
-    border-left: 4px solid #EF4444;
-    border: 1px solid rgba(229, 115, 115, 0.3);
+    background: var(--danger-bg);
+    color: var(--danger-color);
+    border: 1px solid rgba(240, 140, 145, 0.35);
+    border-left: 4px solid var(--danger-color);
 }
 
 .alert-warning {
-    background: rgba(232, 203, 131, 0.15);
-    color: #FEF3C7;
-    border-left: 4px solid #E8CB83;
-    border: 1px solid rgba(232, 203, 131, 0.3);
+    background: var(--warning-bg);
+    color: var(--warning-color);
+    border: 1px solid rgba(232, 203, 131, 0.35);
+    border-left: 4px solid var(--warning-color);
+}
+
+.alert-info {
+    background: var(--info-bg);
+    color: var(--info-color);
+    border: 1px solid rgba(108, 196, 186, 0.35);
+    border-left: 4px solid var(--info-color);
 }
 
 /* ------------------------------------------------------------
@@ -2259,7 +2364,7 @@ textarea:focus-visible {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(10, 2, 4, 0.90);
+    background: rgba(8, 6, 10, 0.90);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     z-index: 9999;
@@ -2269,17 +2374,17 @@ textarea:focus-visible {
 
 .modal-card,
 .modal-box {
-    background: var(--glass-modal-bg, rgba(28, 23, 26, 0.90));
-    backdrop-filter: var(--glass-blur-lg, blur(24px));
-    -webkit-backdrop-filter: var(--glass-blur-lg, blur(24px));
+    background: var(--surface-color);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     color: var(--text-color);
     width: 90%;
     max-width: 520px;
     border-radius: 16px;
     padding: 2.2rem;
-    border: 1px solid rgba(196, 181, 253, 0.28);
+    border: 1px solid var(--border-gold);
     border-top: 4px solid var(--accent-color);
-    box-shadow: var(--glass-modal-shadow, 0 25px 60px rgba(0, 0, 0, 0.8));
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
     position: relative;
     isolation: isolate;
     overflow: hidden;
@@ -2321,7 +2426,7 @@ textarea:focus-visible {
    20. CINEMATIC FOOTER (GRID ALIGNMENT & RESPONSIVENESS)
    ------------------------------------------------------------ */
 .footer {
-    background: linear-gradient(180deg, rgba(16, 9, 29, 0.88) 0%, rgba(8, 5, 16, 0.95) 100%);
+    background: linear-gradient(180deg, var(--surface-dark) 0%, var(--bg-dark) 100%);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     color: var(--text-color);
@@ -2430,7 +2535,7 @@ textarea:focus-visible {
 
 .footer-bottom {
     padding-top: 2rem;
-    border-top: 1px solid var(--border-gold);
+    border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -2452,7 +2557,7 @@ textarea:focus-visible {
     position: fixed;
     inset: 0;
     z-index: 999999;
-    background: radial-gradient(ellipse at 50% 45%, #1C171A 0%, #100D10 65%, #0A080A 100%);
+    background: radial-gradient(ellipse at 50% 45%, var(--surface-color) 0%, var(--bg-color) 65%, var(--bg-dark) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2484,7 +2589,7 @@ textarea:focus-visible {
     transform: translate(-50%, -50%);
     width: 260px;
     height: 150px;
-    background: radial-gradient(ellipse, rgba(216, 185, 106, 0.28) 0%, rgba(84, 25, 35, 0.25) 50%, transparent 75%);
+    background: radial-gradient(ellipse, rgba(216, 185, 106, 0.28) 0%, rgba(90, 26, 43, 0.25) 50%, transparent 75%);
     pointer-events: none;
     animation: loaderGlowPulse 2.2s ease-in-out infinite;
     z-index: 0;
@@ -2520,7 +2625,7 @@ textarea:focus-visible {
     font-size: 1.55rem;
     font-weight: 800;
     letter-spacing: 2.5px;
-    color: #F8F7FC;
+    color: var(--text-light);
     text-transform: uppercase;
     text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
 }
@@ -2646,7 +2751,7 @@ textarea:focus-visible {
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
     .navbar,
     .navbar.scrolled {
-        background: #0A080A !important;
+        background: var(--bg-dark) !important;
     }
     .card,
     .card-dark,
@@ -2662,12 +2767,12 @@ textarea:focus-visible {
     .auth-split-card,
     .glass-surface,
     .glass-surface-elevated {
-        background: #1C171A !important;
+        background: var(--surface-color) !important;
     }
     .stat-item,
     .form-control,
     .glass-surface-subtle {
-        background: #282025 !important;
+        background: var(--surface-elevated) !important;
     }
 }
 

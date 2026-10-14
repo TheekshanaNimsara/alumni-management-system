@@ -298,7 +298,7 @@ require_once __DIR__ . '/includes/header.php';
                             Class of <?php echo htmlspecialchars($profile['graduation_year']); ?>
                         </span>
                         <?php if (($profile['role'] ?? '') === 'admin'): ?>
-                            <span class="profile-badge-pill badge-role-verified" style="background: rgba(84, 25, 35, 0.4); border-color: rgba(216, 185, 106, 0.35); color: var(--accent-light);">
+                            <span class="profile-badge-pill badge-role-verified" style="background: rgba(90, 26, 43, 0.4); border-color: rgba(216, 185, 106, 0.35); color: var(--accent-light);">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                 Administrator
                             </span>
@@ -458,13 +458,13 @@ require_once __DIR__ . '/includes/header.php';
                         </h3>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
-                        <div style="padding: 1.2rem; background: rgba(84, 25, 35, 0.25); border: 1px solid rgba(216, 185, 106, 0.18); border-radius: 12px;">
+                        <div style="padding: 1.2rem; background: rgba(90, 26, 43, 0.25); border: 1px solid rgba(216, 185, 106, 0.18); border-radius: 12px;">
                             <span style="display: block; font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-light); margin-bottom: 0.4rem;">Education</span>
                             <strong style="display: block; font-size: 1.05rem; color: var(--text-light); margin-bottom: 0.2rem;"><?php echo htmlspecialchars($profile['degree_programme']); ?></strong>
                             <span style="font-size: 0.88rem; color: var(--text-secondary);"><?php echo htmlspecialchars($profile['department']); ?> &bull; Class of <?php echo htmlspecialchars($profile['graduation_year']); ?></span>
                         </div>
 
-                        <div style="padding: 1.2rem; background: rgba(84, 25, 35, 0.25); border: 1px solid rgba(216, 185, 106, 0.18); border-radius: 12px;">
+                        <div style="padding: 1.2rem; background: rgba(90, 26, 43, 0.25); border: 1px solid rgba(216, 185, 106, 0.18); border-radius: 12px;">
                             <span style="display: block; font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-light); margin-bottom: 0.4rem;">Current Position</span>
                             <strong style="display: block; font-size: 1.05rem; color: var(--text-light); margin-bottom: 0.2rem;"><?php echo htmlspecialchars($profile['current_job_title'] ?? 'Graduate Alumnus'); ?></strong>
                             <span style="font-size: 0.88rem; color: var(--text-secondary);">

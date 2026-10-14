@@ -236,7 +236,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             transform: translateY(-1px);
         }
         .report-tab-pill.active {
-            background: linear-gradient(135deg, rgba(84, 25, 35, 0.95), rgba(28, 23, 26, 0.95));
+            background: linear-gradient(135deg, rgba(90, 26, 43, 0.95), rgba(28, 23, 26, 0.95));
             color: #E8CB83;
             border-color: rgba(216, 185, 106, 0.6);
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(216, 185, 106, 0.25);
@@ -250,7 +250,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             font-weight: 800;
         }
         .subject-badge-user {
-            background: rgba(84, 25, 35, 0.4);
+            background: rgba(90, 26, 43, 0.4);
             color: #E8CB83;
             border: 1px solid rgba(216, 185, 106, 0.35);
         }
@@ -270,7 +270,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             border: 1px solid rgba(245, 158, 11, 0.4);
         }
         .badge-reviewed {
-            background: rgba(84, 25, 35, 0.5);
+            background: rgba(90, 26, 43, 0.5);
             color: #E8CB83;
             border: 1px solid rgba(216, 185, 106, 0.4);
         }
@@ -493,7 +493,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
                 </a>
                 <a href="reports.php?status=reviewed<?php echo !empty($searchQuery) ? '&search=' . urlencode($searchQuery) : ''; ?>" 
                    class="report-tab-pill <?php echo ($statusFilter === 'reviewed') ? 'active' : ''; ?>">
-                    Under Review <span class="report-pill-badge" style="background: rgba(84, 25, 35, 0.7); color: #E8CB83; border: 1px solid rgba(216, 185, 106, 0.3);"><?php echo $reviewedReportsCount; ?></span>
+                    Under Review <span class="report-pill-badge" style="background: rgba(90, 26, 43, 0.7); color: #E8CB83; border: 1px solid rgba(216, 185, 106, 0.3);"><?php echo $reviewedReportsCount; ?></span>
                 </a>
                 <a href="reports.php?status=resolved<?php echo !empty($searchQuery) ? '&search=' . urlencode($searchQuery) : ''; ?>" 
                    class="report-tab-pill <?php echo ($statusFilter === 'resolved') ? 'active' : ''; ?>">

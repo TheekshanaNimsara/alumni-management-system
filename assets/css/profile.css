@@ -1,6 +1,7 @@
 /* ============================================================
    PROFILE.CSS — KDU ALUMNI NETWORK
-   Cinematic Dark-Purple • Apple Liquid Glass • Responsive & Accessible
+   Wine Burgundy • Champagne Gold • Peacock Teal • Liquid Glass UI
+   Pure CSS3 • No External Frameworks • Responsive & Accessible
    ============================================================ */
 
 @import "./theme.css";
@@ -10,9 +11,9 @@
    ------------------------------------------------------------ */
 .profile-hero {
     position: relative;
-    background: radial-gradient(circle at 75% 20%, rgba(147, 51, 234, 0.28) 0%, rgba(84, 25, 35, 0.20) 45%, transparent 70%),
-                linear-gradient(140deg, rgba(27, 18, 48, 0.92) 0%, rgba(16, 9, 29, 0.96) 60%, rgba(8, 5, 16, 0.98) 100%);
-    border-bottom: 1px solid var(--glass-border, rgba(196, 181, 253, 0.22));
+    background: radial-gradient(circle at 75% 20%, rgba(90, 26, 43, 0.28) 0%, rgba(47, 143, 138, 0.15) 45%, transparent 70%),
+                linear-gradient(140deg, rgba(29, 22, 32, 0.96) 0%, rgba(15, 12, 18, 0.98) 60%, rgba(8, 6, 10, 1) 100%);
+    border-bottom: 1px solid var(--border-gold, rgba(216, 185, 106, 0.22));
     padding: 3.2rem 0 2.8rem;
     overflow: hidden;
     isolation: isolate;
@@ -48,7 +49,7 @@
     flex: 1 1 600px;
 }
 
-/* Avatar Container with macOS Double-Border Halo */
+/* Avatar Container with Peacock Teal Halo */
 .profile-avatar-wrap {
     position: relative;
     width: 132px;
@@ -61,23 +62,23 @@
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    background: var(--surface-color, #1C171A);
-    border: 3px solid var(--border-gold);
+    background: var(--surface-color, #1D1620);
+    border: 3px solid var(--teal-light, #6CC4BA);
     box-shadow:
-        0 0 0 4px rgba(216, 185, 106, 0.35),
+        0 0 0 4px var(--border-teal, rgba(47, 143, 138, 0.45)),
         0 12px 32px rgba(0, 0, 0, 0.65),
-        0 0 24px rgba(84, 25, 35, 0.45);
+        var(--teal-glow, 0 0 20px rgba(47, 143, 138, 0.35));
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
     display: block;
 }
 
 .profile-avatar-wrap:hover .profile-avatar-img {
     transform: scale(1.02);
-    border-color: rgba(216, 185, 106, 0.6);
+    border-color: var(--teal-light, #6CC4BA);
     box-shadow:
-        0 0 0 4px rgba(216, 185, 106, 0.55),
+        0 0 0 4px rgba(108, 196, 186, 0.6),
         0 16px 40px rgba(0, 0, 0, 0.75),
-        0 0 32px rgba(216, 185, 106, 0.4);
+        0 0 30px rgba(47, 143, 138, 0.5);
 }
 
 /* Camera Upload Badge for Profile Owner */
@@ -153,16 +154,16 @@
 }
 
 .badge-class-year {
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.28) 0%, rgba(147, 51, 234, 0.16) 100%);
-    border: 1px solid rgba(196, 181, 253, 0.35);
-    color: var(--accent-light, #E8CB83);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    background: var(--teal-bg, #11262A);
+    border: 1px solid var(--border-teal, rgba(47, 143, 138, 0.45));
+    color: var(--teal-light, #6CC4BA);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .badge-role-verified {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(5, 150, 105, 0.12) 100%);
-    border: 1px solid rgba(110, 231, 183, 0.38);
-    color: #6EE7B7;
+    background: var(--teal-bg, #11262A);
+    border: 1px solid var(--border-teal, rgba(47, 143, 138, 0.45));
+    color: var(--teal-light, #6CC4BA);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
@@ -224,8 +225,8 @@
     display: inline-flex;
     align-items: center;
     padding: 0.35rem;
-    background: rgba(19, 13, 32, 0.78);
-    border: 1px solid var(--glass-border, rgba(196, 181, 253, 0.20));
+    background: rgba(29, 22, 32, 0.85);
+    border: 1px solid var(--border-gold, rgba(216, 185, 106, 0.20));
     border-radius: 12px;
     backdrop-filter: blur(16px) saturate(160%);
     -webkit-backdrop-filter: blur(16px) saturate(160%);
@@ -241,7 +242,7 @@
     border-radius: 8px;
     border: 1px solid transparent;
     background: transparent;
-    color: var(--text-secondary, #B9B2C9);
+    color: var(--text-muted, #B9AAB2);
     font-size: 0.92rem;
     font-weight: 600;
     cursor: pointer;
@@ -260,16 +261,16 @@
 
 .profile-tab-btn:hover {
     color: var(--text-light, #FFFFFF);
-    background: var(--border-gold);
+    background: rgba(47, 143, 138, 0.15);
 }
 
 .profile-tab-btn.active {
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.85) 0%, rgba(147, 51, 234, 0.90) 100%);
+    background: var(--teal-dark, #1B4B4A);
     color: #FFFFFF;
-    border-color: rgba(233, 213, 255, 0.4);
+    border-color: var(--border-teal, rgba(47, 143, 138, 0.45));
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.35),
-        0 4px 14px rgba(216, 185, 106, 0.4);
+        var(--teal-glow, 0 0 20px rgba(47, 143, 138, 0.35));
 }
 
 .profile-tab-btn.active svg {
@@ -287,10 +288,10 @@
 }
 
 .profile-card {
-    background: linear-gradient(145deg, rgba(27, 18, 48, 0.70) 0%, rgba(19, 13, 32, 0.80) 100%);
+    background: linear-gradient(145deg, rgba(29, 22, 32, 0.85) 0%, rgba(15, 12, 18, 0.90) 100%);
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
-    border: 1px solid var(--glass-border, rgba(196, 181, 253, 0.22));
+    border: 1px solid var(--border-gold, rgba(216, 185, 106, 0.22));
     border-radius: 16px;
     padding: 2rem;
     margin-bottom: 2rem;
@@ -298,10 +299,9 @@
     isolation: isolate;
     overflow: hidden;
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.20),
-        inset 0 -1px 0 rgba(76, 29, 149, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
         0 16px 36px rgba(0, 0, 0, 0.50),
-        0 0 24px rgba(84, 25, 35, 0.20);
+        0 0 24px rgba(90, 26, 43, 0.20);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -320,12 +320,11 @@
 }
 
 .profile-card:hover {
-    border-color: rgba(196, 181, 253, 0.38);
+    border-color: var(--border-teal, rgba(47, 143, 138, 0.45));
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.28),
-        inset 0 -1px 0 rgba(76, 29, 149, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.20),
         0 20px 44px rgba(0, 0, 0, 0.65),
-        0 0 30px rgba(147, 51, 234, 0.22);
+        var(--teal-glow, 0 0 20px rgba(47, 143, 138, 0.35));
 }
 
 .profile-card > * {
@@ -391,28 +390,28 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, rgba(216, 185, 106, 0.25) 0%, rgba(147, 51, 234, 0.10) 100%);
-    border: 1px solid rgba(196, 181, 253, 0.26);
+    background: var(--teal-bg, #11262A);
+    border: 1px solid var(--border-teal, rgba(47, 143, 138, 0.45));
     border-radius: 9999px;
-    color: var(--text-light, #FFFFFF);
+    color: var(--teal-light, #6CC4BA);
     font-size: 0.88rem;
     font-weight: 600;
     letter-spacing: 0.01em;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
         0 4px 12px rgba(0, 0, 0, 0.25);
     transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
 }
 
 .skill-chip:hover {
     transform: translateY(-2px);
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.32) 0%, rgba(147, 51, 234, 0.22) 100%);
-    border-color: rgba(233, 213, 255, 0.55);
+    background: rgba(47, 143, 138, 0.25);
+    border-color: var(--teal-light, #6CC4BA);
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.32),
-        0 6px 18px rgba(124, 58, 237, 0.3);
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        var(--teal-glow, 0 0 20px rgba(47, 143, 138, 0.35));
 }
 
 /* ------------------------------------------------------------
@@ -434,14 +433,14 @@
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: linear-gradient(135deg, rgba(84, 25, 35, 0.35) 0%, rgba(76, 29, 149, 0.35) 100%);
-    border: 1px solid rgba(196, 181, 253, 0.24);
+    background: var(--teal-bg, #11262A);
+    border: 1px solid var(--border-teal, rgba(47, 143, 138, 0.45));
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent-light, #E8CB83);
+    color: var(--teal-light, #6CC4BA);
     flex-shrink: 0;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .profile-overview-icon svg {
@@ -634,8 +633,8 @@
    6. LIGHT THEME COORDINATION ([data-theme="light"])
    ------------------------------------------------------------ */
 [data-theme="light"] .profile-hero {
-    background: radial-gradient(circle at 75% 20%, rgba(147, 51, 234, 0.10) 0%, rgba(124, 58, 237, 0.05) 45%, transparent 70%),
-                linear-gradient(140deg, #FFFFFF 0%, #F7F5FC 60%, #EFEBF8 100%);
+    background: radial-gradient(circle at 75% 20%, rgba(90, 26, 43, 0.10) 0%, rgba(47, 143, 138, 0.08) 45%, transparent 70%),
+                linear-gradient(140deg, #FFFFFF 0%, #FAF7F2 60%, #F0EAE1 100%);
     border-bottom-color: rgba(216, 185, 106, 0.25);
 }
 
@@ -645,74 +644,80 @@
 
 [data-theme="light"] .profile-avatar-img {
     background: #FFFFFF;
-    border-color: rgba(84, 25, 35, 0.35);
+    border-color: var(--teal-color, #2F8F8A);
     box-shadow:
-        0 0 0 4px rgba(124, 58, 237, 0.15),
-        0 12px 30px rgba(91, 63, 130, 0.12);
+        0 0 0 4px rgba(47, 143, 138, 0.25),
+        0 12px 30px rgba(0, 0, 0, 0.10);
 }
 
 [data-theme="light"] .profile-avatar-wrap:hover .profile-avatar-img {
-    border-color: rgba(124, 58, 237, 0.45);
+    border-color: var(--teal-light, #6CC4BA);
     box-shadow:
-        0 0 0 4px rgba(84, 25, 35, 0.35),
-        0 16px 36px rgba(91, 63, 130, 0.18);
+        0 0 0 4px rgba(47, 143, 138, 0.40),
+        0 16px 36px rgba(0, 0, 0, 0.15);
 }
 
 [data-theme="light"] .profile-name {
-    color: var(--text-primary, #211632);
+    color: var(--text-primary, #1D1620);
 }
 
 [data-theme="light"] .profile-headline {
-    color: var(--accent-color, #D8B96A);
+    color: var(--accent-dark, #B49345);
 }
 
 [data-theme="light"] .profile-headline .company-name {
-    color: var(--text-primary, #211632);
+    color: var(--text-primary, #1D1620);
 }
 
 [data-theme="light"] .profile-meta-tags {
-    color: var(--text-secondary, #625773);
+    color: var(--text-secondary, #5C4E55);
 }
 
 [data-theme="light"] .profile-meta-tag svg {
-    stroke: var(--accent-color, #D8B96A);
+    stroke: var(--accent-dark, #B49345);
 }
 
 [data-theme="light"] .badge-class-year {
-    background: linear-gradient(135deg, rgba(84, 25, 35, 0.20) 0%, rgba(216, 185, 106, 0.10) 100%);
-    border-color: rgba(84, 25, 35, 0.35);
-    color: var(--accent-color, #D8B96A);
+    background: rgba(47, 143, 138, 0.12);
+    border-color: rgba(47, 143, 138, 0.35);
+    color: #1B4B4A;
     box-shadow: inset 0 1px 0 #FFFFFF;
 }
 
 [data-theme="light"] .badge-role-verified {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.08) 100%);
-    border-color: rgba(16, 185, 129, 0.3);
-    color: #059669;
+    background: rgba(47, 143, 138, 0.12);
+    border-color: rgba(47, 143, 138, 0.35);
+    color: #1B4B4A;
     box-shadow: inset 0 1px 0 #FFFFFF;
 }
 
 [data-theme="light"] .profile-segmented-nav {
     background: rgba(255, 255, 255, 0.88);
-    border-color: rgba(216, 185, 106, 0.25);
-    box-shadow: 0 4px 16px rgba(91, 63, 130, 0.08);
+    border-color: var(--border-gold);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 [data-theme="light"] .profile-tab-btn {
-    color: var(--text-secondary, #625773);
+    color: var(--text-secondary, #5C4E55);
 }
 
 [data-theme="light"] .profile-tab-btn:hover {
-    color: var(--accent-color, #D8B96A);
-    background: rgba(84, 25, 35, 0.15);
+    color: var(--teal-dark, #1B4B4A);
+    background: rgba(47, 143, 138, 0.12);
+}
+
+[data-theme="light"] .profile-tab-btn.active {
+    background: var(--teal-bg, #11262A);
+    color: var(--teal-light, #6CC4BA);
+    border-color: var(--border-teal, rgba(47, 143, 138, 0.45));
 }
 
 [data-theme="light"] .profile-card {
-    background: rgba(255, 255, 255, 0.92);
-    border-color: rgba(216, 185, 106, 0.25);
+    background: rgba(255, 255, 255, 0.94);
+    border-color: var(--border-gold);
     box-shadow:
         inset 0 1px 0 #FFFFFF,
-        0 14px 34px rgba(91, 63, 130, 0.09);
+        0 14px 34px rgba(0, 0, 0, 0.08);
 }
 
 [data-theme="light"] .profile-card::before {
@@ -720,7 +725,7 @@
 }
 
 [data-theme="light"] .profile-card-title {
-    color: var(--text-primary, #211632);
+    color: var(--text-primary, #1D1620);
 }
 
 [data-theme="light"] .profile-card-header {
@@ -728,36 +733,36 @@
 }
 
 [data-theme="light"] .profile-bio-text {
-    color: var(--text-primary, #211632);
+    color: var(--text-primary, #1D1620);
 }
 
 [data-theme="light"] .profile-empty-state {
-    background: rgba(247, 245, 252, 0.85);
+    background: rgba(240, 234, 225, 0.85);
     border-color: var(--border-gold);
-    color: var(--text-secondary, #625773);
+    color: var(--text-secondary, #5C4E55);
 }
 
 [data-theme="light"] .skill-chip {
-    background: rgba(28, 23, 26, 0.65);
-    border-color: var(--border-gold);
-    color: var(--text-primary, #211632);
+    background: rgba(47, 143, 138, 0.12);
+    border-color: var(--border-teal);
+    color: #1B4B4A;
     box-shadow:
         inset 0 1px 0 #FFFFFF,
-        0 2px 8px rgba(91, 63, 130, 0.06);
+        0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="light"] .skill-chip:hover {
-    background: rgba(84, 25, 35, 0.85);
-    border-color: rgba(216, 185, 106, 0.4);
+    background: rgba(47, 143, 138, 0.22);
+    border-color: var(--teal-color);
     box-shadow:
         inset 0 1px 0 #FFFFFF,
-        0 4px 14px rgba(216, 185, 106, 0.25);
+        0 4px 14px rgba(47, 143, 138, 0.25);
 }
 
 [data-theme="light"] .profile-overview-icon {
-    background: linear-gradient(135deg, rgba(28, 23, 26, 0.9) 0%, rgba(48, 16, 21, 0.7) 100%);
-    border-color: var(--border-gold);
-    color: var(--accent-color, #D8B96A);
+    background: rgba(47, 143, 138, 0.12);
+    border-color: var(--border-teal);
+    color: #1B4B4A;
     box-shadow: inset 0 1px 0 #FFFFFF;
 }
 

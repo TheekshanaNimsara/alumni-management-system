@@ -613,7 +613,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                                         </span>
                                     </div>
                                 <?php else: ?>
-                                    <div class="msg-bubble <?php echo $isMe ? 'msg-bubble-me' : 'msg-bubble-other'; ?>" style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); <?php echo $isMe ? 'background: linear-gradient(135deg, #541923, #351017); color: #F4EEE7; border: 1px solid rgba(216, 185, 106, 0.35); border-bottom-right-radius: 2px;' : 'background: #1C171A; color: var(--text-color); border: 1px solid var(--border-color); border-bottom-left-radius: 2px;'; ?>">
+                                    <div class="msg-bubble <?php echo $isMe ? 'msg-bubble-me' : 'msg-bubble-other'; ?>" style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); <?php echo $isMe ? 'background: linear-gradient(135deg, #5A1A2B, #380E19); color: #F4EEE7; border: 1px solid rgba(216, 185, 106, 0.35); border-bottom-right-radius: 2px;' : 'background: #1D1620; color: var(--text-color); border: 1px solid var(--border-color); border-bottom-left-radius: 2px;'; ?>">
                                         <?php echo nl2br(htmlspecialchars($msg['message'])); ?>
                                     </div>
                                     <div class="msg-meta-actions" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; padding: 0 0.3rem;">
@@ -835,7 +835,7 @@ function appendMessageToChat(msg) {
     row.style.cssText = 'display: flex; flex-direction: column; align-items: flex-end;';
 
     row.innerHTML = `
-        <div class="msg-bubble msg-bubble-me" style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); background: linear-gradient(135deg, #541923, #351017); color: #F4EEE7; border: 1px solid rgba(216, 185, 106, 0.35); border-bottom-right-radius: 2px;">
+        <div class="msg-bubble msg-bubble-me" style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); background: linear-gradient(135deg, #5A1A2B, #380E19); color: #F4EEE7; border: 1px solid rgba(216, 185, 106, 0.35); border-bottom-right-radius: 2px;">
             ${escapeHtml(msg.message).replace(/\n/g, '<br>')}
         </div>
         <div class="msg-meta-actions" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; padding: 0 0.3rem;">
@@ -1035,7 +1035,7 @@ function renderConversationMessages(messages) {
         } else {
             html += `
                 <div id="msg-row-${msg.id}" class="msg-row ${isMe ? 'msg-row-me' : 'msg-row-other'}" style="display: flex; flex-direction: column; align-items: ${isMe ? 'flex-end' : 'flex-start'};">
-                    <div class="msg-bubble ${isMe ? 'msg-bubble-me' : 'msg-bubble-other'}" style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); ${isMe ? 'background: linear-gradient(135deg, #541923, #351017); color: #F4EEE7; border: 1px solid rgba(216, 185, 106, 0.35); border-bottom-right-radius: 2px;' : 'background: #1C171A; color: var(--text-color); border: 1px solid var(--border-color); border-bottom-left-radius: 2px;'}">
+                    <div class="msg-bubble ${isMe ? 'msg-bubble-me' : 'msg-bubble-other'}" style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); ${isMe ? 'background: linear-gradient(135deg, #5A1A2B, #380E19); color: #F4EEE7; border: 1px solid rgba(216, 185, 106, 0.35); border-bottom-right-radius: 2px;' : 'background: #1D1620; color: var(--text-color); border: 1px solid var(--border-color); border-bottom-left-radius: 2px;'}">
                         ${escapeHtml(msg.message).replace(/\n/g, '<br>')}
                     </div>
                     <div class="msg-meta-actions" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; padding: 0 0.3rem;">

@@ -109,7 +109,7 @@ if ($db_connected && $pdo) {
 ?>
 
 <!-- Cinematic Header Section -->
-<section style="background: radial-gradient(circle at 50% 20%, rgba(216, 185, 106, 0.12) 0%, rgba(84, 25, 35, 0.75) 50%, #100D10 100%); color: var(--text-light); padding: 4.5rem 0 3.5rem; border-bottom: 1px solid var(--border-color);">
+<section style="background: radial-gradient(circle at 50% 20%, rgba(216, 185, 106, 0.12) 0%, rgba(90, 26, 43, 0.75) 50%, var(--bg-color, #0F0C12) 100%); color: var(--text-light); padding: 4.5rem 0 3.5rem; border-bottom: 1px solid var(--border-color);">
     <div class="container text-center" style="text-align: center;">
         <span class="section-eyebrow">Distinguished Graduates &bull; Global Leaders &bull; Mentors</span>
         <h1 class="section-title" style="color: var(--text-light); margin-bottom: 0.8rem;">Alumni Directory</h1>
@@ -245,11 +245,11 @@ if ($db_connected && $pdo) {
                         </a>
 
                         <?php if ($isLoggedIn && $currentUserId && $alumnus['id'] != $currentUserId): ?>
-                            <a href="messages.php?user_id=<?php echo $alumnus['id']; ?>" class="btn btn-gold btn-sm gold-glow" style="font-size: 0.8rem;">
+                            <a href="messages.php?user_id=<?php echo $alumnus['id']; ?>" class="btn btn-glass-teal btn-sm" style="font-size: 0.8rem;">
                                 Message
                             </a>
                         <?php elseif (!$isLoggedIn): ?>
-                            <a href="auth/login.php" class="btn btn-gold btn-sm" style="font-size: 0.8rem;">
+                            <a href="auth/login.php" class="btn btn-glass-teal btn-sm" style="font-size: 0.8rem;">
                                 Connect
                             </a>
                         <?php endif; ?>

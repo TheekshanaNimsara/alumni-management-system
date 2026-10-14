@@ -78,23 +78,29 @@ $baseUrl = get_base_url();
             <div class="card" style="padding: 2rem;">
                 <h3 style="color: var(--text-light); margin-bottom: 1rem;">Design System Guidelines</h3>
                 <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.2rem;">
-                    The platform complies with the hand-coded dark-maroon &amp; warm-gold Liquid Glass design specifications:
+                    The platform complies with the hand-coded Wine Burgundy, Champagne Gold, Peacock Teal &amp; Plum-Charcoal Liquid Glass design specifications:
                 </p>
                 <div style="display: flex; gap: 0.8rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #100D10; color: #F4EEE7; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
-                        <strong>Dark Charcoal</strong><br>#100D10
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #0F0C12; color: #F4EEE7; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
+                        <strong>Plum-Charcoal</strong><br>#0F0C12
                     </div>
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #541923; color: #F4EEE7; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
-                        <strong>Deep Burgundy</strong><br>#541923
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #5A1A2B; color: #F4EEE7; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
+                        <strong>Wine Burgundy</strong><br>#5A1A2B
                     </div>
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #D8B96A; color: #100D10; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #D8B96A; color: #21170A; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
                         <strong>Champagne Gold</strong><br>#D8B96A
+                    </div>
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #2F8F8A; color: #FFFFFF; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
+                        <strong>Peacock Teal</strong><br>#2F8F8A
+                    </div>
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #C97B4A; color: #FFFFFF; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
+                        <strong>Copper &amp; Rose</strong><br>#C97B4A
                     </div>
                 </div>
                 <div style="font-size: 0.88rem; color: var(--text-muted);">
-                    &bull; Zero external UI frameworks (No Bootstrap/Tailwind)<br>
+                    &bull; Zero external UI frameworks (Handcrafted HTML5, CSS3, Vanilla JS)<br>
                     &bull; Pure CSS Liquid Glass button system with interactive specular gleam<br>
-                    &bull; High-contrast accessible dark-maroon &amp; warm-gold editorial identity
+                    &bull; High-contrast accessible Wine Burgundy, Champagne Gold, Peacock Teal identity
                 </div>
             </div>
 

@@ -160,7 +160,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Cinematic Header -->
-<section style="background: radial-gradient(circle at 50% 20%, rgba(216, 185, 106, 0.12) 0%, rgba(84, 25, 35, 0.75) 50%, #100D10 100%); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border-color);">
+<section style="background: radial-gradient(circle at 50% 20%, rgba(216, 185, 106, 0.12) 0%, rgba(90, 26, 43, 0.75) 50%, #0F0C12 100%); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border-color);">
     <div class="container text-center" style="text-align: center;">
         <span class="section-eyebrow">Professional Opportunities &bull; Internships &bull; Mentorship</span>
         <h1 class="section-title" style="color: var(--text-light); margin-bottom: 0.8rem;">Career Board</h1>
@@ -281,7 +281,7 @@ require_once __DIR__ . '/includes/header.php';
                 </p>
 
                 <?php if (!empty($job['requirements'])): ?>
-                    <div style="background: rgba(84, 25, 35, 0.35); border-left: 3px solid var(--accent-color); border: 1px solid var(--border-color); padding: 0.7rem 1rem; border-radius: 4px; font-size: 0.86rem; color: var(--text-color); margin-bottom: 1.2rem;">
+                    <div style="background: rgba(90, 26, 43, 0.35); border-left: 3px solid var(--accent-color); border: 1px solid var(--border-color); padding: 0.7rem 1rem; border-radius: 4px; font-size: 0.86rem; color: var(--text-color); margin-bottom: 1.2rem;">
                         <strong style="color: var(--accent-light);">Requirements:</strong> <?php echo htmlspecialchars($job['requirements']); ?>
                     </div>
                 <?php endif; ?>
@@ -446,7 +446,7 @@ require_once __DIR__ . '/includes/header.php';
             <p id="applyDesc" style="color: var(--text-color); font-size: 0.9rem; line-height: 1.5; margin: 0; max-height: 120px; overflow-y: auto;"></p>
         </div>
 
-        <div id="applyReqSection" style="margin-bottom: 1.2rem; background: rgba(84, 25, 35, 0.35); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem 0.9rem; display: none;">
+        <div id="applyReqSection" style="margin-bottom: 1.2rem; background: rgba(90, 26, 43, 0.35); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem 0.9rem; display: none;">
             <strong style="color: var(--accent-light); font-size: 0.84rem;">Requirements &amp; Tech Stack:</strong>
             <p id="applyReqs" style="color: var(--text-color); font-size: 0.86rem; margin: 0.3rem 0 0 0; line-height: 1.4;"></p>
         </div>

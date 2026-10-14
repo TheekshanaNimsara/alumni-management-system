@@ -258,7 +258,7 @@ if (empty($jobsList) && empty($statusFilter)) {
             <p id="reviewJobDesc" style="color: var(--text-color); font-size: 0.9rem; line-height: 1.5; margin: 0; max-height: 140px; overflow-y: auto; white-space: pre-wrap;"></p>
         </div>
 
-        <div id="reviewJobReqSection" style="margin-bottom: 1.2rem; background: rgba(84, 25, 35, 0.35); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem 0.9rem; display: none;">
+        <div id="reviewJobReqSection" style="margin-bottom: 1.2rem; background: rgba(90, 26, 43, 0.35); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem 0.9rem; display: none;">
             <strong style="color: var(--accent-light); font-size: 0.84rem;">Candidate Requirements:</strong>
             <p id="reviewJobReqs" style="color: var(--text-color); font-size: 0.86rem; margin: 0.3rem 0 0 0; line-height: 1.4; white-space: pre-wrap;"></p>
         </div>

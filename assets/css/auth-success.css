@@ -14,7 +14,7 @@ html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: #0A080A;
+    background-color: #08060A;
     color: #F4EEE7;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.5;
@@ -30,7 +30,7 @@ html, body {
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
-    background: radial-gradient(circle at 50% 35%, #1C171A 0%, #100D10 50%, #0A080A 100%);
+    background: radial-gradient(circle at 50% 35%, #1D1620 0%, #0F0C12 50%, #08060A 100%);
     overflow: hidden;
     isolation: isolate;
 }
@@ -43,7 +43,7 @@ html, body {
     transform: translateX(-50%);
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(216, 185, 106, 0.18) 0%, rgba(84, 25, 35, 0.12) 50%, transparent 70%);
+    background: radial-gradient(circle, rgba(216, 185, 106, 0.16) 0%, rgba(90, 26, 43, 0.12) 50%, transparent 70%);
     filter: blur(50px);
     pointer-events: none;
     z-index: 0;
@@ -57,7 +57,7 @@ html, body {
     transform: translateX(-50%);
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(84, 25, 35, 0.25) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(90, 26, 43, 0.28) 0%, transparent 70%);
     filter: blur(60px);
     pointer-events: none;
     z-index: 0;
@@ -69,7 +69,7 @@ html, body {
     z-index: 2;
     width: 100%;
     max-width: 480px;
-    background: rgba(28, 23, 26, 0.94);
+    background: rgba(29, 22, 32, 0.94);
     border: 1px solid rgba(216, 185, 106, 0.25);
     border-radius: 28px;
     padding: 3rem 2.4rem 2.4rem;
@@ -128,7 +128,7 @@ html, body {
     width: 34px;
     height: 34px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #541923 0%, #1C171A 100%);
+    background: linear-gradient(135deg, #5A1A2B 0%, #1D1620 100%);
     border: 1px solid rgba(216, 185, 106, 0.35);
     color: #D8B96A;
     font-size: 0.85rem;
@@ -158,7 +158,7 @@ html, body {
     transform: translate(-50%, -50%);
     width: 200px;
     height: 200px;
-    background: radial-gradient(circle, rgba(216, 185, 106, 0.35) 0%, rgba(84, 25, 35, 0.22) 50%, transparent 70%);
+    background: radial-gradient(circle, rgba(216, 185, 106, 0.35) 0%, rgba(90, 26, 43, 0.22) 50%, transparent 70%);
     filter: blur(24px);
     pointer-events: none;
     animation: successPulseAura 3s ease-in-out infinite alternate;
@@ -177,7 +177,7 @@ html, body {
 }
 
 .success-circle-bg {
-    fill: rgba(84, 25, 35, 0.25);
+    fill: rgba(90, 26, 43, 0.25);
     stroke: rgba(216, 185, 106, 0.22);
     stroke-width: 4;
 }
@@ -224,7 +224,7 @@ html, body {
 }
 
 .success-subtitle {
-    color: #B7A9AD;
+    color: #B9AAB2;
     font-size: 1rem;
     line-height: 1.55;
     margin-bottom: 2rem;
@@ -241,7 +241,7 @@ html, body {
 .success-progress-track {
     width: 100%;
     height: 6px;
-    background: rgba(84, 25, 35, 0.45);
+    background: rgba(90, 26, 43, 0.45);
     border: 1px solid rgba(216, 185, 106, 0.20);
     border-radius: 999px;
     overflow: hidden;
@@ -268,7 +268,7 @@ html, body {
     justify-content: space-between;
     align-items: center;
     font-size: 0.84rem;
-    color: #B7A9AD;
+    color: #B9AAB2;
     font-weight: 500;
 }
 
@@ -291,14 +291,14 @@ html, body {
     font-size: 0.88rem;
     font-weight: 600;
     color: #E8CB83;
-    background: rgba(84, 25, 35, 0.45);
+    background: rgba(90, 26, 43, 0.45);
     border: 1px solid rgba(216, 185, 106, 0.35);
     text-decoration: none;
     transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-success-continue:hover {
-    background: rgba(84, 25, 35, 0.80);
+    background: rgba(90, 26, 43, 0.80);
     border-color: rgba(216, 185, 106, 0.70);
     color: #FFFFFF;
     transform: translateY(-1px);
