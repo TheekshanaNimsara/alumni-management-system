@@ -31,7 +31,7 @@ $homeUrl = '../index.php';
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png?v=3">
     
     <!-- Dedicated Scoped Stylesheet -->
-    <link rel="stylesheet" href="../assets/css/auth-success.css">
+    <link rel="stylesheet" href="../assets/css/auth-success.css?v=8">
 </head>
 <body>
 
@@ -50,14 +50,14 @@ $homeUrl = '../index.php';
                 <svg class="success-svg" viewBox="0 0 80 80">
                     <defs>
                         <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#E8CB83" />
-                            <stop offset="50%" stop-color="#D8B96A" />
-                            <stop offset="100%" stop-color="#B49345" />
+                            <stop offset="0%" stop-color="#F5DDA0" />
+                            <stop offset="50%" stop-color="#E8C77E" />
+                            <stop offset="100%" stop-color="#BE984B" />
                         </linearGradient>
                         <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#E8CB83" />
-                            <stop offset="50%" stop-color="#D8B96A" />
-                            <stop offset="100%" stop-color="#B49345" />
+                            <stop offset="0%" stop-color="#F5DDA0" />
+                            <stop offset="50%" stop-color="#E8C77E" />
+                            <stop offset="100%" stop-color="#BE984B" />
                         </linearGradient>
                     </defs>
                     <circle class="success-circle-bg" cx="40" cy="40" r="36" />

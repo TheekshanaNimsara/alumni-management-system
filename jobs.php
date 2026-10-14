@@ -160,7 +160,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Cinematic Header -->
-<section style="background: radial-gradient(circle at 50% 20%, rgba(216, 185, 106, 0.12) 0%, rgba(90, 26, 43, 0.75) 50%, #0F0C12 100%); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border-color);">
+<section style="background: radial-gradient(circle at 50% 20%, rgba(232, 199, 126, 0.12) 0%, rgba(118, 45, 72, 0.75) 50%, #100810 100%); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border-color);">
     <div class="container text-center" style="text-align: center;">
         <span class="section-eyebrow">Professional Opportunities &bull; Internships &bull; Mentorship</span>
         <h1 class="section-title" style="color: var(--text-light); margin-bottom: 0.8rem;">Career Board</h1>
@@ -281,7 +281,7 @@ require_once __DIR__ . '/includes/header.php';
                 </p>
 
                 <?php if (!empty($job['requirements'])): ?>
-                    <div style="background: rgba(90, 26, 43, 0.35); border-left: 3px solid var(--accent-color); border: 1px solid var(--border-color); padding: 0.7rem 1rem; border-radius: 4px; font-size: 0.86rem; color: var(--text-color); margin-bottom: 1.2rem;">
+                    <div style="background: rgba(118, 45, 72, 0.35); border-left: 3px solid var(--accent-color); border: 1px solid var(--border-color); padding: 0.7rem 1rem; border-radius: 4px; font-size: 0.86rem; color: var(--text-color); margin-bottom: 1.2rem;">
                         <strong style="color: var(--accent-light);">Requirements:</strong> <?php echo htmlspecialchars($job['requirements']); ?>
                     </div>
                 <?php endif; ?>
@@ -426,13 +426,13 @@ require_once __DIR__ . '/includes/header.php';
 
 <!-- Modal for Direct Job Application -->
 <div id="applyModal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(10, 2, 4, 0.78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
-    <div class="modal-box" style="max-width: 620px; width: 100%; max-height: 90vh; overflow-y: auto; background: linear-gradient(145deg, rgba(28, 23, 26, 0.96) 0%, rgba(18, 3, 5, 0.98) 100%); border: 1px solid rgba(216, 185, 106, 0.28); border-top: 4px solid var(--accent-color); border-radius: 12px; padding: 2rem;">
+    <div class="modal-box" style="max-width: 620px; width: 100%; max-height: 90vh; overflow-y: auto; background: linear-gradient(145deg, rgba(28, 23, 26, 0.96) 0%, rgba(18, 3, 5, 0.98) 100%); border: 1px solid rgba(232, 199, 126, 0.22); border-top: 4px solid var(--accent-color); border-radius: 12px; padding: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
             <div>
                 <h3 id="applyJobTitle" style="color: var(--text-light); margin-bottom: 0.2rem; font-weight: 800; font-size: 1.4rem;">Apply for Position</h3>
                 <p id="applyCompany" style="color: var(--accent-light); font-weight: 600; margin: 0; font-size: 0.95rem;"></p>
             </div>
-            <button type="button" onclick="closeApplyModal();" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(216, 185, 106, 0.2); color: var(--text-light); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">&times;</button>
+            <button type="button" onclick="closeApplyModal();" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(232, 199, 126, 0.22); color: var(--text-light); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">&times;</button>
         </div>
 
         <div id="applyJobMeta" style="display: flex; flex-wrap: gap; gap: 1rem; font-size: 0.85rem; color: var(--text-muted); padding: 0.6rem 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 1rem;">
@@ -446,7 +446,7 @@ require_once __DIR__ . '/includes/header.php';
             <p id="applyDesc" style="color: var(--text-color); font-size: 0.9rem; line-height: 1.5; margin: 0; max-height: 120px; overflow-y: auto;"></p>
         </div>
 
-        <div id="applyReqSection" style="margin-bottom: 1.2rem; background: rgba(90, 26, 43, 0.35); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem 0.9rem; display: none;">
+        <div id="applyReqSection" style="margin-bottom: 1.2rem; background: rgba(118, 45, 72, 0.35); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem 0.9rem; display: none;">
             <strong style="color: var(--accent-light); font-size: 0.84rem;">Requirements &amp; Tech Stack:</strong>
             <p id="applyReqs" style="color: var(--text-color); font-size: 0.86rem; margin: 0.3rem 0 0 0; line-height: 1.4;"></p>
         </div>

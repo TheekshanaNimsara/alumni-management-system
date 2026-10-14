@@ -92,7 +92,8 @@ if (empty($recentPendingJobs)) {
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $baseUrl; ?>assets/favicon-16x16.png?v=3">
     <link rel="shortcut icon" href="<?php echo $baseUrl; ?>favicon.ico?v=3">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $baseUrl; ?>assets/apple-touch-icon.png?v=3">
-    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css?v=6">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/theme.css?v=8">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css?v=8">
 </head>
 <body>
 

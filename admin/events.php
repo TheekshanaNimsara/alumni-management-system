@@ -100,7 +100,8 @@ if (empty($eventsList) && empty($statusFilter)) {
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $baseUrl; ?>assets/favicon-16x16.png?v=3">
     <link rel="shortcut icon" href="<?php echo $baseUrl; ?>favicon.ico?v=3">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $baseUrl; ?>assets/apple-touch-icon.png?v=3">
-    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css?v=6">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/theme.css?v=8">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css?v=8">
 </head>
 <body>
 
@@ -231,14 +232,14 @@ if (empty($eventsList) && empty($statusFilter)) {
 
 <!-- Admin Event Review Modal -->
 <div id="eventReviewModal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(10, 2, 4, 0.78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
-    <div class="modal-box" style="max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto; background: linear-gradient(145deg, rgba(28, 23, 26, 0.96) 0%, rgba(18, 3, 5, 0.98) 100%); border: 1px solid rgba(216, 185, 106, 0.28); border-top: 4px solid var(--accent-color); border-radius: 12px; padding: 2rem;">
+    <div class="modal-box" style="max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto; background: linear-gradient(145deg, rgba(28, 23, 26, 0.96) 0%, rgba(18, 3, 5, 0.98) 100%); border: 1px solid rgba(232, 199, 126, 0.22); border-top: 4px solid var(--accent-color); border-radius: 12px; padding: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
             <div>
                 <span id="reviewEventBadge" class="badge badge-pending" style="font-size: 0.75rem; margin-bottom: 0.4rem; display: inline-block;">Pending</span>
                 <h3 id="reviewEventTitle" style="color: var(--text-light); margin-bottom: 0.2rem; font-weight: 800; font-size: 1.4rem;">Event Proposal</h3>
                 <p id="reviewEventCreator" style="color: var(--accent-light); font-weight: 600; margin: 0; font-size: 0.95rem;"></p>
             </div>
-            <button type="button" onclick="closeEventReviewModal();" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(216, 185, 106, 0.2); color: var(--text-light); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">&times;</button>
+            <button type="button" onclick="closeEventReviewModal();" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(232, 199, 126, 0.22); color: var(--text-light); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">&times;</button>
         </div>
 
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--text-muted); padding: 0.6rem 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 1rem;">

@@ -183,7 +183,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Cinematic Events Header -->
-<section style="background: radial-gradient(circle at 50% 20%, rgba(216, 185, 106, 0.12) 0%, rgba(90, 26, 43, 0.75) 50%, #0F0C12 100%); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border-color);">
+<section style="background: radial-gradient(circle at 50% 20%, rgba(232, 199, 126, 0.12) 0%, rgba(118, 45, 72, 0.75) 50%, #100810 100%); color: var(--text-light); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border-color);">
     <div class="container text-center" style="text-align: center;">
         <span class="section-eyebrow">Alumni Gatherings &bull; Summits &bull; Reunions</span>
         <h1 class="section-title" style="color: var(--text-light); margin-bottom: 0.8rem;">University Events</h1>
@@ -440,14 +440,14 @@ require_once __DIR__ . '/includes/header.php';
 
 <!-- Modal for Event Details -->
 <div id="eventDetailsModal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(10, 2, 4, 0.78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
-    <div class="modal-box" style="max-width: 620px; width: 100%; max-height: 90vh; overflow-y: auto; background: linear-gradient(145deg, rgba(28, 23, 26, 0.96) 0%, rgba(18, 3, 5, 0.98) 100%); border: 1px solid rgba(216, 185, 106, 0.28); border-top: 4px solid var(--accent-color); border-radius: 12px; padding: 2rem;">
+    <div class="modal-box" style="max-width: 620px; width: 100%; max-height: 90vh; overflow-y: auto; background: linear-gradient(145deg, rgba(28, 23, 26, 0.96) 0%, rgba(18, 3, 5, 0.98) 100%); border: 1px solid rgba(232, 199, 126, 0.22); border-top: 4px solid var(--accent-color); border-radius: 12px; padding: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
             <div>
                 <span id="evDetailBadge" class="badge badge-approved" style="font-size: 0.75rem; margin-bottom: 0.4rem; display: inline-block;">Approved</span>
                 <h3 id="evDetailTitle" style="color: var(--text-light); margin-bottom: 0.2rem; font-weight: 800; font-size: 1.4rem;">Event Specifications</h3>
                 <p id="evDetailOrganizer" style="color: var(--accent-light); font-weight: 600; margin: 0; font-size: 0.95rem;"></p>
             </div>
-            <button type="button" onclick="closeEventDetailsModal();" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(216, 185, 106, 0.2); color: var(--text-light); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">&times;</button>
+            <button type="button" onclick="closeEventDetailsModal();" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(232, 199, 126, 0.22); color: var(--text-light); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">&times;</button>
         </div>
 
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--text-muted); padding: 0.6rem 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 1rem;">

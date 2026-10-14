@@ -139,8 +139,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="shortcut icon" href="../favicon.ico?v=3">
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png?v=3">
     <!-- Master Theme Stylesheets -->
-    <link rel="stylesheet" href="../assets/css/theme.css">
-    <link rel="stylesheet" href="../assets/css/auth.css">
+    <link rel="stylesheet" href="../assets/css/theme.css?v=8">
+    <link rel="stylesheet" href="../assets/css/auth.css?v=8">
 </head>
 <body class="auth-body">
 

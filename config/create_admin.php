@@ -1,12 +1,15 @@
 <?php
-// ============================================================
+
 // University Alumni Network - Administrative Account Provisioning
 // Run via CLI: php config/create_admin.php [username] [email] [password]
-// ============================================================
 
+
+//Load the database connection
 require_once __DIR__ . '/db.php';
 
 // If accessed via web browser, only allow if already authenticated as admin
+
+//web access given button remove from the ui and only can give the access with using CLI
 if (php_sapi_name() !== 'cli') {
     if (!is_admin()) {
         header('HTTP/1.1 403 Forbidden');
@@ -14,6 +17,10 @@ if (php_sapi_name() !== 'cli') {
     }
 }
 
+
+//read command-line arguments passed to a PHP script
+
+//$argv: This is a built-in PHP array that contains all the arguments passed to a script when running it from the command line (CLI).
 $username = $argv[1] ?? 'admin';
 $email    = $argv[2] ?? 'admin@alumni.edu';
 $password = $argv[3] ?? 'Admin@12345';
@@ -29,11 +36,12 @@ if (!$pdo) {
 try {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    // Check if user already exists
+    // Check if user already exists in the database
     $stmt = $pdo->prepare("SELECT id, role FROM users WHERE username = ? OR email = ?");
     $stmt->execute([$username, $email]);
     $existing = $stmt->fetch();
 
+    //check if the user already exists. If they do, update their role to 'admin' and reset their password. If not, create a new admin user.
     if ($existing) {
         $stmt = $pdo->prepare("
             UPDATE users 
@@ -54,5 +62,8 @@ try {
     echo "Admin provisioning complete. Password hashed with bcrypt." . PHP_EOL;
 } catch (Exception $e) {
     echo "Error provisioning administrator: " . $e->getMessage() . PHP_EOL;
-    exit(1);
+    exit(1);//1 (or any number greater than 0) means Failure/Error.
 }
+
+
+ 

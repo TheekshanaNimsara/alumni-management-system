@@ -52,7 +52,7 @@ $pageTitle = ($job ? htmlspecialchars($job['title']) : 'Opportunity Not Found') 
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<link rel="stylesheet" href="jobs.css?v=4.2">
+<link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/jobs.css?v=8">
 
 <main class="content job-detail-wrap" style="padding-top: 2rem;">
     <!-- Breadcrumbs & Return Bar -->
@@ -95,7 +95,7 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
                 <div class="job-hero-tags">
                     <span class="tag" id="detailTypeTag"><?php echo htmlspecialchars($job['job_type'] ?? 'Full-Time'); ?></span>
-                    <span class="tag" id="detailLocation" style="background: rgba(90, 26, 43, 0.4); border-color: rgba(216, 185, 106, 0.35); color: #E8CB83;">
+                    <span class="tag" id="detailLocation" style="background: rgba(118, 45, 72, 0.4); border-color: rgba(232, 199, 126, 0.35); color: #F5DDA0;">
                         &#128205; <?php echo htmlspecialchars($job['location'] ?? 'Colombo, Sri Lanka'); ?>
                     </span>
                     <?php if (!empty($job['deadline'])): ?>
@@ -218,7 +218,7 @@ require_once __DIR__ . '/includes/header.php';
 
                 <!-- In-Page Direct Alumni Application Form -->
                 <?php if ($isLoggedIn): ?>
-                    <div style="background: rgba(28, 23, 26, 0.85); border: 1px solid rgba(216, 185, 106, 0.22); border-radius: 10px; padding: 1.4rem;">
+                    <div style="background: rgba(28, 23, 26, 0.85); border: 1px solid rgba(232, 199, 126, 0.22); border-radius: 10px; padding: 1.4rem;">
                         <h4 style="color: #FFFFFF; font-size: 1rem; margin-bottom: 0.4rem; font-weight: 700;">
                             Quick Alumni Application Note
                         </h4>
@@ -250,7 +250,7 @@ require_once __DIR__ . '/includes/header.php';
                         </form>
                     </div>
                 <?php else: ?>
-                    <div style="background: rgba(28, 23, 26, 0.85); border: 1px solid rgba(216, 185, 106, 0.22); border-radius: 10px; padding: 1.8rem; text-align: center;">
+                    <div style="background: rgba(28, 23, 26, 0.85); border: 1px solid rgba(232, 199, 126, 0.22); border-radius: 10px; padding: 1.8rem; text-align: center;">
                         <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">
                             Sign In Required to Apply
                         </h4>
@@ -284,7 +284,7 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
 
                 <!-- Structured Company Stats -->
-                <div style="background: rgba(18, 3, 5, 0.75); border: 1px solid rgba(216, 185, 106, 0.2); border-radius: 10px; padding: 0.8rem 1.1rem; margin-bottom: 1.5rem;">
+                <div style="background: rgba(18, 3, 5, 0.75); border: 1px solid rgba(232, 199, 126, 0.2); border-radius: 10px; padding: 0.8rem 1.1rem; margin-bottom: 1.5rem;">
                     <div class="company-stat-row">
                         <span class="company-stat-label">Industry</span>
                         <span class="company-stat-value" id="companyIndustry">Software Engineering</span>
@@ -312,7 +312,7 @@ require_once __DIR__ . '/includes/header.php';
                 <?php endif; ?>
 
                 <!-- Posting Metadata -->
-                <div style="border-top: 1px solid rgba(216, 185, 106, 0.2); padding-top: 1.2rem; font-size: 0.82rem; color: var(--text-muted);">
+                <div style="border-top: 1px solid rgba(232, 199, 126, 0.2); padding-top: 1.2rem; font-size: 0.82rem; color: var(--text-muted);">
                     <p style="margin-bottom: 0.4rem;">
                         <strong>Date Posted:</strong> <span id="metaPostedDate"><?php echo !empty($job['posted_at']) ? date('d M Y', strtotime($job['posted_at'])) : 'Recently'; ?></span>
                     </p>

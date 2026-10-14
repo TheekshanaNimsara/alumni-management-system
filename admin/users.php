@@ -112,7 +112,8 @@ if ($db_connected && $pdo) {
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $baseUrl; ?>assets/favicon-16x16.png?v=3">
     <link rel="shortcut icon" href="<?php echo $baseUrl; ?>favicon.ico?v=3">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $baseUrl; ?>assets/apple-touch-icon.png?v=3">
-    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css?v=6">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/theme.css?v=8">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css?v=8">
 </head>
 <body style="background: var(--bg-color);">
 
@@ -228,7 +229,7 @@ if ($db_connected && $pdo) {
                                 </td>
                                 <td>
                                     <?php if ($u['role'] === 'admin'): ?>
-                                        <span class="badge" style="background: rgba(90, 26, 43, 0.45); color: var(--accent-light); border: 1px solid rgba(216, 185, 106, 0.35);">Admin</span>
+                                        <span class="badge" style="background: rgba(118, 45, 72, 0.45); color: var(--accent-light, #F5DDA0); border: 1px solid rgba(232, 199, 126, 0.35);">Admin</span>
                                     <?php else: ?>
                                         <span class="badge badge-secondary">Alumni</span>
                                     <?php endif; ?>

@@ -11,9 +11,9 @@
    ------------------------------------------------------------ */
 .profile-hero {
     position: relative;
-    background: radial-gradient(circle at 75% 20%, rgba(90, 26, 43, 0.28) 0%, rgba(47, 143, 138, 0.15) 45%, transparent 70%),
-                linear-gradient(140deg, rgba(29, 22, 32, 0.96) 0%, rgba(15, 12, 18, 0.98) 60%, rgba(8, 6, 10, 1) 100%);
-    border-bottom: 1px solid var(--border-gold, rgba(216, 185, 106, 0.22));
+    background: radial-gradient(circle at 75% 20%, rgba(118, 45, 72, 0.28) 0%, rgba(47, 143, 138, 0.15) 45%, transparent 70%),
+                linear-gradient(140deg, rgba(33, 23, 33, 0.96) 0%, rgba(21, 15, 23, 0.98) 60%, rgba(9, 6, 11, 1) 100%);
+    border-bottom: 1px solid var(--border-gold, rgba(232, 199, 126, 0.22));
     padding: 3.2rem 0 2.8rem;
     overflow: hidden;
     isolation: isolate;
@@ -62,23 +62,23 @@
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    background: var(--surface-color, #1D1620);
-    border: 3px solid var(--teal-light, #6CC4BA);
+    background: var(--surface-color, #211721);
+    border: 3px solid var(--accent-color, #E8C77E);
     box-shadow:
-        0 0 0 4px var(--border-teal, rgba(47, 143, 138, 0.45)),
+        0 0 0 4px rgba(232, 199, 126, 0.35),
         0 12px 32px rgba(0, 0, 0, 0.65),
-        var(--teal-glow, 0 0 20px rgba(47, 143, 138, 0.35));
+        0 0 20px rgba(232, 199, 126, 0.25);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
     display: block;
 }
 
 .profile-avatar-wrap:hover .profile-avatar-img {
     transform: scale(1.02);
-    border-color: var(--teal-light, #6CC4BA);
+    border-color: var(--accent-light, #F5DDA0);
     box-shadow:
-        0 0 0 4px rgba(108, 196, 186, 0.6),
+        0 0 0 4px rgba(245, 221, 160, 0.5),
         0 16px 40px rgba(0, 0, 0, 0.75),
-        0 0 30px rgba(47, 143, 138, 0.5);
+        0 0 30px rgba(232, 199, 126, 0.4);
 }
 
 /* Camera Upload Badge for Profile Owner */
@@ -91,7 +91,7 @@
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-dark) 100%); color: var(--bg-dark);
     border: 2px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 16px rgba(216, 185, 106, 0.4);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 16px rgba(232, 199, 126, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -104,7 +104,7 @@
 .profile-avatar-badge:hover {
     transform: scale(1.12);
     background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent-color) 100%); color: var(--bg-dark);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 0 22px rgba(216, 185, 106, 0.6);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 0 22px rgba(232, 199, 126, 0.6);
 }
 
 .profile-avatar-badge svg {
@@ -154,16 +154,16 @@
 }
 
 .badge-class-year {
-    background: var(--teal-bg, #11262A);
-    border: 1px solid var(--border-teal, rgba(47, 143, 138, 0.45));
-    color: var(--teal-light, #6CC4BA);
+    background: rgba(118, 45, 72, 0.35);
+    border: 1px solid rgba(232, 199, 126, 0.35);
+    color: var(--accent-light, #F5DDA0);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .badge-role-verified {
-    background: var(--teal-bg, #11262A);
-    border: 1px solid var(--border-teal, rgba(47, 143, 138, 0.45));
-    color: var(--teal-light, #6CC4BA);
+    background: var(--success-bg, rgba(78, 173, 134, 0.15));
+    border: 1px solid var(--success-color, #4EAD86);
+    color: var(--success-color, #4EAD86);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
@@ -225,8 +225,8 @@
     display: inline-flex;
     align-items: center;
     padding: 0.35rem;
-    background: rgba(29, 22, 32, 0.85);
-    border: 1px solid var(--border-gold, rgba(216, 185, 106, 0.20));
+    background: rgba(33, 23, 33, 0.85);
+    border: 1px solid var(--border-gold, rgba(232, 199, 126, 0.20));
     border-radius: 12px;
     backdrop-filter: blur(16px) saturate(160%);
     -webkit-backdrop-filter: blur(16px) saturate(160%);
@@ -288,10 +288,10 @@
 }
 
 .profile-card {
-    background: linear-gradient(145deg, rgba(29, 22, 32, 0.85) 0%, rgba(15, 12, 18, 0.90) 100%);
+    background: linear-gradient(145deg, rgba(33, 23, 33, 0.85) 0%, rgba(21, 15, 23, 0.90) 100%);
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
-    border: 1px solid var(--border-gold, rgba(216, 185, 106, 0.22));
+    border: 1px solid var(--border-gold, rgba(232, 199, 126, 0.22));
     border-radius: 16px;
     padding: 2rem;
     margin-bottom: 2rem;
@@ -301,7 +301,7 @@
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.12),
         0 16px 36px rgba(0, 0, 0, 0.50),
-        0 0 24px rgba(90, 26, 43, 0.20);
+        0 0 24px rgba(118, 45, 72, 0.20);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -390,10 +390,10 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.5rem 1rem;
-    background: var(--teal-bg, #11262A);
-    border: 1px solid var(--border-teal, rgba(47, 143, 138, 0.45));
+    background: rgba(48, 32, 46, 0.68);
+    border: 1px solid var(--glass-border, rgba(232, 199, 126, 0.22));
     border-radius: 9999px;
-    color: var(--teal-light, #6CC4BA);
+    color: var(--text-primary, #F6EDF1);
     font-size: 0.88rem;
     font-weight: 600;
     letter-spacing: 0.01em;
@@ -407,11 +407,12 @@
 
 .skill-chip:hover {
     transform: translateY(-2px);
-    background: rgba(47, 143, 138, 0.25);
-    border-color: var(--teal-light, #6CC4BA);
+    background: rgba(118, 45, 72, 0.35);
+    border-color: var(--accent-color, #E8C77E);
+    color: var(--accent-light, #F5DDA0);
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.25),
-        var(--teal-glow, 0 0 20px rgba(47, 143, 138, 0.35));
+        0 0 20px rgba(232, 199, 126, 0.25);
 }
 
 /* ------------------------------------------------------------
@@ -433,12 +434,12 @@
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: var(--teal-bg, #11262A);
-    border: 1px solid var(--border-teal, rgba(47, 143, 138, 0.45));
+    background: rgba(118, 45, 72, 0.28);
+    border: 1px solid var(--glass-border, rgba(232, 199, 126, 0.22));
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--teal-light, #6CC4BA);
+    color: var(--accent-color, #E8C77E);
     flex-shrink: 0;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
@@ -518,7 +519,7 @@
    5. EDIT PROFILE FORM STYLING
    ------------------------------------------------------------ */
 .profile-card-edit {
-    border-top: 4px solid var(--accent-color, #D8B96A);
+    border-top: 4px solid var(--accent-color, #E8C77E);
 }
 
 .profile-form-section {
@@ -539,7 +540,7 @@
     align-items: center;
     gap: 1.6rem;
     padding: 1.4rem;
-    background: rgba(84, 25, 35, 0.15);
+    background: rgba(118, 45, 72, 0.15);
     border: 1px solid var(--border-gold);
     border-radius: 16px;
     margin-bottom: 0.5rem;
@@ -555,8 +556,8 @@
     overflow: hidden;
     flex-shrink: 0;
     border: 2px solid var(--border-gold);
-    box-shadow: 0 0 0 3px rgba(216, 185, 106, 0.35), 0 8px 24px rgba(0, 0, 0, 0.45);
-    background: var(--surface-color, #1C171A);
+    box-shadow: 0 0 0 3px rgba(232, 199, 126, 0.35), 0 8px 24px rgba(0, 0, 0, 0.45);
+    background: var(--surface-color, #211721);
 }
 
 .profile-photo-preview-wrap img {
@@ -633,9 +634,9 @@
    6. LIGHT THEME COORDINATION ([data-theme="light"])
    ------------------------------------------------------------ */
 [data-theme="light"] .profile-hero {
-    background: radial-gradient(circle at 75% 20%, rgba(90, 26, 43, 0.10) 0%, rgba(47, 143, 138, 0.08) 45%, transparent 70%),
+    background: radial-gradient(circle at 75% 20%, rgba(118, 45, 72, 0.10) 0%, rgba(47, 143, 138, 0.08) 45%, transparent 70%),
                 linear-gradient(140deg, #FFFFFF 0%, #FAF7F2 60%, #F0EAE1 100%);
-    border-bottom-color: rgba(216, 185, 106, 0.25);
+    border-bottom-color: rgba(232, 199, 126, 0.25);
 }
 
 [data-theme="light"] .profile-hero::before {
@@ -646,27 +647,27 @@
     background: #FFFFFF;
     border-color: var(--teal-color, #2F8F8A);
     box-shadow:
-        0 0 0 4px rgba(47, 143, 138, 0.25),
+        0 0 0 4px rgba(190, 152, 75, 0.25),
         0 12px 30px rgba(0, 0, 0, 0.10);
 }
 
 [data-theme="light"] .profile-avatar-wrap:hover .profile-avatar-img {
-    border-color: var(--teal-light, #6CC4BA);
+    border-color: var(--accent-dark, #BE984B);
     box-shadow:
-        0 0 0 4px rgba(47, 143, 138, 0.40),
+        0 0 0 4px rgba(190, 152, 75, 0.40),
         0 16px 36px rgba(0, 0, 0, 0.15);
 }
 
 [data-theme="light"] .profile-name {
-    color: var(--text-primary, #1D1620);
+    color: var(--text-primary, #211721);
 }
 
 [data-theme="light"] .profile-headline {
-    color: var(--accent-dark, #B49345);
+    color: var(--accent-dark, #BE984B);
 }
 
 [data-theme="light"] .profile-headline .company-name {
-    color: var(--text-primary, #1D1620);
+    color: var(--text-primary, #211721);
 }
 
 [data-theme="light"] .profile-meta-tags {
@@ -674,20 +675,20 @@
 }
 
 [data-theme="light"] .profile-meta-tag svg {
-    stroke: var(--accent-dark, #B49345);
+    stroke: var(--accent-dark, #BE984B);
 }
 
 [data-theme="light"] .badge-class-year {
-    background: rgba(47, 143, 138, 0.12);
-    border-color: rgba(47, 143, 138, 0.35);
-    color: #1B4B4A;
+    background: rgba(118, 45, 72, 0.12);
+    border-color: rgba(118, 45, 72, 0.35);
+    color: var(--primary-dark, #451629);
     box-shadow: inset 0 1px 0 #FFFFFF;
 }
 
 [data-theme="light"] .badge-role-verified {
-    background: rgba(47, 143, 138, 0.12);
-    border-color: rgba(47, 143, 138, 0.35);
-    color: #1B4B4A;
+    background: rgba(78, 173, 134, 0.15);
+    border-color: rgba(78, 173, 134, 0.45);
+    color: #2D6A53;
     box-shadow: inset 0 1px 0 #FFFFFF;
 }
 
@@ -702,14 +703,14 @@
 }
 
 [data-theme="light"] .profile-tab-btn:hover {
-    color: var(--teal-dark, #1B4B4A);
-    background: rgba(47, 143, 138, 0.12);
+    color: var(--primary-dark, #451629);
+    background: rgba(118, 45, 72, 0.12);
 }
 
 [data-theme="light"] .profile-tab-btn.active {
-    background: var(--teal-bg, #11262A);
-    color: var(--teal-light, #6CC4BA);
-    border-color: var(--border-teal, rgba(47, 143, 138, 0.45));
+    background: var(--primary-color, #762D48);
+    color: #FFFFFF;
+    border-color: var(--accent-dark, #BE984B);
 }
 
 [data-theme="light"] .profile-card {
@@ -725,7 +726,7 @@
 }
 
 [data-theme="light"] .profile-card-title {
-    color: var(--text-primary, #1D1620);
+    color: var(--text-primary, #211721);
 }
 
 [data-theme="light"] .profile-card-header {
@@ -733,7 +734,7 @@
 }
 
 [data-theme="light"] .profile-bio-text {
-    color: var(--text-primary, #1D1620);
+    color: var(--text-primary, #211721);
 }
 
 [data-theme="light"] .profile-empty-state {
@@ -775,7 +776,7 @@
 }
 
 [data-theme="light"] .profile-overview-val a {
-    color: var(--accent-color, #D8B96A);
+    color: var(--accent-color, #E8C77E);
 }
 
 [data-theme="light"] .profile-community-card {
@@ -784,7 +785,7 @@
 }
 
 [data-theme="light"] .profile-community-title {
-    color: var(--accent-color, #D8B96A);
+    color: var(--accent-color, #E8C77E);
 }
 
 [data-theme="light"] .profile-community-desc {

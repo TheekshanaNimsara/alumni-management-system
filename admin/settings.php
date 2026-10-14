@@ -24,7 +24,8 @@ $baseUrl = get_base_url();
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $baseUrl; ?>assets/favicon-16x16.png?v=3">
     <link rel="shortcut icon" href="<?php echo $baseUrl; ?>favicon.ico?v=3">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $baseUrl; ?>assets/apple-touch-icon.png?v=3">
-    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css?v=6">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/theme.css?v=8">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css?v=8">
 </head>
 <body>
 
@@ -79,29 +80,29 @@ $baseUrl = get_base_url();
             <div class="card" style="padding: 2rem;">
                 <h3 style="color: var(--text-light); margin-bottom: 1rem;">Design System Guidelines</h3>
                 <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.2rem;">
-                    The platform complies with the hand-coded Wine Burgundy, Champagne Gold, Peacock Teal &amp; Plum-Charcoal Liquid Glass design specifications:
+                    The platform complies with the hand-coded Royal Burgundy Luxe, Champagne Gold &amp; Liquid Glass design specifications:
                 </p>
                 <div style="display: flex; gap: 0.8rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #0F0C12; color: #F4EEE7; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
-                        <strong>Plum-Charcoal</strong><br>#0F0C12
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #100810; color: #F6EDF1; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
+                        <strong>Midnight Plum</strong><br>#100810
                     </div>
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #5A1A2B; color: #F4EEE7; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
-                        <strong>Wine Burgundy</strong><br>#5A1A2B
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #762D48; color: #F6EDF1; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
+                        <strong>Royal Burgundy</strong><br>#762D48
                     </div>
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #D8B96A; color: #21170A; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
-                        <strong>Champagne Gold</strong><br>#D8B96A
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #E8C77E; color: #21140B; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
+                        <strong>Champagne Gold</strong><br>#E8C77E
                     </div>
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #2F8F8A; color: #FFFFFF; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
-                        <strong>Peacock Teal</strong><br>#2F8F8A
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #F0A6B8; color: #21140B; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
+                        <strong>Rose Accent</strong><br>#F0A6B8
                     </div>
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #C97B4A; color: #FFFFFF; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
-                        <strong>Copper &amp; Rose</strong><br>#C97B4A
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #B9A0FF; color: #21140B; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
+                        <strong>Violet Accent</strong><br>#B9A0FF
                     </div>
                 </div>
                 <div style="font-size: 0.88rem; color: var(--text-muted);">
                     &bull; Zero external UI frameworks (Handcrafted HTML5, CSS3, Vanilla JS)<br>
                     &bull; Pure CSS Liquid Glass button system with interactive specular gleam<br>
-                    &bull; High-contrast accessible Wine Burgundy, Champagne Gold, Peacock Teal identity
+                    &bull; High-contrast accessible Royal Burgundy Luxe, Champagne Gold identity
                 </div>
             </div>
 
