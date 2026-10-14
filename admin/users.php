@@ -227,7 +227,7 @@ if ($db_connected && $pdo) {
                                 </td>
                                 <td>
                                     <?php if ($u['role'] === 'admin'): ?>
-                                        <span class="badge" style="background: rgba(74, 17, 22, 0.45); color: var(--accent-light); border: 1px solid rgba(212, 175, 55, 0.35);">Admin</span>
+                                        <span class="badge" style="background: rgba(84, 25, 35, 0.45); color: var(--accent-light); border: 1px solid rgba(216, 185, 106, 0.35);">Admin</span>
                                     <?php else: ?>
                                         <span class="badge badge-secondary">Alumni</span>
                                     <?php endif; ?>
@@ -255,7 +255,7 @@ if ($db_connected && $pdo) {
                                                 <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
                                                 <input type="hidden" name="status" value="<?php echo ($u['status'] === 'active') ? 'suspended' : 'active'; ?>">
                                                 <?php if ($u['status'] === 'active'): ?>
-                                                    <button type="submit" class="btn btn-sm" style="background: #FFF4D6; color: var(--warning-color); border: 1px solid var(--warning-color); font-size: 0.75rem; padding: 0.25rem 0.5rem;" onclick="return confirm('Suspend this user account?');">
+                                                    <button type="submit" class="btn btn-glass-danger btn-sm" onclick="return confirm('Suspend this user account?');">
                                                         Suspend
                                                     </button>
                                                 <?php else: ?>
@@ -281,7 +281,7 @@ if ($db_connected && $pdo) {
                                                 <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                                 <input type="hidden" name="action" value="delete_user">
                                                 <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
-                                                <button type="submit" class="btn btn-sm" style="background: var(--danger-color); color: #fff; font-size: 0.75rem; padding: 0.25rem 0.5rem;" onclick="return confirm('PERMANENT DELETION: Are you sure you want to completely delete this user and all associated records?');">
+                                                <button type="submit" class="btn btn-glass-danger btn-sm" onclick="return confirm('PERMANENT DELETION: Are you sure you want to completely delete this user and all associated records?');">
                                                     Delete
                                                 </button>
                                             </form>

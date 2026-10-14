@@ -81,14 +81,14 @@ $baseUrl = get_base_url();
                     The platform complies with the hand-coded dark-maroon &amp; warm-gold Liquid Glass design specifications:
                 </p>
                 <div style="display: flex; gap: 0.8rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #120305; color: #F3EFE6; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
-                        <strong>Dark Maroon</strong><br>#120305
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #100D10; color: #F4EEE7; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
+                        <strong>Dark Charcoal</strong><br>#100D10
                     </div>
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #4A1116; color: #F3EFE6; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
-                        <strong>Deep Burgundy</strong><br>#4A1116
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #541923; color: #F4EEE7; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
+                        <strong>Deep Burgundy</strong><br>#541923
                     </div>
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #D4AF37; color: #120305; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
-                        <strong>Warm Gold</strong><br>#D4AF37
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #D8B96A; color: #100D10; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
+                        <strong>Champagne Gold</strong><br>#D8B96A
                     </div>
                 </div>
                 <div style="font-size: 0.88rem; color: var(--text-muted);">

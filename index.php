@@ -216,14 +216,14 @@ if (empty($recentJobs)) {
                         <p class="event-desc">
                             <?php echo htmlspecialchars(substr($event['description'], 0, 110)) . '...'; ?>
                         </p>
-                        <a href="events.php" class="btn btn-gold btn-block btn-sm">VIEW EVENT</a>
+                        <a href="events.php" class="btn btn-outline-gold btn-block btn-sm">View Event &rarr;</a>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
 
         <div style="text-align: center; margin-top: 3.5rem;">
-            <a href="events.php" class="btn btn-gold gold-glow">Explore All Events</a>
+            <a href="events.php" class="btn btn-primary">Explore All Events &rarr;</a>
         </div>
     </div>
 </section>

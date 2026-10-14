@@ -133,6 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       (function(){try{var s=localStorage.getItem('alumni_theme_preference');var t=(s==='light'||(s!=='dark'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches))?'light':'dark';document.documentElement.setAttribute('data-theme',t);if(s)document.documentElement.setAttribute('data-theme-preference',s);}catch(e){}})();
     </script>
     <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png">
     <link rel="shortcut icon" href="../favicon.ico">

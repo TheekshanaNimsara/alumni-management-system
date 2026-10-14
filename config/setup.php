@@ -84,7 +84,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' || php_sapi_name() === 'cli') 
             padding: 1rem;
             margin: 1.5rem 0;
             border-radius: 6px;
-            background: var(--bg-dark, #0A0204);
+            background: var(--bg-dark, #0A080A);
             color: var(--text-color);
             border: 1px solid var(--border-color);
             font-family: monospace;

@@ -61,6 +61,6 @@ For an optimal understanding of the project, review the documents in the followi
 ## Key Technology Highlights
 
 * **Pure Native Web Stack:** Strictly utilizes HTML5, CSS3, Vanilla JavaScript (ES6+), PHP 8+, and MySQL PDO. Zero external frontend or backend frameworks.
-* **KDU Cinematic Maroon & Gold Palette:** Custom CSS design system adhering to university visual branding (`#24070A`, `#120305`, `#4A1116`, `#D4AF37`, `#F1D77A`, `#F3EFE6`, `#FFFFFF`).
+* **Handcrafted Burgundy, Champagne Gold & Charcoal Palette:** Custom CSS design system adhering to university visual branding (`#541923`, `#100D10`, `#0A080A`, `#1C171A`, `#D8B96A`, `#E8CB83`, `#B49345`, `#F4EEE7`) with handcrafted Liquid Glass button system and Black & White logo favicon.
 * **Robust Security Posture:** BCRYPT password hashing (`password_hash`), 100% PDO prepared statements with parameter binding, XSS escaping (`htmlspecialchars`), session fixation defense (`session_regenerate_id`), session cookie hardening (`HttpOnly`, `SameSite=Lax`), and upload directory execution denial via `.htaccess`.
 * **Relational Database Design:** 9 normalized tables with foreign keys and cascading referential integrity.

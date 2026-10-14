@@ -109,7 +109,7 @@ if ($db_connected && $pdo) {
 ?>
 
 <!-- Cinematic Header Section -->
-<section style="background: radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.15) 0%, rgba(36, 7, 10, 0.95) 70%, #120305 100%); color: var(--text-light); padding: 4.5rem 0 3.5rem; border-bottom: 1px solid var(--border-color);">
+<section style="background: radial-gradient(circle at 50% 20%, rgba(216, 185, 106, 0.12) 0%, rgba(84, 25, 35, 0.75) 50%, #100D10 100%); color: var(--text-light); padding: 4.5rem 0 3.5rem; border-bottom: 1px solid var(--border-color);">
     <div class="container text-center" style="text-align: center;">
         <span class="section-eyebrow">Distinguished Graduates &bull; Global Leaders &bull; Mentors</span>
         <h1 class="section-title" style="color: var(--text-light); margin-bottom: 0.8rem;">Alumni Directory</h1>

@@ -9,21 +9,21 @@
 :root,
 [data-theme="dark"] {
     /* Hand-Coded Maroon & Gold Tokens */
-    --auth-bg-main: #120305;
-    --auth-bg-secondary: #0A0204;
-    --auth-container: #24070A;
-    --auth-surface: #301015;
-    --auth-purple-primary: #D4AF37;
-    --auth-violet-electric: #F1D77A;
-    --auth-lavender-soft: #D4AF37;
-    --auth-pale-highlight: #F1D77A;
-    --auth-text-primary: #F3EFE6;
-    --auth-text-secondary: #B8ADB0;
+    --auth-bg-main: #100D10;
+    --auth-bg-secondary: #0A080A;
+    --auth-container: #1C171A;
+    --auth-surface: #282025;
+    --auth-purple-primary: #D8B96A;
+    --auth-violet-electric: #E8CB83;
+    --auth-lavender-soft: #D8B96A;
+    --auth-pale-highlight: #E8CB83;
+    --auth-text-primary: #F4EEE7;
+    --auth-text-secondary: #B7A9AD;
     --auth-input-bg: rgba(243, 239, 230, 0.95);
-    --auth-input-text: #120305;
-    --auth-btn-dark: #24070A;
-    --auth-border-subtle: rgba(212, 175, 55, 0.22);
-    --auth-purple-glow: rgba(212, 175, 55, 0.25);
+    --auth-input-text: #100D10;
+    --auth-btn-dark: #1C171A;
+    --auth-border-subtle: rgba(216, 185, 106, 0.22);
+    --auth-purple-glow: rgba(216, 185, 106, 0.25);
 
     --auth-radius-lg: 28px;
     --auth-radius-md: 14px;
@@ -31,11 +31,11 @@
     --auth-transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 
     /* Glassmorphism Tokens */
-    --auth-glass-container: rgba(36, 7, 10, 0.88);
-    --auth-glass-surface: rgba(48, 16, 21, 0.82);
-    --auth-glass-border: rgba(212, 175, 55, 0.25);
+    --auth-glass-container: rgba(28, 23, 26, 0.88);
+    --auth-glass-surface: rgba(40, 32, 37, 0.82);
+    --auth-glass-border: rgba(216, 185, 106, 0.25);
     --auth-glass-blur: 20px;
-    --auth-glass-shadow: 0 25px 65px rgba(0, 0, 0, 0.85), 0 0 45px rgba(212, 175, 55, 0.16);
+    --auth-glass-shadow: 0 25px 65px rgba(0, 0, 0, 0.85), 0 0 45px rgba(216, 185, 106, 0.16);
 }
 
 [data-theme="light"] {
@@ -48,20 +48,20 @@
     --auth-violet-electric: #A32638;
     --auth-lavender-soft: #8C1D40;
     --auth-pale-highlight: #A32638;
-    --auth-text-primary: #120305;
+    --auth-text-primary: #100D10;
     --auth-text-secondary: #5C4E52;
     --auth-input-bg: #FFFFFF;
-    --auth-input-text: #120305;
+    --auth-input-text: #100D10;
     --auth-btn-dark: #FFFFFF;
     --auth-border-subtle: rgba(140, 29, 64, 0.18);
-    --auth-purple-glow: rgba(212, 175, 55, 0.18);
+    --auth-purple-glow: rgba(216, 185, 106, 0.18);
 
     /* Glassmorphism Tokens */
     --auth-glass-container: rgba(255, 255, 255, 0.90);
     --auth-glass-surface: rgba(255, 255, 255, 0.95);
     --auth-glass-border: rgba(140, 29, 64, 0.20);
     --auth-glass-blur: 20px;
-    --auth-glass-shadow: 0 20px 50px rgba(74, 17, 22, 0.12), 0 0 30px rgba(212, 175, 55, 0.12);
+    --auth-glass-shadow: 0 20px 50px rgba(84, 25, 35, 0.12), 0 0 30px rgba(216, 185, 106, 0.12);
 }
 
 * {
@@ -102,7 +102,7 @@ body.auth-body::before {
     height: 65vw;
     max-width: 900px;
     max-height: 900px;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.14) 0%, rgba(74, 17, 22, 0.10) 45%, transparent 70%);
+    background: radial-gradient(circle, rgba(216, 185, 106, 0.14) 0%, rgba(84, 25, 35, 0.10) 45%, transparent 70%);
     pointer-events: none;
     z-index: 0;
     filter: blur(40px);
@@ -117,7 +117,7 @@ body.auth-body::after {
     height: 60vw;
     max-width: 800px;
     max-height: 800px;
-    background: radial-gradient(circle, rgba(74, 17, 22, 0.35) 0%, rgba(18, 3, 5, 0.5) 50%, transparent 75%);
+    background: radial-gradient(circle, rgba(84, 25, 35, 0.35) 0%, rgba(18, 3, 5, 0.5) 50%, transparent 75%);
     pointer-events: none;
     z-index: 0;
     filter: blur(50px);
@@ -154,9 +154,9 @@ body.auth-body::after {
 }
 
 .auth-logo-badge {
-    background: linear-gradient(135deg, #4A1116 0%, #24070A 100%);
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    color: #D4AF37;
+    background: linear-gradient(135deg, #541923 0%, #1C171A 100%);
+    border: 1px solid rgba(216, 185, 106, 0.35);
+    color: #D8B96A;
     font-weight: 900;
     font-size: 0.95rem;
     padding: 5px 10px;
@@ -166,7 +166,7 @@ body.auth-body::after {
 }
 
 .auth-nav-back {
-    color: #F1D77A;
+    color: #E8CB83;
     text-decoration: none;
     font-size: 0.92rem;
     font-weight: 600;
@@ -177,17 +177,17 @@ body.auth-body::after {
     border-radius: 30px;
     background: linear-gradient(
         135deg,
-        rgba(74, 17, 22, 0.65) 0%,
-        rgba(36, 7, 10, 0.85) 100%
+        rgba(84, 25, 35, 0.65) 0%,
+        rgba(28, 23, 26, 0.85) 100%
     );
-    border: 1px solid rgba(212, 175, 55, 0.35);
+    border: 1px solid rgba(216, 185, 106, 0.35);
     backdrop-filter: blur(16px) saturate(160%);
     -webkit-backdrop-filter: blur(16px) saturate(160%);
     box-shadow:
-        inset 0 1px 0 rgba(241, 215, 122, 0.25),
+        inset 0 1px 0 rgba(232, 203, 131, 0.25),
         inset 0 -1px 0 rgba(0, 0, 0, 0.4),
         0 4px 16px rgba(0, 0, 0, 0.40),
-        0 0 14px rgba(212, 175, 55, 0.15);
+        0 0 14px rgba(216, 185, 106, 0.15);
     position: relative;
     isolation: isolate;
     overflow: hidden;
@@ -203,16 +203,16 @@ body.auth-body::after {
     background: linear-gradient(
         135deg,
         rgba(90, 22, 28, 0.85) 0%,
-        rgba(48, 16, 21, 0.95) 100%
+        rgba(40, 32, 37, 0.95) 100%
     );
     color: #FFFFFF;
-    border-color: rgba(241, 215, 122, 0.70);
+    border-color: rgba(232, 203, 131, 0.70);
     transform: translateX(-3px);
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.40),
         inset 0 -1px 0 rgba(0, 0, 0, 0.4),
         0 8px 24px rgba(0, 0, 0, 0.50),
-        0 0 24px rgba(212, 175, 55, 0.30);
+        0 0 24px rgba(216, 185, 106, 0.30);
 }
 
 .auth-nav-back:active {
@@ -298,7 +298,7 @@ body.auth-body::after {
     left: 20%;
     width: 320px;
     height: 320px;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(216, 185, 106, 0.12) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
     filter: blur(30px);
@@ -423,7 +423,7 @@ body.auth-body::after {
     outline: none;
     background-color: #FFFFFF;
     border-color: var(--auth-purple-primary);
-    box-shadow: 0 0 0 3.5px rgba(212, 175, 55, 0.25);
+    box-shadow: 0 0 0 3.5px rgba(216, 185, 106, 0.25);
 }
 
 .auth-input:focus-visible {
@@ -455,7 +455,7 @@ body.auth-body::after {
 
 .auth-toggle-pwd:hover {
     color: var(--auth-purple-primary);
-    background: rgba(212, 175, 55, 0.12);
+    background: rgba(216, 185, 106, 0.12);
 }
 
 .auth-toggle-pwd:focus-visible {
@@ -480,15 +480,10 @@ body.auth-body::after {
     width: 100%;
     height: 50px;
     margin-top: 1.1rem;
-    background: linear-gradient(
-        135deg,
-        rgba(212, 175, 55, 0.40) 0%,
-        rgba(74, 17, 22, 0.90) 48%,
-        rgba(36, 7, 10, 0.96) 100%
-    );
-    color: #FFFFFF;
-    border: 1px solid rgba(212, 175, 55, 0.45);
-    border-radius: var(--auth-radius-md);
+    background: var(--btn-primary-bg, #D8B96A);
+    color: var(--btn-primary-text, #21170A);
+    border: 1px solid var(--accent-color, #D8B96A);
+    border-radius: var(--auth-radius-md, 10px);
     font-size: 1rem;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -496,22 +491,17 @@ body.auth-body::after {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     box-shadow:
-        inset 0 1px 0 rgba(241, 215, 122, 0.35),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.4),
-        0 8px 24px rgba(0, 0, 0, 0.50),
-        0 0 20px rgba(212, 175, 55, 0.20);
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        0 6px 18px rgba(0, 0, 0, 0.35),
+        var(--gold-glow);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    animation: liquidAmbientGlow 5s ease-in-out infinite;
-    transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
-                box-shadow 260ms ease,
-                background 260ms ease,
-                border-color 260ms ease;
+    transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease, border-color 200ms ease;
 }
 
 .auth-btn-primary::after {
@@ -526,7 +516,7 @@ body.auth-body::after {
         transparent 0%,
         rgba(255, 255, 255, 0.05) 30%,
         rgba(255, 255, 255, 0.35) 50%,
-        rgba(241, 215, 122, 0.25) 65%,
+        rgba(232, 203, 131, 0.25) 65%,
         transparent 100%
     );
     transform: skewX(-20deg);
@@ -543,18 +533,13 @@ body.auth-body::after {
 
 .auth-btn-primary:hover {
     transform: translateY(-2px);
+    background: var(--btn-primary-hover, #E8CB83);
+    color: var(--btn-primary-text, #21170A);
+    border-color: var(--accent-light, #E8CB83);
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.40),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.4),
-        0 12px 32px rgba(0, 0, 0, 0.65),
-        0 0 30px rgba(212, 175, 55, 0.35);
-    background: linear-gradient(
-        135deg,
-        rgba(241, 215, 122, 0.50) 0%,
-        rgba(90, 22, 28, 0.95) 48%,
-        rgba(48, 16, 21, 0.98) 100%
-    );
-    border-color: rgba(241, 215, 122, 0.75);
+        inset 0 1px 0 rgba(255, 255, 255, 0.60),
+        0 10px 28px rgba(0, 0, 0, 0.45),
+        0 0 20px rgba(216, 185, 106, 0.35);
 }
 
 .auth-btn-primary:active {
@@ -587,7 +572,7 @@ body.auth-body::after {
 
 .auth-switch-link a:hover {
     color: #FFFFFF;
-    text-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+    text-shadow: 0 0 12px rgba(216, 185, 106, 0.5);
 }
 
 /* ------------------------------------------------------------
@@ -595,7 +580,7 @@ body.auth-body::after {
    ------------------------------------------------------------ */
 .auth-column-promo {
     flex: 1 1 48%;
-    background: linear-gradient(155deg, rgba(48, 16, 21, 0.88) 0%, rgba(36, 7, 10, 0.82) 40%, rgba(18, 3, 5, 0.92) 100%);
+    background: linear-gradient(155deg, rgba(40, 32, 37, 0.88) 0%, rgba(28, 23, 26, 0.82) 40%, rgba(18, 3, 5, 0.92) 100%);
     border-left: 1px solid var(--auth-glass-border);
     padding: 3.8rem 3.4rem;
     display: flex;
@@ -615,7 +600,7 @@ body.auth-body::after {
     right: -20%;
     width: 360px;
     height: 360px;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, rgba(74, 17, 22, 0.15) 50%, transparent 75%);
+    background: radial-gradient(circle, rgba(216, 185, 106, 0.22) 0%, rgba(84, 25, 35, 0.15) 50%, transparent 75%);
     pointer-events: none;
     filter: blur(35px);
 }
@@ -694,7 +679,7 @@ body.auth-body::after {
     width: 38px;
     height: 38px;
     border-radius: 8px;
-    background: rgba(212, 175, 55, 0.12);
+    background: rgba(216, 185, 106, 0.12);
     border: 1px solid var(--auth-border-subtle);
     color: var(--auth-text-primary);
     display: flex;
@@ -705,7 +690,7 @@ body.auth-body::after {
 }
 
 .auth-promo-btn:hover {
-    background: rgba(212, 175, 55, 0.25);
+    background: rgba(216, 185, 106, 0.25);
 }
 
 /* Lower Floating Promotional Card */
@@ -713,7 +698,7 @@ body.auth-body::after {
     position: relative;
     z-index: 2;
     background: rgba(247, 245, 252, 0.92);
-    color: #120305;
+    color: #100D10;
     border-radius: 20px;
     padding: 1.6rem 1.8rem;
     border: 1px solid rgba(255, 255, 255, 0.4);
@@ -734,14 +719,14 @@ body.auth-body::after {
 .auth-promo-card-title {
     font-size: 1.15rem;
     font-weight: 800;
-    color: #120305;
+    color: #100D10;
     margin-bottom: 0.35rem;
     line-height: 1.3;
 }
 
 .auth-promo-card-text {
     font-size: 0.88rem;
-    color: #4A1116;
+    color: #541923;
     line-height: 1.5;
 }
 
@@ -749,9 +734,9 @@ body.auth-body::after {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: #24070A;
-    color: #D4AF37;
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    background: #1C171A;
+    color: #D8B96A;
+    border: 1px solid rgba(216, 185, 106, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -852,13 +837,13 @@ body.auth-body::after {
         background: var(--auth-container);
     }
     .auth-column-form {
-        background: #24070A;
+        background: #1C171A;
     }
     .auth-column-promo {
-        background: #301015;
+        background: #282025;
     }
     .auth-nav-back {
-        background: rgba(212, 175, 55, 0.15);
+        background: rgba(216, 185, 106, 0.15);
     }
     .auth-promo-card {
         background: #F4EFE6;
@@ -870,38 +855,38 @@ body.auth-body::after {
 @keyframes returnHomeBeacon {
     0%, 100% {
         box-shadow:
-            inset 0 1px 0 rgba(241, 215, 122, 0.25),
+            inset 0 1px 0 rgba(232, 203, 131, 0.25),
             inset 0 -1px 0 rgba(0, 0, 0, 0.40),
             0 4px 16px rgba(0, 0, 0, 0.40),
-            0 0 14px rgba(212, 175, 55, 0.15);
-        border-color: rgba(212, 175, 55, 0.35);
+            0 0 14px rgba(216, 185, 106, 0.15);
+        border-color: rgba(216, 185, 106, 0.35);
     }
     50% {
         box-shadow:
             inset 0 1px 0 rgba(255, 255, 255, 0.40),
             inset 0 -1px 0 rgba(0, 0, 0, 0.40),
             0 6px 22px rgba(0, 0, 0, 0.50),
-            0 0 24px rgba(212, 175, 55, 0.30);
-        border-color: rgba(241, 215, 122, 0.70);
+            0 0 24px rgba(216, 185, 106, 0.30);
+        border-color: rgba(232, 203, 131, 0.70);
     }
 }
 
 @keyframes liquidAmbientGlow {
     0%, 100% {
         box-shadow:
-            inset 0 1px 0 rgba(241, 215, 122, 0.35),
+            inset 0 1px 0 rgba(232, 203, 131, 0.35),
             inset 0 -1px 0 rgba(0, 0, 0, 0.40),
             0 8px 24px rgba(0, 0, 0, 0.50),
-            0 0 20px rgba(212, 175, 55, 0.18);
-        border-color: rgba(212, 175, 55, 0.45);
+            0 0 20px rgba(216, 185, 106, 0.18);
+        border-color: rgba(216, 185, 106, 0.45);
     }
     50% {
         box-shadow:
             inset 0 1px 0 rgba(255, 255, 255, 0.45),
             inset 0 -1px 0 rgba(0, 0, 0, 0.40),
             0 12px 30px rgba(0, 0, 0, 0.65),
-            0 0 32px rgba(212, 175, 55, 0.35);
-        border-color: rgba(241, 215, 122, 0.75);
+            0 0 32px rgba(216, 185, 106, 0.35);
+        border-color: rgba(232, 203, 131, 0.75);
     }
 }
 
@@ -987,15 +972,15 @@ body.auth-body::after {
     z-index: 2;
     width: 100%;
     max-width: 480px;
-    background: rgba(36, 7, 10, 0.94);
-    border: 1px solid rgba(212, 175, 55, 0.28);
+    background: rgba(28, 23, 26, 0.94);
+    border: 1px solid rgba(216, 185, 106, 0.28);
     border-radius: 28px;
     padding: 3.2rem 2.4rem 2.4rem;
     text-align: center;
     box-shadow:
         0 30px 80px rgba(0, 0, 0, 0.85),
-        0 0 50px rgba(212, 175, 55, 0.20),
-        inset 0 1px 0 rgba(241, 215, 122, 0.25);
+        0 0 50px rgba(216, 185, 106, 0.20),
+        inset 0 1px 0 rgba(232, 203, 131, 0.25);
     transform: scale(0.90) translateY(18px);
     opacity: 0;
     transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1006,8 +991,8 @@ body.auth-body::after {
     background: rgba(255, 255, 255, 0.96);
     border: 1px solid rgba(140, 29, 64, 0.24);
     box-shadow:
-        0 25px 70px rgba(74, 17, 22, 0.18),
-        0 0 45px rgba(212, 175, 55, 0.14),
+        0 25px 70px rgba(84, 25, 35, 0.18),
+        0 0 45px rgba(216, 185, 106, 0.14),
         inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
@@ -1024,7 +1009,7 @@ body.auth-body::after {
     left: 0;
     right: 0;
     height: 40%;
-    background: linear-gradient(180deg, rgba(241, 215, 122, 0.12) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(232, 203, 131, 0.12) 0%, transparent 100%);
     pointer-events: none;
     border-radius: 28px 28px 0 0;
 }
@@ -1037,7 +1022,7 @@ body.auth-body::after {
     transform: translate(-50%, -50%);
     width: 240px;
     height: 240px;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.35) 0%, rgba(74, 17, 22, 0.20) 50%, transparent 70%);
+    background: radial-gradient(circle, rgba(216, 185, 106, 0.35) 0%, rgba(84, 25, 35, 0.20) 50%, transparent 70%);
     filter: blur(24px);
     pointer-events: none;
     animation: successPulseGlow 3s ease-in-out infinite alternate;
@@ -1063,13 +1048,13 @@ body.auth-body::after {
     width: 100%;
     height: 100%;
     display: block;
-    filter: drop-shadow(0 8px 22px rgba(212, 175, 55, 0.45));
+    filter: drop-shadow(0 8px 22px rgba(216, 185, 106, 0.45));
 }
 
 /* Circular Track Background */
 .auth-success-circle-bg {
-    fill: rgba(74, 17, 22, 0.25);
-    stroke: rgba(212, 175, 55, 0.22);
+    fill: rgba(84, 25, 35, 0.25);
+    stroke: rgba(216, 185, 106, 0.22);
     stroke-width: 4;
 }
 
@@ -1127,7 +1112,7 @@ body.auth-body::after {
 
 /* Success Typography */
 .auth-success-title {
-    color: #F3EFE6;
+    color: #F4EEE7;
     font-size: 1.75rem;
     font-weight: 800;
     letter-spacing: -0.025em;
@@ -1136,11 +1121,11 @@ body.auth-body::after {
 }
 
 [data-theme="light"] .auth-success-title {
-    color: #120305;
+    color: #100D10;
 }
 
 .auth-success-message {
-    color: #B8ADB0;
+    color: #B7A9AD;
     font-size: 1rem;
     line-height: 1.55;
     margin-bottom: 2rem;
@@ -1161,8 +1146,8 @@ body.auth-body::after {
 .auth-success-progress-track {
     width: 100%;
     height: 7px;
-    background: rgba(74, 17, 22, 0.35);
-    border: 1px solid rgba(212, 175, 55, 0.22);
+    background: rgba(84, 25, 35, 0.35);
+    border: 1px solid rgba(216, 185, 106, 0.22);
     border-radius: 999px;
     overflow: hidden;
     position: relative;
@@ -1177,9 +1162,9 @@ body.auth-body::after {
 .auth-success-progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #A98218 0%, #D4AF37 50%, #F1D77A 100%);
+    background: linear-gradient(90deg, #B49345 0%, #D8B96A 50%, #E8CB83 100%);
     border-radius: 999px;
-    box-shadow: 0 0 14px rgba(212, 175, 55, 0.75);
+    box-shadow: 0 0 14px rgba(216, 185, 106, 0.75);
 }
 
 .auth-success-overlay.active .auth-success-progress-bar {
@@ -1196,7 +1181,7 @@ body.auth-body::after {
     justify-content: space-between;
     align-items: center;
     font-size: 0.84rem;
-    color: #B8ADB0;
+    color: #B7A9AD;
     font-weight: 500;
 }
 
@@ -1207,7 +1192,7 @@ body.auth-body::after {
 /* Fallback Manual Link */
 .auth-success-manual-link {
     display: inline-block;
-    color: #F1D77A;
+    color: #E8CB83;
     font-size: 0.85rem;
     text-decoration: underline;
     text-underline-offset: 3px;

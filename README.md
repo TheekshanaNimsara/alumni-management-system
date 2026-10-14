@@ -31,7 +31,7 @@ The platform intentionally uses **pure native web technologies** without externa
 * **Database Abstraction:** PHP Data Objects (PDO) with strict parameterized prepared statements
 * **Database Engine:** MySQL 8.0+ / MariaDB 10.4+ (InnoDB, utf8mb4 encoding, foreign key constraints)
 * **Frontend:** Semantic HTML5, Vanilla JavaScript (ES6+), Responsive CSS3
-* **Visual Palette:** Custom **KDU Cinematic Maroon & Gold** palette (`#24070A`, `#120305`, `#4A1116`, `#D4AF37`, `#F1D77A`, `#F3EFE6`, `#FFFFFF`)
+* **Visual Palette:** Handcrafted **Burgundy, Champagne Gold & Charcoal** palette (`#541923`, `#100D10`, `#0A080A`, `#1C171A`, `#D8B96A`, `#E8CB83`, `#B49345`, `#F4EEE7`) with handcrafted Liquid Glass button system and Black & White logo favicon
 * **Framework Policy:** **Zero external dependencies** (no React, Vue, Angular, Laravel, CodeIgniter, Bootstrap, Tailwind, jQuery, Node.js, Express, etc.).
 
 ---
