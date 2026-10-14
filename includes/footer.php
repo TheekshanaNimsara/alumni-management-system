@@ -6,12 +6,12 @@ $baseUrl = isset($baseUrl) ? $baseUrl : get_base_url();
 ?>
     <!-- Cinematic Deep Navy Footer -->
     <footer class="footer">
-        <div class="container">
+        <div class="container footer-container">
             <div class="footer-top">
                 <div>
                     <div class="footer-brand-title">
                         <span class="logo-badge">AN</span>
-                        <span>ALUMNI <span class="logo-gold">NETWORK</span></span>
+                        <span class="logo-text">ALUMNI <span class="logo-gold">NETWORK</span></span>
                     </div>
                     <p class="footer-tagline">
                         Connecting graduates. Creating opportunities. Building the future of our prestigious university community.
