@@ -39,6 +39,9 @@ For an optimal understanding of the project, review the documents in the followi
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 5. [05-testing-and-acceptance-guide.md]                                     │
 │    Step-by-step manual testing guide with 29 test cases across all modules. │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 6. [06-grant-admin-access-guide.md]                                         │
+│    Complete guide on granting admin privileges to registered members.       │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -51,6 +54,7 @@ For an optimal understanding of the project, review the documents in the followi
 | **3** | **Complete File-by-File Technical Description** | [`03-complete-file-by-file-technical-description.md`](./03-complete-file-by-file-technical-description.md) | Deep technical specification: analyzes every source file individually using the rigorous 16-point template (purpose, responsibilities, execution flow, inputs/outputs, database queries, auth guards, security considerations, manual testing steps, status, and related phase). |
 | **4** | **Four-Phase Project Roadmap** | [`04-four-phase-project-roadmap.md`](./04-four-phase-project-roadmap.md) | Comprehensive project planning and milestone framework: divides the entire platform into 4 logical phases (Foundation, Profiles & Directory, Events & Jobs, Messaging & Administration) with detailed objectives, checklists, definitions of done, and an evidence-based Task Matrix. |
 | **5** | **Testing & Acceptance Guide** | [`05-testing-and-acceptance-guide.md`](./05-testing-and-acceptance-guide.md) | Practical manual verification handbook: prerequisites, database setup, seed accounts, and 29 structured test cases with preconditions, test steps, expected results, actual results, and pass/fail statuses covering all functional modules. |
+| **6** | **Grant Admin Access Guide** | [`06-grant-admin-access-guide.md`](./06-grant-admin-access-guide.md) | Operational administrator manual: step-by-step instructions for granting admin privileges via Web Panel, CLI tool (`bin/grant_admin.php`), and direct MySQL queries, including security safeguards. |
 
 ---
 

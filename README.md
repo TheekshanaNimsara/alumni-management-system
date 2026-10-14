@@ -96,6 +96,48 @@ For local evaluation and demonstration, the database seed script provides pre-co
 
 ---
 
+## How to Grant Admin Access to an Already Registered User
+
+Any registered member can be elevated to an Administrator using any of the following 3 methods:
+
+### Method 1: Via the Web Admin Panel (Easiest)
+1. Log into an existing administrator account (e.g., `admin@alumni.edu` / `Admin@123`).
+2. Navigate to the **Admin Panel** > **Users** (`http://localhost/alumni-network/admin/users.php`).
+3. Search for the registered user by their name, email, or username.
+4. In the **Actions** column, click the **"Make Admin"** button and confirm.
+5. The user's role is immediately updated to `Admin`, granting them full access to the administration suite.
+
+### Method 2: Via the CLI Helper Tool (`bin/grant_admin.php`)
+Open PowerShell or terminal in the project root (`c:\xampp\htdocs\alumni-network`):
+```bash
+# Promote by email:
+php bin/grant_admin.php user@example.com
+
+# Promote by username:
+php bin/grant_admin.php username_here
+
+# Promote by user ID:
+php bin/grant_admin.php 3
+
+# List all current administrators:
+php bin/grant_admin.php --list
+
+# Demote an administrator back to alumni:
+php bin/grant_admin.php --demote user@example.com
+```
+
+### Method 3: Via MySQL / phpMyAdmin (Direct SQL)
+Open `http://localhost/phpmyadmin` or your MySQL command line client:
+```sql
+USE alumni_network;
+UPDATE users SET role = 'admin', status = 'active' WHERE email = 'user@example.com';
+```
+*(Or by username: `UPDATE users SET role = 'admin', status = 'active' WHERE username = 'john_doe';`)*
+
+> For full technical details, troubleshooting, and architectural safeguards, see the [Grant Admin Access Guide](docs/06-grant-admin-access-guide.md).
+
+---
+
 ## Security Architecture
 
 * **BCRYPT Hashing:** Passwords encrypted using `password_hash($pwd, PASSWORD_BCRYPT)` and checked via constant-time `password_verify()`.
