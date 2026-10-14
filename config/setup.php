@@ -64,10 +64,11 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' || php_sapi_name() === 'cli') 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Database Setup - Alumni Network</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png">
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=3">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png?v=3">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png?v=3">
+    <link rel="shortcut icon" href="../favicon.ico?v=3">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png?v=3">
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
         .setup-container {
