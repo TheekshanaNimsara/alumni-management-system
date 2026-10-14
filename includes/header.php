@@ -55,7 +55,7 @@ if ($isLoggedIn && $db_connected && $pdo) {
         <div class="navbar-container">
             <a href="<?php echo $baseUrl; ?>index.php" class="logo" title="University Alumni Network">
                 <span class="logo-badge">AN</span>
-                <span>ALUMNI <span class="logo-gold">NETWORK</span></span>
+                <span class="logo-text">ALUMNI <span class="logo-gold">NETWORK</span></span>
             </a>
 
             <button class="nav-toggle" aria-label="Toggle navigation menu">&#9776;</button>

@@ -299,7 +299,8 @@ img { max-width: 100%; display: block; }
   text-decoration: none;
 }
 
-.logo {
+.logo-box,
+.logo-badge {
   background-color: var(--accent-color);
   color: var(--primary-dark);
   font-weight: 900;
