@@ -1,9 +1,6 @@
 <?php
-// ============================================================
-// University Alumni Network - Database Setup & Installer
-// Run this file in browser (http://localhost/alumni-network/config/setup.php)
-// or via CLI to automatically initialize or reset the database.
-// ============================================================
+
+//This code is a Database Initialization and Reset Script. It acts as an installer for a web application
 
 $db_host = 'localhost';
 $db_user = 'root';
