@@ -1,6 +1,6 @@
 /* ============================================================
    ALUMNI CONNECT - DEDICATED AUTH SUCCESS PAGE STYLESHEET
-   Liquid Glass • Dark Purple Aesthetic • Apple/macOS Polish
+   Liquid Glass • Dark Maroon & Warm Gold Aesthetic • Apple/macOS Polish
    Zero Layout Clutter • Centered Viewport • Smooth Animations
    ============================================================ */
 
@@ -14,8 +14,8 @@ html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: #080510;
-    color: #F8F7FC;
+    background-color: #0A0204;
+    color: #F3EFE6;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -30,7 +30,7 @@ html, body {
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
-    background: radial-gradient(circle at 50% 35%, #180D2D 0%, #10091D 50%, #080510 100%);
+    background: radial-gradient(circle at 50% 35%, #24070A 0%, #120305 50%, #0A0204 100%);
     overflow: hidden;
     isolation: isolate;
 }
@@ -43,7 +43,7 @@ html, body {
     transform: translateX(-50%);
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(147, 51, 234, 0.22) 0%, rgba(124, 58, 237, 0.08) 50%, transparent 70%);
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.18) 0%, rgba(74, 17, 22, 0.12) 50%, transparent 70%);
     filter: blur(50px);
     pointer-events: none;
     z-index: 0;
@@ -57,7 +57,7 @@ html, body {
     transform: translateX(-50%);
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.16) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(74, 17, 22, 0.25) 0%, transparent 70%);
     filter: blur(60px);
     pointer-events: none;
     z-index: 0;
@@ -69,15 +69,15 @@ html, body {
     z-index: 2;
     width: 100%;
     max-width: 480px;
-    background: rgba(27, 18, 48, 0.92);
-    border: 1px solid rgba(196, 181, 253, 0.24);
+    background: rgba(36, 7, 10, 0.94);
+    border: 1px solid rgba(212, 175, 55, 0.25);
     border-radius: 28px;
     padding: 3rem 2.4rem 2.4rem;
     text-align: center;
     box-shadow:
         0 30px 80px rgba(0, 0, 0, 0.85),
-        0 0 60px rgba(124, 58, 237, 0.30),
-        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+        0 0 50px rgba(212, 175, 55, 0.18),
+        inset 0 1px 0 rgba(241, 215, 122, 0.22);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
     animation: successCardEntry 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -92,7 +92,7 @@ html, body {
     left: 0;
     right: 0;
     height: 40%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(241, 215, 122, 0.12) 0%, transparent 100%);
     pointer-events: none;
     border-radius: 28px 28px 0 0;
 }
@@ -118,7 +118,7 @@ html, body {
     font-size: 1.15rem;
     font-weight: 800;
     letter-spacing: 0.5px;
-    color: #F8F7FC;
+    color: #F3EFE6;
 }
 
 .success-brand-badge {
@@ -128,15 +128,16 @@ html, body {
     width: 34px;
     height: 34px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #7C3AED 0%, #9333EA 100%);
-    color: #FFFFFF;
+    background: linear-gradient(135deg, #4A1116 0%, #24070A 100%);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: #D4AF37;
     font-size: 0.85rem;
     font-weight: 900;
-    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.55);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55), 0 0 12px rgba(212, 175, 55, 0.22);
 }
 
 .success-brand-text .highlight {
-    color: #C4B5FD;
+    color: #D4AF37;
 }
 
 /* Animated Circular Checkmark Badge */
@@ -157,7 +158,7 @@ html, body {
     transform: translate(-50%, -50%);
     width: 200px;
     height: 200px;
-    background: radial-gradient(circle, rgba(147, 51, 234, 0.45) 0%, rgba(124, 58, 237, 0.18) 50%, transparent 70%);
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.35) 0%, rgba(74, 17, 22, 0.22) 50%, transparent 70%);
     filter: blur(24px);
     pointer-events: none;
     animation: successPulseAura 3s ease-in-out infinite alternate;
@@ -172,18 +173,18 @@ html, body {
     width: 100%;
     height: 100%;
     display: block;
-    filter: drop-shadow(0 8px 24px rgba(124, 58, 237, 0.6));
+    filter: drop-shadow(0 8px 24px rgba(212, 175, 55, 0.45));
 }
 
 .success-circle-bg {
-    fill: rgba(124, 58, 237, 0.16);
-    stroke: rgba(196, 181, 253, 0.22);
+    fill: rgba(74, 17, 22, 0.25);
+    stroke: rgba(212, 175, 55, 0.22);
     stroke-width: 4;
 }
 
 .success-circle-draw {
     fill: none;
-    stroke: url(#purpleGrad);
+    stroke: url(#goldGrad);
     stroke-width: 4.5;
     stroke-linecap: round;
     stroke-dasharray: 230;
@@ -199,7 +200,7 @@ html, body {
 
 .success-check-draw {
     fill: none;
-    stroke: #FFFFFF;
+    stroke: #F3EFE6;
     stroke-width: 5;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -214,7 +215,7 @@ html, body {
 
 /* Typography */
 .success-title {
-    color: #F8F7FC;
+    color: #F3EFE6;
     font-size: 1.75rem;
     font-weight: 800;
     letter-spacing: -0.025em;
@@ -223,7 +224,7 @@ html, body {
 }
 
 .success-subtitle {
-    color: #C4B5FD;
+    color: #B8ADB0;
     font-size: 1rem;
     line-height: 1.55;
     margin-bottom: 2rem;
@@ -240,8 +241,8 @@ html, body {
 .success-progress-track {
     width: 100%;
     height: 6px;
-    background: rgba(124, 58, 237, 0.18);
-    border: 1px solid rgba(196, 181, 253, 0.20);
+    background: rgba(74, 17, 22, 0.45);
+    border: 1px solid rgba(212, 175, 55, 0.20);
     border-radius: 999px;
     overflow: hidden;
     position: relative;
@@ -251,9 +252,9 @@ html, body {
 .success-progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #7C3AED 0%, #9333EA 50%, #C4B5FD 100%);
+    background: linear-gradient(90deg, #A98218 0%, #D4AF37 50%, #F1D77A 100%);
     border-radius: 999px;
-    box-shadow: 0 0 14px rgba(147, 51, 234, 0.85);
+    box-shadow: 0 0 14px rgba(212, 175, 55, 0.85);
     animation: progressFillAnimation 2s linear forwards;
 }
 
@@ -267,12 +268,12 @@ html, body {
     justify-content: space-between;
     align-items: center;
     font-size: 0.84rem;
-    color: #B9B2C9;
+    color: #B8ADB0;
     font-weight: 500;
 }
 
 .success-countdown {
-    color: #C4B5FD;
+    color: #D4AF37;
     font-weight: 700;
 }
 
@@ -289,19 +290,19 @@ html, body {
     border-radius: 999px;
     font-size: 0.88rem;
     font-weight: 600;
-    color: #C4B5FD;
-    background: rgba(124, 58, 237, 0.14);
-    border: 1px solid rgba(196, 181, 253, 0.24);
+    color: #F1D77A;
+    background: rgba(74, 17, 22, 0.45);
+    border: 1px solid rgba(212, 175, 55, 0.35);
     text-decoration: none;
     transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-success-continue:hover {
-    background: rgba(124, 58, 237, 0.32);
-    border-color: rgba(196, 181, 253, 0.45);
+    background: rgba(74, 17, 22, 0.80);
+    border-color: rgba(212, 175, 55, 0.70);
     color: #FFFFFF;
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 14px rgba(212, 175, 55, 0.35);
 }
 
 /* Reduced Motion Safeguard */

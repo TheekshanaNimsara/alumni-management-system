@@ -95,7 +95,7 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
                 <div class="job-hero-tags">
                     <span class="tag" id="detailTypeTag"><?php echo htmlspecialchars($job['job_type'] ?? 'Full-Time'); ?></span>
-                    <span class="tag" id="detailLocation" style="background: rgba(124, 58, 237, 0.15); border-color: rgba(196, 181, 253, 0.25); color: #C4B5FD;">
+                    <span class="tag" id="detailLocation" style="background: rgba(74, 17, 22, 0.4); border-color: rgba(212, 175, 55, 0.35); color: #F1D77A;">
                         &#128205; <?php echo htmlspecialchars($job['location'] ?? 'Colombo, Sri Lanka'); ?>
                     </span>
                     <?php if (!empty($job['deadline'])): ?>
@@ -218,7 +218,7 @@ require_once __DIR__ . '/includes/header.php';
 
                 <!-- In-Page Direct Alumni Application Form -->
                 <?php if ($isLoggedIn): ?>
-                    <div style="background: rgba(16, 9, 29, 0.70); border: 1px solid rgba(196, 181, 253, 0.18); border-radius: 10px; padding: 1.4rem;">
+                    <div style="background: rgba(36, 7, 10, 0.85); border: 1px solid rgba(212, 175, 55, 0.22); border-radius: 10px; padding: 1.4rem;">
                         <h4 style="color: #FFFFFF; font-size: 1rem; margin-bottom: 0.4rem; font-weight: 700;">
                             Quick Alumni Application Note
                         </h4>
@@ -230,19 +230,19 @@ require_once __DIR__ . '/includes/header.php';
                                 <label for="applicantName" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem; font-weight: 600;">
                                     Your Full Name
                                 </label>
-                                <input type="text" id="applicantName" class="form-control" value="<?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>" placeholder="e.g. Anuka Perera" required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 5, 16, 0.85); color: #FFFFFF; font-family: inherit;">
+                                <input type="text" id="applicantName" class="form-control" value="<?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>" placeholder="e.g. Anuka Perera" required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(18, 3, 5, 0.85); color: #FFFFFF; font-family: inherit;">
                             </div>
                             <div style="margin-bottom: 1rem;">
                                 <label for="applicantEmail" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem; font-weight: 600;">
                                     University / Contact Email
                                 </label>
-                                <input type="email" id="applicantEmail" class="form-control" value="<?php echo htmlspecialchars($_SESSION['user_email'] ?? ''); ?>" placeholder="e.g. anuka.alumni@kdu.ac.lk" required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 5, 16, 0.85); color: #FFFFFF; font-family: inherit;">
+                                <input type="email" id="applicantEmail" class="form-control" value="<?php echo htmlspecialchars($_SESSION['user_email'] ?? ''); ?>" placeholder="e.g. anuka.alumni@kdu.ac.lk" required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(18, 3, 5, 0.85); color: #FFFFFF; font-family: inherit;">
                             </div>
                             <div style="margin-bottom: 1.2rem;">
                                 <label for="applicationMessage" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem; font-weight: 600;">
                                     Introduction &amp; Why You Are a Strong Fit (Include LinkedIn/GitHub/Portfolio)
                                 </label>
-                                <textarea id="applicationMessage" rows="4" class="form-control" placeholder="Introduce yourself, mention your faculty/intake, and share links to your resume, portfolio, or GitHub repository..." required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 5, 16, 0.85); color: #FFFFFF; font-family: inherit; resize: vertical;"></textarea>
+                                <textarea id="applicationMessage" rows="4" class="form-control" placeholder="Introduce yourself, mention your faculty/intake, and share links to your resume, portfolio, or GitHub repository..." required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(18, 3, 5, 0.85); color: #FFFFFF; font-family: inherit; resize: vertical;"></textarea>
                             </div>
                             <button type="submit" class="btn btn-gold gold-glow" style="padding: 0.75rem 1.8rem; font-size: 0.95rem;">
                                 Submit Verified Application
@@ -250,7 +250,7 @@ require_once __DIR__ . '/includes/header.php';
                         </form>
                     </div>
                 <?php else: ?>
-                    <div style="background: rgba(16, 9, 29, 0.70); border: 1px solid rgba(196, 181, 253, 0.18); border-radius: 10px; padding: 1.8rem; text-align: center;">
+                    <div style="background: rgba(36, 7, 10, 0.85); border: 1px solid rgba(212, 175, 55, 0.22); border-radius: 10px; padding: 1.8rem; text-align: center;">
                         <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">
                             Sign In Required to Apply
                         </h4>
@@ -284,7 +284,7 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
 
                 <!-- Structured Company Stats -->
-                <div style="background: rgba(16, 9, 29, 0.65); border: 1px solid rgba(196, 181, 253, 0.15); border-radius: 10px; padding: 0.8rem 1.1rem; margin-bottom: 1.5rem;">
+                <div style="background: rgba(18, 3, 5, 0.75); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 10px; padding: 0.8rem 1.1rem; margin-bottom: 1.5rem;">
                     <div class="company-stat-row">
                         <span class="company-stat-label">Industry</span>
                         <span class="company-stat-value" id="companyIndustry">Software Engineering</span>
@@ -312,7 +312,7 @@ require_once __DIR__ . '/includes/header.php';
                 <?php endif; ?>
 
                 <!-- Posting Metadata -->
-                <div style="border-top: 1px solid rgba(196, 181, 253, 0.15); padding-top: 1.2rem; font-size: 0.82rem; color: var(--text-muted);">
+                <div style="border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: 1.2rem; font-size: 0.82rem; color: var(--text-muted);">
                     <p style="margin-bottom: 0.4rem;">
                         <strong>Date Posted:</strong> <span id="metaPostedDate"><?php echo !empty($job['posted_at']) ? date('d M Y', strtotime($job['posted_at'])) : 'Recently'; ?></span>
                     </p>

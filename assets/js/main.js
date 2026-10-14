@@ -5,59 +5,14 @@
    ============================================================ */
 
 // ------------------------------------------------------------
-// 1. FEATURE ONE: GLOBAL CINEMATIC LOADING SCREEN CONTROLLER
+// 1. FULLSCREEN LOADER REMOVED (Safe no-op stubs for backward compatibility)
 // ------------------------------------------------------------
 window.AlumniLoader = {
-    show: function(statusText) {
-        const loader = document.getElementById('cinematicLoader');
-        if (!loader) return;
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-        const statusEl = loader.querySelector('.loader-status');
-        if (statusEl && statusText) {
-            statusEl.textContent = statusText;
-        }
-
-        const bar = loader.querySelector('.loader-progress-bar');
-        if (bar) {
-            bar.style.animation = 'none';
-            void bar.offsetWidth; // trigger reflow
-            bar.style.animation = 'loaderProgressExpand 1.5s cubic-bezier(0.25, 1, 0.5, 1) 0.15s forwards';
-        }
-
-        loader.classList.remove('loader-hidden');
-        loader.setAttribute('aria-hidden', 'false');
-        loader.style.pointerEvents = 'auto';
-
-        // Guaranteed auto-dismissal failsafe (3.8s max)
-        clearTimeout(window._alumniLoaderTimer);
-        window._alumniLoaderTimer = setTimeout(() => {
-            window.AlumniLoader.hide();
-        }, 3800);
-    },
-    hide: function() {
-        const loader = document.getElementById('cinematicLoader');
-        if (!loader) return;
-        loader.classList.add('loader-hidden');
-        loader.setAttribute('aria-hidden', 'true');
-        loader.style.pointerEvents = 'none';
-        clearTimeout(window._alumniLoaderTimer);
-    }
+    show: function() {},
+    hide: function() {}
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-
-    const loader = document.getElementById('cinematicLoader');
-
-    if (loader) {
-        // Ensure loader is cleanly dismissed immediately upon DOM ready
-        window.AlumniLoader.hide();
-
-        // Handle browser back/forward cache (bfcache) restoration
-        window.addEventListener('pageshow', (event) => {
-            window.AlumniLoader.hide();
-        });
-    }
 
     // Double-submit prevention & inline button spinner for data forms (Jobs, Events, RSVPs, Reports)
     document.querySelectorAll('form').forEach(form => {

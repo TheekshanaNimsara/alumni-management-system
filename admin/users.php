@@ -227,7 +227,7 @@ if ($db_connected && $pdo) {
                                 </td>
                                 <td>
                                     <?php if ($u['role'] === 'admin'): ?>
-                                        <span class="badge" style="background: rgba(124, 58, 237, 0.2); color: var(--pale-highlight); border: 1px solid rgba(196, 181, 253, 0.3);">Admin</span>
+                                        <span class="badge" style="background: rgba(74, 17, 22, 0.45); color: var(--accent-light); border: 1px solid rgba(212, 175, 55, 0.35);">Admin</span>
                                     <?php else: ?>
                                         <span class="badge badge-secondary">Alumni</span>
                                     <?php endif; ?>

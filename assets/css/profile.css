@@ -10,7 +10,7 @@
    ------------------------------------------------------------ */
 .profile-hero {
     position: relative;
-    background: radial-gradient(circle at 75% 20%, rgba(147, 51, 234, 0.28) 0%, rgba(124, 58, 237, 0.12) 45%, transparent 70%),
+    background: radial-gradient(circle at 75% 20%, rgba(147, 51, 234, 0.28) 0%, rgba(74, 17, 22, 0.20) 45%, transparent 70%),
                 linear-gradient(140deg, rgba(27, 18, 48, 0.92) 0%, rgba(16, 9, 29, 0.96) 60%, rgba(8, 5, 16, 0.98) 100%);
     border-bottom: 1px solid var(--glass-border, rgba(196, 181, 253, 0.22));
     padding: 3.2rem 0 2.8rem;
@@ -61,23 +61,23 @@
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    background: var(--surface-color, #10091D);
-    border: 3px solid rgba(196, 181, 253, 0.32);
+    background: var(--surface-color, #24070A);
+    border: 3px solid var(--border-gold);
     box-shadow:
-        0 0 0 4px rgba(124, 58, 237, 0.35),
+        0 0 0 4px rgba(212, 175, 55, 0.35),
         0 12px 32px rgba(0, 0, 0, 0.65),
-        0 0 24px rgba(147, 51, 234, 0.25);
+        0 0 24px rgba(74, 17, 22, 0.45);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
     display: block;
 }
 
 .profile-avatar-wrap:hover .profile-avatar-img {
     transform: scale(1.02);
-    border-color: rgba(233, 213, 255, 0.6);
+    border-color: rgba(212, 175, 55, 0.6);
     box-shadow:
-        0 0 0 4px rgba(147, 51, 234, 0.55),
+        0 0 0 4px rgba(212, 175, 55, 0.55),
         0 16px 40px rgba(0, 0, 0, 0.75),
-        0 0 32px rgba(196, 181, 253, 0.4);
+        0 0 32px rgba(212, 175, 55, 0.4);
 }
 
 /* Camera Upload Badge for Profile Owner */
@@ -88,9 +88,9 @@
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #7C3AED 0%, #9333EA 100%);
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-dark) 100%); color: var(--bg-dark);
     border: 2px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 16px rgba(124, 58, 237, 0.4);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 16px rgba(212, 175, 55, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -102,8 +102,8 @@
 
 .profile-avatar-badge:hover {
     transform: scale(1.12);
-    background: linear-gradient(135deg, #9333EA 0%, #A855F7 100%);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 0 22px rgba(196, 181, 253, 0.6);
+    background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent-color) 100%); color: var(--bg-dark);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 0 22px rgba(212, 175, 55, 0.6);
 }
 
 .profile-avatar-badge svg {
@@ -155,7 +155,7 @@
 .badge-class-year {
     background: linear-gradient(135deg, rgba(124, 58, 237, 0.28) 0%, rgba(147, 51, 234, 0.16) 100%);
     border: 1px solid rgba(196, 181, 253, 0.35);
-    color: var(--accent-light, #C4B5FD);
+    color: var(--accent-light, #F1D77A);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
@@ -169,7 +169,7 @@
 .profile-headline {
     font-size: 1.15rem;
     font-weight: 600;
-    color: var(--accent-light, #C4B5FD);
+    color: var(--accent-light, #F1D77A);
     margin: 0 0 0.65rem 0;
     display: flex;
     align-items: center;
@@ -201,7 +201,7 @@
 .profile-meta-tag svg {
     width: 15px;
     height: 15px;
-    stroke: var(--accent-light, #C4B5FD);
+    stroke: var(--accent-light, #F1D77A);
     flex-shrink: 0;
 }
 
@@ -260,7 +260,7 @@
 
 .profile-tab-btn:hover {
     color: var(--text-light, #FFFFFF);
-    background: rgba(124, 58, 237, 0.14);
+    background: var(--border-gold);
 }
 
 .profile-tab-btn.active {
@@ -269,7 +269,7 @@
     border-color: rgba(233, 213, 255, 0.4);
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.35),
-        0 4px 14px rgba(124, 58, 237, 0.4);
+        0 4px 14px rgba(212, 175, 55, 0.4);
 }
 
 .profile-tab-btn.active svg {
@@ -301,7 +301,7 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.20),
         inset 0 -1px 0 rgba(76, 29, 149, 0.18),
         0 16px 36px rgba(0, 0, 0, 0.50),
-        0 0 24px rgba(124, 58, 237, 0.12);
+        0 0 24px rgba(74, 17, 22, 0.20);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -356,7 +356,7 @@
 .profile-card-title svg {
     width: 20px;
     height: 20px;
-    stroke: var(--accent-light, #C4B5FD);
+    stroke: var(--accent-light, #F1D77A);
     flex-shrink: 0;
 }
 
@@ -391,7 +391,7 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.18) 0%, rgba(147, 51, 234, 0.10) 100%);
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(147, 51, 234, 0.10) 100%);
     border: 1px solid rgba(196, 181, 253, 0.26);
     border-radius: 9999px;
     color: var(--text-light, #FFFFFF);
@@ -434,12 +434,12 @@
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.25) 0%, rgba(76, 29, 149, 0.35) 100%);
+    background: linear-gradient(135deg, rgba(74, 17, 22, 0.35) 0%, rgba(76, 29, 149, 0.35) 100%);
     border: 1px solid rgba(196, 181, 253, 0.24);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent-light, #C4B5FD);
+    color: var(--accent-light, #F1D77A);
     flex-shrink: 0;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
@@ -476,7 +476,7 @@
 }
 
 .profile-overview-val a {
-    color: var(--accent-light, #C4B5FD);
+    color: var(--accent-light, #F1D77A);
     text-decoration: none;
     transition: color 0.2s ease;
 }
@@ -495,7 +495,7 @@
 .profile-community-title {
     font-size: 1.15rem;
     font-weight: 700;
-    color: var(--accent-light, #C4B5FD);
+    color: var(--accent-light, #F1D77A);
     margin: 0 0 0.8rem 0;
     display: flex;
     align-items: center;
@@ -505,7 +505,7 @@
 .profile-community-title svg {
     width: 18px;
     height: 18px;
-    stroke: var(--accent-light, #C4B5FD);
+    stroke: var(--accent-light, #F1D77A);
 }
 
 .profile-community-desc {
@@ -519,13 +519,13 @@
    5. EDIT PROFILE FORM STYLING
    ------------------------------------------------------------ */
 .profile-card-edit {
-    border-top: 4px solid var(--accent-color, #7C3AED);
+    border-top: 4px solid var(--accent-color, #D4AF37);
 }
 
 .profile-form-section {
     margin-bottom: 1.8rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(196, 181, 253, 0.12);
+    border-bottom: 1px solid var(--border-gold);
 }
 
 .profile-form-section:last-of-type {
@@ -540,8 +540,8 @@
     align-items: center;
     gap: 1.6rem;
     padding: 1.4rem;
-    background: rgba(124, 58, 237, 0.08);
-    border: 1px solid rgba(196, 181, 253, 0.18);
+    background: rgba(74, 17, 22, 0.15);
+    border: 1px solid var(--border-gold);
     border-radius: 16px;
     margin-bottom: 0.5rem;
     flex-wrap: wrap;
@@ -555,9 +555,9 @@
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
-    border: 2px solid rgba(196, 181, 253, 0.4);
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.35), 0 8px 24px rgba(0, 0, 0, 0.45);
-    background: var(--surface-color, #10091D);
+    border: 2px solid var(--border-gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.35), 0 8px 24px rgba(0, 0, 0, 0.45);
+    background: var(--surface-color, #24070A);
 }
 
 .profile-photo-preview-wrap img {
@@ -584,7 +584,7 @@
 .profile-form-section-heading svg {
     width: 16px;
     height: 16px;
-    stroke: var(--accent-light, #C4B5FD);
+    stroke: var(--accent-light, #F1D77A);
 }
 
 .form-row-2 {
@@ -636,7 +636,7 @@
 [data-theme="light"] .profile-hero {
     background: radial-gradient(circle at 75% 20%, rgba(147, 51, 234, 0.10) 0%, rgba(124, 58, 237, 0.05) 45%, transparent 70%),
                 linear-gradient(140deg, #FFFFFF 0%, #F7F5FC 60%, #EFEBF8 100%);
-    border-bottom-color: rgba(124, 58, 237, 0.18);
+    border-bottom-color: rgba(212, 175, 55, 0.25);
 }
 
 [data-theme="light"] .profile-hero::before {
@@ -645,7 +645,7 @@
 
 [data-theme="light"] .profile-avatar-img {
     background: #FFFFFF;
-    border-color: rgba(124, 58, 237, 0.25);
+    border-color: rgba(74, 17, 22, 0.35);
     box-shadow:
         0 0 0 4px rgba(124, 58, 237, 0.15),
         0 12px 30px rgba(91, 63, 130, 0.12);
@@ -654,7 +654,7 @@
 [data-theme="light"] .profile-avatar-wrap:hover .profile-avatar-img {
     border-color: rgba(124, 58, 237, 0.45);
     box-shadow:
-        0 0 0 4px rgba(124, 58, 237, 0.25),
+        0 0 0 4px rgba(74, 17, 22, 0.35),
         0 16px 36px rgba(91, 63, 130, 0.18);
 }
 
@@ -663,7 +663,7 @@
 }
 
 [data-theme="light"] .profile-headline {
-    color: var(--accent-purple, #7C3AED);
+    color: var(--accent-color, #D4AF37);
 }
 
 [data-theme="light"] .profile-headline .company-name {
@@ -675,13 +675,13 @@
 }
 
 [data-theme="light"] .profile-meta-tag svg {
-    stroke: var(--accent-purple, #7C3AED);
+    stroke: var(--accent-color, #D4AF37);
 }
 
 [data-theme="light"] .badge-class-year {
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.12) 0%, rgba(147, 51, 234, 0.08) 100%);
-    border-color: rgba(124, 58, 237, 0.25);
-    color: var(--accent-purple, #7C3AED);
+    background: linear-gradient(135deg, rgba(74, 17, 22, 0.20) 0%, rgba(212, 175, 55, 0.10) 100%);
+    border-color: rgba(74, 17, 22, 0.35);
+    color: var(--accent-color, #D4AF37);
     box-shadow: inset 0 1px 0 #FFFFFF;
 }
 
@@ -694,7 +694,7 @@
 
 [data-theme="light"] .profile-segmented-nav {
     background: rgba(255, 255, 255, 0.88);
-    border-color: rgba(124, 58, 237, 0.18);
+    border-color: rgba(212, 175, 55, 0.25);
     box-shadow: 0 4px 16px rgba(91, 63, 130, 0.08);
 }
 
@@ -703,13 +703,13 @@
 }
 
 [data-theme="light"] .profile-tab-btn:hover {
-    color: var(--accent-purple, #7C3AED);
-    background: rgba(124, 58, 237, 0.08);
+    color: var(--accent-color, #D4AF37);
+    background: rgba(74, 17, 22, 0.15);
 }
 
 [data-theme="light"] .profile-card {
     background: rgba(255, 255, 255, 0.92);
-    border-color: rgba(124, 58, 237, 0.18);
+    border-color: rgba(212, 175, 55, 0.25);
     box-shadow:
         inset 0 1px 0 #FFFFFF,
         0 14px 34px rgba(91, 63, 130, 0.09);
@@ -724,7 +724,7 @@
 }
 
 [data-theme="light"] .profile-card-header {
-    border-bottom-color: rgba(124, 58, 237, 0.14);
+    border-bottom-color: var(--border-gold);
 }
 
 [data-theme="light"] .profile-bio-text {
@@ -733,13 +733,13 @@
 
 [data-theme="light"] .profile-empty-state {
     background: rgba(247, 245, 252, 0.85);
-    border-color: rgba(124, 58, 237, 0.2);
+    border-color: var(--border-gold);
     color: var(--text-secondary, #625773);
 }
 
 [data-theme="light"] .skill-chip {
-    background: rgba(239, 235, 248, 0.85);
-    border-color: rgba(124, 58, 237, 0.22);
+    background: rgba(36, 7, 10, 0.65);
+    border-color: var(--border-gold);
     color: var(--text-primary, #211632);
     box-shadow:
         inset 0 1px 0 #FFFFFF,
@@ -747,17 +747,17 @@
 }
 
 [data-theme="light"] .skill-chip:hover {
-    background: rgba(233, 213, 255, 0.95);
-    border-color: rgba(124, 58, 237, 0.4);
+    background: rgba(74, 17, 22, 0.85);
+    border-color: rgba(212, 175, 55, 0.4);
     box-shadow:
         inset 0 1px 0 #FFFFFF,
-        0 4px 14px rgba(124, 58, 237, 0.18);
+        0 4px 14px rgba(212, 175, 55, 0.25);
 }
 
 [data-theme="light"] .profile-overview-icon {
-    background: linear-gradient(135deg, rgba(239, 235, 248, 0.9) 0%, rgba(233, 213, 255, 0.7) 100%);
-    border-color: rgba(124, 58, 237, 0.22);
-    color: var(--accent-purple, #7C3AED);
+    background: linear-gradient(135deg, rgba(36, 7, 10, 0.9) 0%, rgba(48, 16, 21, 0.7) 100%);
+    border-color: var(--border-gold);
+    color: var(--accent-color, #D4AF37);
     box-shadow: inset 0 1px 0 #FFFFFF;
 }
 
@@ -770,16 +770,16 @@
 }
 
 [data-theme="light"] .profile-overview-val a {
-    color: var(--accent-purple, #7C3AED);
+    color: var(--accent-color, #D4AF37);
 }
 
 [data-theme="light"] .profile-community-card {
     background: linear-gradient(145deg, rgba(247, 245, 252, 0.95) 0%, rgba(239, 235, 248, 0.90) 100%);
-    border-color: rgba(124, 58, 237, 0.22);
+    border-color: var(--border-gold);
 }
 
 [data-theme="light"] .profile-community-title {
-    color: var(--accent-purple, #7C3AED);
+    color: var(--accent-color, #D4AF37);
 }
 
 [data-theme="light"] .profile-community-desc {

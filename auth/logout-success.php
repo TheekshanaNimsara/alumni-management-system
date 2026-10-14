@@ -42,14 +42,19 @@ $homeUrl = '../index.php';
                 <span class="success-brand-text">ALUMNI <span class="highlight">CONNECT</span></span>
             </div>
 
-            <!-- Animated Purple Circular Checkmark -->
+            <!-- Animated Gold Circular Checkmark -->
             <div class="success-badge-wrap" aria-hidden="true">
                 <svg class="success-svg" viewBox="0 0 80 80">
                     <defs>
+                        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#F1D77A" />
+                            <stop offset="50%" stop-color="#D4AF37" />
+                            <stop offset="100%" stop-color="#A98218" />
+                        </linearGradient>
                         <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#C4B5FD" />
-                            <stop offset="50%" stop-color="#9333EA" />
-                            <stop offset="100%" stop-color="#7C3AED" />
+                            <stop offset="0%" stop-color="#F1D77A" />
+                            <stop offset="50%" stop-color="#D4AF37" />
+                            <stop offset="100%" stop-color="#A98218" />
                         </linearGradient>
                     </defs>
                     <circle class="success-circle-bg" cx="40" cy="40" r="36" />

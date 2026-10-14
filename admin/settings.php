@@ -78,23 +78,23 @@ $baseUrl = get_base_url();
             <div class="card" style="padding: 2rem;">
                 <h3 style="color: var(--text-light); margin-bottom: 1rem;">Design System Guidelines</h3>
                 <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.2rem;">
-                    The platform complies with the cinematic dark-purple editorial design specifications:
+                    The platform complies with the hand-coded dark-maroon &amp; warm-gold Liquid Glass design specifications:
                 </p>
                 <div style="display: flex; gap: 0.8rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #080510; color: #F8F7FC; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
-                        <strong>Midnight Purple</strong><br>#080510
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #120305; color: #F3EFE6; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
+                        <strong>Dark Maroon</strong><br>#120305
                     </div>
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #7C3AED; color: #FFFFFF; border-radius: 6px; text-align: center; font-size: 0.8rem;">
-                        <strong>Electric Violet</strong><br>#7C3AED
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #4A1116; color: #F3EFE6; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
+                        <strong>Deep Burgundy</strong><br>#4A1116
                     </div>
-                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #241735; color: #C4B5FD; border-radius: 6px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color);">
-                        <strong>Soft Lavender</strong><br>#C4B5FD
+                    <div style="flex: 1; min-width: 100px; padding: 0.8rem; background: #D4AF37; color: #120305; border-radius: 6px; text-align: center; font-size: 0.8rem; font-weight: bold;">
+                        <strong>Warm Gold</strong><br>#D4AF37
                     </div>
                 </div>
                 <div style="font-size: 0.88rem; color: var(--text-muted);">
                     &bull; Zero external UI frameworks (No Bootstrap/Tailwind)<br>
-                    &bull; Zero animation or 3D libraries (Pure CSS transitions &amp; keyframes)<br>
-                    &bull; High-contrast accessible midnight-purple editorial identity
+                    &bull; Pure CSS Liquid Glass button system with interactive specular gleam<br>
+                    &bull; High-contrast accessible dark-maroon &amp; warm-gold editorial identity
                 </div>
             </div>
 

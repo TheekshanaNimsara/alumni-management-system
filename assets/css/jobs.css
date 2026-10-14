@@ -1,7 +1,7 @@
 /* ============================================================
    JOBS.CSS — KDU ALUMNI NETWORK
    Uses the shared KDU design system:
-   Midnight Purple (#080510) + Electric Violet (#9333EA) + Soft Lavender (#C4B5FD)
+   Deep Maroon (#120305) + Warm Gold (#D4AF37) + Accent Gold (#F1D77A)
    ============================================================ */
 
 @import "./theme.css";
@@ -11,91 +11,107 @@
    ------------------------------------------------------------ */
 :root,
 [data-theme="dark"] {
-  --primary-color:    #10091D;
-  --primary-dark:     #080510;
-  --primary-light:    #311E48;
+  --primary-color:    #24070A;
+  --primary-dark:     #120305;
+  --primary-light:    #4A1116;
+  --secondary-color:  #4A1116;
 
-  --accent-color:     #7C3AED;
-  --accent-light:     #C4B5FD;
-  --accent-dark:      #9333EA;
+  --accent-color:     #D4AF37;
+  --accent-light:     #F1D77A;
+  --accent-dark:      #A98218;
 
-  --bg-color:         #080510;
-  --surface-color:    #10091D;
-  --surface-elevated: #241735;
+  --bg-color:         #120305;
+  --bg-dark:          #0A0204;
+  --bg-secondary:     #24070A;
 
-  --text-color:       #F8F7FC;
-  --text-light:       #F8F7FC;
-  --text-muted:       #B9B2C9;
-  --text-muted-light: #B9B2C9;
+  --surface-color:    #24070A;
+  --surface-dark:     #120305;
+  --surface-elevated: #301015;
 
-  --border-color:     rgba(196, 181, 253, 0.16);
-  --border-gold:      rgba(196, 181, 253, 0.22);
-  --border-dark:      rgba(196, 181, 253, 0.14);
+  --text-color:       #F3EFE6;
+  --text-main:        #F3EFE6;
+  --text-light:       #FFFFFF;
+  --text-muted:       #B8ADB0;
+  --text-muted-light: #D4CBCD;
 
-  --danger-color:     #EF4444;
-  --danger-bg:        rgba(239, 68, 68, 0.15);
-  --success-color:    #10B981;
-  --success-bg:       rgba(16, 185, 129, 0.15);
-  --warning-color:    #C4B5FD;
-  --warning-bg:       rgba(245, 158, 11, 0.15);
+  --border-color:     rgba(74, 17, 22, 0.7);
+  --border-gold:      rgba(212, 175, 55, 0.25);
+  --border-dark:      rgba(212, 175, 55, 0.2);
 
-  --disabled-color:   #8F859F;
-  --disabled-bg:      #130D20;
+  --danger-color:     #E57373;
+  --danger-bg:        rgba(229, 115, 115, 0.15);
+  --success-color:    #4CAF50;
+  --success-bg:       rgba(76, 175, 80, 0.15);
+  --warning-color:    #F1D77A;
+  --warning-bg:       rgba(241, 215, 122, 0.15);
+  --info-color:       #64B5F6;
+  --info-bg:          rgba(100, 181, 246, 0.15);
+
+  --disabled-color:   #7A7274;
+  --disabled-bg:      #1F080B;
 
   --border-radius:    8px;
 
   /* Glassmorphism Design Tokens */
-  --glass-bg:               linear-gradient(135deg, rgba(124, 58, 237, 0.16) 0%, rgba(20, 11, 38, 0.58) 100%);
-  --glass-bg-subtle:        linear-gradient(135deg, rgba(124, 58, 237, 0.10) 0%, rgba(16, 9, 29, 0.52) 100%);
-  --glass-bg-elevated:      linear-gradient(135deg, rgba(147, 51, 234, 0.22) 0%, rgba(27, 15, 50, 0.70) 100%);
-  --glass-border:           rgba(196, 181, 253, 0.26);
+  --glass-bg:               linear-gradient(135deg, rgba(74, 17, 22, 0.45) 0%, rgba(36, 7, 10, 0.85) 100%);
+  --glass-bg-subtle:        linear-gradient(135deg, rgba(74, 17, 22, 0.25) 0%, rgba(18, 3, 5, 0.75) 100%);
+  --glass-bg-elevated:      linear-gradient(135deg, rgba(90, 22, 28, 0.55) 0%, rgba(48, 16, 21, 0.90) 100%);
+  --glass-border:           rgba(212, 175, 55, 0.25);
   --glass-blur:             16px;
-  --glass-shadow:           0 16px 36px rgba(0, 0, 0, 0.55), 0 0 24px rgba(124, 58, 237, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.20);
-  --glass-hover-shadow:     0 22px 48px rgba(0, 0, 0, 0.72), 0 0 35px rgba(147, 51, 234, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  --glass-shadow:           0 16px 36px rgba(0, 0, 0, 0.65), 0 0 24px rgba(212, 175, 55, 0.12), inset 0 1px 0 rgba(241, 215, 122, 0.18);
+  --glass-hover-shadow:     0 22px 48px rgba(0, 0, 0, 0.80), 0 0 35px rgba(212, 175, 55, 0.25), inset 0 1px 0 rgba(241, 215, 122, 0.25);
 }
 
 [data-theme="light"] {
-  --primary-color:    #F7F5FC;
-  --primary-dark:     #EFEBF8;
-  --primary-light:    #E0D7F5;
+  --primary-color:    #FFFFFF;
+  --primary-dark:     #F4EFE6;
+  --primary-light:    #FDFBF7;
+  --secondary-color:  #8C1D40;
 
-  --accent-color:     #7C3AED;
-  --accent-light:     #6D28D9;
-  --accent-dark:      #5B21B6;
+  --accent-color:     #8C1D40;
+  --accent-light:     #A32638;
+  --accent-dark:      #66001F;
 
-  --bg-color:         #F7F5FC;
+  --bg-color:         #FDFBF7;
+  --bg-dark:          #F4EFE6;
+  --bg-secondary:     #EAE3D6;
+
   --surface-color:    #FFFFFF;
-  --surface-elevated: #F9F7FD;
+  --surface-dark:     #FDFBF7;
+  --surface-elevated: #FFFFFF;
 
-  --text-color:       #211632;
-  --text-light:       #180D29;
-  --text-muted:       #625773;
-  --text-muted-light: #4A3E5C;
+  --text-color:       #120305;
+  --text-main:        #120305;
+  --text-light:       #0A0204;
+  --text-muted:       #5C4E52;
+  --text-muted-light: #7A6C70;
 
-  --border-color:     rgba(91, 63, 130, 0.16);
-  --border-gold:      rgba(124, 58, 237, 0.22);
-  --border-dark:      rgba(91, 63, 130, 0.22);
+  --border-color:     rgba(140, 29, 64, 0.18);
+  --border-gold:      rgba(212, 175, 55, 0.35);
+  --border-dark:      rgba(140, 29, 64, 0.24);
 
-  --danger-color:     #EF4444;
-  --danger-bg:        rgba(239, 68, 68, 0.12);
-  --success-color:    #059669;
-  --success-bg:       rgba(5, 150, 105, 0.12);
-  --warning-color:    #D97706;
-  --warning-bg:       rgba(217, 119, 6, 0.12);
+  --danger-color:     #E57373;
+  --danger-bg:        rgba(229, 115, 115, 0.12);
+  --success-color:    #4CAF50;
+  --success-bg:       rgba(76, 175, 80, 0.12);
+  --warning-color:    #D4AF37;
+  --warning-bg:       rgba(212, 175, 55, 0.12);
+  --info-color:       #64B5F6;
+  --info-bg:          rgba(100, 181, 246, 0.12);
 
-  --disabled-color:   #8F859F;
-  --disabled-bg:      #EAE5F5;
+  --disabled-color:   #8C7F84;
+  --disabled-bg:      #F4EFE6;
 
   --border-radius:    8px;
 
   /* Glassmorphism Design Tokens */
-  --glass-bg:               rgba(255, 255, 255, 0.85);
-  --glass-bg-subtle:        rgba(255, 255, 255, 0.70);
-  --glass-bg-elevated:      rgba(255, 255, 255, 0.95);
-  --glass-border:           rgba(124, 58, 237, 0.18);
+  --glass-bg:               rgba(255, 255, 255, 0.90);
+  --glass-bg-subtle:        rgba(255, 255, 255, 0.75);
+  --glass-bg-elevated:      rgba(255, 255, 255, 0.98);
+  --glass-border:           rgba(140, 29, 64, 0.20);
   --glass-blur:             16px;
-  --glass-shadow:           0 14px 34px rgba(91, 63, 130, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.90);
-  --glass-hover-shadow:     0 20px 44px rgba(91, 63, 130, 0.14), 0 0 25px rgba(124, 58, 237, 0.16), inset 0 1px 0 rgba(255, 255, 255, 1);
+  --glass-shadow:           0 14px 34px rgba(74, 17, 22, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.90);
+  --glass-hover-shadow:     0 20px 44px rgba(74, 17, 22, 0.14), 0 0 25px rgba(212, 175, 55, 0.16), inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 /* ------------------------------------------------------------
@@ -759,7 +775,7 @@ h1 {
   background: transparent;
   border: 1px solid transparent;
   border-radius: 9999px;
-  color: var(--text-muted, #C4B5FD);
+  color: var(--text-muted, #B8ADB0);
   font-size: 0.92rem;
   font-weight: 600;
   cursor: pointer;
@@ -947,9 +963,9 @@ h1 {
   white-space: nowrap;
 }
 
-.remote   { background-color: #1B1230; color: #9333EA; border: 1px solid #C4B5FD; }
+.remote   { background-color: rgba(74, 17, 22, 0.5); color: #F1D77A; border: 1px solid rgba(212, 175, 55, 0.35); }
 .fulltime { background-color: var(--success-bg); color: var(--success-color); border: 1px solid #10B981; }
-.parttime { background-color: #F8F7FC; color: #7C3AED; border: 1px solid #E9D5FF; }
+.parttime { background-color: rgba(36, 7, 10, 0.6); color: #D4AF37; border: 1px solid rgba(212, 175, 55, 0.3); }
 
 /* ------------------------------------------------------------
    11. JOB DETAILS / META ROW

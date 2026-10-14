@@ -49,20 +49,6 @@ if ($isLoggedIn && $db_connected && $pdo) {
 </head>
 <body>
 
-    <!-- Cinematic Fullscreen Loading Overlay (Hidden by default; triggers only on genuine cross-page navigation) -->
-    <div id="cinematicLoader" class="cinematic-loader loader-hidden" aria-hidden="true">
-        <div class="loader-content">
-            <div class="loader-brand">
-                <span class="loader-badge">AN</span>
-                <span class="loader-title">ALUMNI <span class="loader-gold">NETWORK</span></span>
-            </div>
-            <div class="loader-progress-track">
-                <div class="loader-progress-bar"></div>
-            </div>
-            <p class="loader-status">Connecting Alumni &bull; Preparing Your Experience</p>
-        </div>
-    </div>
-
     <!-- Minimal Cinematic Navigation Bar -->
     <header class="navbar">
         <div class="navbar-container">

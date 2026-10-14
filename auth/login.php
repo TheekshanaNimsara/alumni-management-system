@@ -143,20 +143,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="auth-body">
 
-    <!-- Cinematic Fullscreen Loading Overlay -->
-    <div id="cinematicLoader" class="cinematic-loader loader-hidden" aria-hidden="true">
-        <div class="loader-content">
-            <div class="loader-brand">
-                <span class="loader-badge">AN</span>
-                <span class="loader-title">ALUMNI <span class="loader-gold">NETWORK</span></span>
-            </div>
-            <div class="loader-progress-track">
-                <div class="loader-progress-bar"></div>
-            </div>
-            <p class="loader-status">Authenticating &bull; Welcome back...</p>
-        </div>
-    </div>
-
     <!-- Top Navigation -->
     <header class="auth-nav">
         <a href="../index.php" class="auth-nav-logo">

@@ -413,9 +413,9 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
 <style>
 /* Discrete Unsend Control & Inline Composer Loader */
 .btn-msg-unsend {
-    background: rgba(124, 58, 237, 0.12);
-    border: 1px solid rgba(196, 181, 253, 0.22);
-    color: #C4B5FD;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    color: #F1D77A;
     font-size: 0.70rem;
     padding: 0.12rem 0.45rem;
     border-radius: 6px;
@@ -449,8 +449,8 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
 .conv-skeleton-spinner {
     width: 32px;
     height: 32px;
-    border: 3px solid rgba(196, 181, 253, 0.2);
-    border-top-color: #9333EA;
+    border: 3px solid rgba(212, 175, 55, 0.2);
+    border-top-color: #D4AF37;
     border-radius: 50%;
     animation: convSpin 0.8s linear infinite;
 }
@@ -463,9 +463,9 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
     transition: all 0.25s ease;
 }
 .msg-bubble-unsent {
-    background: rgba(27, 18, 48, 0.6) !important;
+    background: rgba(36, 7, 10, 0.6) !important;
     color: var(--text-muted) !important;
-    border: 1px dashed rgba(196, 181, 253, 0.25) !important;
+    border: 1px dashed rgba(212, 175, 55, 0.25) !important;
 }
 </style>
 
@@ -520,8 +520,8 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                            class="conv-item <?php echo $isActive ? 'active' : ''; ?>" 
                            data-conv-id="<?php echo $c['id']; ?>"
                            data-no-loader="true"
-                           style="display: flex; align-items: center; gap: 0.9rem; padding: 1rem 1.2rem; text-decoration: none; border-bottom: 1px solid var(--border-color); transition: background 0.2s; <?php echo $isActive ? 'background: rgba(124, 58, 237, 0.18); border-left: 4px solid var(--accent-color);' : 'background: transparent;'; ?>"
-                           onmouseover="if (!this.classList.contains('active')) this.style.background='rgba(124, 58, 237, 0.08)';"
+                           style="display: flex; align-items: center; gap: 0.9rem; padding: 1rem 1.2rem; text-decoration: none; border-bottom: 1px solid var(--border-color); transition: background 0.2s; <?php echo $isActive ? 'background: rgba(212, 175, 55, 0.15); border-left: 4px solid var(--accent-color);' : 'background: transparent;'; ?>"
+                           onmouseover="if (!this.classList.contains('active')) this.style.background='rgba(212, 175, 55, 0.08)';"
                            onmouseout="if (!this.classList.contains('active')) this.style.background='transparent';">
                             
                             <img src="<?php echo $otherAvatar; ?>" alt="Avatar" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-color); flex-shrink: 0;">
@@ -590,7 +590,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                 </div>
 
                 <!-- Message History Container (Autoscrolled) -->
-                <div id="messageContainer" style="flex: 1; overflow-y: auto; padding: 1.5rem; background: #10091D; display: flex; flex-direction: column; gap: 1rem; max-height: 480px;">
+                <div id="messageContainer" style="flex: 1; overflow-y: auto; padding: 1.5rem; background: var(--surface-dark, #120305); display: flex; flex-direction: column; gap: 1rem; max-height: 480px;">
                     <?php if (empty($messagesList)): ?>
                         <div id="emptyChatPlaceholder" style="text-align: center; color: var(--text-muted); margin: auto; font-size: 0.92rem;">
                             <p>No messages yet in this conversation.</p>
@@ -604,7 +604,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                             ?>
                             <div id="msg-row-<?php echo $msg['id']; ?>" class="msg-row <?php echo $isMe ? 'msg-row-me' : 'msg-row-other'; ?>" style="display: flex; flex-direction: column; align-items: <?php echo $isMe ? 'flex-end' : 'flex-start'; ?>;">
                                 <?php if ($isUnsent): ?>
-                                    <div class="msg-bubble msg-bubble-unsent" style="max-width: 70%; padding: 0.75rem 1.1rem; border-radius: 12px; font-size: 0.92rem; line-height: 1.5; background: rgba(27, 18, 48, 0.6); color: var(--text-muted); border: 1px dashed rgba(196, 181, 253, 0.25); border-bottom-<?php echo $isMe ? 'right' : 'left'; ?>-radius: 2px;">
+                                    <div class="msg-bubble msg-bubble-unsent" style="max-width: 70%; padding: 0.75rem 1.1rem; border-radius: 12px; font-size: 0.92rem; line-height: 1.5; background: rgba(36, 7, 10, 0.6); color: var(--text-muted); border: 1px dashed rgba(212, 175, 55, 0.25); border-bottom-<?php echo $isMe ? 'right' : 'left'; ?>-radius: 2px;">
                                         <em style="font-style: italic; opacity: 0.85;">This message was unsent</em>
                                     </div>
                                     <div class="msg-meta-actions" style="margin-top: 0.3rem; padding: 0 0.3rem;">
@@ -613,7 +613,7 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                                         </span>
                                     </div>
                                 <?php else: ?>
-                                    <div class="msg-bubble <?php echo $isMe ? 'msg-bubble-me' : 'msg-bubble-other'; ?>" style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); <?php echo $isMe ? 'background: linear-gradient(135deg, #7C3AED, #9333EA); color: #FFFFFF; border: 1px solid rgba(196, 181, 253, 0.35); border-bottom-right-radius: 2px;' : 'background: #1B1230; color: var(--text-color); border: 1px solid var(--border-color); border-bottom-left-radius: 2px;'; ?>">
+                                    <div class="msg-bubble <?php echo $isMe ? 'msg-bubble-me' : 'msg-bubble-other'; ?>" style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); <?php echo $isMe ? 'background: linear-gradient(135deg, #4A1116, #24070A); color: #F3EFE6; border: 1px solid rgba(212, 175, 55, 0.35); border-bottom-right-radius: 2px;' : 'background: #24070A; color: var(--text-color); border: 1px solid var(--border-color); border-bottom-left-radius: 2px;'; ?>">
                                         <?php echo nl2br(htmlspecialchars($msg['message'])); ?>
                                     </div>
                                     <div class="msg-meta-actions" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; padding: 0 0.3rem;">
@@ -835,7 +835,7 @@ function appendMessageToChat(msg) {
     row.style.cssText = 'display: flex; flex-direction: column; align-items: flex-end;';
 
     row.innerHTML = `
-        <div class="msg-bubble msg-bubble-me" style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); background: linear-gradient(135deg, #7C3AED, #9333EA); color: #FFFFFF; border: 1px solid rgba(196, 181, 253, 0.35); border-bottom-right-radius: 2px;">
+        <div class="msg-bubble msg-bubble-me" style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); background: linear-gradient(135deg, #4A1116, #24070A); color: #F3EFE6; border: 1px solid rgba(212, 175, 55, 0.35); border-bottom-right-radius: 2px;">
             ${escapeHtml(msg.message).replace(/\n/g, '<br>')}
         </div>
         <div class="msg-meta-actions" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; padding: 0 0.3rem;">
@@ -883,7 +883,7 @@ function unsendMessage(msgId) {
                 const bubble = row.querySelector('.msg-bubble');
                 if (bubble) {
                     bubble.className = 'msg-bubble msg-bubble-unsent';
-                    bubble.style.cssText = 'max-width: 70%; padding: 0.75rem 1.1rem; border-radius: 12px; font-size: 0.92rem; line-height: 1.5; background: rgba(27, 18, 48, 0.6); color: var(--text-muted); border: 1px dashed rgba(196, 181, 253, 0.25); border-bottom-right-radius: 2px;';
+                    bubble.style.cssText = 'max-width: 70%; padding: 0.75rem 1.1rem; border-radius: 12px; font-size: 0.92rem; line-height: 1.5; background: rgba(36, 7, 10, 0.6); color: var(--text-muted); border: 1px dashed rgba(212, 175, 55, 0.25); border-bottom-right-radius: 2px;';
                     bubble.innerHTML = '<em style="font-style: italic; opacity: 0.85;">This message was unsent</em>';
                 }
                 const meta = row.querySelector('.msg-meta-actions');
@@ -926,7 +926,7 @@ function loadConversation(convId) {
         const id = parseInt(el.getAttribute('data-conv-id'), 10);
         if (id === convId) {
             el.classList.add('active');
-            el.style.background = 'rgba(124, 58, 237, 0.18)';
+            el.style.background = 'rgba(212, 175, 55, 0.15)';
             el.style.borderLeft = '4px solid var(--accent-color)';
             const unreadBadge = el.querySelector('.badge');
             if (unreadBadge) unreadBadge.remove();
@@ -1022,7 +1022,7 @@ function renderConversationMessages(messages) {
         if (isUnsent) {
             html += `
                 <div id="msg-row-${msg.id}" class="msg-row ${isMe ? 'msg-row-me' : 'msg-row-other'}" style="display: flex; flex-direction: column; align-items: ${isMe ? 'flex-end' : 'flex-start'};">
-                    <div class="msg-bubble msg-bubble-unsent" style="max-width: 70%; padding: 0.75rem 1.1rem; border-radius: 12px; font-size: 0.92rem; line-height: 1.5; background: rgba(27, 18, 48, 0.6); color: var(--text-muted); border: 1px dashed rgba(196, 181, 253, 0.25); border-bottom-${isMe ? 'right' : 'left'}-radius: 2px;">
+                    <div class="msg-bubble msg-bubble-unsent" style="max-width: 70%; padding: 0.75rem 1.1rem; border-radius: 12px; font-size: 0.92rem; line-height: 1.5; background: rgba(36, 7, 10, 0.6); color: var(--text-muted); border: 1px dashed rgba(212, 175, 55, 0.25); border-bottom-${isMe ? 'right' : 'left'}-radius: 2px;">
                         <em style="font-style: italic; opacity: 0.85;">This message was unsent</em>
                     </div>
                     <div class="msg-meta-actions" style="margin-top: 0.3rem; padding: 0 0.3rem;">
@@ -1035,7 +1035,7 @@ function renderConversationMessages(messages) {
         } else {
             html += `
                 <div id="msg-row-${msg.id}" class="msg-row ${isMe ? 'msg-row-me' : 'msg-row-other'}" style="display: flex; flex-direction: column; align-items: ${isMe ? 'flex-end' : 'flex-start'};">
-                    <div class="msg-bubble ${isMe ? 'msg-bubble-me' : 'msg-bubble-other'}" style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); ${isMe ? 'background: linear-gradient(135deg, #7C3AED, #9333EA); color: #FFFFFF; border: 1px solid rgba(196, 181, 253, 0.35); border-bottom-right-radius: 2px;' : 'background: #1B1230; color: var(--text-color); border: 1px solid var(--border-color); border-bottom-left-radius: 2px;'}">
+                    <div class="msg-bubble ${isMe ? 'msg-bubble-me' : 'msg-bubble-other'}" style="max-width: 70%; padding: 0.8rem 1.1rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; box-shadow: 0 4px 12px rgba(0,0,0,0.3); ${isMe ? 'background: linear-gradient(135deg, #4A1116, #24070A); color: #F3EFE6; border: 1px solid rgba(212, 175, 55, 0.35); border-bottom-right-radius: 2px;' : 'background: #24070A; color: var(--text-color); border: 1px solid var(--border-color); border-bottom-left-radius: 2px;'}">
                         ${escapeHtml(msg.message).replace(/\n/g, '<br>')}
                     </div>
                     <div class="msg-meta-actions" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; padding: 0 0.3rem;">

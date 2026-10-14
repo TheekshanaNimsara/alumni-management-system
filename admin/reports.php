@@ -181,8 +181,8 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             gap: 1rem;
             margin-bottom: 1.5rem;
             padding: 1.2rem 1.4rem;
-            background: rgba(27, 18, 48, 0.75);
-            border: 1px solid rgba(196, 181, 253, 0.22);
+            background: rgba(36, 7, 10, 0.75);
+            border: 1px solid rgba(212, 175, 55, 0.22);
             border-radius: var(--border-radius);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
@@ -197,9 +197,9 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
         }
         .reports-search-input {
             width: 100%;
-            background: rgba(16, 9, 29, 0.85);
-            border: 1px solid rgba(196, 181, 253, 0.25);
-            color: #F8F7FC;
+            background: rgba(18, 3, 5, 0.85);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            color: #F3EFE6;
             padding: 0.6rem 0.95rem;
             border-radius: 8px;
             font-size: 0.92rem;
@@ -207,8 +207,8 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             transition: var(--transition);
         }
         .reports-search-input:focus {
-            border-color: #9333EA;
-            box-shadow: 0 0 14px rgba(147, 51, 234, 0.45);
+            border-color: #D4AF37;
+            box-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
         }
         .reports-tabs {
             display: flex;
@@ -226,20 +226,20 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             border-radius: 8px;
             text-decoration: none;
             transition: all 0.22s ease;
-            border: 1px solid rgba(196, 181, 253, 0.18);
-            color: #B9B2C9;
-            background: rgba(20, 10, 36, 0.55);
+            border: 1px solid rgba(212, 175, 55, 0.22);
+            color: #B8ADB0;
+            background: rgba(36, 7, 10, 0.55);
         }
         .report-tab-pill:hover {
-            color: #F8F7FC;
-            border-color: rgba(196, 181, 253, 0.4);
+            color: #F3EFE6;
+            border-color: rgba(212, 175, 55, 0.45);
             transform: translateY(-1px);
         }
         .report-tab-pill.active {
-            background: linear-gradient(135deg, rgba(147, 51, 234, 0.85), rgba(124, 58, 237, 0.95));
-            color: #FFFFFF;
-            border-color: rgba(233, 213, 255, 0.6);
-            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.45);
+            background: linear-gradient(135deg, rgba(74, 17, 22, 0.95), rgba(36, 7, 10, 0.95));
+            color: #F1D77A;
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(212, 175, 55, 0.25);
         }
         .report-pill-badge {
             background: rgba(0, 0, 0, 0.35);
@@ -250,9 +250,9 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             font-weight: 800;
         }
         .subject-badge-user {
-            background: rgba(124, 58, 237, 0.2);
-            color: #C4B5FD;
-            border: 1px solid rgba(124, 58, 237, 0.4);
+            background: rgba(74, 17, 22, 0.4);
+            color: #F1D77A;
+            border: 1px solid rgba(212, 175, 55, 0.35);
         }
         .subject-badge-event {
             background: rgba(59, 130, 246, 0.2);
@@ -270,9 +270,9 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             border: 1px solid rgba(245, 158, 11, 0.4);
         }
         .badge-reviewed {
-            background: rgba(147, 51, 234, 0.2);
-            color: #C4B5FD;
-            border: 1px solid rgba(147, 51, 234, 0.45);
+            background: rgba(74, 17, 22, 0.5);
+            color: #F1D77A;
+            border: 1px solid rgba(212, 175, 55, 0.4);
         }
         .badge-resolved {
             background: rgba(16, 185, 129, 0.2);
@@ -296,7 +296,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             word-break: break-word;
         }
         .admin-link {
-            color: #C4B5FD;
+            color: #F1D77A;
             text-decoration: underline;
             text-underline-offset: 3px;
             font-size: 0.82rem;
@@ -309,7 +309,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
         .report-modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(8, 5, 16, 0.82);
+            background: rgba(10, 2, 4, 0.82);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 10000;
@@ -322,13 +322,13 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             display: flex;
         }
         .report-modal-card {
-            background: rgba(27, 18, 48, 0.95);
-            border: 1px solid rgba(196, 181, 253, 0.32);
+            background: rgba(36, 7, 10, 0.96);
+            border: 1px solid rgba(212, 175, 55, 0.32);
             border-radius: 20px;
             max-width: 620px;
             width: 100%;
             padding: 2.2rem;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 40px rgba(124, 58, 237, 0.25);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 40px rgba(212, 175, 55, 0.20);
             animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             position: relative;
             max-height: 90vh;
@@ -344,7 +344,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             align-items: flex-start;
             margin-bottom: 1.4rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(196, 181, 253, 0.18);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
         }
         .report-modal-close {
             background: transparent;
@@ -368,10 +368,10 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             margin-bottom: 1.5rem;
         }
         .report-dossier-item {
-            background: rgba(16, 9, 29, 0.65);
+            background: rgba(18, 3, 5, 0.65);
             padding: 0.85rem 1rem;
             border-radius: 10px;
-            border: 1px solid rgba(196, 181, 253, 0.14);
+            border: 1px solid rgba(212, 175, 55, 0.18);
         }
         .report-dossier-label {
             font-size: 0.75rem;
@@ -441,7 +441,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
 
             <a href="reports.php?status=reviewed" class="admin-stat-card <?php echo ($statusFilter === 'reviewed') ? 'active' : ''; ?>" title="Filter under review reports" aria-label="Under Review: <?php echo $reviewedReportsCount; ?>">
                 <div>
-                    <div class="admin-stat-number" style="color: #C4B5FD;"><?php echo number_format($reviewedReportsCount); ?></div>
+                    <div class="admin-stat-number" style="color: #F1D77A;"><?php echo number_format($reviewedReportsCount); ?></div>
                     <div class="admin-stat-label">Under Review</div>
                 </div>
                 <div class="admin-stat-icon">&#128269;</div>
@@ -493,7 +493,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
                 </a>
                 <a href="reports.php?status=reviewed<?php echo !empty($searchQuery) ? '&search=' . urlencode($searchQuery) : ''; ?>" 
                    class="report-tab-pill <?php echo ($statusFilter === 'reviewed') ? 'active' : ''; ?>">
-                    Under Review <span class="report-pill-badge" style="background: rgba(147, 51, 234, 0.45); color: #FFF;"><?php echo $reviewedReportsCount; ?></span>
+                    Under Review <span class="report-pill-badge" style="background: rgba(74, 17, 22, 0.7); color: #F1D77A; border: 1px solid rgba(212, 175, 55, 0.3);"><?php echo $reviewedReportsCount; ?></span>
                 </a>
                 <a href="reports.php?status=resolved<?php echo !empty($searchQuery) ? '&search=' . urlencode($searchQuery) : ''; ?>" 
                    class="report-tab-pill <?php echo ($statusFilter === 'resolved') ? 'active' : ''; ?>">
@@ -548,7 +548,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
                             <tr>
                                 <!-- ID -->
                                 <td>
-                                    <strong style="color: #C4B5FD; font-size: 0.95rem;">#<?php echo $r['id']; ?></strong>
+                                    <strong style="color: #D4AF37; font-size: 0.95rem;">#<?php echo $r['id']; ?></strong>
                                 </td>
 
                                 <!-- Reported Subject -->
@@ -682,7 +682,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
                                                 <input type="hidden" name="report_id" value="<?php echo $r['id']; ?>">
                                                 <input type="hidden" name="new_status" value="reviewed">
                                                 <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
-                                                <button type="submit" class="btn btn-outline-light btn-sm" style="font-size: 0.75rem; padding: 0.28rem 0.55rem; color: #C4B5FD; border-color: rgba(196, 181, 253, 0.35);" title="Mark under active review">
+                                                <button type="submit" class="btn btn-outline-light btn-sm" style="font-size: 0.75rem; padding: 0.28rem 0.55rem; color: #F1D77A; border-color: rgba(212, 175, 55, 0.35);" title="Mark under active review">
                                                     Review
                                                 </button>
                                             </form>
@@ -721,7 +721,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
                                                 <input type="hidden" name="report_id" value="<?php echo $r['id']; ?>">
                                                 <input type="hidden" name="new_status" value="pending">
                                                 <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
-                                                <button type="submit" class="btn btn-outline-light btn-sm" style="font-size: 0.75rem; padding: 0.28rem 0.55rem; color: #C4B5FD;" title="Reopen report for investigation">
+                                                <button type="submit" class="btn btn-outline-light btn-sm" style="font-size: 0.75rem; padding: 0.28rem 0.55rem; color: #F1D77A;" title="Reopen report for investigation">
                                                     Reopen
                                                 </button>
                                             </form>
@@ -790,7 +790,7 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
         </div>
 
         <!-- Fast Moderation Actions inside Modal -->
-        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(196, 181, 253, 0.18); padding-top: 1.2rem; gap: 0.5rem; flex-wrap: wrap;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: 1.2rem; gap: 0.5rem; flex-wrap: wrap;">
             <div id="modalActionsGroup" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
                 <!-- Populated dynamically via JS -->
             </div>
