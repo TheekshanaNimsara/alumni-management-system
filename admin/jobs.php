@@ -100,7 +100,7 @@ if (empty($jobsList) && empty($statusFilter)) {
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $baseUrl; ?>assets/favicon-16x16.png?v=3">
     <link rel="shortcut icon" href="<?php echo $baseUrl; ?>favicon.ico?v=3">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $baseUrl; ?>assets/apple-touch-icon.png?v=3">
-    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css?v=4">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css?v=5">
 </head>
 <body>
 
