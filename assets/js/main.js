@@ -169,52 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ------------------------------------------------------------
-    // 6. INTERACTIVE HERO SPOTLIGHT & "INSPIRE." ILLUMINATION
-    // ------------------------------------------------------------
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        let ticking = false;
-        hero.addEventListener('mousemove', (e) => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const rect = hero.getBoundingClientRect();
-                    const x = Math.round(((e.clientX - rect.left) / rect.width) * 100);
-                    const y = Math.round(((e.clientY - rect.top) / rect.height) * 100);
-                    hero.style.setProperty('--mouse-x', `${x}%`);
-                    hero.style.setProperty('--mouse-y', `${y}%`);
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-    }
-
-    const inspireWord = document.querySelector('.highlight-gold');
-    if (inspireWord) {
-        inspireWord.setAttribute('tabindex', '0');
-        inspireWord.setAttribute('role', 'button');
-        inspireWord.setAttribute('aria-label', 'Inspire — Click to illuminate');
-        inspireWord.setAttribute('title', 'Click to illuminate');
-
-        const triggerSparkle = () => {
-            inspireWord.classList.remove('inspire-sparkle-active');
-            void inspireWord.offsetWidth; // Force DOM reflow
-            inspireWord.classList.add('inspire-sparkle-active');
-            setTimeout(() => {
-                inspireWord.classList.remove('inspire-sparkle-active');
-            }, 1000);
-        };
-
-        inspireWord.addEventListener('click', triggerSparkle);
-        inspireWord.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                triggerSparkle();
-            }
-        });
-    }
-
     // Note: Auth forms (login & register) encapsulate their own validation,
     // inline spinners, error alerts, and Liquid Glass success animations.
     // main.js avoids attaching duplicate listeners to prevent handler collisions.

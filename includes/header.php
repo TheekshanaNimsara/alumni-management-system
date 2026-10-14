@@ -44,8 +44,8 @@ if ($isLoggedIn && $db_connected && $pdo) {
     <link rel="shortcut icon" href="<?php echo $baseUrl; ?>favicon.ico?v=3">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $baseUrl; ?>assets/apple-touch-icon.png?v=3">
     <!-- Cinematic Style -->
-    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/theme.css?v=10">
-    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css?v=10">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/theme.css?v=11">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>assets/css/style.css?v=11">
     <script src="<?php echo $baseUrl; ?>assets/js/theme.js" defer></script>
 </head>
 <body>

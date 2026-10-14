@@ -524,17 +524,10 @@ html.theme-transitioning *::after {
 
 [data-theme="light"] .hero-title {
     color: #2D1B28;
-    text-shadow: 0 2px 12px rgba(118, 45, 72, 0.10);
 }
 
 [data-theme="light"] .hero-title .highlight-gold {
-    color: #762D48;
-    background: linear-gradient(120deg, #762D48 0%, #B65B78 25%, #E8C77E 50%, #98415F 75%, #762D48 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 2px 10px rgba(190, 152, 75, 0.40));
+    color: var(--primary-color);
 }
 
 [data-theme="light"] .hero-description {

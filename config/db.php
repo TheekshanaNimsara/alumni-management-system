@@ -1,8 +1,6 @@
 <?php
-// ============================================================
-// University Alumni Network - Database Connection & Helpers
-// Pure PHP & PDO for beginner-friendly, secure SQL queries
-// ============================================================
+
+//To provide the essential tools (database connection, session security, and helper functions) required by the rest of the application.
 
 // Session security hardening
 if (session_status() === PHP_SESSION_NONE) {
@@ -35,8 +33,12 @@ function is_admin() {
 }
 
 function require_login($redirect = null) {
+    //Never save a copy of this page in your history.
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Pragma: no-cache");
+    
+    //It uses the first function to check if you are logged in. If you are not, it forces your browser to redirect to the login.php page.
+
     if (!is_logged_in()) {
         $target = $redirect ? $redirect : get_base_url() . 'auth/login.php';
         header("Location: " . $target);
@@ -102,6 +104,7 @@ try {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ]);
         
+        //get sql schema from the schema.sql file and execute it to create tables and seed data
         $schemaPath = __DIR__ . '/../database/schema.sql';
         if (file_exists($schemaPath)) {
             $sql = file_get_contents($schemaPath);
