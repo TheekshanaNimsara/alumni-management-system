@@ -23,11 +23,7 @@ $activeTab = 'overview';
 
 // Handle Profile Updates (Owner only)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isOwner) {
-    $token = $_POST['csrf_token'] ?? '';
-    if (!verify_csrf_token($token)) {
-        $errorMsg = "Security validation failed. Please refresh the page and try again.";
-    } else {
-        $action = $_POST['action'] ?? '';
+    $action = $_POST['action'] ?? '';
 
         // 1. Photo Upload Action
         if ($action === 'upload_photo') {
@@ -178,7 +174,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isOwner) {
                 }
             }
         }
-    }
 }
 
 // Fetch Profile Data

@@ -30,12 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     } else {
         $jobId = intval($_POST['job_id'] ?? 0);
         $coverMessage = trim($_POST['application_message'] ?? '');
-        $csrfToken = $_POST['csrf_token'] ?? '';
 
-        if (!verify_csrf_token($csrfToken)) {
-            $message = "Security token mismatch. Please try submitting again.";
-            $messageType = "danger";
-        } elseif ($jobId > 0 && $db_connected && $pdo) {
+        if ($jobId > 0 && $db_connected && $pdo) {
             try {
                 // Check if already applied
                 $stmt = $pdo->prepare("SELECT id, status FROM job_applications WHERE job_id = ? AND user_id = ?");
@@ -70,7 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         header("Location: auth/login.php?redirect=" . urlencode("jobs.php#post-job") . "&msg=auth_required");
         exit;
     } else {
-        $csrfToken = $_POST['csrf_token'] ?? '';
         $title = trim($_POST['title'] ?? '');
         $company = trim($_POST['company'] ?? '');
         $location = trim($_POST['location'] ?? '');
@@ -80,10 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $deadline = !empty($_POST['deadline']) ? trim($_POST['deadline']) : null;
         $application_link = trim($_POST['application_link'] ?? '');
 
-        if (!verify_csrf_token($csrfToken)) {
-            $message = "Security token invalid or expired. Please refresh and try again.";
-            $messageType = "danger";
-        } elseif (!empty($title) && !empty($company) && !empty($location) && !empty($description)) {
+        if (!empty($title) && !empty($company) && !empty($location) && !empty($description)) {
             if ($db_connected && $pdo) {
                 try {
                     $postStatus = is_admin() ? 'approved' : 'pending';

@@ -18,12 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $targetUserId = intval($_POST['user_id'] ?? 0);
     $currentAdminId = current_user_id();
-    $csrfToken = $_POST['csrf_token'] ?? '';
-
-    if (!verify_csrf_token($csrfToken)) {
-        $msg = "Security token expired or invalid. Please try again.";
-        $msgType = 'danger';
-    } elseif ($targetUserId > 0 && $db_connected && $pdo) {
+    if ($targetUserId > 0 && $db_connected && $pdo) {
             try {
                 // Safeguard: Protect primary admin ID 1
                 if ($targetUserId === 1 && in_array($action, ['delete_user', 'change_role', 'change_status'])) {

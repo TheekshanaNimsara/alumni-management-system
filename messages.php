@@ -19,18 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $isAjax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') || !empty($_POST['ajax']);
     $convId = intval($_POST['conversation_id'] ?? 0);
     $messageText = trim($_POST['message'] ?? '');
-    $csrfToken = $_POST['csrf_token'] ?? '';
-
-    // CSRF Token Verification
-    if (!verify_csrf_token($csrfToken)) {
-        if ($isAjax) {
-            header('Content-Type: application/json; charset=utf-8');
-            http_response_code(403);
-            echo json_encode(['success' => false, 'error' => 'Security token invalid. Please refresh the page.']);
-            exit;
-        }
-        $error = 'Security validation failed.';
-    } elseif ($convId > 0 && !empty($messageText) && $db_connected && $pdo) {
+    if ($convId > 0 && !empty($messageText) && $db_connected && $pdo) {
         try {
             // Security Authorization: verify current user is in this conversation
             $stmt = $pdo->prepare("SELECT user_one_id, user_two_id FROM conversations WHERE id = ? LIMIT 1");
@@ -107,17 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'unsend_message') {
     $isAjax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') || !empty($_POST['ajax']);
     $msgId = intval($_POST['message_id'] ?? 0);
-    $csrfToken = $_POST['csrf_token'] ?? '';
 
-    if (!verify_csrf_token($csrfToken)) {
-        if ($isAjax) {
-            header('Content-Type: application/json; charset=utf-8');
-            http_response_code(403);
-            echo json_encode(['success' => false, 'error' => 'Security token invalid. Please refresh the page.']);
-            exit;
-        }
-        $error = 'Security validation failed.';
-    } elseif ($msgId > 0 && $db_connected && $pdo) {
+    if ($msgId > 0 && $db_connected && $pdo) {
         try {
             // Retrieve message and strictly verify ownership
             $stmt = $pdo->prepare("SELECT id, conversation_id, sender_id, receiver_id, is_unsent FROM messages WHERE id = ? LIMIT 1");

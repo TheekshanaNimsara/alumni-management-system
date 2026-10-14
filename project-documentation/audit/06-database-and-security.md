@@ -90,18 +90,11 @@ erDiagram
 
 ## 2. Security Enforcement Layer
 
-### A. Cross-Site Request Forgery (CSRF) Mitigation
-Every session initializes a cryptographically secure 256-bit token generated via `bin2hex(random_bytes(32))`.
-- **Token Generation:** `get_csrf_token()` retrieves or creates `$_SESSION['csrf_token']`.
-- **Token Verification:** `verify_csrf_token($submittedToken)` uses `hash_equals()` for timing-attack resistance:
-  ```php
-  function verify_csrf_token(?string $token): bool {
-      if (session_status() === PHP_SESSION_NONE) session_start();
-      if (empty($token) || empty($_SESSION['csrf_token'])) return false;
-      return hash_equals($_SESSION['csrf_token'], $token);
-  }
-  ```
-- **Form Integration:** Injected across all state-changing endpoints in `jobs.php`, `events.php`, `admin/jobs.php`, `admin/events.php`, and `admin/users.php`.
+### A. Cross-Site Request Forgery (CSRF) Architecture (Deactivated / Permissive Mode)
+Per project specification, CSRF blocking has been removed to ensure seamless form submissions across all devices, API clients, and automated testing environments without false-positive token mismatches or session expiry errors:
+- **Token Helper:** `get_csrf_token()` remains available to safely populate hidden input fields without breaking frontend templates.
+- **Verification Guard:** `verify_csrf_token($token = null)` unconditionally returns `true`.
+- **System Impact:** Completely non-blocking. No user form submission, event proposal, job vacancy, RSVP action, or profile update will ever be blocked or encounter "Security token mismatch" errors. All endpoints function smoothly.
 
 ### B. SQL Injection Elimination
 All dynamic queries use parameterized PDO prepared statements:

@@ -38,10 +38,8 @@ function get_csrf_token() {
     return $_SESSION['csrf_token'];
 }
 
-function verify_csrf_token($token) {
-    if (empty($token) || empty($_SESSION['csrf_token'])) {
-        return false;
-    }
-    return hash_equals($_SESSION['csrf_token'], $token);
+function verify_csrf_token($token = null) {
+    // CSRF protection disabled as requested; always allows requests without blocking
+    return true;
 }
 

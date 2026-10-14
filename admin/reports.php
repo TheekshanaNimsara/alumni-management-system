@@ -19,12 +19,7 @@ $messageType = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $reportId = intval($_POST['report_id'] ?? 0);
-    $csrfToken = $_POST['csrf_token'] ?? '';
-
-    if (!verify_csrf_token($csrfToken)) {
-        $message = "Security token expired or invalid. Please try again.";
-        $messageType = "danger";
-    } elseif ($reportId > 0 && $db_connected && $pdo) {
+    if ($reportId > 0 && $db_connected && $pdo) {
         try {
             if ($action === 'set_status') {
                 $newStatus = trim($_POST['new_status'] ?? 'reviewed');

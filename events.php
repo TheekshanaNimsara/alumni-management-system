@@ -29,12 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         exit;
     } else {
         $eventId = intval($_POST['event_id'] ?? 0);
-        $csrfToken = $_POST['csrf_token'] ?? '';
 
-        if (!verify_csrf_token($csrfToken)) {
-            $message = "Security token mismatch. Please try again.";
-            $messageType = "danger";
-        } elseif ($eventId > 0 && $db_connected && $pdo) {
+        if ($eventId > 0 && $db_connected && $pdo) {
             try {
                 // Check event status & capacity
                 $stmt = $pdo->prepare("
@@ -102,7 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         header("Location: auth/login.php?redirect=" . urlencode("events.php#propose-event") . "&msg=auth_required");
         exit;
     } else {
-        $csrfToken = $_POST['csrf_token'] ?? '';
         $title = trim($_POST['title'] ?? '');
         $description = trim($_POST['description'] ?? '');
         $event_date = trim($_POST['event_date'] ?? '');
@@ -110,10 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $location = trim($_POST['location'] ?? '');
         $capacity = intval($_POST['capacity'] ?? 100);
 
-        if (!verify_csrf_token($csrfToken)) {
-            $message = "Security token mismatch. Please try again.";
-            $messageType = "danger";
-        } elseif (!empty($title) && !empty($event_date) && !empty($location)) {
+        if (!empty($title) && !empty($event_date) && !empty($location)) {
             if ($db_connected && $pdo) {
                 try {
                     $eventStatus = is_admin() ? 'approved' : 'pending';

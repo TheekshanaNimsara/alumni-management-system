@@ -23,11 +23,7 @@ $statusFilter = trim($_GET['status'] ?? '');
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['event_id'], $_POST['action'])) {
     $eventId = intval($_POST['event_id']);
     $action = $_POST['action'];
-    $csrfToken = $_POST['csrf_token'] ?? '';
-
-    if (!verify_csrf_token($csrfToken)) {
-        $_SESSION['flash_msg'] = "Security token expired or invalid. Please try again.";
-    } elseif ($db_connected && $pdo) {
+    if ($db_connected && $pdo) {
         try {
             if ($action === 'approve') {
                 $stmt = $pdo->prepare("UPDATE events SET status = 'approved' WHERE id = ?");
