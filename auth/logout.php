@@ -1,7 +1,7 @@
 <?php
-// ============================================================
+
 // University Alumni Network - Logout Handler
-// ============================================================
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

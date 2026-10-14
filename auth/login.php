@@ -1,9 +1,9 @@
 <?php
-// ============================================================
+
 // Alumni Connect - Member Login
 // Cinematic Dark Purple Split-Screen Authentication Experience
 // Secure PDO Prepared Statements • Bcrypt Verification • Session Hardening
-// ============================================================
+
 require_once __DIR__ . '/../config/db.php';
 
 $error = '';
@@ -17,6 +17,7 @@ if ($rawMsg === 'auth_required') {
 }
 
 // If already authenticated, redirect to appropriate destination
+//This PHP code checks whether the user is already logged in
 if (is_logged_in()) {
     $redirect = $_GET['redirect'] ?? '';
     if (!empty($redirect) && is_string($redirect) && 
@@ -33,6 +34,9 @@ if (is_logged_in()) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Detect the request type,Get the user's identity,Get the password
+    //AJAX is a technique that allows a webpage to communicate with a server asynchronously without reloading the entire page.
     $isAjax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') || !empty($_POST['ajax']);
     $identity = trim($_POST['identity'] ?? '');
     $password = $_POST['password'] ?? '';

@@ -6,14 +6,15 @@
  *   php bin/grant_admin.php <email|username|user_id>
  *   php bin/grant_admin.php --list
  *   php bin/grant_admin.php --demote <email|username|user_id>
- *
- * Examples:
- *   php bin/grant_admin.php sarah.j@alumni.edu
- *   php bin/grant_admin.php john_doe
- *   php bin/grant_admin.php 3
- *   php bin/grant_admin.php --list
+ 
  */
 
+  //Grant administrator privileges to an existing user.
+  //Remove administrator privileges from an existing administrator.
+  //List all existing administrators.
+  //Protect the primary administrator account from being demoted.
+
+  
 // Ensure script is run from CLI
 if (php_sapi_name() !== 'cli') {
     header('Content-Type: text/plain');
@@ -53,6 +54,8 @@ if (empty($args) || in_array($args[0], ['-h', '--help', 'help'])) {
 // Action: List all administrators
 if ($args[0] === '--list' || $args[0] === '-l') {
     try {
+
+        //get the admin users from the database and display them in a formatted table   
         $stmt = $pdo->query("SELECT id, first_name, last_name, username, email, role, status, created_at FROM users WHERE role = 'admin' ORDER BY id ASC");
         $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -105,7 +108,7 @@ try {
 
     $fullName = trim($user['first_name'] . ' ' . $user['last_name']);
 
-    // Demotion Workflow
+    // Administrator privileges removing workflow
     if ($isDemote) {
         if ($user['id'] == 1) {
             echo "\n[REJECTED] User ID 1 is the primary root administrator and cannot be demoted.\n\n";

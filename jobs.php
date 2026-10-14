@@ -356,7 +356,6 @@ require_once __DIR__ . '/includes/header.php';
         <?php if ($isLoggedIn): ?>
             <form method="POST" action="jobs.php#post-job">
                 <input type="hidden" name="action" value="post_job">
-                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                 
                 <div class="grid grid-2" style="margin-bottom: 1.2rem; gap: 1.5rem;">
                     <div class="form-group" style="margin-bottom: 0;">
@@ -453,7 +452,6 @@ require_once __DIR__ . '/includes/header.php';
 
         <form method="POST" action="jobs.php">
             <input type="hidden" name="action" value="apply_job">
-            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
             <input type="hidden" name="job_id" id="apply_job_id" value="">
             
             <div class="form-group" style="margin-bottom: 1rem;">

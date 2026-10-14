@@ -1,7 +1,6 @@
 <?php
-// ============================================================
+
 // University Alumni Network - Admin Event Moderation
-// ============================================================
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
@@ -193,7 +192,6 @@ if (empty($eventsList) && empty($statusFilter)) {
                                     <?php if ($event['status'] !== 'approved'): ?>
                                         <form method="POST" style="display: inline;">
                                             <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
-                                            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                             <input type="hidden" name="action" value="approve">
                                             <button type="submit" class="btn btn-glass-success btn-sm">
                                                 Approve
@@ -204,7 +202,6 @@ if (empty($eventsList) && empty($statusFilter)) {
                                     <?php if ($event['status'] !== 'rejected'): ?>
                                         <form method="POST" style="display: inline;">
                                             <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
-                                            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                             <input type="hidden" name="action" value="reject">
                                             <button type="submit" class="btn btn-glass-danger btn-sm">
                                                 Reject
@@ -214,7 +211,6 @@ if (empty($eventsList) && empty($statusFilter)) {
 
                                     <form method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this event?');">
                                         <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
-                                        <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                         <input type="hidden" name="action" value="delete">
                                         <button type="submit" class="btn btn-glass-danger btn-sm">
                                             Delete
@@ -259,13 +255,11 @@ if (empty($eventsList) && empty($statusFilter)) {
             <div style="display: flex; gap: 0.5rem;">
                 <form method="POST" style="display: inline;">
                     <input type="hidden" name="event_id" id="modalEventIdApprove" value="">
-                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                     <input type="hidden" name="action" value="approve">
                     <button type="submit" class="btn btn-glass-success btn-sm">Approve Event</button>
                 </form>
                 <form method="POST" style="display: inline;">
                     <input type="hidden" name="event_id" id="modalEventIdReject" value="">
-                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                     <input type="hidden" name="action" value="reject">
                     <button type="submit" class="btn btn-glass-danger btn-sm">Reject Event</button>
                 </form>

@@ -343,7 +343,6 @@ require_once __DIR__ . '/includes/header.php';
                                 <?php if ($isLoggedIn): ?>
                                     <form method="POST" action="events.php" style="display: inline;">
                                         <input type="hidden" name="action" value="toggle_rsvp">
-                                        <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                         <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
                                         
                                         <?php if ($isUserAttending): ?>
@@ -386,7 +385,6 @@ require_once __DIR__ . '/includes/header.php';
         <?php if ($isLoggedIn): ?>
             <form method="POST" action="events.php#propose-event">
                 <input type="hidden" name="action" value="create_event">
-                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                 
                 <div class="grid grid-2" style="margin-bottom: 1.2rem; gap: 1.5rem;">
                     <div class="form-group" style="margin-bottom: 0;">
@@ -471,7 +469,6 @@ require_once __DIR__ . '/includes/header.php';
             <?php if ($isLoggedIn): ?>
                 <form id="evModalRsvpForm" method="POST" action="events.php" style="display: inline;">
                     <input type="hidden" name="action" value="toggle_rsvp">
-                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                     <input type="hidden" name="event_id" id="evModalEventId" value="">
                     <button type="submit" id="evModalRsvpBtn" class="btn btn-gold btn-sm gold-glow">RSVP Now</button>
                 </form>

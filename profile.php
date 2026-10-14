@@ -281,7 +281,6 @@ require_once __DIR__ . '/includes/header.php';
                         </label>
                         <form id="heroPhotoUploadForm" method="POST" action="profile.php" enctype="multipart/form-data" style="display: none;">
                             <input type="hidden" name="action" value="upload_photo">
-                            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                             <input type="file" id="heroProfilePhotoInput" name="profile_photo" accept="image/jpeg,image/png,image/webp" onchange="submitHeroPhoto(this);">
                         </form>
                     <?php endif; ?>
@@ -523,7 +522,6 @@ require_once __DIR__ . '/includes/header.php';
                                     <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
                                         <form id="editTabPhotoForm" method="POST" action="profile.php" enctype="multipart/form-data" style="display: inline-flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin: 0;">
                                             <input type="hidden" name="action" value="upload_photo">
-                                            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                             <input type="file" id="editTabPhotoInput" name="profile_photo" accept="image/jpeg,image/png,image/webp" style="display: none;" onchange="handleEditTabPhotoSelected(this);">
                                             
                                             <button type="button" class="btn btn-outline-glass btn-sm" onclick="document.getElementById('editTabPhotoInput').click();">
@@ -542,7 +540,6 @@ require_once __DIR__ . '/includes/header.php';
                                         <?php if ($hasCustomPhoto): ?>
                                             <form method="POST" action="profile.php" onsubmit="return confirm('Are you sure you want to remove your custom photo and restore the default avatar?');" style="display: inline; margin: 0;">
                                                 <input type="hidden" name="action" value="remove_photo">
-                                                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                                 <button type="submit" class="btn btn-outline-danger btn-sm" style="border: 1px solid rgba(239, 68, 68, 0.4); color: #F87171; background: rgba(239, 68, 68, 0.08); font-size: 0.8rem; padding: 0.4rem 0.8rem;">
                                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.3rem;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                                                     Remove Photo
@@ -556,7 +553,6 @@ require_once __DIR__ . '/includes/header.php';
 
                         <form method="POST" action="profile.php">
                             <input type="hidden" name="action" value="update_profile">
-                            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
 
                             <!-- Section 1: Basic Identity & Contact -->
                             <div class="profile-form-section">

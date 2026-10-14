@@ -1,8 +1,8 @@
 <?php
-// ============================================================
+
 // Alumni Connect - Dedicated Logout Success Screen
 // Apple-inspired Liquid Glass • Centered Viewport • Auto-Redirect to Home
-// ============================================================
+
 require_once __DIR__ . '/../config/db.php';
 
 // Security: Prevent browser caching of logout success state
@@ -10,7 +10,7 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-$baseUrl = get_base_url();
+$baseUrl = get_base_url(); 
 $homeUrl = '../index.php';
 ?>
 <!DOCTYPE html>

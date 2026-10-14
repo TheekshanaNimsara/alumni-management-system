@@ -1,8 +1,8 @@
 <?php
-// ============================================================
+
 // University Alumni Network - Admin User Management
 // Search, Filter, Activate, Block, Role Changes & Deletion
-// ============================================================
+
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
@@ -252,7 +252,6 @@ if ($db_connected && $pdo) {
                                         <!-- Toggle Status: Activate / Suspend -->
                                         <?php if ($u['id'] !== 1 && $u['id'] !== current_user_id()): ?>
                                             <form method="POST" action="users.php" style="display: inline;">
-                                                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                                 <input type="hidden" name="action" value="change_status">
                                                 <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
                                                 <input type="hidden" name="status" value="<?php echo ($u['status'] === 'active') ? 'suspended' : 'active'; ?>">
@@ -270,7 +269,6 @@ if ($db_connected && $pdo) {
 
                                             <!-- Delete User -->
                                             <form method="POST" action="users.php" style="display: inline;">
-                                                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                                 <input type="hidden" name="action" value="delete_user">
                                                 <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
                                                 <button type="submit" class="btn btn-glass-danger btn-sm" onclick="return confirm('PERMANENT DELETION: Are you sure you want to completely delete this user and all associated records?');">

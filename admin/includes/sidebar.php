@@ -1,7 +1,6 @@
 <?php
-// ============================================================
+
 // University Alumni Network - Admin Sidebar Component
-// ============================================================
 $currentAdminPage = isset($currentAdminPage) ? $currentAdminPage : 'dashboard';
 $baseUrl = get_base_url();
 ?>

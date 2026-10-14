@@ -1,8 +1,8 @@
 <?php
-// ============================================================
+
 // Alumni Connect - Dedicated Login Success Screen
 // Apple-inspired Liquid Glass • Centered Viewport • Auto-Redirect to Home
-// ============================================================
+
 require_once __DIR__ . '/../config/db.php';
 
 // Security: Verify authenticated session
@@ -11,7 +11,7 @@ if (!is_logged_in()) {
     exit;
 }
 
-$baseUrl = get_base_url();
+$baseUrl = get_base_url(); //$baseUrl = 'http://localhost/alumni_network';
 $homeUrl = '../index.php';
 ?>
 <!DOCTYPE html>

@@ -1,8 +1,8 @@
 <?php
-// ============================================================
+
 // Alumni Connect - Dedicated Signup Success Screen
 // Apple-inspired Liquid Glass • Centered Viewport • Auto-Redirect to Home
-// ============================================================
+
 require_once __DIR__ . '/../config/db.php';
 
 // Security: Verify authenticated session

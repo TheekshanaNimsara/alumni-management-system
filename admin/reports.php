@@ -2,7 +2,7 @@
 // ============================================================
 // University Alumni Network - Admin Content & User Reports
 // Review, investigate, moderate, resolve, or dismiss member reports
-// Apple-Inspired Liquid Glass UI • Dark-Purple Aesthetic • CSRF Protection
+// Apple-Inspired Liquid Glass UI • Dark-Purple Aesthetic
 // ============================================================
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
@@ -682,7 +682,6 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
                                                 <input type="hidden" name="action" value="set_status">
                                                 <input type="hidden" name="report_id" value="<?php echo $r['id']; ?>">
                                                 <input type="hidden" name="new_status" value="reviewed">
-                                                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                                 <button type="submit" class="btn btn-outline-light btn-sm" style="font-size: 0.75rem; padding: 0.28rem 0.55rem; color: #F5DDA0; border-color: rgba(232, 199, 126, 0.35);" title="Mark under active review">
                                                     Review
                                                 </button>
@@ -695,7 +694,6 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
                                                 <input type="hidden" name="action" value="set_status">
                                                 <input type="hidden" name="report_id" value="<?php echo $r['id']; ?>">
                                                 <input type="hidden" name="new_status" value="resolved">
-                                                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                                 <button type="submit" class="btn btn-primary btn-sm" style="font-size: 0.75rem; padding: 0.28rem 0.55rem;" title="Mark report as resolved">
                                                     Resolve
                                                 </button>
@@ -708,7 +706,6 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
                                                 <input type="hidden" name="action" value="set_status">
                                                 <input type="hidden" name="report_id" value="<?php echo $r['id']; ?>">
                                                 <input type="hidden" name="new_status" value="dismissed">
-                                                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                                 <button type="submit" class="btn btn-outline-light btn-sm" style="font-size: 0.75rem; padding: 0.28rem 0.55rem; color: #94A3B8;" title="Dismiss report as invalid or duplicate">
                                                     Dismiss
                                                 </button>
@@ -721,7 +718,6 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
                                                 <input type="hidden" name="action" value="set_status">
                                                 <input type="hidden" name="report_id" value="<?php echo $r['id']; ?>">
                                                 <input type="hidden" name="new_status" value="pending">
-                                                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                                 <button type="submit" class="btn btn-outline-light btn-sm" style="font-size: 0.75rem; padding: 0.28rem 0.55rem; color: #E8CB83;" title="Reopen report for investigation">
                                                     Reopen
                                                 </button>
@@ -734,7 +730,6 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
                                                 <input type="hidden" name="action" value="suspend_user">
                                                 <input type="hidden" name="report_id" value="<?php echo $r['id']; ?>">
                                                 <input type="hidden" name="target_user_id" value="<?php echo $r['reported_user_id']; ?>">
-                                                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                                 <button type="submit" class="btn btn-glass-danger btn-sm" title="Suspend account immediately">
                                                     Suspend User
                                                 </button>
@@ -805,7 +800,6 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
 <script>
     // Pure Vanilla JS Incident Dossier Modal Controller
     const reportModal = document.getElementById('reportDetailsModal');
-    const csrfToken = <?php echo json_encode(get_csrf_token()); ?>;
 
     function openReportModal(data) {
         if (!data || !reportModal) return;
@@ -905,7 +899,6 @@ if (empty($reports) && empty($searchQuery) && empty($statusFilter)) {
             <input type="hidden" name="action" value="${action}">
             <input type="hidden" name="report_id" value="${reportId}">
             <input type="hidden" name="new_status" value="${newStatus}">
-            <input type="hidden" name="csrf_token" value="${csrfToken}">
             <button type="submit" class="btn ${btnClass} btn-sm">${label}</button>
         `;
         return form;

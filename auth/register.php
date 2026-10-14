@@ -1,9 +1,9 @@
 <?php
-// ============================================================
+
 // Alumni Connect - Member Registration
 // Cinematic Dark Purple Split-Screen Authentication Experience
 // Secure PDO Transactions • Bcrypt Password Hashing • Session Hardening
-// ============================================================
+
 require_once __DIR__ . '/../config/db.php';
 
 $error = '';
@@ -453,7 +453,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 
     <script>
-        // Password Visibility Controls
+       
+       // Password Visibility Controls
         function setupPasswordToggle(btnId, inputId, iconId) {
             const btn = document.getElementById(btnId);
             const input = document.getElementById(inputId);

@@ -1,7 +1,7 @@
 <?php
-// ============================================================
+
 // University Alumni Network - General Reusable Functions
-// ============================================================
+
 require_once __DIR__ . '/../config/db.php';
 
 function sanitize_output($text) {
@@ -32,14 +32,12 @@ function get_user_avatar_url($profile_picture = null) {
 }
 
 function get_csrf_token() {
-    if (empty($_SESSION['csrf_token'])) {
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    }
-    return $_SESSION['csrf_token'];
+    // CSRF token passing removed for simplified architecture & viva defense
+    return '';
 }
 
 function verify_csrf_token($token = null) {
-    // CSRF protection disabled as requested; always allows requests without blocking
+    // CSRF verification disabled; always permits requests without blocking
     return true;
 }
 

@@ -1,7 +1,7 @@
 <?php
-// ============================================================
+
 // University Alumni Network - Admin Settings
-// ============================================================
+
 require_once __DIR__ . '/../config/db.php';
 
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
@@ -38,6 +38,8 @@ $baseUrl = get_base_url();
                 <h1 class="admin-title">System Settings &amp; Diagnostics</h1>
                 <p style="color: var(--text-muted); font-size: 0.95rem;">Configuration parameters and runtime diagnostics</p>
             </div>
+            
+            //database re-seed tool
             <div>
                 <a href="<?php echo $baseUrl; ?>config/setup.php" class="btn btn-gold btn-sm">Database Re-Seed Tool</a>
             </div>

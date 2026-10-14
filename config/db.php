@@ -2,6 +2,9 @@
 
 //To provide the essential tools (database connection, session security, and helper functions) required by the rest of the application.
 
+//Provide fallback sample data so the website
+//Automatically prepare the database by creating the database and tables when needed, and adding new columns to existing tables.
+
 // Session security hardening
 if (session_status() === PHP_SESSION_NONE) {
     ini_set("session.use_only_cookies", 1);
@@ -116,6 +119,8 @@ try {
     }
 }
 
+
+//The purpose of this PHP code is to automatically add new columns to existing database tables 
 if ($db_connected && $pdo) {
     try { $pdo->exec("ALTER TABLE events ADD COLUMN reg_date DATE DEFAULT NULL AFTER event_date"); } catch (Exception $e) {}
     try { $pdo->exec("ALTER TABLE events ADD COLUMN start_time TIME DEFAULT NULL AFTER event_time"); } catch (Exception $e) {}

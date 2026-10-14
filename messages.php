@@ -643,7 +643,6 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
                     <form method="POST" action="messages.php?conversation_id=<?php echo $activeConvId; ?>" id="messageSendForm" style="display: flex; gap: 0.8rem; align-items: center;">
                         <input type="hidden" name="action" value="send_message">
                         <input type="hidden" name="conversation_id" value="<?php echo $activeConvId; ?>">
-                        <input type="hidden" name="csrf_token" id="composerCsrfToken" value="<?php echo get_csrf_token(); ?>">
                         
                         <input type="text" name="message" id="messageInput" class="form-control" 
                                 placeholder="Type a message to <?php echo htmlspecialchars($activeConv['first_name']); ?>..." 
@@ -713,7 +712,6 @@ if ($activeConvId > 0 && $db_connected && $pdo) {
 // State management
 let currentActiveConvId = <?php echo (int)$activeConvId; ?>;
 const currentUserId = <?php echo (int)$currentUserId; ?>;
-const csrfToken = <?php echo json_encode(get_csrf_token()); ?>;
 let isSending = false;
 let isLoadingConv = false;
 
@@ -864,7 +862,6 @@ function unsendMessage(msgId) {
     const formData = new FormData();
     formData.append('action', 'unsend_message');
     formData.append('message_id', msgId);
-    formData.append('csrf_token', csrfToken);
     formData.append('ajax', '1');
 
     fetch('messages.php', {

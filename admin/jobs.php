@@ -1,7 +1,7 @@
 <?php
-// ============================================================
+
 // University Alumni Network - Admin Job Moderation
-// ============================================================
+
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
@@ -196,7 +196,6 @@ if (empty($jobsList) && empty($statusFilter)) {
                                     <?php if ($job['status'] !== 'approved'): ?>
                                         <form method="POST" style="display: inline;">
                                             <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
-                                            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                             <input type="hidden" name="action" value="approve">
                                             <button type="submit" class="btn btn-glass-success btn-sm">
                                                 Approve
@@ -207,7 +206,6 @@ if (empty($jobsList) && empty($statusFilter)) {
                                     <?php if ($job['status'] !== 'rejected'): ?>
                                         <form method="POST" style="display: inline;">
                                             <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
-                                            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                             <input type="hidden" name="action" value="reject">
                                             <button type="submit" class="btn btn-glass-danger btn-sm">
                                                 Reject
@@ -217,7 +215,6 @@ if (empty($jobsList) && empty($statusFilter)) {
 
                                     <form method="POST" style="display: inline;" onsubmit="return confirm('Delete this job posting permanently?');">
                                         <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
-                                        <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                         <input type="hidden" name="action" value="delete">
                                         <button type="submit" class="btn btn-glass-danger btn-sm">
                                             Delete
@@ -270,13 +267,11 @@ if (empty($jobsList) && empty($statusFilter)) {
             <div style="display: flex; gap: 0.5rem;">
                 <form method="POST" style="display: inline;">
                     <input type="hidden" name="job_id" id="modalJobIdApprove" value="">
-                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                     <input type="hidden" name="action" value="approve">
                     <button type="submit" class="btn btn-glass-success btn-sm">Approve Job</button>
                 </form>
                 <form method="POST" style="display: inline;">
                     <input type="hidden" name="job_id" id="modalJobIdReject" value="">
-                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                     <input type="hidden" name="action" value="reject">
                     <button type="submit" class="btn btn-glass-danger btn-sm">Reject Job</button>
                 </form>
