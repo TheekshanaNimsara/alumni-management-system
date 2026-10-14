@@ -265,16 +265,6 @@ if ($db_connected && $pdo) {
                                                 <?php endif; ?>
                                             </form>
 
-                                            <!-- Toggle Role -->
-                                            <form method="POST" action="users.php" style="display: inline;">
-                                                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
-                                                <input type="hidden" name="action" value="change_role">
-                                                <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
-                                                <input type="hidden" name="role" value="<?php echo ($u['role'] === 'admin') ? 'alumni' : 'admin'; ?>">
-                                                <button type="submit" class="btn btn-outline-light btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem; color: var(--text-color);" onclick="return confirm('Change user role to <?php echo ($u['role'] === 'admin') ? 'Alumni' : 'Admin'; ?>?');">
-                                                    <?php echo ($u['role'] === 'admin') ? 'Demote' : 'Make Admin'; ?>
-                                                </button>
-                                            </form>
 
                                             <!-- Delete User -->
                                             <form method="POST" action="users.php" style="display: inline;">
