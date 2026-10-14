@@ -50,23 +50,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const loader = document.getElementById('cinematicLoader');
 
     if (loader) {
-        // If loader is initially visible on page load, dismiss it smoothly
-        if (!loader.classList.contains('loader-hidden')) {
-            setTimeout(() => {
-                window.AlumniLoader.hide();
-            }, 800);
-        }
-
-        // Safety fallback: guaranteed dismissal within 2200ms
-        setTimeout(() => {
-            window.AlumniLoader.hide();
-        }, 2200);
+        // Ensure loader is cleanly dismissed immediately upon DOM ready
+        window.AlumniLoader.hide();
 
         // Handle browser back/forward cache (bfcache) restoration
         window.addEventListener('pageshow', (event) => {
             window.AlumniLoader.hide();
         });
     }
+
+    // Double-submit prevention & inline button spinner for data forms (Jobs, Events, RSVPs, Reports)
+    document.querySelectorAll('form').forEach(form => {
+        if (form.classList.contains('auth-form') || (form.method && form.method.toUpperCase() === 'GET')) return;
+        form.addEventListener('submit', function(e) {
+            if (this.dataset.submitting === 'true') {
+                e.preventDefault();
+                return;
+            }
+            if (this.checkValidity && !this.checkValidity()) return;
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn && !submitBtn.disabled) {
+                this.dataset.submitting = 'true';
+                const originalHtml = submitBtn.innerHTML;
+                submitBtn.dataset.originalHtml = originalHtml;
+                submitBtn.innerHTML = '<span class="btn-spinner"></span> Submitting...';
+                submitBtn.style.opacity = '0.85';
+                submitBtn.style.pointerEvents = 'none';
+
+                setTimeout(() => {
+                    if (this.dataset.submitting === 'true') {
+                        this.dataset.submitting = 'false';
+                        submitBtn.innerHTML = submitBtn.dataset.originalHtml || originalHtml;
+                        submitBtn.style.opacity = '1';
+                        submitBtn.style.pointerEvents = 'auto';
+                    }
+                }, 8000);
+            }
+        });
+    });
 
     // Intercept Major Section Navigation Links
     document.addEventListener('click', (e) => {

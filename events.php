@@ -3,14 +3,22 @@
 // University Alumni Network - Campus & Alumni Events
 // Interactive RSVP, Capacity Management, Open/Closed State & Moderation
 // ============================================================
-$pageTitle = 'Events';
-$currentPage = 'events';
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
+$pageTitle = 'Events';
+$currentPage = 'events';
 $message = '';
 $messageType = '';
 $currentUserId = current_user_id();
+$isLoggedIn = is_logged_in();
+
+// Flash message retrieval from session
+if (!empty($_SESSION['flash_message'])) {
+    $message = $_SESSION['flash_message'];
+    $messageType = $_SESSION['flash_type'] ?? 'info';
+    unset($_SESSION['flash_message'], $_SESSION['flash_type']);
+}
 
 // 1. Handle RSVP Action
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'toggle_rsvp') {
@@ -21,7 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         exit;
     } else {
         $eventId = intval($_POST['event_id'] ?? 0);
-        if ($eventId > 0 && $db_connected && $pdo) {
+        $csrfToken = $_POST['csrf_token'] ?? '';
+
+        if (!verify_csrf_token($csrfToken)) {
+            $message = "Security token mismatch. Please try again.";
+            $messageType = "danger";
+        } elseif ($eventId > 0 && $db_connected && $pdo) {
             try {
                 // Check event status & capacity
                 $stmt = $pdo->prepare("
@@ -34,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 $eventData = $stmt->fetch();
 
                 if (!$eventData) {
-                    $message = "Event not found or not currently active.";
-                    $messageType = "danger";
+                    $_SESSION['flash_message'] = "Event not found or not currently active.";
+                    $_SESSION['flash_type'] = "danger";
                 } else {
                     $isPast = (strtotime($eventData['event_date']) < strtotime(date('Y-m-d')));
                     $isFull = ($eventData['capacity'] > 0 && $eventData['attendee_count'] >= $eventData['capacity']);
@@ -50,16 +63,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         // Cancel RSVP
                         $stmt = $pdo->prepare("UPDATE event_registrations SET status = 'cancelled' WHERE event_id = ? AND user_id = ?");
                         $stmt->execute([$eventId, $currentUserId]);
-                        $message = "Your RSVP has been cancelled for: " . htmlspecialchars($eventData['title']);
-                        $messageType = "warning";
+                        $_SESSION['flash_message'] = "Your RSVP has been cancelled for: " . htmlspecialchars($eventData['title']);
+                        $_SESSION['flash_type'] = "warning";
                     } else {
                         // Attempt RSVP
                         if ($isClosed) {
-                            $message = "This event is closed or has concluded. Registrations are no longer accepted.";
-                            $messageType = "danger";
+                            $_SESSION['flash_message'] = "This event is closed or has concluded. Registrations are no longer accepted.";
+                            $_SESSION['flash_type'] = "danger";
                         } elseif ($isFull) {
-                            $message = "This event has reached its maximum capacity.";
-                            $messageType = "danger";
+                            $_SESSION['flash_message'] = "This event has reached its maximum capacity.";
+                            $_SESSION['flash_type'] = "danger";
                         } else {
                             if ($reg) {
                                 $stmt = $pdo->prepare("UPDATE event_registrations SET status = 'attending', registered_at = NOW() WHERE event_id = ? AND user_id = ?");
@@ -68,11 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 $stmt = $pdo->prepare("INSERT INTO event_registrations (event_id, user_id, status) VALUES (?, ?, 'attending')");
                                 $stmt->execute([$eventId, $currentUserId]);
                             }
-                            $message = "Registration confirmed! You are attending: " . htmlspecialchars($eventData['title']);
-                            $messageType = "success";
+                            $_SESSION['flash_message'] = "Registration confirmed! You are attending: " . htmlspecialchars($eventData['title']);
+                            $_SESSION['flash_type'] = "success";
                         }
                     }
                 }
+                header("Location: events.php#event-" . $eventId);
+                exit;
             } catch (Exception $e) {
                 $message = "RSVP error: " . $e->getMessage();
                 $messageType = "danger";
@@ -87,6 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         header("Location: auth/login.php?redirect=" . urlencode("events.php#propose-event") . "&msg=auth_required");
         exit;
     } else {
+        $csrfToken = $_POST['csrf_token'] ?? '';
         $title = trim($_POST['title'] ?? '');
         $description = trim($_POST['description'] ?? '');
         $event_date = trim($_POST['event_date'] ?? '');
@@ -94,23 +110,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $location = trim($_POST['location'] ?? '');
         $capacity = intval($_POST['capacity'] ?? 100);
 
-        if (!empty($title) && !empty($event_date) && !empty($location)) {
+        if (!verify_csrf_token($csrfToken)) {
+            $message = "Security token mismatch. Please try again.";
+            $messageType = "danger";
+        } elseif (!empty($title) && !empty($event_date) && !empty($location)) {
             if ($db_connected && $pdo) {
                 try {
+                    $eventStatus = is_admin() ? 'approved' : 'pending';
                     $stmt = $pdo->prepare("
                         INSERT INTO events (title, description, event_date, event_time, location, capacity, organizer_id, status)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                     ");
-                    $stmt->execute([$title, $description, $event_date, $event_time, $location, $capacity, $currentUserId]);
-                    $message = "Thank you! Your event proposal has been submitted for admin moderation.";
-                    $messageType = "success";
+                    $stmt->execute([$title, $description, $event_date, $event_time, $location, $capacity, $currentUserId, $eventStatus]);
+                    $_SESSION['flash_message'] = is_admin() ? "Event created and published successfully!" : "Thank you! Your event proposal has been submitted for admin moderation.";
+                    $_SESSION['flash_type'] = "success";
+                    header("Location: events.php?tab=my#propose-event");
+                    exit;
                 } catch (Exception $e) {
                     $message = "Submission error: " . $e->getMessage();
                     $messageType = "danger";
                 }
             } else {
-                $message = "Thank you! Your event proposal has been recorded.";
-                $messageType = "success";
+                $_SESSION['flash_message'] = "Thank you! Your event proposal has been recorded.";
+                $_SESSION['flash_type'] = "success";
+                header("Location: events.php?tab=my#propose-event");
+                exit;
             }
         } else {
             $message = "Please complete all required fields.";
@@ -162,6 +186,8 @@ if ($db_connected && $pdo) {
 if (empty($events) && $tabFilter !== 'my') {
     $events = get_sample_events();
 }
+
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Cinematic Events Header -->
@@ -300,10 +326,32 @@ if (empty($events) && $tabFilter !== 'my') {
                                     &#9873;
                                 </button>
 
+                                <!-- Event Details Modal Trigger -->
+                                <button type="button" class="btn btn-outline-glass btn-sm" 
+                                        data-event='<?php echo htmlspecialchars(json_encode([
+                                            "id" => $event["id"],
+                                            "title" => $event["title"],
+                                            "description" => $event["description"] ?? "",
+                                            "date" => date("d M Y", strtotime($event["event_date"])),
+                                            "time" => date("h:i A", strtotime($event["event_time"])),
+                                            "location" => $event["location"],
+                                            "capacity" => $capacity,
+                                            "attendees" => $attendees,
+                                            "organizer" => !empty($event["organizer_name"]) ? $event["organizer_name"] : "Alumni Relations",
+                                            "status" => $event["status"] ?? "approved",
+                                            "is_attending" => $isUserAttending,
+                                            "is_closed" => ($isClosed || $isFull)
+                                        ]), ENT_QUOTES, "UTF-8"); ?>'
+                                        onclick="openEventDetailsModalWithData(this);"
+                                        style="font-size: 0.78rem;">
+                                    Details &rarr;
+                                </button>
+
                                 <!-- RSVP Form Button -->
                                 <?php if ($isLoggedIn): ?>
                                     <form method="POST" action="events.php" style="display: inline;">
                                         <input type="hidden" name="action" value="toggle_rsvp">
+                                        <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                         <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
                                         
                                         <?php if ($isUserAttending): ?>
@@ -346,6 +394,7 @@ if (empty($events) && $tabFilter !== 'my') {
         <?php if ($isLoggedIn): ?>
             <form method="POST" action="events.php#propose-event">
                 <input type="hidden" name="action" value="create_event">
+                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                 
                 <div class="grid grid-2" style="margin-bottom: 1.2rem; gap: 1.5rem;">
                     <div class="form-group" style="margin-bottom: 0;">
@@ -397,6 +446,50 @@ if (empty($events) && $tabFilter !== 'my') {
 
 </div>
 
+<!-- Modal for Event Details -->
+<div id="eventDetailsModal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(8, 5, 16, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
+    <div class="modal-box" style="max-width: 620px; width: 100%; max-height: 90vh; overflow-y: auto; background: linear-gradient(145deg, rgba(32, 18, 56, 0.95) 0%, rgba(16, 9, 29, 0.98) 100%); border: 1px solid rgba(196, 181, 253, 0.28); border-top: 4px solid var(--accent-color); border-radius: 12px; padding: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+            <div>
+                <span id="evDetailBadge" class="badge badge-approved" style="font-size: 0.75rem; margin-bottom: 0.4rem; display: inline-block;">Approved</span>
+                <h3 id="evDetailTitle" style="color: var(--text-light); margin-bottom: 0.2rem; font-weight: 800; font-size: 1.4rem;">Event Specifications</h3>
+                <p id="evDetailOrganizer" style="color: var(--accent-light); font-weight: 600; margin: 0; font-size: 0.95rem;"></p>
+            </div>
+            <button type="button" onclick="closeEventDetailsModal();" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(196, 181, 253, 0.2); color: var(--text-light); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">&times;</button>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--text-muted); padding: 0.6rem 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 1rem;">
+            <span id="evDetailDate">&#128197; </span>
+            <span id="evDetailTime">&#128338; </span>
+            <span id="evDetailLocation">&#128205; </span>
+        </div>
+
+        <div style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 1.2rem; padding: 0.5rem 0.8rem; background: rgba(0,0,0,0.3); border-radius: 4px; display: flex; justify-content: space-between;">
+            <span id="evDetailAttendees">Attendees: 0 registered</span>
+            <span id="evDetailCapacity">Capacity: 100</span>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+            <h5 style="color: var(--accent-light); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.4rem;">Event Description &amp; Agenda</h5>
+            <p id="evDetailDesc" style="color: var(--text-color); font-size: 0.92rem; line-height: 1.6; margin: 0; max-height: 200px; overflow-y: auto; white-space: pre-wrap;"></p>
+        </div>
+
+        <div id="evModalActionArea" style="display: flex; justify-content: flex-end; gap: 0.8rem; border-top: 1px solid var(--border-color); padding-top: 1.2rem;">
+            <button type="button" class="btn btn-outline-light btn-sm" onclick="closeEventDetailsModal();">Close</button>
+            <?php if ($isLoggedIn): ?>
+                <form id="evModalRsvpForm" method="POST" action="events.php" style="display: inline;">
+                    <input type="hidden" name="action" value="toggle_rsvp">
+                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
+                    <input type="hidden" name="event_id" id="evModalEventId" value="">
+                    <button type="submit" id="evModalRsvpBtn" class="btn btn-gold btn-sm gold-glow">RSVP Now</button>
+                </form>
+            <?php else: ?>
+                <a id="evModalLoginBtn" href="auth/login.php" class="btn btn-gold btn-sm">Login to RSVP</a>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
 <!-- Modal for reporting event -->
 <div id="reportModal" class="modal-overlay">
     <div class="modal-box">
@@ -433,6 +526,58 @@ if (empty($events) && $tabFilter !== 'my') {
 </div>
 
 <script>
+function openEventDetailsModalWithData(btn) {
+    try {
+        const ev = JSON.parse(btn.dataset.event);
+        document.getElementById('evDetailTitle').innerText = ev.title || 'Event Details';
+        document.getElementById('evDetailOrganizer').innerText = 'Hosted by ' + (ev.organizer || 'Alumni Relations');
+        document.getElementById('evDetailDate').innerHTML = '&#128197; ' + (ev.date || 'TBD');
+        document.getElementById('evDetailTime').innerHTML = '&#128338; ' + (ev.time || 'TBD');
+        document.getElementById('evDetailLocation').innerHTML = '&#128205; ' + (ev.location || 'Campus');
+        document.getElementById('evDetailAttendees').innerText = 'Attendees: ' + (ev.attendees || 0) + ' registered';
+        document.getElementById('evDetailCapacity').innerText = 'Capacity: ' + (ev.capacity || '100');
+        document.getElementById('evDetailDesc').innerText = ev.description || 'No detailed agenda provided.';
+
+        const badge = document.getElementById('evDetailBadge');
+        if (badge) {
+            badge.className = 'badge badge-' + (ev.status || 'approved').toLowerCase();
+            badge.innerText = (ev.status || 'Approved').toUpperCase();
+        }
+
+        const rsvpForm = document.getElementById('evModalRsvpForm');
+        const evIdInput = document.getElementById('evModalEventId');
+        const rsvpBtn = document.getElementById('evModalRsvpBtn');
+        const loginBtn = document.getElementById('evModalLoginBtn');
+
+        if (evIdInput) evIdInput.value = ev.id;
+        if (loginBtn) loginBtn.href = 'auth/login.php?redirect=' + encodeURIComponent('events.php#event-' + ev.id) + '&msg=auth_required';
+
+        if (rsvpBtn) {
+            if (ev.is_attending) {
+                rsvpBtn.className = 'btn btn-sm';
+                rsvpBtn.style.background = 'var(--success-color)';
+                rsvpBtn.style.color = '#fff';
+                rsvpBtn.innerText = '✓ Attending (Cancel)';
+            } else if (ev.is_closed) {
+                rsvpBtn.className = 'btn btn-sm btn-disabled';
+                rsvpBtn.disabled = true;
+                rsvpBtn.innerText = 'Registration Closed';
+            } else {
+                rsvpBtn.className = 'btn btn-gold btn-sm gold-glow';
+                rsvpBtn.disabled = false;
+                rsvpBtn.innerText = 'RSVP Now';
+            }
+        }
+
+        document.getElementById('eventDetailsModal').style.display = 'flex';
+    } catch(e) {
+        console.error('Error opening event modal:', e);
+    }
+}
+function closeEventDetailsModal() {
+    document.getElementById('eventDetailsModal').style.display = 'none';
+}
+
 function openReportModal(eventId, type, name) {
     document.getElementById('report_event_id').value = eventId;
     document.getElementById('reportModal').style.display = 'flex';

@@ -3,6 +3,7 @@
 // University Alumni Network - Admin Job Moderation
 // ============================================================
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../includes/functions.php';
 
 require_admin();
 
@@ -10,36 +11,47 @@ $currentAdminPage = 'jobs';
 $baseUrl = get_base_url();
 $msg = '';
 
-// Handle Moderation Action
-if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['job_id'], $_POST['action'])) {
-    $jobId = intval($_POST['job_id']);
-    $action = $_POST['action'];
-
-    if ($db_connected && $pdo) {
-        try {
-            if ($action === 'approve') {
-                $stmt = $pdo->prepare("UPDATE jobs SET status = 'approved' WHERE id = ?");
-                $stmt->execute([$jobId]);
-                $msg = "Job vacancy #{$jobId} approved.";
-            } elseif ($action === 'reject') {
-                $stmt = $pdo->prepare("UPDATE jobs SET status = 'rejected' WHERE id = ?");
-                $stmt->execute([$jobId]);
-                $msg = "Job vacancy #{$jobId} marked as rejected.";
-            } elseif ($action === 'delete') {
-                $stmt = $pdo->prepare("DELETE FROM jobs WHERE id = ?");
-                $stmt->execute([$jobId]);
-                $msg = "Job vacancy #{$jobId} deleted permanently.";
-            }
-        } catch (Exception $e) {
-            $msg = "Error updating job: " . $e->getMessage();
-        }
-    } else {
-        $msg = "Job vacancy #{$jobId} status updated ({$action}).";
-    }
+if (!empty($_SESSION['flash_msg'])) {
+    $msg = $_SESSION['flash_msg'];
+    unset($_SESSION['flash_msg']);
 }
 
 // Status Filter
 $statusFilter = trim($_GET['status'] ?? '');
+
+// Handle Moderation Action
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['job_id'], $_POST['action'])) {
+    $jobId = intval($_POST['job_id']);
+    $action = $_POST['action'];
+    $csrfToken = $_POST['csrf_token'] ?? '';
+
+    if (!verify_csrf_token($csrfToken)) {
+        $_SESSION['flash_msg'] = "Security token expired or invalid. Please try again.";
+    } elseif ($db_connected && $pdo) {
+        try {
+            if ($action === 'approve') {
+                $stmt = $pdo->prepare("UPDATE jobs SET status = 'approved' WHERE id = ?");
+                $stmt->execute([$jobId]);
+                $_SESSION['flash_msg'] = "Job vacancy #{$jobId} approved successfully.";
+            } elseif ($action === 'reject') {
+                $stmt = $pdo->prepare("UPDATE jobs SET status = 'rejected' WHERE id = ?");
+                $stmt->execute([$jobId]);
+                $_SESSION['flash_msg'] = "Job vacancy #{$jobId} marked as rejected.";
+            } elseif ($action === 'delete') {
+                $stmt = $pdo->prepare("DELETE FROM jobs WHERE id = ?");
+                $stmt->execute([$jobId]);
+                $_SESSION['flash_msg'] = "Job vacancy #{$jobId} deleted permanently.";
+            }
+        } catch (Exception $e) {
+            $_SESSION['flash_msg'] = "Error updating job: " . $e->getMessage();
+        }
+    } else {
+        $_SESSION['flash_msg'] = "Job vacancy #{$jobId} status updated ({$action}).";
+    }
+
+    header("Location: jobs.php" . (!empty($statusFilter) ? "?status=" . urlencode($statusFilter) : ""));
+    exit;
+}
 
 // Fetch all jobs for moderation
 $jobsList = [];
@@ -161,10 +173,32 @@ if (empty($jobsList) && empty($statusFilter)) {
                                 </span>
                             </td>
                             <td>
-                                <div style="display: flex; gap: 0.4rem;">
+                                <div style="display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">
+                                    <button type="button" class="btn btn-outline-glass btn-sm"
+                                            data-job='<?php echo htmlspecialchars(json_encode([
+                                                "id" => $job["id"],
+                                                "title" => $job["title"],
+                                                "company" => $job["company"],
+                                                "location" => $job["location"] ?? "",
+                                                "job_type" => $job["job_type"] ?? "Full-Time",
+                                                "deadline" => $job["deadline"] ?? "",
+                                                "description" => $job["description"] ?? "",
+                                                "requirements" => $job["requirements"] ?? "",
+                                                "contact_email" => $job["contact_email"] ?? "",
+                                                "application_link" => $job["application_link"] ?? "",
+                                                "status" => $job["status"] ?? "pending",
+                                                "poster_name" => $job["poster_name"] ?? "Alumnus",
+                                                "poster_email" => $job["poster_email"] ?? ""
+                                            ]), ENT_QUOTES, "UTF-8"); ?>'
+                                            onclick="openJobReviewModal(this);"
+                                            style="padding: 0.3rem 0.65rem; font-size: 0.8rem;">
+                                        Review
+                                    </button>
+
                                     <?php if ($job['status'] !== 'approved'): ?>
                                         <form method="POST" style="display: inline;">
                                             <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
+                                            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                             <input type="hidden" name="action" value="approve">
                                             <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.8rem;">
                                                 Approve
@@ -175,6 +209,7 @@ if (empty($jobsList) && empty($statusFilter)) {
                                     <?php if ($job['status'] !== 'rejected'): ?>
                                         <form method="POST" style="display: inline;">
                                             <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
+                                            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                             <input type="hidden" name="action" value="reject">
                                             <button type="submit" class="btn btn-sm" style="background: #FFF4D6; color: #B7791F; border: 1px solid #D8CDBB; padding: 0.3rem 0.65rem; font-size: 0.8rem;">
                                                 Reject
@@ -182,8 +217,9 @@ if (empty($jobsList) && empty($statusFilter)) {
                                         </form>
                                     <?php endif; ?>
 
-                                    <form method="POST" style="display: inline;" onsubmit="return confirm('Delete this job posting?');">
+                                    <form method="POST" style="display: inline;" onsubmit="return confirm('Delete this job posting permanently?');">
                                         <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
+                                        <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                         <input type="hidden" name="action" value="delete">
                                         <button type="submit" class="btn btn-sm" style="background: #F8EAEA; color: #A63D40; border: 1px solid #A63D40; padding: 0.3rem 0.65rem; font-size: 0.8rem;">
                                             Delete
@@ -198,6 +234,97 @@ if (empty($jobsList) && empty($statusFilter)) {
         </div>
     </main>
 </div>
+
+<!-- Admin Job Review Modal -->
+<div id="jobReviewModal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(8, 5, 16, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
+    <div class="modal-box" style="max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto; background: linear-gradient(145deg, rgba(32, 18, 56, 0.95) 0%, rgba(16, 9, 29, 0.98) 100%); border: 1px solid rgba(196, 181, 253, 0.28); border-top: 4px solid var(--accent-color); border-radius: 12px; padding: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+            <div>
+                <span id="reviewJobBadge" class="badge badge-pending" style="font-size: 0.75rem; margin-bottom: 0.4rem; display: inline-block;">Pending</span>
+                <h3 id="reviewJobTitle" style="color: var(--text-light); margin-bottom: 0.2rem; font-weight: 800; font-size: 1.4rem;">Job Specifications</h3>
+                <p id="reviewJobCompany" style="color: var(--accent-light); font-weight: 600; margin: 0; font-size: 0.95rem;"></p>
+            </div>
+            <button type="button" onclick="closeJobReviewModal();" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(196, 181, 253, 0.2); color: var(--text-light); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">&times;</button>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--text-muted); padding: 0.6rem 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 1rem;">
+            <span id="reviewJobLocation">&#128205; </span>
+            <span id="reviewJobType">&#128188; </span>
+            <span id="reviewJobDeadline" style="color: var(--danger-color);">&#9203; </span>
+        </div>
+
+        <div style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1.2rem; padding: 0.5rem 0.8rem; background: rgba(0,0,0,0.3); border-radius: 4px;">
+            <span id="reviewJobPoster">Posted by: Alumnus</span>
+        </div>
+
+        <div style="margin-bottom: 1.2rem;">
+            <h5 style="color: var(--accent-light); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem;">Role Description</h5>
+            <p id="reviewJobDesc" style="color: var(--text-color); font-size: 0.9rem; line-height: 1.5; margin: 0; max-height: 140px; overflow-y: auto; white-space: pre-wrap;"></p>
+        </div>
+
+        <div id="reviewJobReqSection" style="margin-bottom: 1.2rem; background: rgba(124, 58, 237, 0.10); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem 0.9rem; display: none;">
+            <strong style="color: var(--accent-light); font-size: 0.84rem;">Candidate Requirements:</strong>
+            <p id="reviewJobReqs" style="color: var(--text-color); font-size: 0.86rem; margin: 0.3rem 0 0 0; line-height: 1.4; white-space: pre-wrap;"></p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 1.2rem; margin-top: 1rem; flex-wrap: wrap; gap: 0.8rem;">
+            <button type="button" class="btn btn-outline-light btn-sm" onclick="closeJobReviewModal();">Close</button>
+            <div style="display: flex; gap: 0.5rem;">
+                <form method="POST" style="display: inline;">
+                    <input type="hidden" name="job_id" id="modalJobIdApprove" value="">
+                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
+                    <input type="hidden" name="action" value="approve">
+                    <button type="submit" class="btn btn-primary btn-sm">Approve Job</button>
+                </form>
+                <form method="POST" style="display: inline;">
+                    <input type="hidden" name="job_id" id="modalJobIdReject" value="">
+                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
+                    <input type="hidden" name="action" value="reject">
+                    <button type="submit" class="btn btn-sm" style="background: #FFF4D6; color: #B7791F; border: 1px solid #D8CDBB;">Reject Job</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function openJobReviewModal(btn) {
+    try {
+        const job = JSON.parse(btn.dataset.job);
+        document.getElementById('reviewJobTitle').innerText = job.title || 'Job Specifications';
+        document.getElementById('reviewJobCompany').innerText = job.company || '';
+        document.getElementById('reviewJobLocation').innerHTML = '&#128205; ' + (job.location || 'Not specified');
+        document.getElementById('reviewJobType').innerHTML = '&#128188; ' + (job.job_type || 'Full-Time');
+        document.getElementById('reviewJobDeadline').innerHTML = job.deadline ? ('&#9203; Deadline: ' + job.deadline) : 'No deadline set';
+        document.getElementById('reviewJobPoster').innerText = 'Posted by: ' + (job.poster_name || 'Alumnus') + (job.poster_email ? (' (' + job.poster_email + ')') : '');
+        document.getElementById('reviewJobDesc').innerText = job.description || 'No description provided.';
+
+        const reqSection = document.getElementById('reviewJobReqSection');
+        if (job.requirements && job.requirements.trim()) {
+            document.getElementById('reviewJobReqs').innerText = job.requirements;
+            reqSection.style.display = 'block';
+        } else {
+            reqSection.style.display = 'none';
+        }
+
+        const badge = document.getElementById('reviewJobBadge');
+        if (badge) {
+            badge.className = 'badge badge-' + (job.status || 'pending').toLowerCase();
+            badge.innerText = (job.status || 'Pending').toUpperCase();
+        }
+
+        document.getElementById('modalJobIdApprove').value = job.id;
+        document.getElementById('modalJobIdReject').value = job.id;
+
+        document.getElementById('jobReviewModal').style.display = 'flex';
+    } catch(e) {
+        console.error('Error opening job modal:', e);
+    }
+}
+function closeJobReviewModal() {
+    document.getElementById('jobReviewModal').style.display = 'none';
+}
+</script>
 
 <script src="<?php echo $baseUrl; ?>assets/js/main.js"></script>
 </body>

@@ -101,8 +101,8 @@ $homeUrl = '../index.php';
             }, 1000);
 
             setTimeout(function() {
-                window.location.href = homeUrl;
-            }, prefersReducedMotion ? 400 : 2000);
+                window.location.replace(homeUrl);
+            }, prefersReducedMotion ? 400 : 1800);
         })();
     </script>
 </body>

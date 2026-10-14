@@ -40,22 +40,22 @@ if ($db_connected && $pdo) {
         // Reports stats
         $pendingReportsCount = (int)$pdo->query("SELECT COUNT(*) FROM reports WHERE status = 'pending'")->fetchColumn();
 
-        // Fetch pending events list (two preview examples)
+        // Fetch moderation events list prioritizing pending
         $stmt = $pdo->query("
             SELECT e.*, CONCAT(u.first_name, ' ', u.last_name) AS creator_name
             FROM events e
             LEFT JOIN users u ON e.organizer_id = u.id
-            ORDER BY e.created_at DESC
+            ORDER BY FIELD(e.status, 'pending', 'approved', 'rejected'), e.created_at DESC
             LIMIT 2
         ");
         $recentPendingEvents = $stmt->fetchAll();
 
-        // Fetch pending jobs list (two preview examples)
+        // Fetch moderation jobs list prioritizing pending
         $stmt = $pdo->query("
             SELECT j.*, CONCAT(u.first_name, ' ', u.last_name) AS poster_name
             FROM jobs j
             LEFT JOIN users u ON j.posted_by = u.id
-            ORDER BY j.posted_at DESC
+            ORDER BY FIELD(j.status, 'pending', 'approved', 'rejected'), j.posted_at DESC
             LIMIT 2
         ");
         $recentPendingJobs = $stmt->fetchAll();
@@ -212,8 +212,8 @@ if (empty($recentPendingJobs)) {
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="events.php" class="btn btn-primary btn-sm" style="padding: 0.25rem 0.6rem; font-size: 0.8rem;">
-                                            <?php echo ($ev['status'] === 'pending') ? 'Approve' : 'View'; ?>
+                                        <a href="events.php<?php echo ($ev['status'] === 'pending') ? '?status=pending' : ''; ?>" class="btn btn-primary btn-sm" style="padding: 0.25rem 0.6rem; font-size: 0.8rem;">
+                                            <?php echo ($ev['status'] === 'pending') ? 'Review' : 'View'; ?>
                                         </a>
                                     </td>
                                 </tr>
@@ -251,8 +251,8 @@ if (empty($recentPendingJobs)) {
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="jobs.php" class="btn btn-primary btn-sm" style="padding: 0.25rem 0.6rem; font-size: 0.8rem;">
-                                            <?php echo ($jb['status'] === 'pending') ? 'Approve' : 'View'; ?>
+                                        <a href="jobs.php<?php echo ($jb['status'] === 'pending') ? '?status=pending' : ''; ?>" class="btn btn-primary btn-sm" style="padding: 0.25rem 0.6rem; font-size: 0.8rem;">
+                                            <?php echo ($jb['status'] === 'pending') ? 'Review' : 'View'; ?>
                                         </a>
                                     </td>
                                 </tr>

@@ -49,8 +49,8 @@ if ($isLoggedIn && $db_connected && $pdo) {
 </head>
 <body>
 
-    <!-- Cinematic Fullscreen Loading Overlay -->
-    <div id="cinematicLoader" class="cinematic-loader" aria-hidden="true">
+    <!-- Cinematic Fullscreen Loading Overlay (Hidden by default; triggers only on genuine cross-page navigation) -->
+    <div id="cinematicLoader" class="cinematic-loader loader-hidden" aria-hidden="true">
         <div class="loader-content">
             <div class="loader-brand">
                 <span class="loader-badge">AN</span>

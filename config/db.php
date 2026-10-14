@@ -35,6 +35,8 @@ function is_admin() {
 }
 
 function require_login($redirect = null) {
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Pragma: no-cache");
     if (!is_logged_in()) {
         $target = $redirect ? $redirect : get_base_url() . 'auth/login.php';
         header("Location: " . $target);
@@ -43,6 +45,8 @@ function require_login($redirect = null) {
 }
 
 function require_admin($redirect = null) {
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Pragma: no-cache");
     if (!is_admin()) {
         $target = $redirect ? $redirect : get_base_url() . 'auth/login.php?admin_required=1';
         header("Location: " . $target);

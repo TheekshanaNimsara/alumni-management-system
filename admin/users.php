@@ -18,8 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $targetUserId = intval($_POST['user_id'] ?? 0);
     $currentAdminId = current_user_id();
+    $csrfToken = $_POST['csrf_token'] ?? '';
 
-        if ($targetUserId > 0 && $db_connected && $pdo) {
+    if (!verify_csrf_token($csrfToken)) {
+        $msg = "Security token expired or invalid. Please try again.";
+        $msgType = 'danger';
+    } elseif ($targetUserId > 0 && $db_connected && $pdo) {
             try {
                 // Safeguard: Protect primary admin ID 1
                 if ($targetUserId === 1 && in_array($action, ['delete_user', 'change_role', 'change_status'])) {
@@ -251,6 +255,7 @@ if ($db_connected && $pdo) {
                                         <!-- Toggle Status: Activate / Suspend -->
                                         <?php if ($u['id'] !== 1 && $u['id'] !== current_user_id()): ?>
                                             <form method="POST" action="users.php" style="display: inline;">
+                                                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                                 <input type="hidden" name="action" value="change_status">
                                                 <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
                                                 <input type="hidden" name="status" value="<?php echo ($u['status'] === 'active') ? 'suspended' : 'active'; ?>">
@@ -267,6 +272,7 @@ if ($db_connected && $pdo) {
 
                                             <!-- Toggle Role -->
                                             <form method="POST" action="users.php" style="display: inline;">
+                                                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                                 <input type="hidden" name="action" value="change_role">
                                                 <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
                                                 <input type="hidden" name="role" value="<?php echo ($u['role'] === 'admin') ? 'alumni' : 'admin'; ?>">
@@ -277,6 +283,7 @@ if ($db_connected && $pdo) {
 
                                             <!-- Delete User -->
                                             <form method="POST" action="users.php" style="display: inline;">
+                                                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                                 <input type="hidden" name="action" value="delete_user">
                                                 <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
                                                 <button type="submit" class="btn btn-sm" style="background: var(--danger-color); color: #fff; font-size: 0.75rem; padding: 0.25rem 0.5rem;" onclick="return confirm('PERMANENT DELETION: Are you sure you want to completely delete this user and all associated records?');">

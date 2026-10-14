@@ -3,6 +3,7 @@
 // University Alumni Network - Admin Event Moderation
 // ============================================================
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../includes/functions.php';
 
 require_admin();
 
@@ -10,36 +11,47 @@ $currentAdminPage = 'events';
 $baseUrl = get_base_url();
 $msg = '';
 
-// Handle Moderation Action
-if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['event_id'], $_POST['action'])) {
-    $eventId = intval($_POST['event_id']);
-    $action = $_POST['action'];
-
-    if ($db_connected && $pdo) {
-        try {
-            if ($action === 'approve') {
-                $stmt = $pdo->prepare("UPDATE events SET status = 'approved' WHERE id = ?");
-                $stmt->execute([$eventId]);
-                $msg = "Event #{$eventId} approved successfully.";
-            } elseif ($action === 'reject') {
-                $stmt = $pdo->prepare("UPDATE events SET status = 'rejected' WHERE id = ?");
-                $stmt->execute([$eventId]);
-                $msg = "Event #{$eventId} rejected.";
-            } elseif ($action === 'delete') {
-                $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
-                $stmt->execute([$eventId]);
-                $msg = "Event #{$eventId} deleted permanently.";
-            }
-        } catch (Exception $e) {
-            $msg = "Error updating event: " . $e->getMessage();
-        }
-    } else {
-        $msg = "Event #{$eventId} status updated ({$action}).";
-    }
+if (!empty($_SESSION['flash_msg'])) {
+    $msg = $_SESSION['flash_msg'];
+    unset($_SESSION['flash_msg']);
 }
 
 // Status Filter
 $statusFilter = trim($_GET['status'] ?? '');
+
+// Handle Moderation Action
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['event_id'], $_POST['action'])) {
+    $eventId = intval($_POST['event_id']);
+    $action = $_POST['action'];
+    $csrfToken = $_POST['csrf_token'] ?? '';
+
+    if (!verify_csrf_token($csrfToken)) {
+        $_SESSION['flash_msg'] = "Security token expired or invalid. Please try again.";
+    } elseif ($db_connected && $pdo) {
+        try {
+            if ($action === 'approve') {
+                $stmt = $pdo->prepare("UPDATE events SET status = 'approved' WHERE id = ?");
+                $stmt->execute([$eventId]);
+                $_SESSION['flash_msg'] = "Event #{$eventId} approved successfully.";
+            } elseif ($action === 'reject') {
+                $stmt = $pdo->prepare("UPDATE events SET status = 'rejected' WHERE id = ?");
+                $stmt->execute([$eventId]);
+                $_SESSION['flash_msg'] = "Event #{$eventId} rejected.";
+            } elseif ($action === 'delete') {
+                $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
+                $stmt->execute([$eventId]);
+                $_SESSION['flash_msg'] = "Event #{$eventId} deleted permanently.";
+            }
+        } catch (Exception $e) {
+            $_SESSION['flash_msg'] = "Error updating event: " . $e->getMessage();
+        }
+    } else {
+        $_SESSION['flash_msg'] = "Event #{$eventId} status updated ({$action}).";
+    }
+
+    header("Location: events.php" . (!empty($statusFilter) ? "?status=" . urlencode($statusFilter) : ""));
+    exit;
+}
 
 // Fetch events for moderation
 $eventsList = [];
@@ -161,10 +173,29 @@ if (empty($eventsList) && empty($statusFilter)) {
                                 </span>
                             </td>
                             <td>
-                                <div style="display: flex; gap: 0.4rem;">
+                                <div style="display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">
+                                    <button type="button" class="btn btn-outline-glass btn-sm"
+                                            data-event='<?php echo htmlspecialchars(json_encode([
+                                                "id" => $event["id"],
+                                                "title" => $event["title"],
+                                                "description" => $event["description"] ?? "",
+                                                "event_date" => date("M d, Y", strtotime($event["event_date"])),
+                                                "event_time" => !empty($event["event_time"]) ? date("h:i A", strtotime($event["event_time"])) : "TBD",
+                                                "location" => $event["location"] ?? "Campus",
+                                                "capacity" => $event["capacity"] ?? 100,
+                                                "status" => $event["status"] ?? "pending",
+                                                "creator_name" => $event["creator_name"] ?? "Alumnus",
+                                                "creator_email" => $event["creator_email"] ?? ""
+                                            ]), ENT_QUOTES, "UTF-8"); ?>'
+                                            onclick="openEventReviewModal(this);"
+                                            style="padding: 0.3rem 0.65rem; font-size: 0.8rem;">
+                                        Review
+                                    </button>
+
                                     <?php if ($event['status'] !== 'approved'): ?>
                                         <form method="POST" style="display: inline;">
                                             <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
+                                            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                             <input type="hidden" name="action" value="approve">
                                             <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.8rem;">
                                                 Approve
@@ -175,6 +206,7 @@ if (empty($eventsList) && empty($statusFilter)) {
                                     <?php if ($event['status'] !== 'rejected'): ?>
                                         <form method="POST" style="display: inline;">
                                             <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
+                                            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                             <input type="hidden" name="action" value="reject">
                                             <button type="submit" class="btn btn-sm" style="background: #FFF4D6; color: #B7791F; border: 1px solid #D8CDBB; padding: 0.3rem 0.65rem; font-size: 0.8rem;">
                                                 Reject
@@ -184,6 +216,7 @@ if (empty($eventsList) && empty($statusFilter)) {
 
                                     <form method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this event?');">
                                         <input type="hidden" name="event_id" value="<?php echo $event['id']; ?>">
+                                        <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                                         <input type="hidden" name="action" value="delete">
                                         <button type="submit" class="btn btn-sm" style="background: #F8EAEA; color: #A63D40; border: 1px solid #A63D40; padding: 0.3rem 0.65rem; font-size: 0.8rem;">
                                             Delete
@@ -198,6 +231,81 @@ if (empty($eventsList) && empty($statusFilter)) {
         </div>
     </main>
 </div>
+
+<!-- Admin Event Review Modal -->
+<div id="eventReviewModal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(8, 5, 16, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
+    <div class="modal-box" style="max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto; background: linear-gradient(145deg, rgba(32, 18, 56, 0.95) 0%, rgba(16, 9, 29, 0.98) 100%); border: 1px solid rgba(196, 181, 253, 0.28); border-top: 4px solid var(--accent-color); border-radius: 12px; padding: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+            <div>
+                <span id="reviewEventBadge" class="badge badge-pending" style="font-size: 0.75rem; margin-bottom: 0.4rem; display: inline-block;">Pending</span>
+                <h3 id="reviewEventTitle" style="color: var(--text-light); margin-bottom: 0.2rem; font-weight: 800; font-size: 1.4rem;">Event Proposal</h3>
+                <p id="reviewEventCreator" style="color: var(--accent-light); font-weight: 600; margin: 0; font-size: 0.95rem;"></p>
+            </div>
+            <button type="button" onclick="closeEventReviewModal();" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(196, 181, 253, 0.2); color: var(--text-light); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">&times;</button>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--text-muted); padding: 0.6rem 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 1rem;">
+            <span id="reviewEventDate">&#128197; </span>
+            <span id="reviewEventTime">&#128338; </span>
+            <span id="reviewEventLocation">&#128205; </span>
+            <span id="reviewEventCapacity">&#128101; Capacity: 100</span>
+        </div>
+
+        <div style="margin-bottom: 1.2rem;">
+            <h5 style="color: var(--accent-light); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem;">Description &amp; Agenda</h5>
+            <p id="reviewEventDesc" style="color: var(--text-color); font-size: 0.9rem; line-height: 1.5; margin: 0; max-height: 160px; overflow-y: auto; white-space: pre-wrap;"></p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 1.2rem; margin-top: 1rem; flex-wrap: wrap; gap: 0.8rem;">
+            <button type="button" class="btn btn-outline-light btn-sm" onclick="closeEventReviewModal();">Close</button>
+            <div style="display: flex; gap: 0.5rem;">
+                <form method="POST" style="display: inline;">
+                    <input type="hidden" name="event_id" id="modalEventIdApprove" value="">
+                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
+                    <input type="hidden" name="action" value="approve">
+                    <button type="submit" class="btn btn-primary btn-sm">Approve Event</button>
+                </form>
+                <form method="POST" style="display: inline;">
+                    <input type="hidden" name="event_id" id="modalEventIdReject" value="">
+                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
+                    <input type="hidden" name="action" value="reject">
+                    <button type="submit" class="btn btn-sm" style="background: #FFF4D6; color: #B7791F; border: 1px solid #D8CDBB;">Reject Event</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function openEventReviewModal(btn) {
+    try {
+        const ev = JSON.parse(btn.dataset.event);
+        document.getElementById('reviewEventTitle').innerText = ev.title || 'Event Proposal';
+        document.getElementById('reviewEventCreator').innerText = 'Submitted by ' + (ev.creator_name || 'Alumnus') + (ev.creator_email ? (' (' + ev.creator_email + ')') : '');
+        document.getElementById('reviewEventDate').innerHTML = '&#128197; ' + (ev.event_date || 'TBD');
+        document.getElementById('reviewEventTime').innerHTML = '&#128338; ' + (ev.event_time || 'TBD');
+        document.getElementById('reviewEventLocation').innerHTML = '&#128205; ' + (ev.location || 'Campus');
+        document.getElementById('reviewEventCapacity').innerHTML = '&#128101; Capacity: ' + (ev.capacity || 100);
+        document.getElementById('reviewEventDesc').innerText = ev.description || 'No detailed agenda provided.';
+
+        const badge = document.getElementById('reviewEventBadge');
+        if (badge) {
+            badge.className = 'badge badge-' + (ev.status || 'pending').toLowerCase();
+            badge.innerText = (ev.status || 'Pending').toUpperCase();
+        }
+
+        document.getElementById('modalEventIdApprove').value = ev.id;
+        document.getElementById('modalEventIdReject').value = ev.id;
+
+        document.getElementById('eventReviewModal').style.display = 'flex';
+    } catch(e) {
+        console.error('Error opening event modal:', e);
+    }
+}
+function closeEventReviewModal() {
+    document.getElementById('eventReviewModal').style.display = 'none';
+}
+</script>
 
 <script src="<?php echo $baseUrl; ?>assets/js/main.js"></script>
 </body>

@@ -2781,3 +2781,26 @@ textarea:focus-visible {
     }
 }
 
+/* Inline Button Spinner for Asynchronous & Form Submission States */
+.btn-spinner, .composer-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #FFFFFF;
+    border-radius: 50%;
+    animation: btnSpin 0.75s linear infinite;
+    vertical-align: middle;
+    margin-right: 0.45rem;
+}
+@keyframes btnSpin {
+    to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .btn-spinner, .composer-spinner {
+        animation: none;
+        border-style: dotted;
+    }
+}
+
+

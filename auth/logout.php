@@ -16,5 +16,8 @@ if (ini_get("session.use_cookies")) {
 }
 session_destroy();
 
-header("Location: ../index.php");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+
+header("Location: logout-success.php");
 exit;

@@ -3,14 +3,22 @@
 // University Alumni Network - Jobs & Opportunities Board
 // Opportunities, Internal Applications, Deadlines & Moderation
 // ============================================================
-$pageTitle = 'Career Opportunities';
-$currentPage = 'jobs';
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
+$pageTitle = 'Career Opportunities';
+$currentPage = 'jobs';
 $message = '';
 $messageType = '';
 $currentUserId = current_user_id();
+$isLoggedIn = is_logged_in();
+
+// Flash message retrieval from session
+if (!empty($_SESSION['flash_message'])) {
+    $message = $_SESSION['flash_message'];
+    $messageType = $_SESSION['flash_type'] ?? 'info';
+    unset($_SESSION['flash_message'], $_SESSION['flash_type']);
+}
 
 // 1. Handle Internal Job Application
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'apply_job') {
@@ -22,8 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     } else {
         $jobId = intval($_POST['job_id'] ?? 0);
         $coverMessage = trim($_POST['application_message'] ?? '');
+        $csrfToken = $_POST['csrf_token'] ?? '';
 
-        if ($jobId > 0 && $db_connected && $pdo) {
+        if (!verify_csrf_token($csrfToken)) {
+            $message = "Security token mismatch. Please try submitting again.";
+            $messageType = "danger";
+        } elseif ($jobId > 0 && $db_connected && $pdo) {
             try {
                 // Check if already applied
                 $stmt = $pdo->prepare("SELECT id, status FROM job_applications WHERE job_id = ? AND user_id = ?");
@@ -31,17 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 $existingApp = $stmt->fetch();
 
                 if ($existingApp) {
-                    $message = "You have already applied for this position (Current Status: " . htmlspecialchars($existingApp['status']) . ").";
-                    $messageType = "warning";
+                    $_SESSION['flash_message'] = "You have already applied for this position (Current Status: " . htmlspecialchars($existingApp['status']) . ").";
+                    $_SESSION['flash_type'] = "warning";
                 } else {
                     $stmt = $pdo->prepare("
                         INSERT INTO job_applications (job_id, user_id, message, status, applied_at)
                         VALUES (?, ?, ?, 'Applied', NOW())
                     ");
                     $stmt->execute([$jobId, $currentUserId, $coverMessage]);
-                    $message = "Application submitted successfully! The recruiter/alumnus will review your profile.";
-                    $messageType = "success";
+                    $_SESSION['flash_message'] = "Application submitted successfully! The recruiter/alumnus will review your profile.";
+                    $_SESSION['flash_type'] = "success";
                 }
+                header("Location: jobs.php#job-" . $jobId);
+                exit;
             } catch (Exception $e) {
                 $message = "Application submission error: " . $e->getMessage();
                 $messageType = "danger";
@@ -56,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         header("Location: auth/login.php?redirect=" . urlencode("jobs.php#post-job") . "&msg=auth_required");
         exit;
     } else {
+        $csrfToken = $_POST['csrf_token'] ?? '';
         $title = trim($_POST['title'] ?? '');
         $company = trim($_POST['company'] ?? '');
         $location = trim($_POST['location'] ?? '');
@@ -65,7 +80,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $deadline = !empty($_POST['deadline']) ? trim($_POST['deadline']) : null;
         $application_link = trim($_POST['application_link'] ?? '');
 
-        if (!empty($title) && !empty($company) && !empty($location) && !empty($description)) {
+        if (!verify_csrf_token($csrfToken)) {
+            $message = "Security token invalid or expired. Please refresh and try again.";
+            $messageType = "danger";
+        } elseif (!empty($title) && !empty($company) && !empty($location) && !empty($description)) {
             if ($db_connected && $pdo) {
                 try {
                     $postStatus = is_admin() ? 'approved' : 'pending';
@@ -74,15 +92,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ");
                     $stmt->execute([$title, $company, $location, $job_type, $description, $requirements, $deadline, $application_link, $currentUserId, $postStatus]);
-                    $message = is_admin() ? "Job opportunity published successfully." : "Your job opportunity has been submitted for admin approval.";
-                    $messageType = "success";
+                    $_SESSION['flash_message'] = is_admin() ? "Job opportunity published successfully." : "Your job opportunity has been submitted for admin approval.";
+                    $_SESSION['flash_type'] = "success";
+                    header("Location: jobs.php?tab=my#post-job");
+                    exit;
                 } catch (Exception $e) {
                     $message = "Error posting job: " . $e->getMessage();
                     $messageType = "danger";
                 }
             } else {
-                $message = "Job vacancy recorded successfully!";
-                $messageType = "success";
+                $_SESSION['flash_message'] = "Job vacancy recorded successfully!";
+                $_SESSION['flash_type'] = "success";
+                header("Location: jobs.php?tab=my#post-job");
+                exit;
             }
         } else {
             $message = "Please complete all mandatory fields.";
@@ -141,6 +163,8 @@ if ($db_connected && $pdo) {
 if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
     $jobs = get_sample_jobs();
 }
+
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Cinematic Header -->
@@ -340,6 +364,7 @@ if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
         <?php if ($isLoggedIn): ?>
             <form method="POST" action="jobs.php#post-job">
                 <input type="hidden" name="action" value="post_job">
+                <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                 
                 <div class="grid grid-2" style="margin-bottom: 1.2rem; gap: 1.5rem;">
                     <div class="form-group" style="margin-bottom: 0;">
@@ -436,6 +461,7 @@ if (empty($jobs) && empty($typeFilter) && $tabFilter !== 'my') {
 
         <form method="POST" action="jobs.php">
             <input type="hidden" name="action" value="apply_job">
+            <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
             <input type="hidden" name="job_id" id="apply_job_id" value="">
             
             <div class="form-group" style="margin-bottom: 1rem;">
