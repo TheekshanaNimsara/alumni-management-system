@@ -50,6 +50,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const loader = document.getElementById('cinematicLoader');
 
     if (loader) {
+        // If loaded with a specific section hash, announce the section and smooth-scroll
+        if (window.location.hash && window.location.hash.length > 1) {
+            const targetEl = document.querySelector(window.location.hash);
+            if (targetEl) {
+                let sectionName = window.location.hash.replace('#', '');
+                sectionName = sectionName.charAt(0).toUpperCase() + sectionName.slice(1);
+                const statusEl = loader.querySelector('.loader-status');
+                if (statusEl) statusEl.textContent = 'Connecting Alumni • ' + sectionName;
+                setTimeout(() => {
+                    targetEl.scrollIntoView({ behavior: 'smooth' });
+                }, 120);
+            }
+        }
+
         // If loader is initially visible on page load, dismiss it swiftly & smoothly (300ms)
         if (!loader.classList.contains('loader-hidden')) {
             setTimeout(() => {
@@ -99,20 +113,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Intercept Major Section Navigation Links
+    // ------------------------------------------------------------
+    // INTERCEPT MAIN HEADER SECTIONS & MAJOR NAVIGATION LINKS
+    // ------------------------------------------------------------
     document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
         if (!link) return;
 
-        // Skip modified or non-primary clicks
+        // Skip modified or non-primary clicks (middle-click, ctrl+click, new tabs)
         if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button !== 0) return;
         if (link.target && link.target !== '_self') return;
 
         const href = link.getAttribute('href');
-        if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+        if (!href || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
 
         // Exclude micro-interactions (theme switchers, modal buttons, tabs, conversation items)
-        if (link.closest('.theme-switcher') || link.closest('.modal-overlay') || link.closest('.modal-box') || link.hasAttribute('data-no-loader') || link.closest('[data-no-loader]') || link.closest('.conv-item')) return;
+        if (link.closest('.theme-switcher') || link.closest('.modal-overlay') || link.closest('.modal-box') || link.hasAttribute('data-no-loader') || link.closest('[data-no-loader]') || link.closest('.conv-item') || link.classList.contains('tab')) return;
 
         // Logout Action
         if (href.includes('logout.php')) {
@@ -120,22 +136,97 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Major Section Navigation (Navbar links, logo, user profile, return home)
-        if (link.classList.contains('nav-link') || link.classList.contains('nav-user') || link.classList.contains('logo') || link.classList.contains('btn-return-home')) {
+        // Determine if this is a header/navbar link or a major section link
+        const isHeaderLink = !!link.closest('.navbar, .site-header, header, .nav-menu, .site-nav, .nav-links');
+        const isMajorLink = link.classList.contains('nav-link') || link.classList.contains('active-nav') || link.classList.contains('logo') || link.classList.contains('brand') || link.classList.contains('brand-link') || link.classList.contains('nav-user') || link.classList.contains('btn-return-home') || link.closest('.footer-links') || link.classList.contains('gold-glow');
+
+        if (!isHeaderLink && !isMajorLink) return;
+
+        // Derive user-friendly section/action label
+        let label = link.textContent.trim().replace(/\s+/g, ' ');
+        if (link.classList.contains('logo') || link.classList.contains('brand') || link.classList.contains('brand-link')) {
+            label = 'Home';
+        } else if (link.classList.contains('nav-user')) {
+            label = 'Your Profile';
+        } else if (link.classList.contains('btn-return-home')) {
+            label = 'Homepage';
+        }
+        if (!label) label = 'Portal';
+
+        // Check for in-page anchor navigation (e.g. #alumni, #events, #jobs, #about, #home)
+        let isAnchor = false;
+        let targetId = '';
+
+        if (href.startsWith('#')) {
+            isAnchor = true;
+            targetId = href;
+        } else {
             try {
                 const dest = new URL(link.href, window.location.href);
-                if (dest.origin === window.location.origin && dest.pathname === window.location.pathname && dest.search === window.location.search) {
-                    return; // Same page, do nothing
+                if (dest.origin === window.location.origin && dest.pathname === window.location.pathname) {
+                    if (dest.hash) {
+                        isAnchor = true;
+                        targetId = dest.hash;
+                    } else if (href.includes('index.html') || href === './' || href === '/') {
+                        isAnchor = true;
+                        targetId = '#home';
+                    }
                 }
             } catch (err) {}
-
-            let label = link.textContent.trim();
-            if (link.classList.contains('logo')) label = 'Alumni Network';
-            if (link.classList.contains('nav-user')) label = 'Your Profile';
-            if (link.classList.contains('btn-return-home')) label = 'Homepage';
-
-            window.AlumniLoader.show('Connecting Alumni • ' + label);
         }
+
+        if (isAnchor) {
+            e.preventDefault();
+
+            // Auto-close mobile drawer if open
+            const navMenu = document.querySelector('.nav-menu');
+            const navToggle = document.querySelector('.nav-toggle');
+            if (navMenu && navMenu.classList.contains('open')) {
+                navMenu.classList.remove('open');
+                if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+            }
+
+            // Trigger full cinematic loader with section label
+            window.AlumniLoader.show('Connecting Alumni • ' + label);
+
+            // Snappy transition: scroll to target after initial progress expansion
+            setTimeout(() => {
+                if (targetId === '#home' || targetId === '' || targetId === '#') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+
+                // Update active navigation state
+                document.querySelectorAll('.nav-links .nav-link, .site-nav a, nav a').forEach(l => {
+                    l.classList.remove('active', 'active-nav');
+                });
+                if (link.classList.contains('nav-link') || link.closest('.nav-links')) {
+                    link.classList.add('active');
+                }
+
+                // Update hash in history without triggering browser jump
+                if (history.pushState && targetId) {
+                    history.pushState(null, '', targetId);
+                }
+
+                // Smoothly dismiss loader
+                setTimeout(() => {
+                    window.AlumniLoader.hide();
+                }, 160);
+            }, 240);
+            return;
+        }
+
+        // Cross-page navigation: display loader immediately then proceed
+        e.preventDefault();
+        window.AlumniLoader.show('Connecting Alumni • ' + label);
+        setTimeout(() => {
+            window.location.href = link.href;
+        }, 180);
     });
 
     // Auth pages (login & register) handle their own dedicated Liquid Glass success animations

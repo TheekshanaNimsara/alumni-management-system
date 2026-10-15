@@ -14,10 +14,24 @@
     <link rel="shortcut icon" href="./favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
     <!-- Master Theme Stylesheets -->
-    <link rel="stylesheet" href="./assets/css/theme.css">
-    <link rel="stylesheet" href="./assets/css/auth.css?v=3.0">
+    <link rel="stylesheet" href="./assets/css/theme.css?v=9.2">
+    <link rel="stylesheet" href="./assets/css/auth.css?v=9.2">
 </head>
 <body class="auth-body">
+
+    <!-- Cinematic Loading Screen -->
+    <div id="cinematicLoader" class="cinematic-loader loader-hidden" aria-hidden="true">
+        <div class="loader-content">
+            <div class="loader-brand">
+                <span class="loader-badge">AN</span>
+                <span class="loader-title">ALUMNI <span class="loader-gold">NETWORK</span></span>
+            </div>
+            <div class="loader-progress-track">
+                <div class="loader-progress-bar"></div>
+            </div>
+            <p class="loader-status">Connecting Alumni &bull; Preparing Your Experience</p>
+        </div>
+    </div>
 
     <!-- Top Navigation -->
     <header class="auth-nav">
@@ -258,5 +272,6 @@
         }
     </script>
     <script src="./assets/js/theme.js"></script>
+    <script src="./assets/js/main.js?v=9.2"></script>
 </body>
 </html>

@@ -222,6 +222,10 @@ html {
     scroll-behavior: smooth;
 }
 
+section[id], footer[id], header[id], [id="home"], [id="alumni"], [id="events"], [id="jobs"], [id="about"] {
+    scroll-margin-top: 85px;
+}
+
 body {
     background-color: var(--bg-color);
     background-image: var(--ambient-burgundy), var(--ambient-rose), var(--ambient-violet);
