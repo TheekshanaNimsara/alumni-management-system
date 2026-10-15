@@ -7,6 +7,7 @@
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
+// 1. Security Check: Only logged-in administrators can access reports moderation
 require_admin();
 
 $currentAdminPage = 'reports';
@@ -15,12 +16,13 @@ $pageTitle = 'Moderation & Incident Reports';
 $message = '';
 $messageType = '';
 
-// Handle Moderation Actions
+// 2. Handle report moderation actions submitted by the admin
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $reportId = intval($_POST['report_id'] ?? 0);
     if ($reportId > 0 && $db_connected && $pdo) {
         try {
+            // Action A: Update report workflow status (pending, reviewed, resolved, or dismissed)
             if ($action === 'set_status') {
                 $newStatus = trim($_POST['new_status'] ?? 'reviewed');
                 if (in_array($newStatus, ['pending', 'reviewed', 'resolved', 'dismissed'])) {
@@ -30,11 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $message = "Report #{$reportId} status successfully updated to {$statusLabel}.";
                     $messageType = ($newStatus === 'resolved') ? "success" : "info";
                 }
+
+            // Action B: Suspend the reported user account and automatically mark report as resolved
             } elseif ($action === 'suspend_user') {
                 $targetUserId = intval($_POST['target_user_id'] ?? 0);
                 $currentAdminId = current_user_id();
 
-                if ($targetUserId > 1 && $targetUserId !== $currentAdminId) { // Do not suspend primary admin or self
+                // Safety Rule: Do not allow suspending the primary administrator (ID 1) or self
+                if ($targetUserId > 1 && $targetUserId !== $currentAdminId) {
                     $stmt = $pdo->prepare("UPDATE users SET status = 'suspended' WHERE id = ?");
                     $stmt->execute([$targetUserId]);
 
@@ -48,6 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $message = "Cannot suspend the primary administrator or your own active account.";
                     $messageType = "danger";
                 }
+
+            // Action C: Restore a previously suspended user account back to active
             } elseif ($action === 'unsuspend_user') {
                 $targetUserId = intval($_POST['target_user_id'] ?? 0);
                 if ($targetUserId > 0) {
@@ -64,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Compute Statistics (Database-Driven)
+// 3. Count reports by status for the summary statistics cards
 $totalReportsCount = 0;
 $pendingReportsCount = 0;
 $reviewedReportsCount = 0;
@@ -89,13 +96,14 @@ if ($db_connected && $pdo) {
     $reviewedReportsCount = 1;
 }
 
-// Filters & Search Parameters
+// 4. Read search keyword and status filter from URL
 $statusFilter = trim($_GET['status'] ?? '');
 $searchQuery = trim($_GET['search'] ?? '');
 
 $reports = [];
 if ($db_connected && $pdo) {
     try {
+        // 5. Query reports joined with reporter, reported user, event, and job details
         $sql = "
             SELECT r.*,
                    CONCAT(u_rep.first_name, ' ', u_rep.last_name) AS reporter_name,

@@ -2,12 +2,11 @@
 
 // University Alumni Network - Admin Settings
 
+// 1. Connect to database and load session settings
 require_once __DIR__ . '/../config/db.php';
 
-if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-    header("Location: ../auth/login.php?admin_required=1");
-    exit;
-}
+// 2. Security Check: Only logged-in administrators can access system settings
+require_admin();
 
 $currentAdminPage = 'settings';
 $baseUrl = get_base_url();
@@ -30,6 +29,7 @@ $baseUrl = get_base_url();
 <body>
 
 <div class="admin-layout">
+    <!-- Admin Navigation Sidebar -->
     <?php require_once __DIR__ . '/includes/sidebar.php'; ?>
 
     <main class="admin-main">
@@ -39,7 +39,7 @@ $baseUrl = get_base_url();
                 <p style="color: var(--text-muted); font-size: 0.95rem;">Configuration parameters and runtime diagnostics</p>
             </div>
             
-            //database re-seed tool
+            <!-- Database re-seed tool button -->
             <div>
                 <a href="<?php echo $baseUrl; ?>config/setup.php" class="btn btn-gold btn-sm">Database Re-Seed Tool</a>
             </div>

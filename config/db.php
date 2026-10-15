@@ -11,8 +11,9 @@ if (session_status() === PHP_SESSION_NONE) {
     ini_set("session.use_strict_mode", 1);
     $is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
     session_set_cookie_params([
-        "lifetime" => 0,
-        "path" => "/",
+        "lifetime" => 0, //// Cookie expires when the browser window closes
+        "path" => "/", // Cookie is available within the entire domain
+        "domain" => $_SERVER['HTTP_HOST'] ?? '', // Cookie is available for the current domain
         "secure" => $is_https,
         "httponly" => true,
         "samesite" => "Lax"
@@ -20,9 +21,17 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// ------------------------------------------------------------
+//session_status() === PHP_SESSION_NONE=Prevents duplicate session_start() errors when multiple files require
+
+//session.use_strict_mode", 1=Prevents session fixation attacks by rejecting uninitialized session IDs
+
+//session.use_only_cookies", 1=Ensures that the session ID is only passed through cookies, not through URLs or other means
+
+
+
+
 // Authentication & Role Helpers
-// ------------------------------------------------------------
+
 function is_logged_in() {
     return isset($_SESSION['user_id']);
 }

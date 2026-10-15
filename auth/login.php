@@ -4,6 +4,8 @@
 // Cinematic Dark Purple Split-Screen Authentication Experience
 // Secure PDO Prepared Statements • Bcrypt Verification • Session Hardening
 
+//Form input is pulled from PHP superglobal $_POST:
+
 require_once __DIR__ . '/../config/db.php';
 
 $error = '';
@@ -61,6 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute([$identity, $identity]);
                 $user = $stmt->fetch();
 
+                //password_verify($password, $user['password']) evaluates the hashed password.
+                
                 if ($user && password_verify($password, $user['password'])) {
                     if ($user['status'] === 'suspended') {
                         $error = "This account has been suspended. Please contact the administrator.";

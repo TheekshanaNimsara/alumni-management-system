@@ -2,14 +2,16 @@
 
 // University Alumni Network - Admin Dashboard Overview
 
+// 1. Connect to database and load session helper functions
 require_once __DIR__ . '/../config/db.php';
 
+// 2. Security Check: Make sure only logged-in administrators can open this page
 require_admin();
 
 $currentAdminPage = 'dashboard';
 $baseUrl = get_base_url();
 
-// Compute stats
+// 3. Default counters for dashboard statistics
 $totalUsersCount = 0;
 $activeUsersCount = 0;
 $suspendedUsersCount = 0;
@@ -24,23 +26,23 @@ $recentPendingJobs = [];
 
 if ($db_connected && $pdo) {
     try {
-        // Users stats
+        // 4. Count total, active, and suspended users from the database
         $totalUsersCount = (int)$pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
         $activeUsersCount = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE status = 'active'")->fetchColumn();
         $suspendedUsersCount = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE status = 'suspended'")->fetchColumn();
 
-        // Events stats
+        // 5. Count events: pending approval vs approved
         $pendingEventsCount = (int)$pdo->query("SELECT COUNT(*) FROM events WHERE status = 'pending'")->fetchColumn();
         $approvedEventsCount = (int)$pdo->query("SELECT COUNT(*) FROM events WHERE status = 'approved'")->fetchColumn();
 
-        // Jobs stats
+        // 6. Count jobs: pending approval vs approved
         $pendingJobsCount = (int)$pdo->query("SELECT COUNT(*) FROM jobs WHERE status = 'pending'")->fetchColumn();
         $approvedJobsCount = (int)$pdo->query("SELECT COUNT(*) FROM jobs WHERE status = 'approved'")->fetchColumn();
 
-        // Reports stats
+        // 7. Count member reports waiting in the moderation queue
         $pendingReportsCount = (int)$pdo->query("SELECT COUNT(*) FROM reports WHERE status = 'pending'")->fetchColumn();
 
-        // Fetch moderation events list prioritizing pending
+        // 8. Fetch the latest events submitted by users (pending first)
         $stmt = $pdo->query("
             SELECT e.*, CONCAT(u.first_name, ' ', u.last_name) AS creator_name
             FROM events e
@@ -50,7 +52,7 @@ if ($db_connected && $pdo) {
         ");
         $recentPendingEvents = $stmt->fetchAll();
 
-        // Fetch moderation jobs list prioritizing pending
+        // 9. Fetch the latest jobs posted by alumni (pending first)
         $stmt = $pdo->query("
             SELECT j.*, CONCAT(u.first_name, ' ', u.last_name) AS poster_name
             FROM jobs j
@@ -61,11 +63,11 @@ if ($db_connected && $pdo) {
         $recentPendingJobs = $stmt->fetchAll();
 
     } catch (Exception $e) {
-        // Fallback to sample data
+        // Fallback to sample data if database error occurs
     }
 }
 
-// Fallback dummy records if empty (reduced to two examples per section)
+// 10. Fallback sample data to show demo cards if database tables are empty
 if (empty($recentPendingEvents)) {
     $recentPendingEvents = [
         ['id' => 101, 'title' => 'Alumni Meetup & Tech Fireside', 'creator_name' => 'John Doe', 'status' => 'pending', 'event_date' => '2026-11-20'],

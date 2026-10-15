@@ -1,10 +1,12 @@
 <?php
 
 // University Alumni Network - Admin Sidebar Component
+// 1. Identify which admin page is currently open to highlight its link in gold
 $currentAdminPage = isset($currentAdminPage) ? $currentAdminPage : 'dashboard';
 $baseUrl = get_base_url();
 ?>
 <aside class="admin-sidebar">
+    <!-- Brand Logo -->
     <div class="admin-sidebar-header">
         <a href="<?php echo $baseUrl; ?>index.php" class="logo" style="font-size: 1.1rem;">
             <span class="logo-badge">AN</span>
@@ -12,27 +14,33 @@ $baseUrl = get_base_url();
         </a>
     </div>
 
+    <!-- 2. Admin Navigation Links with Active State Highlighting -->
     <ul class="admin-nav">
+        <!-- Dashboard Link -->
         <li class="admin-nav-item">
             <a href="<?php echo $baseUrl; ?>admin/index.php" class="admin-nav-link <?php echo ($currentAdminPage === 'dashboard') ? 'active' : ''; ?>">
                 <span>&#128202;</span> Dashboard
             </a>
         </li>
+        <!-- User Management Link -->
         <li class="admin-nav-item">
             <a href="<?php echo $baseUrl; ?>admin/users.php" class="admin-nav-link <?php echo ($currentAdminPage === 'users') ? 'active' : ''; ?>">
                 <span>&#128101;</span> Users
             </a>
         </li>
+        <!-- Events Moderation Link -->
         <li class="admin-nav-item">
             <a href="<?php echo $baseUrl; ?>admin/events.php" class="admin-nav-link <?php echo ($currentAdminPage === 'events') ? 'active' : ''; ?>">
                 <span>&#128197;</span> Events
             </a>
         </li>
+        <!-- Jobs Moderation Link -->
         <li class="admin-nav-item">
             <a href="<?php echo $baseUrl; ?>admin/jobs.php" class="admin-nav-link <?php echo ($currentAdminPage === 'jobs') ? 'active' : ''; ?>">
                 <span>&#128188;</span> Jobs
             </a>
         </li>
+        <!-- Reports Queue Link with dynamic counter badge -->
         <li class="admin-nav-item">
             <?php $pendingRepCount = ($db_connected && $pdo) ? get_pending_reports_count($pdo) : 0; ?>
             <a href="<?php echo $baseUrl; ?>admin/reports.php" class="admin-nav-link <?php echo ($currentAdminPage === 'reports') ? 'active' : ''; ?>">
@@ -44,6 +52,7 @@ $baseUrl = get_base_url();
                 <?php endif; ?>
             </a>
         </li>
+        <!-- Platform Settings Link -->
         <li class="admin-nav-item">
             <a href="<?php echo $baseUrl; ?>admin/settings.php" class="admin-nav-link <?php echo ($currentAdminPage === 'settings') ? 'active' : ''; ?>">
                 <span>&#9881;</span> Settings

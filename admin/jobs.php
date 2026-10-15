@@ -5,34 +5,42 @@
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
+// 1. Security Check: Only logged-in administrators can moderate job vacancies
 require_admin();
 
 $currentAdminPage = 'jobs';
 $baseUrl = get_base_url();
 $msg = '';
 
+// 2. Read any feedback message stored in session from a previous action
 if (!empty($_SESSION['flash_msg'])) {
     $msg = $_SESSION['flash_msg'];
     unset($_SESSION['flash_msg']);
 }
 
-// Status Filter
+// 3. Read status filter from URL (e.g., ?status=pending or ?status=approved)
 $statusFilter = trim($_GET['status'] ?? '');
 
-// Handle Moderation Action
+// 4. Handle job moderation button actions (approve, reject, or delete)
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['job_id'], $_POST['action'])) {
     $jobId = intval($_POST['job_id']);
     $action = $_POST['action'];
+
     if ($db_connected && $pdo) {
         try {
+            // Action A: Approve job vacancy so it is published on the public jobs board
             if ($action === 'approve') {
                 $stmt = $pdo->prepare("UPDATE jobs SET status = 'approved' WHERE id = ?");
                 $stmt->execute([$jobId]);
                 $_SESSION['flash_msg'] = "Job vacancy #{$jobId} approved successfully.";
+
+            // Action B: Mark job posting as rejected
             } elseif ($action === 'reject') {
                 $stmt = $pdo->prepare("UPDATE jobs SET status = 'rejected' WHERE id = ?");
                 $stmt->execute([$jobId]);
                 $_SESSION['flash_msg'] = "Job vacancy #{$jobId} marked as rejected.";
+
+            // Action C: Permanently delete job posting from database
             } elseif ($action === 'delete') {
                 $stmt = $pdo->prepare("DELETE FROM jobs WHERE id = ?");
                 $stmt->execute([$jobId]);
@@ -45,11 +53,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['job_id'], $_P
         $_SESSION['flash_msg'] = "Job vacancy #{$jobId} status updated ({$action}).";
     }
 
+    // Refresh page with same filter
     header("Location: jobs.php" . (!empty($statusFilter) ? "?status=" . urlencode($statusFilter) : ""));
     exit;
 }
 
-// Fetch all jobs for moderation
+// 5. Query job listings joined with poster name, prioritizing pending vacancies first
 $jobsList = [];
 if ($db_connected && $pdo) {
     try {
@@ -72,7 +81,7 @@ if ($db_connected && $pdo) {
     }
 }
 
-// Fallback dummy records (reduced to two examples)
+// 6. Fallback sample data to show demo cards if database tables are empty
 if (empty($jobsList) && empty($statusFilter)) {
     $jobsList = [
         ['id' => 1, 'title' => 'Software Engineer', 'company' => 'ABC Technologies', 'location' => 'Colombo, Sri Lanka', 'job_type' => 'Full-Time', 'status' => 'pending'],

@@ -6,6 +6,7 @@
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
+// 1. Security Check: Only logged-in administrators can access user management
 require_admin();
 
 $currentAdminPage = 'users';
@@ -13,50 +14,57 @@ $baseUrl = get_base_url();
 $msg = '';
 $msgType = 'success';
 
-// Handle State-Changing POST Actions
+// 2. Process admin actions submitted via POST buttons
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $targetUserId = intval($_POST['user_id'] ?? 0);
     $currentAdminId = current_user_id();
+
     if ($targetUserId > 0 && $db_connected && $pdo) {
-            try {
-                // Safeguard: Protect primary admin ID 1
-                if ($targetUserId === 1 && in_array($action, ['delete_user', 'change_role', 'change_status'])) {
-                    $msg = "Primary system administrator cannot be modified or deleted.";
-                    $msgType = 'danger';
-                }
-                // Safeguard: Prevent admin from suspending/deleting themselves
-                elseif ($targetUserId === $currentAdminId && in_array($action, ['delete_user', 'change_status'])) {
-                    $msg = "You cannot suspend or delete your own active administrator account.";
-                    $msgType = 'danger';
-                } else {
-                    if ($action === 'change_status') {
-                        $newStatus = ($_POST['status'] === 'suspended') ? 'suspended' : 'active';
-                        $stmt = $pdo->prepare("UPDATE users SET status = ? WHERE id = ?");
-                        $stmt->execute([$newStatus, $targetUserId]);
-                        $msg = "User #{$targetUserId} status updated to " . ucfirst($newStatus) . ".";
-                        $msgType = ($newStatus === 'active') ? 'success' : 'warning';
-                    } elseif ($action === 'change_role') {
-                        $newRole = ($_POST['role'] === 'admin') ? 'admin' : 'alumni';
-                        $stmt = $pdo->prepare("UPDATE users SET role = ? WHERE id = ?");
-                        $stmt->execute([$newRole, $targetUserId]);
-                        $msg = "User #{$targetUserId} role updated to " . ucfirst($newRole) . ".";
-                        $msgType = 'success';
-                    } elseif ($action === 'delete_user') {
-                        $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
-                        $stmt->execute([$targetUserId]);
-                        $msg = "User account #{$targetUserId} permanently deleted.";
-                        $msgType = 'warning';
-                    }
-                }
-            } catch (Exception $e) {
-                $msg = "Operation error: " . $e->getMessage();
+        try {
+            // Safety Rule 1: Never modify or delete the primary system administrator (User ID 1)
+            if ($targetUserId === 1 && in_array($action, ['delete_user', 'change_role', 'change_status'])) {
+                $msg = "Primary system administrator cannot be modified or deleted.";
                 $msgType = 'danger';
             }
+
+            // Safety Rule 2: Prevent the admin from accidentally suspending or deleting themselves
+            elseif ($targetUserId === $currentAdminId && in_array($action, ['delete_user', 'change_status'])) {
+                $msg = "You cannot suspend or delete your own active administrator account.";
+                $msgType = 'danger';
+            } else {
+                // Action A: Toggle user status between 'active' and 'suspended'
+                if ($action === 'change_status') {
+                    $newStatus = ($_POST['status'] === 'suspended') ? 'suspended' : 'active';
+                    $stmt = $pdo->prepare("UPDATE users SET status = ? WHERE id = ?");
+                    $stmt->execute([$newStatus, $targetUserId]);
+                    $msg = "User #{$targetUserId} status updated to " . ucfirst($newStatus) . ".";
+                    $msgType = ($newStatus === 'active') ? 'success' : 'warning';
+
+                // Action B: Change user role between 'admin' and 'alumni'
+                } elseif ($action === 'change_role') {
+                    $newRole = ($_POST['role'] === 'admin') ? 'admin' : 'alumni';
+                    $stmt = $pdo->prepare("UPDATE users SET role = ? WHERE id = ?");
+                    $stmt->execute([$newRole, $targetUserId]);
+                    $msg = "User #{$targetUserId} role updated to " . ucfirst($newRole) . ".";
+                    $msgType = 'success';
+
+                // Action C: Permanently delete user from database
+                } elseif ($action === 'delete_user') {
+                    $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+                    $stmt->execute([$targetUserId]);
+                    $msg = "User account #{$targetUserId} permanently deleted.";
+                    $msgType = 'warning';
+                }
+            }
+        } catch (Exception $e) {
+            $msg = "Operation error: " . $e->getMessage();
+            $msgType = 'danger';
         }
+    }
 }
 
-// Search & Filter parameters
+// 3. Read search keywords and dropdown filters from the URL
 $searchQuery = trim($_GET['search'] ?? '');
 $roleFilter = trim($_GET['role'] ?? '');
 $statusFilter = trim($_GET['status'] ?? '');
@@ -64,6 +72,7 @@ $statusFilter = trim($_GET['status'] ?? '');
 $usersList = [];
 if ($db_connected && $pdo) {
     try {
+        // 4. Build SQL query to fetch users joined with their profile info
         $sql = "
             SELECT u.*, p.degree_programme, p.graduation_year, p.current_company, p.current_job_title, p.profile_picture
             FROM users u
@@ -74,17 +83,20 @@ if ($db_connected && $pdo) {
         ";
         $params = [];
 
+        // Apply text search on name, email, username, or company
         if (!empty($searchQuery)) {
             $sql .= " AND (u.first_name LIKE ? OR u.last_name LIKE ? OR u.email LIKE ? OR u.username LIKE ? OR p.current_company LIKE ?)";
             $term = "%{$searchQuery}%";
             $params = array_merge($params, [$term, $term, $term, $term, $term]);
         }
 
+        // Apply role filter (admin or alumni)
         if (!empty($roleFilter)) {
             $sql .= " AND u.role = ?";
             $params[] = $roleFilter;
         }
 
+        // Apply status filter (active or suspended)
         if (!empty($statusFilter)) {
             $sql .= " AND u.status = ?";
             $params[] = $statusFilter;

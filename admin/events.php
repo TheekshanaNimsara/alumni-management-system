@@ -4,34 +4,42 @@
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
+// 1. Security Check: Only logged-in administrators can moderate events
 require_admin();
 
 $currentAdminPage = 'events';
 $baseUrl = get_base_url();
 $msg = '';
 
+// 2. Read any feedback message stored in session from a previous action
 if (!empty($_SESSION['flash_msg'])) {
     $msg = $_SESSION['flash_msg'];
     unset($_SESSION['flash_msg']);
 }
 
-// Status Filter
+// 3. Read status filter from URL (e.g., ?status=pending or ?status=approved)
 $statusFilter = trim($_GET['status'] ?? '');
 
-// Handle Moderation Action
+// 4. Handle event moderation button actions (approve, reject, or delete)
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['event_id'], $_POST['action'])) {
     $eventId = intval($_POST['event_id']);
     $action = $_POST['action'];
+
     if ($db_connected && $pdo) {
         try {
+            // Action A: Approve event so it appears on the public events board
             if ($action === 'approve') {
                 $stmt = $pdo->prepare("UPDATE events SET status = 'approved' WHERE id = ?");
                 $stmt->execute([$eventId]);
                 $_SESSION['flash_msg'] = "Event #{$eventId} approved successfully.";
+
+            // Action B: Reject event proposal
             } elseif ($action === 'reject') {
                 $stmt = $pdo->prepare("UPDATE events SET status = 'rejected' WHERE id = ?");
                 $stmt->execute([$eventId]);
                 $_SESSION['flash_msg'] = "Event #{$eventId} rejected.";
+
+            // Action C: Permanently delete event from database
             } elseif ($action === 'delete') {
                 $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
                 $stmt->execute([$eventId]);
@@ -44,11 +52,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['event_id'], $
         $_SESSION['flash_msg'] = "Event #{$eventId} status updated ({$action}).";
     }
 
+    // Refresh page with same filter
     header("Location: events.php" . (!empty($statusFilter) ? "?status=" . urlencode($statusFilter) : ""));
     exit;
 }
 
-// Fetch events for moderation
+// 5. Query events joined with organizer name, prioritizing pending events first
 $eventsList = [];
 if ($db_connected && $pdo) {
     try {
@@ -71,7 +80,7 @@ if ($db_connected && $pdo) {
     }
 }
 
-// Fallback dummy records (reduced to two examples)
+// 6. Fallback sample data to show demo cards if database tables are empty
 if (empty($eventsList) && empty($statusFilter)) {
     $eventsList = [
         ['id' => 1, 'title' => 'ALUMNI MEET 2026', 'creator_name' => 'System Administrator', 'status' => 'approved', 'event_date' => '2026-10-24', 'location' => 'Main Campus Grand Auditorium'],
