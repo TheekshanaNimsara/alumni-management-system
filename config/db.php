@@ -141,9 +141,10 @@ if ($db_connected && $pdo) {
     try { $pdo->exec("ALTER TABLE alumni_profiles ADD COLUMN skills TEXT NULL AFTER bio"); } catch (Exception $e) {}
 }
 
-// ------------------------------------------------------------
+
 // Helper: Get base URL for clean internal routing
-// ------------------------------------------------------------
+//get_base_url() tries to find the common starting path of your website
+
 function get_base_url() {
     if (!isset($_SERVER['SCRIPT_NAME']) || php_sapi_name() === 'cli') {
         return './';
