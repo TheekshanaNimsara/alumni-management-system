@@ -1313,7 +1313,7 @@ html.theme-transitioning *::after {
     justify-content: center;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s ease;
     pointer-events: auto;
 }
 
@@ -1400,7 +1400,7 @@ html.theme-transitioning *::after {
     background: linear-gradient(90deg, #BE984B, #E8C77E, #F5DDA0, #E8C77E);
     border-radius: 3px;
     box-shadow: 0 0 14px rgba(232, 199, 126, 0.7);
-    animation: loaderProgressExpand 1.5s cubic-bezier(0.25, 1, 0.5, 1) 0.15s forwards;
+    animation: loaderProgressExpand 0.45s cubic-bezier(0.25, 1, 0.5, 1) 0.05s forwards;
 }
 
 @keyframes loaderProgressExpand {
